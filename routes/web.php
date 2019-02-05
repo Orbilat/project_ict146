@@ -14,8 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/pop', function () {
+Route::get('/client-home', function () {
     return view('clients.client_home');
+});
+Route::get('/S&R', function () {
+    return view('clients.client_S&R');
 });
 Auth::routes();
 
