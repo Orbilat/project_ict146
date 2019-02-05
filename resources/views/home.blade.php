@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.analyst_app2')
 
 @section('content')
 <div class="container">
@@ -13,8 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    @include('analyst.analyst_landingPage')
                 </div>
             </div>
         </div>
