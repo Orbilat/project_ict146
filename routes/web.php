@@ -20,6 +20,9 @@ Route::get('/client-home', function () {
 Route::get('/S&R', function () {
     return view('clients.client_S&R');
 });
+Route::get('/contact', function () {
+    return view('clients.client_contact');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

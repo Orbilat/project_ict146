@@ -10,7 +10,7 @@
 <ul class="client-page">
   <li><a class="active" href="{{ url('/client-home') }}">Home</a></li>
   <li><a href="{{ url('/S&R') }}">Services & Rates</a></li>
-  <li><a href="#contact">Contact Us</a></li>
+  <li><a href="{{ url('/contact') }}">Contact Us</a></li>
 </ul>
 <br><br>
 <h2>News</h2>
