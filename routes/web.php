@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
+Route::get('/inventory', 'SecretaryController@inve')->name('inventory');
+Route::get('/view', 'SecretaryController@stat')->name('view');
+Route::get('/add', 'SecretaryController@add')->name('add');
+Route::get('/create','SecretaryController@create')->name('create');
