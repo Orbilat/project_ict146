@@ -16,13 +16,18 @@ Route::get('/', function () {
 });
 Route::get('/client-home', function () {
     return view('clients.client_home');
-});
-Route::get('/S&R', function () {
+});Route::get('/S&R', function () {
     return view('clients.client_S&R');
 });
 Route::get('/contact', function () {
     return view('clients.client_contact');
 });
+Route::get('/suggestion', function () {
+    return view('clients.client_suggestion');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('events', 'EventController@index')->name('events.index');
+Route::post('events', 'EventController@addEvent')->name('events.add');

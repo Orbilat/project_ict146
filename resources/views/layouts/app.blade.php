@@ -21,7 +21,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Client Style -->
-    @include('client_style')
+    @include('layouts/client_homestyle')
 
 </head>
 <body>
