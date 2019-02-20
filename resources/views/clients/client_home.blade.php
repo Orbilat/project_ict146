@@ -21,7 +21,13 @@
 </form>
 <br>
 <h2>News</h2>
-
+<div class="panel panel-primary">
+              <div class="panel-heading">MY Event Details</div>
+              <div class="panel-body" >
+                  {!! $calendar_details->calendar() !!}
+              </div>
+            </div>
+            </div>
 <div class="foot">
 				<a href="https://www.facebook.com/warriorsturf" target="blank">
 					<i class="fa fa-facebook-square" style="font-size:25px"></i>
