@@ -27,3 +27,9 @@ Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory'
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@add')->name('add');
 Route::get('/secretary/create','SecretaryController@create')->name('create');
+
+// Route::get('/secretary/form',function() {
+//     return view('secretary-file.ris');
+//  });
+
+ Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');

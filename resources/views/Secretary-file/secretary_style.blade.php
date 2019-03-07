@@ -27,4 +27,19 @@ li a:hover:not(.active) {
 .active {
   background-color: #4CAF50;
 }
+.bckg{
+  background-image: url("/img/RIS.png"); 
+  
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  
+}
+p.a {
+  font-family: "Times New Roman", Times, serif;
+}
+.margin{
+  margin-top: 100px;
+  margin-left:70px;
+}
 </style>

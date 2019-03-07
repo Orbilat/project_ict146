@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ris;
+use App\Http\Controllers\Controller;
 
 class SecretaryController extends Controller
 {
@@ -30,5 +32,39 @@ class SecretaryController extends Controller
     public function create()
     {
         return view ('secretary-file.create-secretary');
+    }
+    // protected function form(Request $request)
+    // {
+    //     $ris=new Ris;
+    //     $ris->nameOfPerson= $request->Name;
+    //     $ris->risNumber= $request->risNumber;
+    //     $ris->nameOfEntity= $request->nameOfEntity;
+    //     $ris->address= $request->address;
+        
+    //     $saved = $ris->save();
+    //     if(!$saved){
+    //         abort(500, 'Unsuccessful!');
+    //     }
+    //     else{
+    //         return view('secretary-file.ris');
+    //     }  
+    // }
+    protected function ris(Request $request)
+    {  
+        // $ris=new Ris;
+        // $ris->nameOfPerson= $request->Name;
+        // $ris->risNumber= $request->risNumber;
+        // $ris->nameOfEntity= $request->nameOfEntity;
+        // $ris->address= $request->address;
+        
+        // $saved = $ris->save();
+        // if(!$saved){
+        //     abort(500, 'Unsuccessful!');
+        // }
+        // else{
+        // return view('secretary-file.ris-form');
+        // }
+
+        return view('secretary-file.ris-form');
     }
 }

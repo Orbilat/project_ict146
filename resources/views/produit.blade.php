@@ -22,5 +22,11 @@
         </div>
         @endforeach
     </div>
+    <button onclick="myFunction()">Print this page</button>
 </body>
+<script>
+function myFunction() {
+  window.print();
+}
+</script>
 </html>
