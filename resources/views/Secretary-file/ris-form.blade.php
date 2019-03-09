@@ -20,18 +20,50 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @include('secretary-file.secretary_style')
 </head>
+<style>
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:black;
+  height: 5px;
+}
+
+table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+div.test
+{
+width: 115  px;
+padding: 10px;
+border: 2px solid #000;
+border-radius: 15px;
+-moz-border-radius: 15px;
+}
+#border1{
+width: 500px;
+padding: 10px;
+border: 2px solid #000;
+border-radius: 15px;
+-moz-border-radius: 15px;
+}
+th,td{
+    padding: 10px;
+}
+</style>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-1">
-            </div>
+            <div class="col-md-1"> </div>
             <div class="col-md-8">
                 <div class="float-left mt-4">
-                <img src="/img/logo_clean.png" height="150px" width="500px"/>
+                    <img src="/img/logo_clean.png" height="150px" width="500px"/>
                 </div>
                 <div class="float-left margin">
-                <p class="a" style="font-size:25px;">USC - Water Laboratory</p>
+                    <p class="a" style="font-size:25px;">USC - Water Laboratory</p>
                 </div>
             </div>
             <div class="col-md-3" style="margin-top:100px"> 
@@ -41,17 +73,78 @@
                 </b>
             </div>        
         </div>
+
         <div class="row">
-        <div class="col-md-1">
+            <div class="col-md-1"> </div>
+            <div class="col-md-6">
+                <p>Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, Nasipit, Talamban Cebu City Philippines 6000
+                                Email: waterlab@usc.edu.ph     Phone no.: (63 32) 230 0100 loc. 110 Telefax no.: (032) 345-3811</p>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3"> </div>
         </div>
-        <div class="col-md-6">
-        <p>Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, Nasipit, Talamban Cebu City Philippines 6000
-                             Email: waterlab@usc.edu.ph     Phone no.: (63 32) 230 0100 loc. 110 Telefax no.: (032) 345-3811</p>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div></div>
+            <div class="col-md-10">
+                <hr>
+            </div>
+            <div class="col-md-1"></div>    
         </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-3">
         
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6 test">       
+                  <h3> <b>REQUESTED BY:</b></h3>
+                   <br>
+                   <h5><b>Name of Person:</b><br>
+                   <b>Name of Entity:</b><br>
+                   <b>Address:</b> </h5>
+            </div>
+            <div class="col-md-4">  
+                  <h5 id="border1"><b> Sample <br>Submitted:</b>&emsp;&emsp; Date:___________  Time:____hrs.</h5>
+                  <h5 id="border1"><b> PAYMENT MADE:</b>  &emsp;&emsp; Total Amount Charged: <br> <br> Deposit:_____________ &emsp;&emsp;OR #:</h5>       
+            </div>
         </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 ">
+                <table style="width:95%">
+                    <tr>
+                        <th>Laboratory Code
+                        </th>
+                        <th>Client's Code</th>
+                        <th colspan="2">Telephone</th>
+                        <th>SAMPLE TYPE/METRIX
+<!--                             
+                            <tr>
+                            <th>Drinking Water
+                            </th>
+                            <th>Ground Water</th>
+                            <th>Waste Water</th>
+                            <th>Other Type</th>
+                            </tr> -->
+                            
+                        </th>
+                        <th>Sample Collection</th>
+                        <th>Sample Preservation</th>
+                        <th>Parameter(s) Requested</th>
+                        <th>Purpose of Analysis</th>
+                        <th>Sample Source <br>
+                            (Location/Address)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Bill GatesSDSFSDFSDFSDFSDFSDFSD</td>
+                        <td>55577854</td>
+                        <td>555772423423423855</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
         </div>
         
 
