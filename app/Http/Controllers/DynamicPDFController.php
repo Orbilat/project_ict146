@@ -1,28 +1,108 @@
-<!<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+use PDF;
+use App\Samples;
+
+class DynamicPDFController extends Controller
+{
+    function index()
+    {
+     $customer_data = $this->get_customer_data();
+     return view('dynamic_pdf')->with('customer_data', $customer_data);
+    }
+
+    function get_customer_data()
+    {
+     $customer_data = DB::table('sample')
+         ->limit(10)
+         ->get();
+     return $customer_data;
+    }
+
+    function pdf()
+    {
+     $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($this->convert_customer_data_to_html());
+     return $pdf->setPaper('4', 'landscape')->stream();
+    }
+
+    function convert_customer_data_to_html()
+    {
+     $customer_data = $this->get_customer_data();
+     $output = '
+     <head>
+  <title>Laravel - How to Generate Dynamic PDF from HTML using DomPDF</title>
+
+  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config(\'app.name\', \'Laravel\') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset(\'js/app.js\') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    
+  
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @include('secretary-file.secretary_style')
-</head>
-<style>
-hr {
-  border: 0;
+    <link href="{{ asset(\'css/app.css\') }}" rel="stylesheet">
+    @include(\'secretary-file.secretary_style\')
+
+  <style type="text/css">
+  * {
+    box-sizing: border-box;
+  }
+  
+  .header {
+    border: 1px;
+    padding: 15px;
+  }
+  
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+//   .float-left{   
+//         float: left;     
+//   }
+  
+  [class*="col-"] {
+    float: left;
+    padding: 15px;
+    border: 1px;
+  }
+
+  
+  
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+  
+   .box{
+    width:600px;
+    margin:0 auto;
+   }
+   
+hr{border: 0;
   clear:both;
   display:block;
   width: 96%;               
@@ -52,26 +132,33 @@ border-radius: 15px;
 th,td{
     padding: 10px;
 }
-</style>
 
+  </style>
+ </head>
+     
 <body>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-1"> </div>
             <div class="col-md-8">
                 <div class="float-left mt-4">
-                    <img src="/img/logo_clean.png" height="150px" width="500px"/>
+                    <img src="C:/Users/daryne/project_ict146/public/img/logo_clean.png" height="150px" width="500px"/>
                 </div>
                 <div class="float-left margin">
                     <p class="a" style="font-size:25px;">USC - Water Laboratory</p>
                 </div>
             </div>
-            <div class="col-md-3" style="margin-top:100px"> 
+
+            <div class="col-md-3" style="margin-top:100px">
+                
+                <br>
                 <b style="font-size:17px;">REQUEST INFORMATION
                 <br><br>
                 SHEET # _________________
                 </b>
-            </div>        
+            </div>
+                   
         </div>
 
         <div class="row">
@@ -113,30 +200,11 @@ th,td{
             <div class="col-md-1"></div>
             <div class="col-md-10 ">
                 <table style="width:95%">
-                <col>
-                <col>
-                <col>
-                <colgroup span="4"></colgroup>
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
                     <tr>
                         <th>Laboratory Code</th>
-                        <th>Client's Code</th>
-                        <th>Telephone</th>
-                        <th colspan="4" scope="colgroup">SAMPLE TYPE/METRIX</th>
-<!--                             
-                            <tr>
-                            <th>Drinking Water
-                            </th>
-                            <th>Ground Water</th>
-                            <th>Waste Water</th>
-                            <th>Other Type</th>
-                            </tr> -->
-                            
+                        <th>Client\'s Code</th>
                         
+                        <th>Sample Type/Metrix</th>            
                         <th>Sample Collection</th>
                         <th>Sample Preservation</th>
                         <th>Parameter(s) Requested</th>
@@ -145,27 +213,38 @@ th,td{
                             (Location/Address)
                         </th>
                     </tr>
-                    <tr>
-                        <th scope="col">Drinking Water</th>
-
-                        <th scope="col">Drinking Water</th>
-                        <th scope="col">Drinking Water</th>
-                        <th scope="col">Drinking Water</th>
-                    </tr>
-                    <tr>
-                        <td>Bill GatesSDSFSDFSDFSDFSDFSDFSD</td>
-                        <td>55577854</td>
-                        <td>555772423423423855</td>
-                    </tr>
-                </table>
+                    
+                    
+                        
+                        .';
+                        foreach($customer_data as $sample);
+                        $output .='
+                        <tr>
+                            <td>'.$sample->sampleID.'</td>
+                            <td>'.$sample->clientsCode.'</td>
+                            <td>'.$sample->sampleMatrix.'</td>
+                            <td>'.$sample->collectionTime.'</td>
+                            <td>'.$sample->samplePreservation.'</td>
+                            <td>'.$sample->purposeOfAnalysis.'</td>
+                            
+                            <td>'.$sample->samplePreservation.'</td>
+                            <td>'.$sample->sampleSource.'</td>
+                            </tr>';     
+     $output .= '</table>';
+     
+    $output .= '
+            
             </div>
             <div class="col-md-1"></div>
-        </div>
-        
+            </div>
 
 
 
-    </div>
-    
-</body>
-</html>
+
+            </div>
+
+            </body>
+    ';
+    return $output;
+    }
+}

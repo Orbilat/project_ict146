@@ -33,3 +33,6 @@ Route::get('/secretary/create','SecretaryController@create')->name('create');
 //  });
 
  Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
+//  Route::get('/dynamic_pdf', 'DynamicPDFController@index');
+Route::get('/dynamic_pdf', 'SecretaryController@samples');
+ Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');

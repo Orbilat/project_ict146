@@ -1,7 +1,11 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+ <head>
+  <title>Laravel - How to Generate Dynamic PDF from HTML using DomPDF</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -19,10 +23,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @include('secretary-file.secretary_style')
-</head>
-<style>
-hr {
-  border: 0;
+
+  <style type="text/css">
+   .box{
+    width:600px;
+    margin:0 auto;
+   }
+   
+hr{border: 0;
   clear:both;
   display:block;
   width: 96%;               
@@ -52,9 +60,13 @@ border-radius: 15px;
 th,td{
     padding: 10px;
 }
-</style>
 
+  </style>
+ </head>
+ <body>
+     
 <body>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-1"> </div>
@@ -66,12 +78,16 @@ th,td{
                     <p class="a" style="font-size:25px;">USC - Water Laboratory</p>
                 </div>
             </div>
-            <div class="col-md-3" style="margin-top:100px"> 
+
+            <div class="col-md-3" style="margin-top:100px">
+                <a href="{{ url('dynamic_pdf/pdf') }}" class="btn btn-danger">Convert into PDF</a> 
+                <br>
                 <b style="font-size:17px;">REQUEST INFORMATION
                 <br><br>
                 SHEET # _________________
                 </b>
-            </div>        
+            </div>
+                   
         </div>
 
         <div class="row">
@@ -113,30 +129,11 @@ th,td{
             <div class="col-md-1"></div>
             <div class="col-md-10 ">
                 <table style="width:95%">
-                <col>
-                <col>
-                <col>
-                <colgroup span="4"></colgroup>
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
                     <tr>
                         <th>Laboratory Code</th>
                         <th>Client's Code</th>
-                        <th>Telephone</th>
-                        <th colspan="4" scope="colgroup">SAMPLE TYPE/METRIX</th>
-<!--                             
-                            <tr>
-                            <th>Drinking Water
-                            </th>
-                            <th>Ground Water</th>
-                            <th>Waste Water</th>
-                            <th>Other Type</th>
-                            </tr> -->
-                            
                         
+                        <th>Sample Type/Metrix</th>            
                         <th>Sample Collection</th>
                         <th>Sample Preservation</th>
                         <th>Parameter(s) Requested</th>
@@ -145,18 +142,24 @@ th,td{
                             (Location/Address)
                         </th>
                     </tr>
-                    <tr>
-                        <th scope="col">Drinking Water</th>
+                    
+                    
+                        
+                        @foreach($samples as $sample)
+                        <tr>
+                            <td>{{$sample->sampleID}}</td>
+                            <td>{{$sample->clientsCode}}</td>
+                            <td>{{$sample->sampleMatrix}}</td>
+                            <td>{{$sample->collectionTime}}</td>
+                            <td>{{$sample->samplePreservation}}</td>
+                            <td>{{$sample->purposeOfAnalysis}}</td>
+                            
+                            <td>{{$sample->samplePreservation}}</td>
+                            <td>{{$sample->sampleSource}}</td>
+                            </tr>   
+                         @endforeach   
 
-                        <th scope="col">Drinking Water</th>
-                        <th scope="col">Drinking Water</th>
-                        <th scope="col">Drinking Water</th>
-                    </tr>
-                    <tr>
-                        <td>Bill GatesSDSFSDFSDFSDFSDFSDFSD</td>
-                        <td>55577854</td>
-                        <td>555772423423423855</td>
-                    </tr>
+                    
                 </table>
             </div>
             <div class="col-md-1"></div>
@@ -168,4 +171,5 @@ th,td{
     </div>
     
 </body>
+  
 </html>

@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class, 
 
     ],
 
@@ -226,7 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DNS1D' => 'Milon\Barcode\Facades\DNS1DFacade',
         'DNS2D' => 'Milon\Barcode\Facades\DNS2DFacade',
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
