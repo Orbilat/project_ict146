@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameRis extends Migration
+class AddForeginKeyOnPaymentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class RenameRis extends Migration
      */
     public function up()
     {
-        Schema::rename('ris','client');
-        //
+        Schema::table('payments', function (Blueprint $table) {
+            $table->foreign('testingCost')->references('testId')->on('sample__tests')->onDelete('cascade');
+        });
     }
 
     /**
@@ -24,7 +25,8 @@ class RenameRis extends Migration
      */
     public function down()
     {
-        Schema::rename('client','ris');
-        //
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropForeign('testingCost');
+        });
     }
 }

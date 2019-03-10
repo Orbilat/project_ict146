@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $type = Auth::user()->userType;
+        //Checking type..
+        switch ($type) {
+            case 'administrator':
+                return redirect('/admin');
+                break;
+            case 'secretary':
+                return redirect('/secretary');
+                break;
+            case 'analyst':
+                return redirect('/analyst');
+                break;
+            default:
+                return redirect('/home');
+                break;
+        }
     }
 }

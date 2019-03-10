@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRISTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateRISTable extends Migration
      */
     public function up()
     {
-        Schema::create('RIS', function (Blueprint $table) {
-            $table->increments('risNumber');
-            $table->date('year')->nullable();
-            $table->string('nameOfPerson')->nullable();
+        Schema::create('clients', function (Blueprint $table) {
+            $table->increments('clientId');
+            $table->string('nameOfPerson');
             $table->string('nameOfEntity')->nullable();
-            $table->string('address')->nullable();
+            $table->string('address');
             $table->string('contactNumber')->nullable();
             $table->string('faxNumber')->nullable();
             $table->string('emailAddress')->nullable();
-            $table->string('dateOfSubmission')->nullable();
-            $table->string('manageBy')->nullable();
-            $table->string('manageDate')->nullable();
-
+            $table->date('dateOfSubmission');
+            $table->string('managedBy');
+            $table->dateTime('managedDate');
             $table->timestamps();
         });
     }
@@ -37,6 +35,6 @@ class CreateRISTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('RIS');
+        Schema::dropIfExists('clients');
     }
 }

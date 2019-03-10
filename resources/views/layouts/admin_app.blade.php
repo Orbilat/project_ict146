@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,12 +19,16 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @include('secretary-file.secretary_style')
+
+    {{-- CSS Table Style --}}
+    @include('custom_style')
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -34,7 +38,34 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if(Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin') }}">{{ __('Notifications') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('samples') }}">{{ __('Samples') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('clients') }}">{{ __('Clients') }}</a>
+                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Inventory
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('inventory-glassware') }}">
+                                            {{ __('Glassware') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
+                                            {{ __('Chemicals') }}
+                                        </a>
+                                    </div>
+                                </li>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -52,7 +83,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -72,10 +103,34 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    
+    <script type="text/javascript">
+    
+        // $('#exampleModal').on('show.bs.modal', function (event) {
+
+        // var button = $(event.relatedTarget) // Button that triggered the modal
+        // var recipient = button.data('whatever') // Extract info from data-* attributes
+        // var modal = $(this)
+        // modal.find('.modal-title').text('New message to ' + recipient)
+        // modal.find('.modal-body input').val(recipient)
+
+        // })
+
+    function changeText() {
+        var text = document.getElementById("addNew");
+
+        if(text.innerHTML === "+Add new"){
+            text.innerHTML = "-Close";
+        }
+        else {
+            text.innerHTML = "+Add new";
+        }
+    }
+
+    </script>
 </body>
 </html>

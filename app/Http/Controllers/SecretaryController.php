@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Ris;
-use App\Samples;
+use App\Sample;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -36,7 +37,7 @@ class SecretaryController extends Controller
         return view ('secretary-file.create-secretary');
     }
     public function samples(){
-        $samples=Samples::all();
+        $samples=Sample::all();
         return view('dynamic_pdf',['samples'=>$samples]);
     }
     // protected function form(Request $request)

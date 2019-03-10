@@ -17,7 +17,7 @@ class DynamicPDFController extends Controller
 
     function get_customer_data()
     {
-     $customer_data = DB::table('sample')
+     $customer_data = DB::table('samples')
          ->limit(10)
          ->get();
      return $customer_data;
