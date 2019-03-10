@@ -10,8 +10,8 @@
                     &nbsp;
                     <a href="#addAccount" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">+Add new</a>
                     <form class="float-right" action="GET">
-                        <input class="float-right" type="submit" value="Search">
-                        {{-- <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search employee..."> --}}
+                        {{-- <input class="float-right" type="submit" value="Search"> --}}
+                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search employee...">
                     </form>
                     @if ($errors->any())
                     <div class="alert alert-danger pb-0">
@@ -207,7 +207,7 @@
                                                     <p>Are you sure you want to delete this account?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAccount()">Delete</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div> 
@@ -223,13 +223,6 @@
             <div class="offset-md-5 mt-3">
                     {{ $accounts->links() }}
             </div>
-            @if (session('alert'))
-            <script type = "text/javascript">
-                function success() {
-                    alert ("This is a warning message!");
-                }
-            </script>     
-            @endif
         </div>
     </div>
 </div>
