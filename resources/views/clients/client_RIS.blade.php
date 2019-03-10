@@ -1,7 +1,6 @@
 @extends('layouts.clientapp')
 
 @section('content')
-
 <div class="wrapper">
 <nav>
     <div class="logo">
@@ -18,5 +17,4 @@
         </form></li>
 </ul>
   </nav>
-<br><br>
 @endsection

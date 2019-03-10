@@ -19,15 +19,19 @@ Route::get('/client-home', function () {
 });Route::get('/S&R', function () {
     return view('clients.client_S&R');
 });
-Route::get('/contact', function () {
-    return view('clients.client_contact');
-});
-Route::get('/suggestion', function () {
-    return view('clients.client_suggestion');
-});
+Route::get('/contact', [
+    'uses' => 'ContactMessageController@create'
+]);
+Route::post('/contact', [
+    'uses' => 'ContactMessageController@store',
+    'as' => 'contact.store'
+]);
+Route::get('/RIS', function () {
+    return view('clients.client_RIS');
+})->name('RIS');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('events', 'EventController@index')->name('events.index');
-Route::post('events', 'EventController@addEvent')->name('events.add');
+Route::get('/client-home', 'EventController@index')->name('events.index');
+Route::post('/client-home', 'EventController@addEvent')->name('events.add');
