@@ -103,15 +103,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <label for="userType" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
 
                             <div class="col-md-6">
-                                <select id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType">
-                                    <option value="administrator">Admin</option>
-                                    <option value="secretary">Secretary</option>
-                                    <option value="analyst">Analyst</option>                                    
-                                </select>
+                                    <input id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType" value="administrator" required>                                    
                                 @if ($errors->has('userType'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('userType') }}</strong>

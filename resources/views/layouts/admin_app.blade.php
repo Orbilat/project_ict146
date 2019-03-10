@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{-- CSS Table Style --}}
-    @include('table_style')
+    @include('custom_style')
 
 </head>
 <body>
@@ -50,8 +50,19 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('inventory') }}">{{ __('Inventory') }}</a>
+                            <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Inventory
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('inventory-glassware') }}">
+                                            {{ __('Glassware') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
+                                            {{ __('Chemicals') }}
+                                        </a>
+                                    </div>
+                                </li>
                             </li>
                         @endif
                     </ul>
@@ -95,5 +106,30 @@
             @yield('content')
         </main>
     </div>
+    
+    <script type="text/javascript">
+    
+        // $('#exampleModal').on('show.bs.modal', function (event) {
+
+        // var button = $(event.relatedTarget) // Button that triggered the modal
+        // var recipient = button.data('whatever') // Extract info from data-* attributes
+        // var modal = $(this)
+        // modal.find('.modal-title').text('New message to ' + recipient)
+        // modal.find('.modal-body input').val(recipient)
+
+        // })
+
+    function changeText() {
+        var text = document.getElementById("addNew");
+
+        if(text.innerHTML === "+Add new"){
+            text.innerHTML = "-Close";
+        }
+        else {
+            text.innerHTML = "+Add new";
+        }
+    }
+
+    </script>
 </body>
 </html>

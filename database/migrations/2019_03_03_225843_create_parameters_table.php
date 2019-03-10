@@ -14,7 +14,7 @@ class CreateParametersTable extends Migration
     public function up()
     {
         Schema::create('parameters', function (Blueprint $table) {
-            $table->increments('paramterId');
+            $table->increments('parameterId');
             $table->string('analysis');
             $table->string('method');
             $table->float('chargePerSample');

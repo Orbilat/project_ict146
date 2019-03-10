@@ -21,8 +21,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Redirect route
 Route::redirect('/admin', '/admin/home');
 //Admin routes
-Route::get('/admin/home', 'AdminController@admin')->name('admin');
-Route::get('/admin/samples', 'AdminController@samples')->name('samples');
-Route::get('/admin/clients', 'AdminController@clients')->name('clients');
-Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts');
-Route::get('/admin/inventory', 'AdminController@inventory')->name('inventory');
+Route::get('/admin/home', 'AdminController@admin')->name('admin')->middleware('auth');
+Route::get('/admin/samples', 'AdminController@samples')->name('samples')->middleware('auth');
+Route::get('/admin/clients', 'AdminController@clients')->name('clients')->middleware('auth');
+Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts')->middleware('auth');
+Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount')->middleware('auth');
+//Inventory routes
+Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals')->middleware('auth');
+Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware')->middleware('auth');
