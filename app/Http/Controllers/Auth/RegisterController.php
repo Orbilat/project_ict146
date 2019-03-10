@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use DateTime;
+use App\Employee;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -49,9 +51,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'min:4', 'unique:employees'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'employeeName' => ['required', 'string', 'max:50', 'unique:employees'],
+            'position' => ['required', 'string', 'max:30',],
+            'idNumber' => ['required', 'string', 'numeric', 'unique:employees'],
+            'licenseNumber' => ['required', 'string', 'max:50', 'unique:employees'],
+            'userType' => ['required', 'string', 'max:20',],
         ]);
     }
 
@@ -63,10 +69,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        return Employee::create([
+            'username' => $data['username'],
             'password' => Hash::make($data['password']),
+            'employeeName' => $data['employeeName'],
+            'position' => $data['position'],
+            'idNumber' => $data['idNumber'],
+            'licenseNumber' => $data['licenseNumber'],
+            'userType' => $data['userType'],
+            'managedBy' => (Auth::check() == true) ? Auth::user()->username : NULL,
+            'managedDate' => new DateTime(),
         ]);
     }
 }
