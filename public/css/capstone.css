@@ -1,0 +1,24 @@
+div#sampledata_wrapper{
+	margin: 10px;	
+}
+
+.qty{
+	color:red;
+}
+
+.hblue{
+	color:blue;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: blue;
+  text-align: center;
+}
+
+.margintop{
+	margin: 15px;
+}

@@ -10,13 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Stations;
 
 Route::get('/', function () {
     return view('auth.login');
+
+	//Add to login controller
+	$stations = Stations::all();
+
+	session(['stations' => $stations]);
+    return view('home');
 });
-<<<<<<< HEAD
 //Auth routes
-=======
 Route::get('/client-home', function () {
     return view('clients.client_home');
 });Route::get('/S&R', function () {
@@ -32,11 +37,10 @@ Route::post('/contact', [
 Route::get('/RIS', function () {
     return view('clients.client_RIS');
 })->name('RIS');
->>>>>>> b2b9750c82d3c1729e80c94d483fa2036209f237
 Auth::routes();
+
 //Home route
 Route::get('/home', 'HomeController@index')->name('home');
-<<<<<<< HEAD
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
 //Redirect route
@@ -56,8 +60,18 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware');
 });
-=======
 
 Route::get('/client-home', 'EventController@index')->name('events.index');
 Route::post('/client-home', 'EventController@addEvent')->name('events.add');
->>>>>>> b2b9750c82d3c1729e80c94d483fa2036209f237
+
+Route::get('/analyst/notification', 'AnalystController@notification')->name('notification');
+
+Route::get('/analyst/inventory', 'AnalystController@inventory')->name('inventory');
+Route::post('/analyst/inventory/update', 'AnalystController@inventoryupdate')->name('inventoryupdate');
+Route::get('/analyst/inventory/history', 'AnalystController@history')->name('inventoryhistory');
+
+Route::get('/analyst/sample/station/{id}', 'AnalystController@samplePerStation')->name('samplestation');
+Route::get('/analyst/{stationid}/sample/{id}', 'AnalystController@sampleDetails')->name('sampledetails');
+
+Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
+Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
