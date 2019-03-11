@@ -59,7 +59,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#sampledata').DataTable();
+        $('#sampledata').DataTable({
+            "ordering": false
+        });
         $('#scanid2').focus();
     });
 </script>

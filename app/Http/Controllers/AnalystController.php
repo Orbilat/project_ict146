@@ -46,7 +46,7 @@ class AnalystController extends Controller
 
     	for($i=0; $i < sizeof($input['itemid']); $i++){
     		if($input['borrowqty'][$i] > 0){
-    			$empId = $input['itemid'][$i];
+    			$id = $input['itemid'][$i];
     			$item = Item::find($id);
     			$updateresult = Item::find($id)->update(array('quantity' => $item->quantity - $input['borrowqty'][$i]));
     			$invListResult = InventoryList::create(array('inventoryId' => $invresult->inventoryId , 'itemId' => $id, 'qty' => $input['borrowqty'][$i]));
@@ -71,7 +71,7 @@ class AnalystController extends Controller
 
     public function samplePerStation($id){
     	$sampleperstation = DB::table('sample AS s')
-    			->select('s.sampleId', 's.risNumber', 'p.stationId', 'st.status' )
+    			->select('s.sampleId', 's.risNumber', 'p.stationId', 'st.status','st.testId' )
     			->leftJoin('sample_tests AS st','st.sampleId','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameterId')
     			->leftJoin('stations AS sta', 'p.stationId', '=', 'sta.stationid')
@@ -80,7 +80,8 @@ class AnalystController extends Controller
                     $query->where('st.status','=', 'In Progress')
                     ->orwhere('st.status','=', 'Complete');
                 })
-    			->groupBy('p.stationId','s.sampleId', 'st.status' )
+                ->groupBy('p.stationId','s.sampleId', 's.risNumber', 'st.status','st.testId' )
+                ->orderBy('st.testId','desc')
     			->get();
 
     	return view('analyst.stationsamples', [ 'stationssample' => $sampleperstation ,'station' => $id]);

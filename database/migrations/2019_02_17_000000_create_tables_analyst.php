@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+// to run migration -- `php artisan migrate`
 class CreateTablesAnalyst extends Migration
 {
     /**
