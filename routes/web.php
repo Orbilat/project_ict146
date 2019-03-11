@@ -14,10 +14,29 @@
 Route::get('/', function () {
     return view('auth.login');
 });
+<<<<<<< HEAD
 //Auth routes
+=======
+Route::get('/client-home', function () {
+    return view('clients.client_home');
+});Route::get('/S&R', function () {
+    return view('clients.client_S&R');
+});
+Route::get('/contact', [
+    'uses' => 'ContactMessageController@create'
+]);
+Route::post('/contact', [
+    'uses' => 'ContactMessageController@store',
+    'as' => 'contact.store'
+]);
+Route::get('/RIS', function () {
+    return view('clients.client_RIS');
+})->name('RIS');
+>>>>>>> b2b9750c82d3c1729e80c94d483fa2036209f237
 Auth::routes();
 //Home route
 Route::get('/home', 'HomeController@index')->name('home');
+<<<<<<< HEAD
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
 //Redirect route
@@ -37,3 +56,8 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware');
 });
+=======
+
+Route::get('/client-home', 'EventController@index')->name('events.index');
+Route::post('/client-home', 'EventController@addEvent')->name('events.add');
+>>>>>>> b2b9750c82d3c1729e80c94d483fa2036209f237
