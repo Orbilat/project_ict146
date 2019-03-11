@@ -20,11 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<<<<<<< HEAD
-    {{-- @include('secretary-file.secretary_style') --}}
-=======
     @include('secretary-file.secretary_style')
->>>>>>> f76f05723b8ea612b1b17542b2e634822b11a28b
 
     {{-- CSS Table Style --}}
     @include('custom_style')

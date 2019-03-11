@@ -1,8 +1,5 @@
 @extends('layouts.admin_app')
 
-<body>
-
-
 @section('content')
 
 <div class="container">
@@ -28,6 +25,5 @@
         </div>
     </div>
 </div>
-</body>
 
 @endsection
