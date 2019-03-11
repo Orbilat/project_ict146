@@ -220,7 +220,7 @@ th,td{
                         foreach($customer_data as $sample);
                         $output .='
                         <tr>
-                            <td>'.$sample->sampleID.'</td>
+                            <td>'.$sample->sampleId.'</td>
                             <td>'.$sample->clientsCode.'</td>
                             <td>'.$sample->sampleMatrix.'</td>
                             <td>'.$sample->collectionTime.'</td>
