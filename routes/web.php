@@ -23,6 +23,10 @@ Route::get('/', function () {
 	session(['stations' => $stations]);
     return view('home');
 });
+
+Route::get('barcode','ProduitController@index');
+
+
 //Auth routes
 // Route::get('/client-home', function () {
 //     return view('clients.client_home');
@@ -47,10 +51,25 @@ Route::post('/contact', [
 // END CLIENT ROUTES
 
 
-//ADMIN ROUTES
+//SECRETARY ROUTES
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
+Route::get('/secretary/notification', 'SecretaryController@noti')->name('notification');
+Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
+Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
+Route::get('/secretary/add', 'SecretaryController@add')->name('add');
+Route::get('/secretary/create','SecretaryController@create')->name('create');
+// Route::get('/secretary/form',function() {
+//     return view('secretary-file.ris');
+//  });
+Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
+// Route::get('/dynamic_pdf', 'DynamicPDFController@index');
+Route::get('/dynamic_pdf', 'SecretaryController@samples');
+Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
+//END SECRETARY ROUTES
+
+//ADMIN ROUTES
 //Redirect route
 Route::redirect('/admin', '/admin/home');
 //Middleware for User Content Control
@@ -85,3 +104,4 @@ Route::get('/analyst/{stationid}/sample/{id}', 'AnalystController@sampleDetails'
 Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
 Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
 // END ANALYST ROUTES
+

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin_app')
 
 <body>
 
@@ -10,11 +10,11 @@
         <div class="col-md-10">
             <div class="card">
                 <ul class="secretary-page">
-                  <li><a href="{{url('/notification')}}">Notification</a></li>
-                  <li><a href="{{url('/notification')}}">Inventory</a></li>
-                  <li><a href="Inventory">View Status</a></li>
-                  <li><a href="View Status">Add & View Status</a></li>
-                  <li><a href="Add & View Status">Create Report</a></li>
+                  <li><a href="{{url('/secretary/notification')}}">Notification</a></li>
+                  <li><a href="{{url('/secretary/inventory')}}">Inventory</a></li>
+                  <li><a href="{{url('/secretary/view')}}">View Status</a></li>
+                  <li><a href="{{url('/secretary/add')}}">Add & View Status</a></li>
+                  <li><a href="{{url('/secretary/create')}}">Create Report</a></li>
                 </ul>
                 <div class="card-body">
                     @if (session('status'))

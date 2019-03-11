@@ -10,11 +10,11 @@
         <div class="col-md-10">
             <div class="card">
                 <ul class="secretary-page">
-                  <li class="active"><a  href="{{url('/secretary/notification')}}">Notification</a></li>
-                  <li><a href="{{url('/secretary/inventory')}}">Inventory</a></li>
-                  <li><a href="{{url('/secretary/view')}}">View Status</a></li>
-                  <li><a href="{{url('/secretary/add')}}">Add & View Status</a></li>
-                  <li><a href="{{url('/secretary/create')}}">Create Report</a></li>
+                  <li><a  href="{{url('secretary/notification')}}">Notification</a></li>
+                  <li><a href="{{url('secretary/inventory')}}">Inventory</a></li>
+                  <li><a href="{{url('secretary/view')}}">View Status</a></li>
+                  <li class = "active"><a href="{{url('secretary/add')}}">Add & View Status</a></li>
+                  <li><a href="{{url('secretary/create')}}">Create Report</a></li>
                 </ul>
                 <div class="card-body">
                     @if (session('status'))
@@ -23,7 +23,7 @@
                         </div>
                     @endif                  
                 </div>
-            Notification
+            Add
             </div>
         </div>
     </div>

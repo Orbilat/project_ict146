@@ -173,7 +173,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+<<<<<<< HEAD
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+=======
+        Milon\Barcode\BarcodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class, 
+
+>>>>>>> f76f05723b8ea612b1b17542b2e634822b11a28b
     ],
 
     /*
@@ -222,7 +228,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+<<<<<<< HEAD
         'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
+=======
+        'DNS1D' => 'Milon\Barcode\Facades\DNS1DFacade',
+        'DNS2D' => 'Milon\Barcode\Facades\DNS2DFacade',
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+>>>>>>> f76f05723b8ea612b1b17542b2e634822b11a28b
     ],
 
 ];
