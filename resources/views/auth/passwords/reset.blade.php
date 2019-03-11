@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 @extends('layouts.admin_app')
-=======
-@extends('layouts.analyst_app')
->>>>>>> e51d4fa04dfc2826df049dfe41e781e2c55b173a
 
 @section('content')
 <div class="container">

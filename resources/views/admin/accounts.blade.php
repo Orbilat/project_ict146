@@ -5,7 +5,7 @@
     @if(Session::has('flash_account_added'))
     <div class="alert alert-info offset-md-2 col-md-8">
         <a class="close" data-dismiss="alert">×</a>
-        <strong>Notification</strong> {!!Session::get('flash_account_added')!!}
+        <strong>Notification:</strong> {!!Session::get('flash_account_added')!!}
     </div>
     @endif
 {{-- SUCCESS MESSAGE OF DELETING ACCOUNT --}}

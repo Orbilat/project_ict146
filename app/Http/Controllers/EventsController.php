@@ -11,7 +11,7 @@ use App\Event;
 
 use Calendar;
 
-class EventController extends Controller
+class EventsController extends Controller
 {
     public function index(){
     	$events = Event::get();

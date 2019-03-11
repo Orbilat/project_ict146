@@ -12,6 +12,8 @@
 */
 use App\Stations;
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('auth.login');
 
@@ -22,9 +24,17 @@ Route::get('/', function () {
     return view('home');
 });
 //Auth routes
-Route::get('/client-home', function () {
-    return view('clients.client_home');
-});Route::get('/S&R', function () {
+// Route::get('/client-home', function () {
+//     return view('clients.client_home');
+
+
+//CLIENT ROUTES
+Route::get('/RIS', function () {
+    return view('clients.client_RIS');
+})->name('RIS');
+Route::get('/client-home', 'EventsController@index')->name('events.index');
+Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
+Route::get('/S&R', function () {
     return view('clients.client_S&R');
 });
 Route::get('/contact', [
@@ -34,12 +44,10 @@ Route::post('/contact', [
     'uses' => 'ContactMessageController@store',
     'as' => 'contact.store'
 ]);
-Route::get('/RIS', function () {
-    return view('clients.client_RIS');
-})->name('RIS');
-Auth::routes();
+// END CLIENT ROUTES
 
-//Home route
+
+//ADMIN ROUTES
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
@@ -60,10 +68,11 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware');
 });
+// END ADMIN ROUTES
 
-Route::get('/client-home', 'EventController@index')->name('events.index');
-Route::post('/client-home', 'EventController@addEvent')->name('events.add');
 
+// ANALYST ROUTES
+Route::redirect('/analyst', '/analyst/notification');
 Route::get('/analyst/notification', 'AnalystController@notification')->name('notification');
 
 Route::get('/analyst/inventory', 'AnalystController@inventory')->name('inventory');
@@ -75,3 +84,4 @@ Route::get('/analyst/{stationid}/sample/{id}', 'AnalystController@sampleDetails'
 
 Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
 Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
+// END ANALYST ROUTES
