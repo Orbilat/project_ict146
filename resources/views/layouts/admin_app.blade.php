@@ -18,14 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<<<<<<< HEAD:resources/views/layouts/app.blade.php
-    @include('secretary-file.secretary_style')
-=======
+    {{-- @include('secretary-file.secretary_style') --}}
 
     {{-- CSS Table Style --}}
     @include('custom_style')
 
->>>>>>> 1c75a23dcb90496cf6d0c61c8bc89ee03dcd43c8:resources/views/layouts/admin_app.blade.php
 </head>
 <body>
     <div id="app">
@@ -91,7 +88,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                       onclick="event.preventDefault(); 
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -112,25 +109,15 @@
     </div>
     
     <script type="text/javascript">
-    
-        // $('#exampleModal').on('show.bs.modal', function (event) {
-
-        // var button = $(event.relatedTarget) // Button that triggered the modal
-        // var recipient = button.data('whatever') // Extract info from data-* attributes
-        // var modal = $(this)
-        // modal.find('.modal-title').text('New message to ' + recipient)
-        // modal.find('.modal-body input').val(recipient)
-
-        // })
 
     function changeText() {
         var text = document.getElementById("addNew");
 
-        if(text.innerHTML === "+Add new"){
-            text.innerHTML = "-Close";
+        if(text.innerHTML === "Add new"){
+            text.innerHTML = "Close";
         }
         else {
-            text.innerHTML = "+Add new";
+            text.innerHTML = "Add new";
         }
     }
 

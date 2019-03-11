@@ -18,10 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 //Home route
 Route::get('/home', 'HomeController@index')->name('home');
-<<<<<<< HEAD
 Route::get('/secretary', 'SecretaryController@index')->name('secretary');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
-=======
 //Redirect route
 Route::redirect('/admin', '/admin/home');
 //Middleware for User Content Control
@@ -32,9 +30,10 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/clients', 'AdminController@clients')->name('clients');
     Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts');
     Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount');
+    Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount');
+    Route::patch('/admin/accounts/{accountId}', 'AdminController@updateAccount')->name('updateAccount');
     Route::post('/admin/samples', 'AdminController@addSample')->name('addSample');
     //Inventory routes
     Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware');
 });
->>>>>>> 1c75a23dcb90496cf6d0c61c8bc89ee03dcd43c8

@@ -14,12 +14,8 @@
                         </div>
                     @endif
 
-<<<<<<< HEAD:resources/views/home.blade.php
-                     CJ IS DEPRESSED
-=======
                    <p> You are logged in! </p>
     
->>>>>>> 1c75a23dcb90496cf6d0c61c8bc89ee03dcd43c8:resources/views/admin/home.blade.php
                 </div>
             </div>
         </div>
