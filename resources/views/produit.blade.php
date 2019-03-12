@@ -17,8 +17,8 @@
     <div class="row">
         @foreach($produits as $p)
         <div class="col-md-4">
-            <div>{!! DNS1D::getBarcodeHTML ($p->id, 'C128A') !!}</div>
-            <h2>{{ $p->risNumber}}</h2>
+            <div>{!! DNS1D::getBarcodeHTML ($p->faxNumber, 'C128A') !!}</div>
+            <h2>{{ $p->faxNumber}}</h2>
         </div>
         @endforeach
     </div>

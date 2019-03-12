@@ -246,4 +246,96 @@ class AdminController extends Controller
         }
 
     }
+    // PARAMETER INSERT
+    protected function addParameter(Request $request)
+    {
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'analysis' => 'required|string|max:255',
+            'method' => 'nullable|string|max:255',
+            'typeOfAnalysis' => 'required|string|max:50',
+            'chargePerSample' => 'required|string|numeric',
+            'samplePrepCharge' => 'nullable|string|numeric',
+        ]);
+        // VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/clients')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        //ELOQUENT INSERT
+        $client = new Client;
+        $client->nameOfPerson = trim($request->nameOfPerson);
+        $client->nameOfEntity = trim($request->nameOfEntity);
+        $client->address =  trim($request->address);
+        $client->contactNumber = trim($request->contactNumber);
+        $client->faxNumber = trim($request->faxNumber);
+        $client->emailAddress = trim($request->emailAddress);
+        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->managedBy = Auth::user()->employeeName;
+        $client->managedDate = new DateTime();
+        $client->save();
+        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+        //SAVE TO DB && CHECK
+        if($client->save()){
+            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+            return view('admin.add_sample');
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // CLIENT DELETE
+    protected function destroyParameter($clientId)
+    {
+        $account = Client::findOrFail($clientId);
+        if($account->delete()){
+            Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // CLIENT UPDATE
+    protected function updateParameter(Request $request, $clientId)
+    {
+        // VALIDATION
+        $validatorUpdate = Validator::make($request->all(), [
+            'nameOfPerson' => 'required|string|max:255|min:4',
+            'nameOfEntity' => 'nullable|string|max:255',
+            'address' => 'required|string|max:50',
+            'contactNumber' => 'string|numeric',
+            'faxNumber' => 'nullable|string|numeric',
+            'emailAddress' => 'nullable|string|max:50|email',
+            'dateOfSubmission' => 'required|string|max:20',
+        ]);
+        // VALIDATION CHECKS
+        if ($validatorUpdate->fails()) {
+            return redirect('admin/clients')
+                        ->withErrors($validatorUpdate)
+                        ->withInput();
+        }
+        // FIND CLIENT AND UPDATE
+        $client = Client::findOrFail($clientId);
+        $client->nameOfPerson = trim($request->nameOfPerson);
+        $client->nameOfEntity = trim($request->nameOfEntity);
+        $client->address =  trim($request->address);
+        $client->contactNumber = trim($request->contactNumber);
+        $client->faxNumber = trim($request->faxNumber);
+        $client->emailAddress = trim($request->emailAddress);
+        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->managedBy = Auth::user()->employeeName;
+        $client->managedDate = new DateTime();
+    
+        if($client->save()){
+            Session::flash('flash_client_updated', 'Client information updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+
+    }
 }
