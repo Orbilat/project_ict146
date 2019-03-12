@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use PDF;
-use App\Samples;
+use App\Sample;
 
 class DynamicPDFController extends Controller
 {

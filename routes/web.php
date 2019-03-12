@@ -69,7 +69,6 @@ Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
 //END SECRETARY ROUTES
 
-
 //ADMIN ROUTES
 //Redirect route
 Route::redirect('/admin', '/admin/home');
