@@ -14,7 +14,6 @@ class AddForeignKeyOnStations extends Migration
     public function up()
     {
         Schema::table('stations', function (Blueprint $table) {
-            $table->foreign('samples')->references('parameterId')->on('parameters')->onDelete('cascade');
             $table->foreign('handledBy')->references('employeeId')->on('employees')->onDelete('cascade');
         });
     }

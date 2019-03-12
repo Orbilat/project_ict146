@@ -17,6 +17,7 @@ class CreateStationsTable extends Migration
             $table->increments('stationId');
             $table->unsignedInteger('samples');
             $table->unsignedInteger('handledBy');
+            $table->string('stationname');
             $table->dateTime('timeReceived');
             $table->dateTime('timeCompleted')->nullable();
             $table->string('managedBy');
