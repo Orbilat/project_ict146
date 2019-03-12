@@ -1,7 +1,7 @@
 <style>
 body
     {
-        margin: 0;
+        margin: 0%;
         padding: 0;
    }
 
@@ -13,15 +13,17 @@ nav {
     box-sizing: border-box;
     background: #1E90FF;
     text-decoration: none;
+    border-radius: 3px;
     }
 
 nav .logo {
     padding: 22px 20px;
     height: 80px;
     float: left;
-    font-size: 24px;
+    font-size: 20px;
     color: #fff;
     font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    padding-left:100px;
     
     }
 
@@ -83,21 +85,45 @@ form.example button {
 
 .foot{
     width:100%;
-    padding: 10px 600px;
+    padding:25px;
+    text-align: center;
+    background: #1E90FF;
+    display: inline-block;
 
+
+}
+i.fa.fa-facebook-square{
+    color:#fff;
+    padding:5px;
+    border:3px solid;
+    border-radius:100px;
 }
 i.fa.fa-facebook-square:hover{
     color: #3b5998;
  
 }
-
+i.fa.fa-twitter{
+    color:#fff;
+    padding:5px;
+    border:3px solid;
+    border-radius:100px;
+}
 i.fa.fa-twitter:hover{
     color: #4099FF;
 
 }
+i.fa.fa-instagram{
+    color:#fff;
+    padding:5px;
+    border:3px solid;
+    border-radius:100px;
+}
 i.fa.fa-instagram:hover{
-	color: #bc2a8d;
+	  color: #bc2a8d;
 
+}
+i.fa.fa-info-circle{
+  font-size:36px
 }
 i.fa.fa-map-marker{
 	font-size:29px;
@@ -128,15 +154,17 @@ i.fa.fa-mobile-phone{
 	text-rendering:optimizeLegibility;
 }
 .contactUs{
-  width: 400px;
+  width: 100%;
   padding: 20px;
-  font-size: 40px;
-  text-align: center;
+  font-size: 3vw; 
+  text-align: left;
   color:#FFF;
-  background: #0191C8;
-  margin-top:50px;
-  margin-left: 490px;
-  border-radius: 50px;
+  background: #1E90FF;
+  padding-left:100px;
+  font-weight: bold;
+  font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  letter-spacing: 5px;
+  
 
 }
 .bg {
@@ -144,17 +172,20 @@ i.fa.fa-mobile-phone{
 	font-size: 12px;
 	line-height:50px;
 	color:#000; 
-  margin-top:30px;
+
   
 
 }
 
+.wrapperContact{
+  width:100%;
+  display: inline-block;
+  background-color: #fff;
+}
 .container1 {
   display: inline-block;
   width:40%;
   margin-left: 200px;
-  
-
 
 }
 .container2 {
@@ -222,7 +253,8 @@ fieldset {
   .invalid-feedback{
     display: block;
 }
-
-
+  .RIS{
+    font-size: 15px;
+  }
 
 </style>

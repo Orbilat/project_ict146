@@ -35,7 +35,9 @@ Route::get('barcode','ProduitController@index');
 //CLIENT ROUTES
 Route::get('/RIS', function () {
     return view('clients.client_RIS');
-})->name('RIS');
+})->name('RisNumber');
+Route::post('/RIS', 'ClientController@RIS')->name('RIS');
+
 Route::get('/client-home', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', function () {
