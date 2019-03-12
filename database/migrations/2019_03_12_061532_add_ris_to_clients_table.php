@@ -14,7 +14,7 @@ class AddRisToClientsTable extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->bigInteger('risNumber')->after('clientId');
+            $table->bigInteger('risNumber')->after('clientId')->nullable();
         });
     }
 

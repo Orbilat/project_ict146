@@ -183,6 +183,8 @@ class AdminController extends Controller
         $client->dateOfSubmission = $request->dateOfSubmission;
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
+        $client->save();
+        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
         //SAVE TO DB && CHECK
         if($client->save()){
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
@@ -234,6 +236,7 @@ class AdminController extends Controller
         $client->dateOfSubmission = $request->dateOfSubmission;
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
+    
         if($client->save()){
             Session::flash('flash_client_updated', 'Client information updated successfully!');
             return Redirect::back();

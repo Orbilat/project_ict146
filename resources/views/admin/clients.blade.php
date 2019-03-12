@@ -178,7 +178,7 @@
                             @foreach($clients as $client)
                             <tr>
                                 {{-- TABLE BODY --}}
-                                <td>{{ date("Y", strtotime($client->created_at)) . $client->clientId }}</td>
+                                <td>{{ $client->risNumber }}</td>
                                 <td>{{ $client->nameOfPerson }}</td>
                                 <td>{{ $client->nameOfEntity }}</td>
                                 <td>{{ $client->address }}</td>
@@ -317,7 +317,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
-                                                        Deleting RIS: {{ date("Y", strtotime($client->created_at)) . $client->clientId }} will remove other related data (samples, payments).
+                                                        Deleting RIS: {{ $client->risNumber }} will remove other related data (samples, payments).
                                                         <br><br>
                                                         Do you wish to continue?
                                                     </p>

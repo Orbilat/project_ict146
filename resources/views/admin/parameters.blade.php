@@ -109,31 +109,14 @@
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="licenseNumber" class="col-md-4 col-form-label text-md-right">{{ __('License Number') }}</label>
+                                    <label for="samplePrepCharge" class="col-md-4 col-form-label text-md-right">{{ __('Sample Prep Charge') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="licenseNumber" type="text" class="form-control{{ $errors->has('licenseNumber') ? ' is-invalid' : '' }}" name="licenseNumber" required>
+                                        <input id="samplePrepCharge" type="number" class="form-control{{ $errors->has('samplePrepCharge') ? ' is-invalid' : '' }}" name="samplePrepCharge" required>
         
-                                        @if ($errors->has('licenseNumber'))
+                                        @if ($errors->has('samplePrepCharge'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('licenseNumber') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="userType" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <select id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType">
-                                            <option value="administrator">Admin</option>
-                                            <option value="analyst">Analyst</option>
-                                            <option value="secretary">Secretary</option>                                    
-                                        </select>
-                                        @if ($errors->has('userType'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('userType') }}</strong>
+                                                <strong>{{ $errors->first('samplePrepCharge') }}</strong>
                                             </span>
                                         @endif
                                     </div>
