@@ -44,11 +44,16 @@ table, th, td {
 }
 div.test
 {
-width: 115  px;
+width: 115px;
 padding: 10px;
 border: 2px solid #000;
 border-radius: 15px;
 -moz-border-radius: 15px;
+}
+div.test1
+{
+
+border: 2px solid #000;
 }
 #border1{
 width: 500px;
@@ -63,8 +68,7 @@ th,td{
 
   </style>
  </head>
- <body>
-     
+    
 <body>
     
     <div class="container-fluid">
@@ -142,29 +146,55 @@ th,td{
                             (Location/Address)
                         </th>
                     </tr>
-                    
-                    
-                        
+                                              
                         @foreach($samples as $sample)
-                        <tr>
-                            <td>{{$sample->sampleID}}</td>
+                      <tr>
+                            <td>{{$sample->sampleId}}</td>
                             <td>{{$sample->clientsCode}}</td>
                             <td>{{$sample->sampleMatrix}}</td>
                             <td>{{$sample->collectionTime}}</td>
                             <td>{{$sample->samplePreservation}}</td>
-                            <td>{{$sample->purposeOfAnalysis}}</td>
-                            
+                            <td>{{$sample->purposeOfAnalysis}}</td> 
                             <td>{{$sample->samplePreservation}}</td>
                             <td>{{$sample->sampleSource}}</td>
-                            </tr>   
+                     </tr>   
                          @endforeach   
-
                     
                 </table>
             </div>
             <div class="col-md-1"></div>
         </div>
+
+
         
+        <div class="row" style="margin-top:10px">
+           
+                <div class="col-md-1"></div>
+                <div class="col-md-5 test1"><h3>SAMPLE COLLECTED BY:</h3></div>
+                <div class="col-md-5 test1"><h3>SAMPLE SUBMITTED BY:</h3> </div>
+            
+        </div>
+        <div class="row" > 
+            <div class="col-md-1"></div>
+            <div class="col-md-2 test1">  
+                <br>     
+                  <h5>Sample(s) placed at <br>
+                    Micro Area
+                       <br> ___________
+                       <br>
+                       Wet Lab Area
+                  </h5>
+            </div>
+            <div class="col-md-3 test1">
+                <br>
+                <h5>
+                Reclaim sample/bottle:   _______Yes      ________No
+                <br>
+                <br>
+                Test result: ______E-mail   ______Fax   _______LBC
+                </h5>
+            </div>
+        </div>
 
 
 

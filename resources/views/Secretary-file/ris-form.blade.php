@@ -128,14 +128,7 @@ th,td{
                         <th>Telephone</th>
                         <th colspan="4" scope="colgroup">SAMPLE TYPE/METRIX</th>
 <!--                             
-                            <tr>
-                            <th>Drinking Water
-                            </th>
-                            <th>Ground Water</th>
-                            <th>Waste Water</th>
-                            <th>Other Type</th>
-                            </tr> -->
-                            
+
                         
                         <th>Sample Collection</th>
                         <th>Sample Preservation</th>

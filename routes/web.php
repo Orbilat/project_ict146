@@ -38,6 +38,7 @@ Route::get('/secretary/create','SecretaryController@create')->name('create');
 //  Route::get('/dynamic_pdf', 'DynamicPDFController@index');
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
  Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
+ Route::get('/barcode/pdf', 'RisPDFController@pdf');
 Route::get('/notification', 'SecretaryController@noti')->name('notification');
 
 //Redirect route
