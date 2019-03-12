@@ -1,137 +1,144 @@
 @extends('layouts.admin_app')
 
 @section('content')
-<div class="container">
+{{-- SUCCESS MESSAGE OF DELETING CLIENT --}}
+@if(Session::has('flash_client_deleted'))
+    <div class="alert alert-info offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Notification:</strong> {!!Session::get('flash_client_deleted')!!}
+    </div>
+@endif
+{{-- SUCCESS MESSAGE OF UPDATING CLIENT --}}
+@if(Session::has('flash_client_updated'))
+    <div class="alert alert-info offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Notification:</strong> {!!Session::get('flash_client_updated')!!}
+    </div>
+@endif
+{{-- VALIDATION CHECKS --}}
+@if ($errors->any())
+<div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+            <p>&nbsp;Please try again.</p>
+    </ul>
+</div>
+@endif
+{{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
+<?php $count = 0; ?>
+
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     Clients
                     &nbsp;
-                    <a href="#addAccount" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
+                    <a href="#addClient" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
                     <form class="float-right" action="GET">
                         {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search employee...">
+                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search client...">
                     </form>
-                    @if ($errors->any())
-                    <div class="alert alert-danger pb-0">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                                <p>Please try again.</p>
-                        </ul>
-                    </div>
-                    @endif
-                <div id="addAccount" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
+                <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
-                            <form method="POST" action="{{ route('addAccount') }}">
+                            {{-- FORM FOR ADDING CLIENT HERE --}}
+                            <form method="POST" action="{{ route('addClient') }}">
                                 @csrf
         
                                 <div class="form-group row">
-                                    <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                                    <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('name') }}" required autofocus>
+                                        <input id="nameOfPerson" type="text" class="form-control{{ $errors->has('nameOfPerson') ? ' is-invalid' : '' }}" name="nameOfPerson" value="{{ old('nameOfPerson') }}" required autofocus>
         
-                                        @if ($errors->has('username'))
+                                        @if ($errors->has('nameOfPerson'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('username') }}</strong>
+                                                <strong>{{ $errors->first('nameOfPerson') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    <label for="nameOfEntity" class="col-md-4 col-form-label text-md-right">{{ __('Entity Name') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                        <input id="nameOfEntity" type="text" class="form-control{{ $errors->has('nameOfEntity') ? ' is-invalid' : '' }}" name="nameOfEntity" value="{{ old('nameOfEntity') }}" placeholder="Optional" autofocus>
         
-                                        @if ($errors->has('password'))
+                                        @if ($errors->has('nameOfEntity'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
+                                                <strong>{{ $errors->first('nameOfEntity') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                    </div>
-                                </div>
+                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
         
-                                <div class="form-group row">
-                                    <label for="employeeName" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="employeeName" type="text" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="employeeName" value="{{ old('employeeName') }}" required autofocus>
-        
-                                        @if ($errors->has('employeeName'))
+                                        @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('employeeName') }}</strong>
+                                                <strong>{{ $errors->first('address') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
+                                    <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="position" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="position" required autofocus>
+                                        <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" required autofocus>
         
-                                        @if ($errors->has('position'))
+                                        @if ($errors->has('contactNumber'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('position') }}</strong>
+                                                <strong>{{ $errors->first('contactNumber') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <label for="idNumber" class="col-md-4 col-form-label text-md-right">{{ __('ID Number') }}</label>
+                                    <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="idNumber" type="text" class="form-control{{ $errors->has('idNumber') ? ' is-invalid' : '' }}" name="idNumber" required>
+                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber">
         
-                                        @if ($errors->has('idNumber'))
+                                        @if ($errors->has('faxNumber'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('idNumber') }}</strong>
+                                                <strong>{{ $errors->first('faxNumber') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="licenseNumber" class="col-md-4 col-form-label text-md-right">{{ __('License Number') }}</label>
+                                    <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="licenseNumber" type="text" class="form-control{{ $errors->has('licenseNumber') ? ' is-invalid' : '' }}" name="licenseNumber" required>
+                                        <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" value="{{ old('emailAddress') }}" autofocus>
         
-                                        @if ($errors->has('licenseNumber'))
+                                        @if ($errors->has('emailAddress'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('licenseNumber') }}</strong>
+                                                <strong>{{ $errors->first('emailAddress') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="userType" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+                                    <label for="dateOfSubmission" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
         
                                     <div class="col-md-6">
-                                        <select id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType">
-                                            <option value="administrator">Admin</option>
-                                            <option value="secretary">Secretary</option>
-                                            <option value="analyst">Analyst</option>                                    
-                                        </select>
-                                        @if ($errors->has('userType'))
+                                        <input type="date" name="dateOfSubmission" id="dateOfSubmission" class="form-control{{ $errors->has('dateOfSubmission') ? ' is-invalid' : '' }}" required>
+                                        @if ($errors->has('dateOfSubmission'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('userType') }}</strong>
+                                                <strong>{{ $errors->first('dateOfSubmission') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -140,182 +147,168 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-secondary">
-                                            {{ __('Add Account') }}
+                                            {{ __('Add Client') }}
                                         </button>
                                     </div>
                                 </div>
                             </form>
+                            {{-- END FORM --}}
                         </div>
                     </div>
                 </div>
-
+                {{-- TABLE FOR DISPLAYING CLIENTS --}}
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>ID No.</th>
-                                <th>License No.</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
+                                {{-- TABLE HEADER --}}
+                                <th>RIS #</th>
+                                <th>Client Name</th>
+                                <th>Entity Name</th>
+                                <th>Address</th>
+                                <th>Contact No.</th>
+                                <th>Fax</th>
+                                <th>Email</th>
+                                <th>Date Submitted</th>
                                 <th>Status</th>
+                                {{-- TABLE HEADER END --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($accounts as $account)
+                            @foreach($clients as $client)
                             <tr>
-                                <td>{{ $account->employeeName }}</td>
-                                <td>{{ $account->username }}</td>
-                                <td>{{ $account->position }}</td>
-                                <td>{{ $account->idNumber }}</td>
-                                <td>{{ $account->licenseNumber }}</td>
-                                <td>{{ $account->managedBy }}</td>
-                                <td>{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
+                                {{-- TABLE BODY --}}
+                                <td>{{ date("Y", strtotime($client->created_at)) . $client->clientId }}</td>
+                                <td>{{ $client->nameOfPerson }}</td>
+                                <td>{{ $client->nameOfEntity }}</td>
+                                <td>{{ $client->address }}</td>
+                                <td>{{ $client->contactNumber }}</td>
+                                <td>{{ $client->faxNumber }}</td>
+                                <td>{{ $client->emailAddress }}</td>
+                                <td>{{ date("F jS, Y", strtotime($client->dateOfSubmission)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editAccount">Edit</button>
-                                    <div id="editAccount" class="modal fade" role="dialog">
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editClient{{ $count }}">Edit</button>
+                                    <div id="editClient{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header editModal">
                                                     <h5 class="modal-title">Edit Account</h5>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
+                                                <form method="POST" action="{{ route('updateClient', ['clientId' => $client->clientId]) }}">
+                                                    @method('PATCH')
+                                                    @csrf
                                                 <div class="modal-body">
-                                                        <form method="POST" action="{{ route('addAccount') }}">
-                                                                @csrf
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('name') }}" required autofocus>
-                                        
-                                                                        @if ($errors->has('username'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('username') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                                        
-                                                                        @if ($errors->has('password'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('password') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="employeeName" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="employeeName" type="text" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="employeeName" value="{{ old('employeeName') }}" required autofocus>
-                                        
-                                                                        @if ($errors->has('employeeName'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('employeeName') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="position" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="position" required autofocus>
-                                        
-                                                                        @if ($errors->has('position'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('position') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="form-group row">
-                                                                    <label for="idNumber" class="col-md-4 col-form-label text-md-right">{{ __('ID Number') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="idNumber" type="text" class="form-control{{ $errors->has('idNumber') ? ' is-invalid' : '' }}" name="idNumber" required>
-                                        
-                                                                        @if ($errors->has('idNumber'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('idNumber') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="licenseNumber" class="col-md-4 col-form-label text-md-right">{{ __('License Number') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <input id="licenseNumber" type="text" class="form-control{{ $errors->has('licenseNumber') ? ' is-invalid' : '' }}" name="licenseNumber" required>
-                                        
-                                                                        @if ($errors->has('licenseNumber'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('licenseNumber') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row">
-                                                                    <label for="userType" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
-                                        
-                                                                    <div class="col-md-6">
-                                                                        <select id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType">
-                                                                            <option value="administrator">Admin</option>
-                                                                            <option value="secretary">Secretary</option>
-                                                                            <option value="analyst">Analyst</option>                                    
-                                                                        </select>
-                                                                        @if ($errors->has('userType'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('userType') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                        
-                                                                <div class="form-group row mb-0">
-                                                                    <div class="col-md-6 offset-md-4">
-                                                                        <button type="submit" class="btn btn-secondary">
-                                                                            {{ __('Add Account') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                    <div class="form-group row">
+                                                        <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="nameOfPerson" type="text" class="form-control{{ $errors->has('nameOfPerson') ? ' is-invalid' : '' }}" name="nameOfPerson" value="{{ $client->nameOfPerson }}" required autofocus>
+                            
+                                                            @if ($errors->has('nameOfPerson'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('nameOfPerson') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="form-group row">
+                                                        <label for="nameOfEntity" class="col-md-4 col-form-label text-md-right">{{ __('Entity Name') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="nameOfEntity" type="text" class="form-control{{ $errors->has('nameOfEntity') ? ' is-invalid' : '' }}" name="nameOfEntity" value="{{ $client->nameOfEntity }}" autofocus>
+                            
+                                                            @if ($errors->has('nameOfEntity'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('nameOfEntity') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="form-group row">
+                                                        <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ $client->address }}" required autofocus>
+                            
+                                                            @if ($errors->has('address'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('address') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="form-group row">
+                                                        <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ $client->contactNumber }}" required autofocus>
+                            
+                                                            @if ($errors->has('contactNumber'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('contactNumber') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group row">
+                                                        <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ $client->faxNumber }}">
+                            
+                                                            @if ($errors->has('faxNumber'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('faxNumber') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="form-group row">
+                                                        <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" value="{{ $client->emailAddress }}" autofocus>
+                            
+                                                            @if ($errors->has('emailAddress'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('emailAddress') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="form-group row">
+                                                        <label for="dateOfSubmission" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input type="date" name="dateOfSubmission" id="dateOfSubmission" class="form-control{{ $errors->has('dateOfSubmission') ? ' is-invalid' : '' }}" value="{{ date('dd-mm-yyyy', strtotime($client->address)) }}" required>
+                                                            @if ($errors->has('dateOfSubmission'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('dateOfSubmission') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
+                                            </form>
                                             </div> 
                                         </div>
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount">Delete</button>
-                                    <div id="deleteAccount" class="modal fade" role="dialog">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
+                                    <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header deleteModal">
@@ -323,25 +316,40 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Are you sure you want to delete this account?</p>
+                                                    <p>
+                                                        Deleting RIS: {{ date("Y", strtotime($client->created_at)) . $client->clientId }} will remove other related data (samples, payments).
+                                                        <br><br>
+                                                        Do you wish to continue?
+                                                    </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAccount()">Delete</button>
+                                                    <form action="{{ route('deleteClient', [$client->clientId])}}" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div> 
                                         </div>
                                     </div>
+                                    {{-- DELETE BUTTON END --}}
                                 </td>
+                                {{-- TABLE BODY END --}}
                             </tr>
+                            {{-- COUNT INCREMENTS --}}
+                            <?php $count++; ?>
                             @endforeach
                         </tbody>
-                    </table>           
+                    </table>
+                    {{-- TABLE END   --}}
                 </div>
             </div>
+            {{-- PAGINATION LINKS (PAGINATION:6) --}}
             <div class="offset-md-5 mt-3">
-                    {{ $accounts->links() }}
+                    {{ $clients->links() }}
             </div>
+            {{-- PAGINATION END --}}
         </div>
     </div>
 </div>

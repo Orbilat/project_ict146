@@ -7,6 +7,7 @@ use Redirect;
 use Validator;
 use Session;
 use App\Employee;
+use App\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -23,38 +24,44 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(10);
+        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(6);
         return view('admin.samples', ['accounts' => $accounts]);
     }
 
     // Admin Clients Page (/clients)
     public function clients()
     {
-        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(10);
-        return view('admin.clients', ['accounts' => $accounts]);
+        $clients = DB::table('clients')->orderBy('clientId')->paginate(6);
+        return view('admin.clients', ['clients' => $clients]);
     }
 
     // Admin Accounts Page (/accounts)
     public function accounts()
     {
-        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(10);
+        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(6);
         return view('admin.accounts', ['accounts' => $accounts]);
     }
 
-    // Admin Inventory-Chemicals Page (/inventory)
+    // Admin Inventory-Chemicals Page (/inventory/chemicals)
     public function chemicals()
     {
         return view('admin.inventory-chemicals');
     }
 
-    // Admin Inventory-Chemicals Page (/inventory)
+    // Admin Inventory-Glassware Page (/inventory/glassware)
     public function glassware()
     {
         return view('admin.inventory-glassware');
     }
 
-    // Adding New Account (/admin/accounts)
-    // FROM routes/web.php -> Route::post
+    // Admin Parameters Page (/parameters)
+    public function parameters()
+    {
+        $parameters = DB::table('parameters')->orderBy('typeOfAnalysis')->paginate(6);
+        return view('admin.parameters', ['parameters' => $parameters]);
+    }
+
+    // ACCOUNT INSERT
     protected function addAccount(Request $request)
     {
         // VALIDATION
@@ -67,7 +74,7 @@ class AdminController extends Controller
             'licenseNumber' => 'required|string|max:50|unique:employees',
             'userType' => 'required|string|max:20',
         ]);
-
+        //VALIDATION CHECKS
         if ($validator->fails()) {
             return redirect('admin/accounts')
                         ->withErrors($validator)
@@ -96,7 +103,7 @@ class AdminController extends Controller
             App::abort(500, 'Error!');
         }
     }
-    // Deleting an account
+    // ACCOUNT DELETE
     protected function destroyAccount($accountId)
     {
         $account = Employee::findOrFail($accountId);
@@ -108,7 +115,7 @@ class AdminController extends Controller
             App::abort(500, 'Error!');
         }
     }
-    // Updating an account
+    // ACCOUNT UPDATE
     protected function updateAccount(Request $request, $accountId)
     {
         // VALIDATION
@@ -120,13 +127,13 @@ class AdminController extends Controller
             'licenseNumber' => 'required|string|max:50',
             'userType' => 'required|string|max:20',
         ]);
-
+        // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
             return redirect('admin/accounts')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-
+        // FIND ACCOUNT AND UPDATE
         $account = Employee::findOrFail($accountId);
         $account->username = trim($request->username);
         $account->employeeName =  trim($request->employeeName);
@@ -145,10 +152,95 @@ class AdminController extends Controller
         }
 
     }
-    // Adding Client (/)
-    // FROM routes/web.php -> Route::post
+    // CLIENT INSERT
     protected function addClient(Request $request)
     {
-        
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'nameOfPerson' => 'required|string|max:255|min:4',
+            'nameOfEntity' => 'nullable|string|max:255',
+            'address' => 'required|string|max:50',
+            'contactNumber' => 'string|numeric',
+            'faxNumber' => 'nullable|string|numeric',
+            'emailAddress' => 'nullable|string|max:50|email',
+            'dateOfSubmission' => 'required|string|max:20',
+        ]);
+        // VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/clients')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        //ELOQUENT INSERT
+        $client = new Client;
+        $client->nameOfPerson = trim($request->nameOfPerson);
+        $client->nameOfEntity = trim($request->nameOfEntity);
+        $client->address =  trim($request->address);
+        $client->contactNumber = trim($request->contactNumber);
+        $client->faxNumber = trim($request->faxNumber);
+        $client->emailAddress = trim($request->emailAddress);
+        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->managedBy = Auth::user()->employeeName;
+        $client->managedDate = new DateTime();
+        //SAVE TO DB && CHECK
+        if($client->save()){
+            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+            return view('admin.add_sample');
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // CLIENT DELETE
+    protected function destroyClient($clientId)
+    {
+        $account = Client::findOrFail($clientId);
+        if($account->delete()){
+            Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // CLIENT UPDATE
+    protected function updateClient(Request $request, $clientId)
+    {
+        // VALIDATION
+        $validatorUpdate = Validator::make($request->all(), [
+            'nameOfPerson' => 'required|string|max:255|min:4',
+            'nameOfEntity' => 'nullable|string|max:255',
+            'address' => 'required|string|max:50',
+            'contactNumber' => 'string|numeric',
+            'faxNumber' => 'nullable|string|numeric',
+            'emailAddress' => 'nullable|string|max:50|email',
+            'dateOfSubmission' => 'required|string|max:20',
+        ]);
+        // VALIDATION CHECKS
+        if ($validatorUpdate->fails()) {
+            return redirect('admin/clients')
+                        ->withErrors($validatorUpdate)
+                        ->withInput();
+        }
+        // FIND CLIENT AND UPDATE
+        $client = Client::findOrFail($clientId);
+        $client->nameOfPerson = trim($request->nameOfPerson);
+        $client->nameOfEntity = trim($request->nameOfEntity);
+        $client->address =  trim($request->address);
+        $client->contactNumber = trim($request->contactNumber);
+        $client->faxNumber = trim($request->faxNumber);
+        $client->emailAddress = trim($request->emailAddress);
+        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->managedBy = Auth::user()->employeeName;
+        $client->managedDate = new DateTime();
+        if($client->save()){
+            Session::flash('flash_client_updated', 'Client information updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+
     }
 }

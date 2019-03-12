@@ -3,28 +3,28 @@
 @section('content')
 {{-- SUCCESS MESSAGE OF ADDING ACCOUNT --}}
     @if(Session::has('flash_account_added'))
-    <div class="alert alert-info offset-md-2 col-md-8">
-        <a class="close" data-dismiss="alert">×</a>
-        <strong>Notification:</strong> {!!Session::get('flash_account_added')!!}
-    </div>
+        <div class="alert alert-info offset-md-1 col-md-10">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>Notification:</strong> {!!Session::get('flash_account_added')!!}
+        </div>
     @endif
 {{-- SUCCESS MESSAGE OF DELETING ACCOUNT --}}
     @if(Session::has('flash_account_deleted'))
-        <div class="alert alert-info offset-md-2 col-md-8">
+        <div class="alert alert-info offset-md-1 col-md-10">
             <a class="close" data-dismiss="alert">×</a>
             <strong>Notification:</strong> {!!Session::get('flash_account_deleted')!!}
         </div>
     @endif
-{{-- SUCCESS MESSAGE OF DELETING ACCOUNT --}}
+{{-- SUCCESS MESSAGE OF UPDATING ACCOUNT --}}
     @if(Session::has('flash_account_updated'))
-    <div class="alert alert-info offset-md-2 col-md-8">
-        <a class="close" data-dismiss="alert">×</a>
-        <strong>Notification:</strong> {!!Session::get('flash_account_updated')!!}
-    </div>
+        <div class="alert alert-info offset-md-1 col-md-10">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>Notification:</strong> {!!Session::get('flash_account_updated')!!}
+        </div>
     @endif
 {{-- VALIDATION CHECKS --}}
     @if ($errors->any())
-    <div class="alert alert-danger pb-0 offset-md-2 col-md-8">
+    <div class="alert alert-danger pb-0 offset-md-1 col-md-10">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -33,12 +33,12 @@
         </ul>
     </div>
     @endif
-
+{{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
 <?php $count = 0; ?>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     Accounts
@@ -56,7 +56,7 @@
                                     <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('name') }}" required autofocus>
+                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
         
                                         @if ($errors->has('username'))
                                             <span class="invalid-feedback" role="alert">
@@ -207,10 +207,10 @@
                                                     <h5 class="modal-title">Edit Account</h5>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
+                                                    <form method="POST" action="{{ route('updateAccount', [$account->employeeId])}}">
+                                                        @method('PATCH')
+                                                        @csrf
                                                     <div class="modal-body">
-                                                        <form method="POST" action="{{ route('updateAccount', [$account->employeeId])}}">
-                                                            @method('PATCH')
-                                                            @csrf
                                                         <div class="form-group row">
                                                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
                                 
@@ -319,13 +319,12 @@
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary float-right mr-2">Save</button>
-                                                    </form>
                                                     </div>
                                                     <div class="modal-footer">
-                                                       
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     </div>
+                                                </form>
                                             </div> 
                                         </div>
                                     </div>
@@ -355,6 +354,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {{-- COUNT INCREMENTS --}}
                             <?php $count++; ?>
                             @endforeach
                         </tbody>

@@ -9,4 +9,8 @@ class Parameter extends Model
     //
     protected $table = 'parameters';
     protected $primaryKey = 'parameterId';
+
+    protected $fillable = [
+        'analysis', 'method', 'typeOfAnalysis', 'chargePerSample', 'samplePrepCharge', 'managedBy', 'managedDate',
+    ];
 }

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>USC Water Laboratory</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -17,10 +17,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @include('secretary-file.secretary_style')
+    {{-- @include('secretary-file.secretary_style') --}}
 
     {{-- CSS Table Style --}}
     @include('custom_style')
@@ -66,9 +65,15 @@
                                         <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
                                             {{ __('Chemicals') }}
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
+                                                {{ __('Suppliers') }}
+                                        </a>
                                     </div>
                                 </li>
                             </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('parameters') }}">{{ __('Analyses') }}</a>
+                                </li>
                         @endif
                     </ul>
 
