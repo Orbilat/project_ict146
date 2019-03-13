@@ -56,7 +56,7 @@
                                     <label for="samples" class="col-md-4 col-form-label text-md-right">{{ __('Sample') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="samples" type="text" class="form-control{{ $errors->has('samples') ? ' is-invalid' : '' }}" name="samples" required autofocus>
+                                        <input id="samples" type="number" class="form-control{{ $errors->has('samples') ? ' is-invalid' : '' }}" name="samples" required autofocus>
         
                                         @if ($errors->has('samples'))
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email Address') }}</label>
+                                    <label for="" class="col-md-4 col-form-label text-md-right">{{ __('Email Address') }}</label>
         
                                     <div class="col-md-6">
                                         <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" required>

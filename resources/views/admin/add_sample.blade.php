@@ -19,6 +19,7 @@
                 <div class="card-body">
                     <form action="{{ route('addSample-admin') }}" method="post">
                         @csrf
+                        <input type="hidden" name="laboratoryCode" value="{{  }}">
                         <div class="form-group row">
                             <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
 
@@ -76,21 +77,21 @@
                         </div>
                         
                         <div class="form-group row">
-                                <label for="samplePreservation" class="col-md-4 col-form-label text-md-right">{{ __('Sample Preservation') }}</label>
+                            <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
     
-                                <div class="col-md-6">
-                                    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                            <option value="AL">Alabama</option>
-                                              ...
-                                            <option value="WY">Wyoming</option>
-                                    </select>
-                                    @if ($errors->has('samplePreservation'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('samplePreservation') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                            <div class="col-md-6">
+                                <select id="parameter" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="parameter">
+                                    @foreach($parameters as $value)
+                                        <option value="{{ $value->analysis }}">{{ $value->analysis }}</option>
+                                    @endforeach                              
+                                </select>
+                                @if ($errors->has('parameter'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('parameter') }}</strong>
+                                    </span>
+                                @endif
                             </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="purposeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Purpose of Analysis') }}</label>

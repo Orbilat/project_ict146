@@ -73,9 +73,7 @@ Route::redirect('/admin', '/admin/home');
 Route::middleware(['admin','auth'])->group(function (){
     //Admin routes
     //testroute
-    Route::get('/admin/add_sample', function () {
-        return view('admin.add_sample');
-    });
+    Route::get('/admin/add_sample', 'AdminController@addsample')->name('addsample');
     //endtestroute
     Route::get('/admin/home', 'AdminController@admin')->name('admin');
     Route::get('/admin/samples', 'AdminController@samples')->name('samples-admin');

@@ -153,25 +153,34 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>ID No.</th>
-                                <th>License No.</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
+                                <th>RIS Number</th>
+                                <th>Lab Code</th>
+                                <th>Client's Code</th>
+                                <th>Sample Matrix</th>
+                                <th>Collection Time</th>
+                                <th>Sample Preservation</th>
+                                <th>Parameters Requested</th>
+                                <th>Purpose of Analysis</th>
+                                <th>Sample Source</th>
+                                <th>Due Date</th>
+                                <th>Managed By</th>
+                                <th>Managed Date</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($accounts as $account)
+                            @foreach($samples as $sample)
                             <tr>
-                                <td>{{ $account->employeeName }}</td>
-                                <td>{{ $account->username }}</td>
-                                <td>{{ $account->position }}</td>
-                                <td>{{ $account->idNumber }}</td>
-                                <td>{{ $account->licenseNumber }}</td>
-                                <td>{{ $account->managedBy }}</td>
+                                <td>{{ $sample->risNumber }}</td>
+                                <td>{{ $sample->laboratoryCode }}</td>
+                                <td>{{ $sample->clientsCode }}</td>
+                                <td>{{ $sample->sampleMatrix }}</td>
+                                <td>{{ $sample->samplePreservation }}</td>
+                                <td>{{ $sample->analysis }}</td>
+                                <td>{{ $sample->purposeOfAnalysis }}</td>
+                                <td>{{ $sample->sampleSource }}</td>
+                                <td>{{ $sample->dueDate }}</td>
+                                <td>{{ $sample->managedBy }}</td>
                                 <td>{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}

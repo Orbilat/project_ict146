@@ -225,8 +225,9 @@ class AdminController extends Controller
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
         if($transaction->save()){
+            $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('admin.add_sample');
+            return view('admin.add_sample', ['clientRis' => $clientRis]);
         }
         else {
             App::abort(500, 'Error!');
@@ -277,6 +278,100 @@ class AdminController extends Controller
     
         if($client->save()){
             Session::flash('flash_client_updated', 'Client information updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+
+    }
+    // SAMPLE INSERT
+    protected function addSample(Request $request)
+    {
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'clientsCode' => 'nullable|string|max:255',
+            'sampleMatrix' => 'required|string|max:255',
+            'collectionTime' => 'required|string|max:50',
+            'samplePreservation' => 'required|string|max:30',
+            'analysis' => 'required|string|unique:parameters',
+            'purposeOfAnalysis' => 'required|string|max:50',
+            'sampleSource' => 'required|string|max:20',
+            'dueDate' => 'required|string|max:20',
+        ]);
+        //VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/add_sample')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        //ELOQUENT INSERT
+        $sample = new Sample;
+        $sample->clientsCode = trim($request->clientsCode);
+        $sample->sampleMatrix =  trim($request->sampleMatrix);
+        $sample->collectionTime = trim($request->collectionTime);
+        $sample->samplePreservation = trim($request->samplePreservation);
+        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        $sample->sampleSource = $request->sampleSource;
+        $sample->dueDate = $request->dueDate;
+        $sample->managedDate = Auth::user()->employeeName;
+        $sample->managedDate = new DateTime();
+        //SAVE TO DB
+        $sample->save();
+        $client = DB::table('clients')->select('risNumber')->where('clientId', '=', $sample->sampleId)->get();
+        $sample->laboratoryCode = (int)date("Y", strtotime($client->created_at) . $client . $sample->sampleId);
+        //CHECK SAVE
+        if($sample->save()){
+            
+            return redirect('admin.clients');
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // ACCOUNT DELETE
+    protected function destroySample($sampleId)
+    {
+        $account = Employee::findOrFail($accountId);
+        if($account->delete()){
+            Session::flash('flash_account_deleted', 'Account deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // ACCOUNT UPDATE
+    protected function updateSample(Request $request, $sampleId)
+    {
+        // VALIDATION
+        $validatorUpdate = Validator::make($request->all(), [
+            'username' => 'required|string|max:255|min:4',
+            'employeeName' => 'required|string|max:50',
+            'position' => 'required|string|max:30',
+            'idNumber' => 'required|string|numeric',
+            'licenseNumber' => 'required|string|max:50',
+            'userType' => 'required|string|max:20',
+        ]);
+        // VALIDATION CHECKS
+        if ($validatorUpdate->fails()) {
+            return redirect('admin/accounts')
+                        ->withErrors($validatorUpdate)
+                        ->withInput();
+        }
+        // FIND ACCOUNT AND UPDATE
+        $account = Employee::findOrFail($accountId);
+        $account->username = trim($request->username);
+        $account->employeeName =  trim($request->employeeName);
+        $account->position = trim($request->position);
+        $account->idNumber = trim($request->idNumber);
+        $account->licenseNumber = trim($request->licenseNumber);
+        $account->userType = $request->userType;
+        $account->managedBy = Auth::user()->employeeName;
+        $account->managedDate = new DateTime();
+        if($account->save()){
+            Session::flash('flash_account_updated', 'Account updated successfully!');
             return Redirect::back();
         }
         else {
