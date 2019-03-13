@@ -272,6 +272,7 @@ class AdminController extends Controller
         $parameter->typeOfAnalysis =  trim($request->typeOfAnalysis);
         $parameter->chargePerSample = $request->chargePerSample;
         $parameter->samplePrepCharge = $request->samplePrepCharge;
+        $parameter->stationId = 1;
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
         //SAVE TO DB && CHECK
