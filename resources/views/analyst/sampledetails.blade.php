@@ -16,7 +16,7 @@
     <tbody>
         @foreach($details as $data)
             <tr>
-                <td>{{ $data->sampleId}} </td>
+                <td>{{ $data->sampleCode}} </td>
                 <td>{{ $data->method }}</td>
                 <td>{{ $data->collectionTime }}</td>
                 <td>{{ $data->status }}</a></td>

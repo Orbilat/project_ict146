@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "333d07a2b101e06745b15436b155ed22",
+    "content-hash": "c6b1d062aee204f5369bbc82a7b8a33b",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3249,7 +3249,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",

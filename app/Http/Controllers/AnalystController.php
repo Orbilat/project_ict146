@@ -37,7 +37,7 @@ class AnalystController extends Controller
     	$input = $request->all();
 
     	//change empId to session id
-    	$inventory = array('empId' => 1,'dateofuse' => date("Y-m-d"));
+    	$inventory = array('usedBy' => 1,'dateOfUse' => date("Y-m-d"));
 
     	$invresult = Inventory::create($inventory);
 
@@ -58,11 +58,11 @@ class AnalystController extends Controller
     public function history(){
 
         // SELECT inventory_list.qty, inventory.inventoryId, inventory.dateofuse, item.itemType, item.containerType FROM inventory LEFT JOIN inventory_list ON inventory_list.inventoryId=inventory.inventoryId LEFT JOIN item ON item.itemId=inventory_list.itemId WHERE inventory.empId = 1 ORDER BY inventory_list.created_at
-    	$history = DB::table('inventory')
-    		->select('inventory_list.qty', 'inventory.inventoryId' , 'inventory.dateofuse', 'item.itemType', 'item.containerType')
-    		->leftJoin('inventory_list','inventory_list.inventoryId','=','inventory.inventoryId')
-    		->leftJoin('item','item.itemId','=','inventory_list.itemId')
-    		->where('inventory.empId','=',1) //change to session id
+    	$history = DB::table('inventory_list')
+    		->select('inventory_list.qty', 'inventories.inventoryId' , 'inventories.dateOfUse', 'items.itemType', 'items.containerType')
+    		->leftJoin('inventories','inventory_list.inventoryId','=','inventories.inventoryId')
+    		->leftJoin('items','items.itemId','=','inventory_list.itemId')
+    		->where('inventories.usedBy','=',1) //change to session id
     		->orderBy('inventory_list.created_at')
     		->get();
 
@@ -70,29 +70,30 @@ class AnalystController extends Controller
     }
 
     public function samplePerStation($id){
-    	$sampleperstation = DB::table('sample AS s')
-    			->select('s.sampleId', 's.risNumber', 'p.stationId', 'st.status','st.testId' )
-    			->leftJoin('sample_tests AS st','st.sampleId','=','s.sampleId')
-    			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameterId')
+    	$sampleperstation = DB::table('samples AS s')
+    			->select('st.sampleCode', 's.risNumber', 'p.stationId', 'st.status','st.testId' )
+    			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+    			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->leftJoin('stations AS sta', 'p.stationId', '=', 'sta.stationid')
     			->where('p.stationId','=', $id)
                 ->where(function($query) {
                     $query->where('st.status','=', 'In Progress')
                     ->orwhere('st.status','=', 'Complete');
                 })
-                ->groupBy('p.stationId','s.sampleId', 's.risNumber', 'st.status','st.testId' )
+                ->groupBy('st.sampleCode', 's.risNumber','p.stationId','st.status','st.testId' )
                 ->orderBy('st.testId','desc')
+                ->distinct()
     			->get();
 
     	return view('analyst.stationsamples', [ 'stationssample' => $sampleperstation ,'station' => $id]);
     }
 
     public function sampleDetails($stationid,$id){
-    	$sampledetails = DB::table('sample AS s')
-    			->select('st.sampleId','p.method', 's.collectionTime', 'st.status', 'st.timecompleted' )
-    			->leftJoin('sample_tests AS st','st.sampleId','=','s.sampleId')
-    			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameterId')
-    			->where('st.sampleId','=', $id)
+    	$sampledetails = DB::table('samples AS s')
+    			->select('st.sampleCode','p.method', 's.collectionTime', 'st.status', 'st.timecompleted' )
+    			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+    			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+    			->where('st.sampleCode','=', $id)
     			->where('p.stationId','=', $stationid)
     			->get();
 
@@ -102,10 +103,10 @@ class AnalystController extends Controller
     public function receiveSample($id,Request $request){
         $input = $request->all();
 
-        DB::table('sample_tests AS st')
-            ->leftJoin('sample AS s','st.sampleId','=','s.sampleId')
-            ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameterId')
-            ->where('st.sampleId','=', $input['scanid'])
+        DB::table('sample__tests AS st')
+            ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
+            ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+            ->where('st.sampleCode','=', $input['scanid'])
             ->where('p.stationId','=', $id)
             ->where('st.status','=', 'New')
             ->update(array('st.status' => 'In Progress'));
@@ -116,10 +117,10 @@ class AnalystController extends Controller
     public function completeSample($id,Request $request){
         $input = $request->all();
 
-        DB::table('sample_tests AS st')
-            ->leftJoin('sample AS s','st.sampleId','=','s.sampleId')
-            ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameterId')
-            ->where('st.sampleId','=', $input['scanid'])
+        DB::table('sample__tests AS st')
+            ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
+            ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+            ->where('st.sampleCode','=', $input['scanid'])
             ->where('p.stationId','=', $id)
             ->where('st.status','=', 'In Progress')
             ->update(array('st.status' => 'Complete', 'st.timecompleted' => now()));

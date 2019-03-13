@@ -10,18 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Stations;
+use App\Station;
 
 Auth::routes();
 
 Route::get('/', function () {
+    $stations = Station::all();
+
+    session(['stations' => $stations]);
     return view('auth.login');
-
-	//Add to login controller
-	$stations = Stations::all();
-
-	session(['stations' => $stations]);
-    return view('home');
 });
 
 Route::get('barcode','ProduitController@index');

@@ -22,6 +22,9 @@ class CreateParametersTable extends Migration
             $table->string('managedBy');
             $table->dateTime('managedDate');
             $table->timestamps();
+
+             $table->unsignedInteger('stationId');
+             $table->foreign('stationId')->references('stationId')->on('stations');
         });
     }
 
