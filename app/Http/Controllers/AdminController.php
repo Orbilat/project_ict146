@@ -8,6 +8,7 @@ use Validator;
 use Session;
 use App\Employee;
 use App\Client;
+use App\Parameter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -251,91 +252,82 @@ class AdminController extends Controller
     {
         // VALIDATION
         $validator = Validator::make($request->all(), [
-            'analysis' => 'required|string|max:255',
+            'analysis' => 'required|string|max:255|unique:parameters',
             'method' => 'nullable|string|max:255',
             'typeOfAnalysis' => 'required|string|max:50',
-            'chargePerSample' => 'required|string|numeric',
-            'samplePrepCharge' => 'nullable|string|numeric',
+            'chargePerSample' => 'required|string|numeric|max:100000',
+            'samplePrepCharge' => 'nullable|string|numeric|max:100000',
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('admin/clients')
+            return redirect('admin/parameters')
                         ->withErrors($validator)
                         ->withInput();
         }
 
         //ELOQUENT INSERT
-        $client = new Client;
-        $client->nameOfPerson = trim($request->nameOfPerson);
-        $client->nameOfEntity = trim($request->nameOfEntity);
-        $client->address =  trim($request->address);
-        $client->contactNumber = trim($request->contactNumber);
-        $client->faxNumber = trim($request->faxNumber);
-        $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
-        $client->managedBy = Auth::user()->employeeName;
-        $client->managedDate = new DateTime();
-        $client->save();
-        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+        $parameter = new Parameter;
+        $parameter->analysis = trim($request->analysis);
+        $parameter->method = trim($request->method);
+        $parameter->typeOfAnalysis =  trim($request->typeOfAnalysis);
+        $parameter->chargePerSample = $request->chargePerSample;
+        $parameter->samplePrepCharge = $request->samplePrepCharge;
+        $parameter->managedBy = Auth::user()->employeeName;
+        $parameter->managedDate = new DateTime();
         //SAVE TO DB && CHECK
-        if($client->save()){
-            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('admin.add_sample');
-        }
-        else {
-            App::abort(500, 'Error!');
-        }
-    }
-    // CLIENT DELETE
-    protected function destroyParameter($clientId)
-    {
-        $account = Client::findOrFail($clientId);
-        if($account->delete()){
-            Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
+        if($parameter->save()){
+            Session::flash('flash_parameter_added', 'Analysis added successfully!');
             return Redirect::back();
         }
         else {
             App::abort(500, 'Error!');
         }
     }
-    // CLIENT UPDATE
-    protected function updateParameter(Request $request, $clientId)
+    // PARAMETER DELETE
+    protected function destroyParameter($parameterId)
+    {
+        $account = Parameter::findOrFail($parameterId);
+        if($account->delete()){
+            Session::flash('flash_parameter_deleted', 'Analysis has been deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // PARAMETER UPDATE
+    protected function updateParameter(Request $request, $parameterId)
     {
         // VALIDATION
         $validatorUpdate = Validator::make($request->all(), [
-            'nameOfPerson' => 'required|string|max:255|min:4',
-            'nameOfEntity' => 'nullable|string|max:255',
-            'address' => 'required|string|max:50',
-            'contactNumber' => 'string|numeric',
-            'faxNumber' => 'nullable|string|numeric',
-            'emailAddress' => 'nullable|string|max:50|email',
-            'dateOfSubmission' => 'required|string|max:20',
+            'analysis' => 'required|string|max:255',
+            'method' => 'nullable|string|max:255',
+            'typeOfAnalysis' => 'required|string|max:50',
+            'chargePerSample' => 'required|string|numeric|max:100000',
+            'samplePrepCharge' => 'nullable|string|numeric|max:100000',
         ]);
         // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
-            return redirect('admin/clients')
+            return redirect('admin/parameters')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
         // FIND CLIENT AND UPDATE
-        $client = Client::findOrFail($clientId);
-        $client->nameOfPerson = trim($request->nameOfPerson);
-        $client->nameOfEntity = trim($request->nameOfEntity);
-        $client->address =  trim($request->address);
-        $client->contactNumber = trim($request->contactNumber);
-        $client->faxNumber = trim($request->faxNumber);
-        $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
-        $client->managedBy = Auth::user()->employeeName;
-        $client->managedDate = new DateTime();
+        $parameter = Parameter::findOrFail($parameterId);
+        $parameter->analysis = trim($request->analysis);
+        $parameter->method = trim($request->method);
+        $parameter->typeOfAnalysis =  trim($request->typeOfAnalysis);
+        $parameter->chargePerSample = $request->chargePerSample;
+        $parameter->samplePrepCharge = $request->samplePrepCharge;
+        $parameter->managedBy = Auth::user()->employeeName;
+        $parameter->managedDate = new DateTime();
     
-        if($client->save()){
-            Session::flash('flash_client_updated', 'Client information updated successfully!');
+        if($parameter->save()){
+            Session::flash('flash_parameter_updated', 'Analysis information updated successfully!');
             return Redirect::back();
         }
         else {
             App::abort(500, 'Error!');
         }
-
     }
 }

@@ -25,7 +25,7 @@
                     @endif
                 <div id="addSample" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
-                            <form method="POST" action="{{ route('addSample') }}">
+                            <form method="POST" action="{{ route('addSample-admin') }}">
                                 @csrf
         
                                 <div class="form-group row">

@@ -19,8 +19,8 @@ class AnalystController extends Controller
     */
     public function notification(){
         //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
-    	$sampledata = Sample::where('duedate','<=',date("Y-m-d",strtotime("+4 day")))
-    					->orderBy('duedate')
+    	$sampledata = Sample::where('dueDate','<=',date("Y-m-d",strtotime("+4 day")))
+    					->orderBy('dueDate')
     					->get();
 
         //print_r($sampledata);die();

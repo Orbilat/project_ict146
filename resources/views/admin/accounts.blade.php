@@ -50,7 +50,7 @@
                     </form>
                 <div id="addAccount" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
-                            <form method="POST" action="{{ route('addAccount') }}">
+                            <form method="POST" action="{{ route('addAccount-admin') }}">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
@@ -207,7 +207,7 @@
                                                     <h5 class="modal-title">Edit Account</h5>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
-                                                    <form method="POST" action="{{ route('updateAccount', [$account->employeeId])}}">
+                                                    <form method="POST" action="{{ route('updateAccount-admin', [$account->employeeId])}}">
                                                         @method('PATCH')
                                                         @csrf
                                                     <div class="modal-body">
@@ -342,7 +342,7 @@
                                                 <p>Are you sure you want to delete {{ $account->employeeName }} account?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{{ route('deleteAccount', [$account->employeeId])}}" method="post">
+                                                    <form action="{{ route('deleteAccount-admin', [$account->employeeId])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger">Delete</button>

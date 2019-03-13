@@ -46,33 +46,33 @@
                                 <a class="nav-link" href="{{ route('admin') }}">{{ __('Notifications') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('samples') }}">{{ __('Samples') }}</a>
+                                <a class="nav-link" href="{{ route('samples-admin') }}">{{ __('Samples') }}</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('clients') }}">{{ __('Clients') }}</a>
+                                    <a class="nav-link" href="{{ route('clients-admin') }}">{{ __('Clients') }}</a>
                                 </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
+                                <a class="nav-link" href="{{ route('accounts-admin') }}">{{ __('Accounts') }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Inventory
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('inventory-glassware') }}">
+                                        <a class="dropdown-item" href="{{ route('inventory-glassware-admin') }}">
                                             {{ __('Glassware') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
+                                        <a class="dropdown-item" href="{{ route('inventory-chemicals-admin') }}">
                                             {{ __('Chemicals') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
+                                        <a class="dropdown-item" href="{{ route('inventory-chemicals-admin') }}">
                                                 {{ __('Suppliers') }}
                                         </a>
                                     </div>
                                 </li>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('parameters') }}">{{ __('Analyses') }}</a>
+                                    <a class="nav-link" href="{{ route('parameters-admin') }}">{{ __('Analyses') }}</a>
                                 </li>
                         @endif
                     </ul>

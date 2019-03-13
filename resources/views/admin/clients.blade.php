@@ -44,7 +44,7 @@
                 <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             {{-- FORM FOR ADDING CLIENT HERE --}}
-                            <form method="POST" action="{{ route('addClient') }}">
+                            <form method="POST" action="{{ route('addClient-admin') }}">
                                 @csrf
         
                                 <div class="form-group row">
@@ -193,10 +193,10 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header editModal">
-                                                    <h5 class="modal-title">Edit Account</h5>
+                                                    <h5 class="modal-title">Edit Client Information</h5>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
-                                                <form method="POST" action="{{ route('updateClient', ['clientId' => $client->clientId]) }}">
+                                                <form method="POST" action="{{ route('updateClient-admin', ['clientId' => $client->clientId]) }}">
                                                     @method('PATCH')
                                                     @csrf
                                                 <div class="modal-body">
@@ -312,7 +312,7 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header deleteModal">
-                                                    <h5 class="modal-title">Delete Account</h5>
+                                                    <h5 class="modal-title">Delete Client</h5>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
@@ -323,7 +323,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{{ route('deleteClient', [$client->clientId])}}" method="post">
+                                                    <form action="{{ route('deleteClient-admin', [$client->clientId])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger">Delete</button>

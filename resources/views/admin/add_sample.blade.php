@@ -14,10 +14,10 @@
             <div class="card">
                 <div class="card-header">
                     Add Samples to Client
-                    <a href="{{ route('clients') }}" class="glyphicon glyphicon-plus float-right">Back</a>
+                    <a href="{{ route('clients-admin') }}" class="glyphicon glyphicon-plus float-right">Back</a>
                 </div>   
                 <div class="card-body">
-                    <form action="{{ route('addSample') }}" method="post">
+                    <form action="{{ route('addSample-admin') }}" method="post">
                         @csrf
                         <div class="form-group row">
                             <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
