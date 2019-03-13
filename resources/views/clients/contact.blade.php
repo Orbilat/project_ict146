@@ -24,7 +24,7 @@
 
                   <div class="form-group">
                     <label>Email Address:</label>
-                    <input type="text" class="form-control" name="email">
+                    <input type="text" class="form-control" name="email" require="required">
                     @if ($errors->has('email'))
                     <small class="form-text invalid-feedback">{{ $errors->first('email') }}</small>
                     @endif

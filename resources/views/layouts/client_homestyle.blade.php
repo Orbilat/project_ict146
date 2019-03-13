@@ -64,8 +64,7 @@ nav ul li a:hover{
   text-decoration: none;
 }
 
-form.example input[type=text] {
-  padding: 5px;
+form.example input[type=number] {
   font-size: 17px;
   border: 1px solid grey;
   background: #f1f1f1;
@@ -80,6 +79,7 @@ form.example button {
   font-size: 22px;
   border: 1px #f1f1f1;
   cursor: pointer;
+  margin-top:10px;
   
 }
 
@@ -253,8 +253,5 @@ fieldset {
   .invalid-feedback{
     display: block;
 }
-  .RIS{
-    font-size: 15px;
-  }
 
 </style>
