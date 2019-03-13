@@ -93,7 +93,7 @@
                                     <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" required autofocus>
+                                        <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
         
                                         @if ($errors->has('contactNumber'))
                                             <span class="invalid-feedback" role="alert">
@@ -107,7 +107,7 @@
                                     <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber">
+                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
         
                                         @if ($errors->has('faxNumber'))
                                             <span class="invalid-feedback" role="alert">
@@ -121,7 +121,7 @@
                                     <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" value="{{ old('emailAddress') }}" autofocus>
+                                        <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" value="{{ old('emailAddress') }}" placeholder="Optional" autofocus>
         
                                         @if ($errors->has('emailAddress'))
                                             <span class="invalid-feedback" role="alert">
@@ -131,6 +131,34 @@
                                     </div>
                                 </div>
         
+                                <div class="form-group row">
+                                    <label for="discount" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="discount" type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}" placeholder="Optional">
+        
+                                        @if ($errors->has('discount'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('discount') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="addedCharges" class="col-md-4 col-form-label text-md-right">{{ __('Added Charges') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="addedCharges" type="number" class="form-control{{ $errors->has('addedCharges') ? ' is-invalid' : '' }}" name="addedCharges" value="{{ old('addedCharges') }}" placeholder="Optional">
+        
+                                        @if ($errors->has('addedCharges'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('addedCharges') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+    
                                 <div class="form-group row">
                                     <label for="dateOfSubmission" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
         

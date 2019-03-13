@@ -121,7 +121,24 @@
                                         @endif
                                     </div>
                                 </div>
+                                
+                                <div class="form-group row">
+                                    <label for="stationId" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
         
+                                    <div class="col-md-6">
+                                        <select id="stationId" type="text" class="form-control{{ $errors->has('stationId') ? ' is-invalid' : '' }}" name="stationId">
+                                            <option value="1">Station 1</option>
+                                            <option value="2">Station 2</option>
+                                            <option value="3">Station 3</option>                                    
+                                        </select>
+                                        @if ($errors->has('stationId'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('stationId') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-secondary">

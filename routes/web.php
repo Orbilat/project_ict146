@@ -81,7 +81,9 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/samples', 'AdminController@samples')->name('samples-admin');
     Route::get('/admin/clients', 'AdminController@clients')->name('clients-admin');
     Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts-admin');
+    Route::get('/admin/stations', 'AdminController@stations')->name('stations-admin');
     Route::get('/admin/parameters', 'AdminController@parameters')->name('parameters-admin');
+    Route::get('/admin/suppliers', 'AdminController@suppliers')->name('suppliers-admin');
     Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount-admin');
     Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount-admin');
     Route::patch('/admin/accounts/{accountId}', 'AdminController@updateAccount')->name('updateAccount-admin');
@@ -89,9 +91,15 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::delete('/admin/clients/{clientId}', 'AdminController@destroyClient')->name('deleteClient-admin');
     Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient-admin');
     Route::post('/admin/samples', 'AdminController@addSample')->name('addSample-admin');
+    Route::post('/admin/stations', 'AdminController@addStation')->name('addStation-admin');
+    Route::delete('/admin/stations/{stationId}', 'AdminController@destroyStation')->name('destroyStation-admin');
+    Route::patch('/admin/stations/{stationId}', 'AdminController@updateStation')->name('updateStation-admin');
     Route::post('/admin/parameters', 'AdminController@addParameter')->name('addParameter-admin');
     Route::delete('/admin/parameters/{parameterId}', 'AdminController@destroyParameter')->name('deleteParameter-admin');
     Route::patch('/admin/parameters/{parameterId}', 'AdminController@updateParameter')->name('updateParameter-admin');
+    Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');
+    Route::delete('/admin/suppliers/{supplierId}', 'AdminController@destroySupplier')->name('deleteSupplier-admin');
+    Route::patch('/admin/suppliers/{supplierId}', 'AdminController@updateSupplier')->name('updateSupplier-admin');
     //Inventory routes
     Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals-admin');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware-admin');

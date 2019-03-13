@@ -15,11 +15,11 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('paymentId');
-            $table->unsignedInteger('testingCost');
+            $table->unsignedInteger('testingCost')->default(0)->nullable();
             $table->float('discount')->default(0)->nullable();
             $table->float('addedCharges')->default(0)->nullable();
-            $table->float('depositedAmount');
-            $table->float('totalAmount');
+            $table->float('depositedAmount')->nullable();
+            $table->float('totalAmount')->default(0);
             $table->string('managedBy');
             $table->dateTime('managedDate');
             $table->timestamps();

@@ -20,97 +20,114 @@
                     <form action="{{ route('addSample-admin') }}" method="post">
                         @csrf
                         <div class="form-group row">
-                            <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
+                            <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nameOfPerson" type="text" class="form-control{{ $errors->has('nameOfPerson') ? ' is-invalid' : '' }}" name="nameOfPerson" value="{{ old('nameOfPerson') }}" required autofocus>
+                                <input id="clientsCode" type="text" class="form-control{{ $errors->has('clientsCode') ? ' is-invalid' : '' }}" name="clientsCode" value="{{ old('clientsCode') }}" placeholder="Optional" autofocus>
 
-                                @if ($errors->has('nameOfPerson'))
+                                @if ($errors->has('clientsCode'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nameOfPerson') }}</strong>
+                                        <strong>{{ $errors->first('clientsCode') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="nameOfEntity" class="col-md-4 col-form-label text-md-right">{{ __('Entity Name') }}</label>
+                            <label for="sampleMatrix" class="col-md-4 col-form-label text-md-right">{{ __('Sample Matrix') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nameOfEntity" type="text" class="form-control{{ $errors->has('nameOfEntity') ? ' is-invalid' : '' }}" name="nameOfEntity" value="{{ old('nameOfEntity') }}" placeholder="Optional" autofocus>
+                                <input id="sampleMatrix" type="text" class="form-control{{ $errors->has('sampleMatrix') ? ' is-invalid' : '' }}" name="sampleMatrix" value="{{ old('sampleMatrix') }}" required autofocus>
 
-                                @if ($errors->has('nameOfEntity'))
+                                @if ($errors->has('sampleMatrix'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nameOfEntity') }}</strong>
+                                        <strong>{{ $errors->first('sampleMatrix') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            <label for="collectionTime" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
+                                <input id="collectionTime" type="time" class="form-control{{ $errors->has('collectionTime') ? ' is-invalid' : '' }}" name="collectionTime" value="{{ old('collectionTime') }}" required autofocus>
 
-                                @if ($errors->has('address'))
+                                @if ($errors->has('collectionTime'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('address') }}</strong>
+                                        <strong>{{ $errors->first('collectionTime') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                            <label for="samplePreservation" class="col-md-4 col-form-label text-md-right">{{ __('Sample Preservation') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" required autofocus>
+                                <input id="samplePreservation" type="text" class="form-control{{ $errors->has('samplePreservation') ? ' is-invalid' : '' }}" name="samplePreservation" value="{{ old('samplePreservation') }}" required autofocus>
 
-                                @if ($errors->has('contactNumber'))
+                                @if ($errors->has('samplePreservation'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('contactNumber') }}</strong>
+                                        <strong>{{ $errors->first('samplePreservation') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax') }}</label>
+                                <label for="samplePreservation" class="col-md-4 col-form-label text-md-right">{{ __('Sample Preservation') }}</label>
+    
+                                <div class="col-md-6">
+                                    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                                            <option value="AL">Alabama</option>
+                                              ...
+                                            <option value="WY">Wyoming</option>
+                                    </select>
+                                    @if ($errors->has('samplePreservation'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('samplePreservation') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                        <div class="form-group row">
+                            <label for="purposeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Purpose of Analysis') }}</label>
 
                             <div class="col-md-6">
-                                <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber">
+                                <input id="purposeOfAnalysis" type="text" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" required autofocus>
 
-                                @if ($errors->has('faxNumber'))
+                                @if ($errors->has('purposeOfAnalysis'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('faxNumber') }}</strong>
+                                        <strong>{{ $errors->first('purposeOfAnalysis') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            <label for="sampleSource" class="col-md-4 col-form-label text-md-right">{{ __('Sample Source') }}</label>
 
                             <div class="col-md-6">
-                                <input id="emailAddress" type="email" class="form-control{{ $errors->has('emailAddress') ? ' is-invalid' : '' }}" name="emailAddress" value="{{ old('emailAddress') }}" autofocus>
+                                <input id="sampleSource" type="text" class="form-control{{ $errors->has('sampleSource') ? ' is-invalid' : '' }}" name="sampleSource" value="{{ old('sampleSource') }}" required autofocus>
 
-                                @if ($errors->has('emailAddress'))
+                                @if ($errors->has('sampleSource'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('emailAddress') }}</strong>
+                                        <strong>{{ $errors->first('sampleSource') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="dateOfSubmission" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
+                            <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
 
                             <div class="col-md-6">
-                                <input type="date" name="dateOfSubmission" id="dateOfSubmission" class="form-control{{ $errors->has('dateOfSubmission') ? ' is-invalid' : '' }}" required>
-                                @if ($errors->has('dateOfSubmission'))
+                                <input type="date" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
+                                @if ($errors->has('dueDate'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('dateOfSubmission') }}</strong>
+                                        <strong>{{ $errors->first('dueDate') }}</strong>
                                     </span>
                                 @endif
                             </div>

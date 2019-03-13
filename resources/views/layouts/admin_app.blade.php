@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -19,12 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- @include('secretary-file.secretary_style') --}}
-
-    {{-- CSS Table Style --}}
     @include('custom_style')
-    <!-- Client Style -->
-    {{-- @include('layouts/client_homestyle') --}}
 
 </head>
 <body>
@@ -65,15 +60,18 @@
                                         <a class="dropdown-item" href="{{ route('inventory-chemicals-admin') }}">
                                             {{ __('Chemicals') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals-admin') }}">
+                                        <a class="dropdown-item" href="{{ route('suppliers-admin') }}">
                                                 {{ __('Suppliers') }}
                                         </a>
                                     </div>
                                 </li>
                             </li>
                             <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('stations-admin') }}">{{ __('Stations') }}</a>
+                            </li>
+                            <li class="nav-item">
                                     <a class="nav-link" href="{{ route('parameters-admin') }}">{{ __('Analyses') }}</a>
-                                </li>
+                            </li>
                         @endif
                     </ul>
 
@@ -118,16 +116,19 @@
     
     <script type="text/javascript">
 
-    function changeText() {
-        var text = document.getElementById("addNew");
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+        function changeText() {
+            var text = document.getElementById("addNew");
 
-        if(text.innerHTML === "Add new"){
-            text.innerHTML = "Close";
+            if(text.innerHTML === "Add new"){
+                text.innerHTML = "Close";
+            }
+            else {
+                text.innerHTML = "Add new";
+            }
         }
-        else {
-            text.innerHTML = "Add new";
-        }
-    }
 
     </script>
 </body>
