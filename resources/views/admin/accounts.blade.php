@@ -192,7 +192,7 @@
                             <tr>
                                 <td>{{ $account->employeeName }}</td>
                                 <td>{{ $account->username }}</td>
-                                <td>{{ $account->position }}</td>
+                                <td>{{ $account->userType }}</td>
                                 <td>{{ $account->idNumber }}</td>
                                 <td>{{ $account->licenseNumber }}</td>
                                 <td>{{ $account->managedBy }}</td>

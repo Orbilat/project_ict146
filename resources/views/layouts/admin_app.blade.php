@@ -10,7 +10,7 @@
     <title>USC Water Laboratory</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -41,36 +41,47 @@
                                 <a class="nav-link" href="{{ route('admin') }}">{{ __('Notifications') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('samples-admin') }}">{{ __('Samples') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('clients-admin') }}">{{ __('Clients') }}</a>
+                                    <a class="nav-link" href="{{ route('admin') }}">{{ __('Transactions') }}</a>
                                 </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('accounts-admin') }}">{{ __('Accounts') }}</a>
+                            <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('samples-admin') }}">
+                                            {{ __('Samples') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('clients-admin') }}">
+                                                {{ __('Clients') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('stations-admin') }}">
+                                                {{ __('Stations') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('parameters-admin') }}">
+                                                {{ __('Parameters') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('accounts-admin') }}">
+                                                {{ __('Accounts') }}
+                                        </a>
+                                    </div>
+                                </li>
                             </li>
                             <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Inventory
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('inventory-history-admin') }}">
+                                            {{ __('History') }}
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('inventory-glassware-admin') }}">
                                             {{ __('Glassware') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals-admin') }}">
-                                            {{ __('Chemicals') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('suppliers-admin') }}">
                                                 {{ __('Suppliers') }}
                                         </a>
                                     </div>
                                 </li>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('stations-admin') }}">{{ __('Stations') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('parameters-admin') }}">{{ __('Analyses') }}</a>
                             </li>
                         @endif
                     </ul>
@@ -119,6 +130,7 @@
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
         });
+
         function changeText() {
             var text = document.getElementById("addNew");
 

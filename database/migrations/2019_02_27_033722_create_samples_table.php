@@ -16,11 +16,11 @@ class CreateSamplesTable extends Migration
         Schema::create('samples', function (Blueprint $table) {
             $table->increments('sampleId');
             $table->unsignedInteger('risNumber');
-            $table->string('clientsCode')->nullable();
-            $table->string('sampleMatrix');
-            $table->time('collectionTime');
-            $table->string('samplePreservation');
-            $table->string('purposeOfAnalysis');
+            $table->string('clientsCode');
+            $table->string('sampleType');
+            $table->dateTime('sampleCollection');
+            $table->string('samplePreservation')->nullable();
+            $table->string('purposeOfAnalysis')->nullable();
             $table->string('sampleSource');
             $table->dateTime('dueDate');
             $table->string('managedBy');

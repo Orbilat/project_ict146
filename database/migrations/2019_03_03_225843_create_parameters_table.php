@@ -17,14 +17,12 @@ class CreateParametersTable extends Migration
             $table->increments('parameterId');
             $table->string('analysis');
             $table->string('method');
-            $table->float('chargePerSample');
-            $table->float('samplePrepCharge')->nullable()->default(0);
+            $table->unsignedInteger('stationId');
             $table->string('managedBy');
             $table->dateTime('managedDate');
             $table->timestamps();
-
-             $table->unsignedInteger('stationId');
-             $table->foreign('stationId')->references('stationId')->on('stations');
+      
+            $table->foreign('stationId')->references('stationId')->on('stations');
         });
     }
 

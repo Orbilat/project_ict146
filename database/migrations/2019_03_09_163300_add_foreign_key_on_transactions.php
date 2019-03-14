@@ -15,7 +15,6 @@ class AddForeignKeyOnTransactions extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->foreign('client')->references('clientId')->on('clients')->onDelete('cascade');
-            $table->foreign('payment')->references('paymentId')->on('payments')->onDelete('cascade');
             $table->foreign('approvedBy')->references('employeeId')->on('employees')->onDelete('cascade');
         });
     }
@@ -29,7 +28,6 @@ class AddForeignKeyOnTransactions extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropForeign('client');
-            $table->dropForeign('payment');
             $table->dropForeign('approvedBy');
         });
     }

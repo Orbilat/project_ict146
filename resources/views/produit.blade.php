@@ -54,14 +54,25 @@ border: 2px solid #000;
 </head>
 <body>
     
-        
-        {{-- @foreach($data as $p) --}}
+        @php
+            $produits->toArray();
+            $array = array('CODABAR','PHARMA2T','CODE11','IMB','KIX','RMS4CC','PLANET','POSTNET');
+        @endphp
+
         <div class="row">
-        <div class="col-4">
-            <div>{!! DNS1D::getBarcodeHTML ($risNumber, 'C128A') !!}</div>
-            <h2>{{ $risNumber}}</h2>
+            @for ($i = 0; $i < 8; $i++)
+            @if ($i%3 == 0)
+                <div class="row">
+            @endif
+            <div class="col-3">
+                {!! DNS1D::getBarcodeHTML ($produits[1]->risNumber, $array[$i],2,33) !!}
+                <h5>{{ $produits[1]->risNumber .'-'. $array[$i] }}</h5>
+            </div>
+            @endfor
         </div>
-        <div class="col-4 test1">
+        
+
+        {{-- <div class="col-4 test1"> 
         <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
@@ -78,9 +89,9 @@ border: 2px solid #000;
             Analysis Requested:
             </h5>   
         </div>
+         --}}
         
-        </div>
-        {{-- @endforeach --}}
+        
     
     <input id ="printbtn" type="button" value="Print this page" onclick="window.print();" >
 </body>

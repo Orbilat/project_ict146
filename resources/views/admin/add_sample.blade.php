@@ -19,12 +19,12 @@
                 <div class="card-body">
                     <form action="{{ route('addSample-admin') }}" method="post">
                         @csrf
-                        <input type="hidden" name="laboratoryCode" value="{{  }}">
+                        <input type="hidden" name="clientId" value="{{ $clientRis }}">
                         <div class="form-group row">
                             <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
 
                             <div class="col-md-6">
-                                <input id="clientsCode" type="text" class="form-control{{ $errors->has('clientsCode') ? ' is-invalid' : '' }}" name="clientsCode" value="{{ old('clientsCode') }}" placeholder="Optional" autofocus>
+                                <input id="clientsCode" type="text" class="form-control{{ $errors->has('clientsCode') ? ' is-invalid' : '' }}" name="clientsCode" value="{{ old('clientsCode') }}" required autofocus>
 
                                 @if ($errors->has('clientsCode'))
                                     <span class="invalid-feedback" role="alert">
@@ -35,28 +35,28 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="sampleMatrix" class="col-md-4 col-form-label text-md-right">{{ __('Sample Matrix') }}</label>
+                            <label for="sampleType" class="col-md-4 col-form-label text-md-right">{{ __('Sample Type') }}</label>
 
                             <div class="col-md-6">
-                                <input id="sampleMatrix" type="text" class="form-control{{ $errors->has('sampleMatrix') ? ' is-invalid' : '' }}" name="sampleMatrix" value="{{ old('sampleMatrix') }}" required autofocus>
+                                <input id="sampleType" type="text" class="form-control{{ $errors->has('sampleType') ? ' is-invalid' : '' }}" name="sampleType" value="{{ old('sampleType') }}" required autofocus>
 
-                                @if ($errors->has('sampleMatrix'))
+                                @if ($errors->has('sampleType'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('sampleMatrix') }}</strong>
+                                        <strong>{{ $errors->first('sampleType') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="collectionTime" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
+                            <label for="sampleCollection" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
 
                             <div class="col-md-6">
-                                <input id="collectionTime" type="time" class="form-control{{ $errors->has('collectionTime') ? ' is-invalid' : '' }}" name="collectionTime" value="{{ old('collectionTime') }}" required autofocus>
+                                <input id="sampleCollection" type="time" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ old('sampleCollection') }}" required autofocus>
 
-                                @if ($errors->has('collectionTime'))
+                                @if ($errors->has('sampleCollection'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('collectionTime') }}</strong>
+                                        <strong>{{ $errors->first('sampleCollection') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -66,7 +66,7 @@
                             <label for="samplePreservation" class="col-md-4 col-form-label text-md-right">{{ __('Sample Preservation') }}</label>
 
                             <div class="col-md-6">
-                                <input id="samplePreservation" type="text" class="form-control{{ $errors->has('samplePreservation') ? ' is-invalid' : '' }}" name="samplePreservation" value="{{ old('samplePreservation') }}" required autofocus>
+                                <input id="samplePreservation" type="text" class="form-control{{ $errors->has('samplePreservation') ? ' is-invalid' : '' }}" name="samplePreservation" value="{{ old('samplePreservation') }}" placeholder="Optional" autofocus>
 
                                 @if ($errors->has('samplePreservation'))
                                     <span class="invalid-feedback" role="alert">
@@ -97,7 +97,7 @@
                             <label for="purposeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Purpose of Analysis') }}</label>
 
                             <div class="col-md-6">
-                                <input id="purposeOfAnalysis" type="text" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" required autofocus>
+                                <input id="purposeOfAnalysis" type="text" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" placeholder="Optional" autofocus>
 
                                 @if ($errors->has('purposeOfAnalysis'))
                                     <span class="invalid-feedback" role="alert">

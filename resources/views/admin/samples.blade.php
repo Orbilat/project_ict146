@@ -27,7 +27,6 @@
                     <div class="card-body">
                             <form method="POST" action="{{ route('addSample-admin') }}">
                                 @csrf
-        
                                 <div class="form-group row">
                                     <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
         
@@ -159,12 +158,12 @@
                                 <th>Sample Matrix</th>
                                 <th>Collection Time</th>
                                 <th>Sample Preservation</th>
-                                <th>Parameters Requested</th>
+                              
                                 <th>Purpose of Analysis</th>
                                 <th>Sample Source</th>
                                 <th>Due Date</th>
-                                <th>Managed By</th>
-                                <th>Managed Date</th>
+                             
+                            
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -176,12 +175,12 @@
                                 <td>{{ $sample->clientsCode }}</td>
                                 <td>{{ $sample->sampleMatrix }}</td>
                                 <td>{{ $sample->samplePreservation }}</td>
-                                <td>{{ $sample->analysis }}</td>
+                            
                                 <td>{{ $sample->purposeOfAnalysis }}</td>
                                 <td>{{ $sample->sampleSource }}</td>
                                 <td>{{ $sample->dueDate }}</td>
                                 <td>{{ $sample->managedBy }}</td>
-                                <td>{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
+                                
                                 <td>
                                     {{-- EDIT BUTTON --}}
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editAccount">Edit</button>
@@ -230,7 +229,7 @@
                 </div>
             </div>
             <div class="offset-md-5 mt-3">
-                    {{ $accounts->links() }}
+                    {{ $samples->links() }}
             </div>
         </div>
     </div>

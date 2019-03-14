@@ -15,13 +15,9 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('itemId');
-            $table->integer('itemNumber');
-            $table->string('itemType');
+            $table->string('itemName');
             $table->string('containerType');
             $table->integer('quantity')->default(1);
-            $table->float('volumeCapacity')->default(0);
-            $table->date('acquiredDate');
-            $table->date('expiryDate');
             $table->unsignedInteger('supplier');
             $table->string('managedBy');
             $table->dateTime('managedDate');

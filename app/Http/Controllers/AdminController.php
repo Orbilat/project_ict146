@@ -8,9 +8,10 @@ use Validator;
 use Session;
 use App\Employee;
 use App\Client;
+use App\Sample;
 use App\Parameter;
 use App\Supplier;
-use App\Payment;
+use App\Item;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(6);
+        $accounts = DB::table('samples')->orderBy('sampleId')->paginate(6);
         return view('admin.samples', ['accounts' => $accounts]);
     }
 
@@ -225,9 +226,10 @@ class AdminController extends Controller
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
         if($transaction->save()){
+            $parameter = Parameter::all();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('admin.add_sample', ['clientRis' => $clientRis]);
+            return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
         }
         else {
             App::abort(500, 'Error!');
@@ -290,24 +292,25 @@ class AdminController extends Controller
     {
         // VALIDATION
         $validator = Validator::make($request->all(), [
+            'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleMatrix' => 'required|string|max:255',
-            'collectionTime' => 'required|string|max:50',
+            'collectionTime' => 'required|max:50',
             'samplePreservation' => 'required|string|max:30',
-            'analysis' => 'required|string|unique:parameters',
             'purposeOfAnalysis' => 'required|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|string|max:20',
+            'dueDate' => 'required|max:20',
         ]);
         //VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('admin/add_sample')
+            return redirect('admin/clients')
                         ->withErrors($validator)
                         ->withInput();
         }
 
         //ELOQUENT INSERT
         $sample = new Sample;
+        $sample->risNumber = $request->clientId;
         $sample->clientsCode = trim($request->clientsCode);
         $sample->sampleMatrix =  trim($request->sampleMatrix);
         $sample->collectionTime = trim($request->collectionTime);
@@ -315,16 +318,25 @@ class AdminController extends Controller
         $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
         $sample->sampleSource = $request->sampleSource;
         $sample->dueDate = $request->dueDate;
-        $sample->managedDate = Auth::user()->employeeName;
+        $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         //SAVE TO DB
         $sample->save();
         $client = DB::table('clients')->select('risNumber')->where('clientId', '=', $sample->sampleId)->get();
         $sample->laboratoryCode = (int)date("Y", strtotime($client->created_at) . $client . $sample->sampleId);
         //CHECK SAVE
+        $sampletests = new Sample_Test;
+        $sampletests->sampleCode = $sample->sampleId;
+        $sampletests->sampleDate = new DateTime();
+        $parameterId = DB::table('parameters')->select('parameterId')->where('analysis', '=', $request->analysis)->get();
+        $sampletests->parameters = $parameterId;
+        $sampletests->status = "In Progress";
+        $sampletests->managedBy = Auth::user()->employeeName;
+        $sampletests->managedDate = new DateTime();
+        $sampletests->save();
         if($sample->save()){
             
-            return redirect('admin.clients');
+            return redirect('admin.samples');
         }
         else {
             App::abort(500, 'Error!');
