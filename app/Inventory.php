@@ -11,6 +11,6 @@ class Inventory extends Model
     protected $primaryKey = 'inventoryId';
 
     protected $fillable = [
-        'usedBy', 'dateOfUse'
+        'usedBy', 'itemUsed'
     ];
 }

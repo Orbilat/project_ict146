@@ -11,6 +11,6 @@ class Item extends Model
     protected $primaryKey = 'itemId';
 
     protected $fillable = [
-        'itemType', 'containerType', 'quantity', 'expiryDate'
+        'itemName', 'containerType', 'quantity', 'supplier'
     ];
 }
