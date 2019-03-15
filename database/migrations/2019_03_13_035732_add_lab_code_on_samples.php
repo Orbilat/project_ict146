@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAnalysisTypeOnParameters extends Migration
+class AddLabCodeOnSamples extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddAnalysisTypeOnParameters extends Migration
      */
     public function up()
     {
-        Schema::table('parameters', function (Blueprint $table) {
-            $table->string('typeOfAnalysis')->after('method');
+        Schema::table('samples', function (Blueprint $table) {
+            $table->bigInteger('laboratoryCode')->nullable()->after('risNumber');
         });
     }
 
@@ -25,8 +25,8 @@ class AddAnalysisTypeOnParameters extends Migration
      */
     public function down()
     {
-        Schema::table('parameters', function (Blueprint $table) {
-            $table->dropColumn('typeOfAnalysis');
+        Schema::table('samples', function (Blueprint $table) {
+            $table->dropColumn('laboratoryCode');
         });
     }
 }

@@ -14,9 +14,6 @@ class AddForeignKeyOnItems extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->integer('itemNumber')->unsigned()->change();
-
-            $table->foreign('itemNumber')->references('itemId')->on('items')->onDelete('cascade');
             $table->foreign('supplier')->references('supplierId')->on('suppliers')->onDelete('cascade');
         });
     }
@@ -29,9 +26,6 @@ class AddForeignKeyOnItems extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->integer('itemNumber')->change();
-
-            $table->dropForeign('itemNumber');
             $table->dropForeign('supplier');
         });
     }

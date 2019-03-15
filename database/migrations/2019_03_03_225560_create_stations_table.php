@@ -15,8 +15,7 @@ class CreateStationsTable extends Migration
     {
         Schema::create('stations', function (Blueprint $table) {
             $table->increments('stationId');
-            $table->unsignedInteger('samples');
-            $table->unsignedInteger('handledBy');
+            $table->string('stationName');
             $table->dateTime('timeReceived');
             $table->dateTime('timeCompleted')->nullable();
             $table->string('managedBy');

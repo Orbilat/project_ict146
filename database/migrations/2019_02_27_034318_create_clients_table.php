@@ -18,10 +18,15 @@ class CreateClientsTable extends Migration
             $table->string('nameOfPerson');
             $table->string('nameOfEntity')->nullable();
             $table->string('address');
-            $table->string('contactNumber')->nullable();
+            $table->string('contactNumber');
             $table->string('faxNumber')->nullable();
             $table->string('emailAddress')->nullable();
-            $table->date('dateOfSubmission');
+            $table->integer('discount')->nullable()->default(0);
+            $table->float('deposit')->nullalbe()->default(0);
+            $table->boolean('reclaimSample')->default(0);
+            $table->string('testResult')->nullable();
+            $table->string('remarks')->nullable();
+            $table->dateTime('dateSubmitted');
             $table->string('managedBy');
             $table->dateTime('managedDate');
             $table->timestamps();

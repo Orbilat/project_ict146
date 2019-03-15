@@ -16,7 +16,7 @@
             @foreach($history as $data)
                 <tr>
                     <td>{{ $data->inventoryId }}</td>
-                    <td>{{ $data->dateofuse }}</td>
+                    <td>{{ $data->dateOfUse }}</td>
                     <td>{{ $data->itemType }}</td>
                     <td>{{ $data->containerType }}</td>
                     <td>{{ $data->qty }}</td>

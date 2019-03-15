@@ -25,9 +25,8 @@
                     @endif
                 <div id="addSample" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
-                            <form method="POST" action="{{ route('addSample') }}">
+                            <form method="POST" action="{{ route('addSample-admin') }}">
                                 @csrf
-        
                                 <div class="form-group row">
                                     <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
         
@@ -153,26 +152,35 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>ID No.</th>
-                                <th>License No.</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
+                                <th>RIS Number</th>
+                                <th>Lab Code</th>
+                                <th>Client's Code</th>
+                                <th>Sample Matrix</th>
+                                <th>Collection Time</th>
+                                <th>Sample Preservation</th>
+                              
+                                <th>Purpose of Analysis</th>
+                                <th>Sample Source</th>
+                                <th>Due Date</th>
+                             
+                            
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($accounts as $account)
+                            @foreach($samples as $sample)
                             <tr>
-                                <td>{{ $account->employeeName }}</td>
-                                <td>{{ $account->username }}</td>
-                                <td>{{ $account->position }}</td>
-                                <td>{{ $account->idNumber }}</td>
-                                <td>{{ $account->licenseNumber }}</td>
-                                <td>{{ $account->managedBy }}</td>
-                                <td>{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
+                                <td>{{ $sample->risNumber }}</td>
+                                <td>{{ $sample->laboratoryCode }}</td>
+                                <td>{{ $sample->clientsCode }}</td>
+                                <td>{{ $sample->sampleMatrix }}</td>
+                                <td>{{ $sample->samplePreservation }}</td>
+                            
+                                <td>{{ $sample->purposeOfAnalysis }}</td>
+                                <td>{{ $sample->sampleSource }}</td>
+                                <td>{{ $sample->dueDate }}</td>
+                                <td>{{ $sample->managedBy }}</td>
+                                
                                 <td>
                                     {{-- EDIT BUTTON --}}
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editAccount">Edit</button>
@@ -221,7 +229,7 @@
                 </div>
             </div>
             <div class="offset-md-5 mt-3">
-                    {{ $accounts->links() }}
+                    {{ $samples->links() }}
             </div>
         </div>
     </div>

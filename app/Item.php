@@ -9,4 +9,8 @@ class Item extends Model
     //
     protected $table = 'items';
     protected $primaryKey = 'itemId';
+
+    protected $fillable = [
+        'itemName', 'containerType', 'quantity', 'supplier'
+    ];
 }

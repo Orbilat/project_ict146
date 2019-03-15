@@ -17,7 +17,7 @@
             @if(!empty($stationssample))
                 @foreach($stationssample as $data)
                     <tr>
-                        <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->sampleId }}">{{ $data->sampleId }}</a></td>
+                        <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->sampleCode }}">{{ $data->sampleCode }}</a></td>
                         <td>{{ $data->risNumber }}</td>
                         <td>{{ $data->status}} </td>
                         

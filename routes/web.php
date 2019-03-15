@@ -10,18 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Stations;
+use App\Station;
 
 Auth::routes();
 
 Route::get('/', function () {
+    $stations = Station::all();
+
+    session(['stations' => $stations]);
     return view('auth.login');
-
-	//Add to login controller
-	$stations = Stations::all();
-
-	session(['stations' => $stations]);
-    return view('home');
 });
 
 Route::get('barcode','ProduitController@index');
@@ -35,7 +32,9 @@ Route::get('barcode','ProduitController@index');
 //CLIENT ROUTES
 Route::get('/RIS', function () {
     return view('clients.client_RIS');
-})->name('RIS');
+})->name('RisNumber');
+Route::post('/RIS', 'ClientController@RIS')->name('RIS');
+
 Route::get('/client-home', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', function () {
@@ -77,29 +76,35 @@ Route::redirect('/admin', '/admin/home');
 //Middleware for User Content Control
 Route::middleware(['admin','auth'])->group(function (){
     //Admin routes
-    //testroute
-    Route::get('/admin/add_sample', function () {
-        return view('admin.add_sample');
-    });
-    //endtestroute
     Route::get('/admin/home', 'AdminController@admin')->name('admin');
-    Route::get('/admin/samples', 'AdminController@samples')->name('samples');
-    Route::get('/admin/clients', 'AdminController@clients')->name('clients');
-    Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts');
-    Route::get('/admin/parameters', 'AdminController@parameters')->name('parameters');
-    Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount');
-    Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount');
-    Route::patch('/admin/accounts/{accountId}', 'AdminController@updateAccount')->name('updateAccount');
-    Route::post('/admin/clients', 'AdminController@addClient')->name('addClient');
-    Route::delete('/admin/clients/{clientId}', 'AdminController@destroyClient')->name('deleteClient');
-    Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient');
-    Route::post('/admin/samples', 'AdminController@addSample')->name('addSample');
-    Route::post('/admin/parameters', 'AdminController@addParameter')->name('addParameter');
-    Route::delete('/admin/clients/{parameterId}', 'AdminController@destroyParameter')->name('deleteParameter');
-    Route::patch('/admin/clients/{parameterId}', 'AdminController@updateParameter')->name('updateParameter');
+    Route::get('/admin/samples', 'AdminController@samples')->name('samples-admin');
+    Route::get('/admin/clients', 'AdminController@clients')->name('clients-admin');
+    Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts-admin');
+    Route::get('/admin/stations', 'AdminController@stations')->name('stations-admin');
+    Route::get('/admin/parameters', 'AdminController@parameters')->name('parameters-admin');
+    //ADD, DELETE AND UPDATE ROUTES
+    Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount-admin');
+    Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount-admin');
+    Route::patch('/admin/accounts/{accountId}', 'AdminController@updateAccount')->name('updateAccount-admin');
+    Route::post('/admin/clients', 'AdminController@addClient')->name('addClient-admin');
+    Route::delete('/admin/clients/{clientId}', 'AdminController@destroyClient')->name('deleteClient-admin');
+    Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient-admin');
+    Route::post('/admin/samples', 'AdminController@addSample')->name('addSample-admin');
+    Route::delete('/admin/stations/{sampleId}', 'AdminController@destroySample')->name('destroySample-admin');
+    Route::patch('/admin/stations/{sampleId}', 'AdminController@updateSample')->name('updateSample-admin');
+    Route::post('/admin/stations', 'AdminController@addStation')->name('addStation-admin');
+    Route::delete('/admin/stations/{stationId}', 'AdminController@destroyStation')->name('destroyStation-admin');
+    Route::patch('/admin/stations/{stationId}', 'AdminController@updateStation')->name('updateStation-admin');
+    Route::post('/admin/parameters', 'AdminController@addParameter')->name('addParameter-admin');
+    Route::delete('/admin/parameters/{parameterId}', 'AdminController@destroyParameter')->name('deleteParameter-admin');
+    Route::patch('/admin/parameters/{parameterId}', 'AdminController@updateParameter')->name('updateParameter-admin');
     //Inventory routes
-    Route::get('/admin/inventory/chemicals', 'AdminController@chemicals')->name('inventory-chemicals');
-    Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware');
+    Route::get('/admin/suppliers', 'AdminController@suppliers')->name('suppliers-admin');
+    Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');
+    Route::delete('/admin/suppliers/{supplierId}', 'AdminController@destroySupplier')->name('deleteSupplier-admin');
+    Route::patch('/admin/suppliers/{supplierId}', 'AdminController@updateSupplier')->name('updateSupplier-admin');
+    Route::get('/admin/inventory/chemicals', 'AdminController@history')->name('inventory-history-admin');
+    Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware-admin');
 });
 // END ADMIN ROUTES
 

@@ -54,8 +54,11 @@ border: 2px solid #000;
 </head>
 <body>
     
-        
-        @foreach($produits as $p)
+        @php
+            $produits->toArray();
+            $array = array('CODABAR','PHARMA2T','CODE11','IMB','KIX','RMS4CC','PLANET','POSTNET');
+        @endphp
+
         <div class="row">
         <div class="col-10">
             <div>{!! DNS1D::getBarcodeHTML ($p->risNumber, 'C128A') !!}</div><br>

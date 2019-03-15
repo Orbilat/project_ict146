@@ -1,20 +1,44 @@
 @extends('layouts.clientapp')
 
 @section('content')
-<div class="wrapper">
-<nav>
-    <div class="logo">
-    <i class="fa fa-flask" style="font-size:35px;color:white"></i>USC WATER LABORATORY
-    </div>
 
-      <ul>
-        <li><a class="active" href="{{ url('/client-home') }}">Home</a></li>
-        <li><a href="{{ url('/S&R') }}">Services & Rates</a></li>
-        <li><a href="{{ url('/contact') }}">Contact Us</a></li>
-        <li><form class="example" action="{{ route('RIS') }}">
-        <input type="text" placeholder="Type your RIS number" name="search" >
-        <button type="submit"><i class="fa fa-search"></i></button>
-        </form></li>
-</ul>
-  </nav>
+
+  <div class="RIS">
+  <div class="card-body">
+                  @if(isset($ris))
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                {{-- TABLE HEADER --}}
+                                <th>RIS #</th>
+                                <th>Client Name</th>
+                                <th>Entity Name</th>
+                                <th>Address</th>
+                                <th>Contact No.</th>
+                                <th>Fax</th>
+                                <th>Email</th>
+                                <th>Date Submitted</th>
+                                <th>Status</th>
+                                {{-- TABLE HEADER END --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {{-- TABLE BODY --}}
+                                <td>{{ $ris->risNumber }}</td>
+                                <td>{{ $ris->nameOfPerson }}</td>
+                                <td>{{ $ris->nameOfEntity }}</td>
+                                <td>{{ $ris->address }}</td>
+                                <td>{{ $ris->contactNumber }}</td>
+                                <td>{{ $ris->faxNumber }}</td>
+                                <td>{{ $ris->emailAddress }}</td>
+                        </table>
+                  @else
+                  <div class="alert alert-danger offset-md-1 col-md-10">
+                      <a class="close" data-dismiss="alert">×</a>
+                      <h3><strong>Error</strong></h3>
+                  </div>
+                  @endif
+  </div>
+</div>
 @endsection
