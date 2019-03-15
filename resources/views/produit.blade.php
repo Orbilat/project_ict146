@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Barcode</title>
-   
+    
     
     <style type="text/css">
 @media print {
@@ -57,11 +57,15 @@ border: 2px solid #000;
         
         @foreach($produits as $p)
         <div class="row">
-        <div class="col-4">
-            <div>{!! DNS1D::getBarcodeHTML ($p->faxNumber, 'C128A') !!}</div>
-            <h2>{{ $p->faxNumber}}</h2>
+        <div class="col-10">
+            <div>{!! DNS1D::getBarcodeHTML ($p->risNumber, 'C128A') !!}</div><br>
+            <h2>{{ $p->risNumber}}</h2>
+
+            
         </div>
-        <div class="col-4 test1"> 
+   
+    
+        <div class="col-2 test1"> 
         <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
@@ -77,9 +81,10 @@ border: 2px solid #000;
             <br>
             Analysis Requested:
             </h5>   
-        </div>
+        </div> 
         
         </div>
+
         @endforeach
     
     <input id ="printbtn" type="button" value="Print this page" onclick="window.print();" >

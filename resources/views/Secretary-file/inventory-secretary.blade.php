@@ -1,4 +1,4 @@
-@extends('layouts.admin_app')
+@extends('layouts.secretary_app')
 
 <body>
 

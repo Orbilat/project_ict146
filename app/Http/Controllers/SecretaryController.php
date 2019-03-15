@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Session;
 use App\Ris;
 use App\Sample;
+use Validator;
+use App\Client;
+use Illuminate\Support\Facades\Auth;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -16,10 +20,7 @@ class SecretaryController extends Controller
     {
         return view('secretary-file.secretary');
     }
-    public function noti()
-    {
-        return view('secretary-file.notification-secretary');
-    }
+    
     public function inve()
     {
         return view('secretary-file.inventory-secretary');
@@ -73,5 +74,117 @@ class SecretaryController extends Controller
         // }
 
         return view('secretary-file.ris-form');
+    }
+    // protected function addClient(Request $request)
+    // {
+    //     // VALIDATION
+    //     $validator = Validator::make($request->all(), [
+    //         'nameOfPerson' => 'required|string|max:255|min:4',
+    //         'nameOfEntity' => 'nullable|string|max:255',
+    //         'address' => 'required|string|max:50',
+    //         'contactNumber' => 'string|numeric',
+    //         'faxNumber' => 'nullable|string|numeric',
+    //         'emailAddress' => 'nullable|string|max:50|email',
+    //         'dateOfSubmission' => 'required|string|max:20',
+    //     ]);
+    //     // VALIDATION CHECKS
+    //     if ($validator->fails()) {
+    //         return redirect('admin/clients')
+    //                     ->withErrors($validator)
+    //                     ->withInput();
+    //     }
+
+    //     //ELOQUENT INSERT
+    //     $client = new Client;
+    //     $client->nameOfPerson = trim($request->nameOfPerson);
+    //     $client->nameOfEntity = trim($request->nameOfEntity);
+    //     $client->address =  trim($request->address);
+    //     $client->contactNumber = trim($request->contactNumber);
+    //     $client->faxNumber = trim($request->faxNumber);
+    //     $client->emailAddress = trim($request->emailAddress);
+    //     $client->dateOfSubmission = $request->dateOfSubmission;
+    //     $client->managedBy = Auth::user()->employeeName;
+    //     $client->managedDate = new DateTime();
+    //     $client->save();
+    //     $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+    //     //SAVE TO DB && CHECK
+    //     if($client->save()){
+    //         Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+    //         return view('admin.add_sample');
+    //     }
+    //     else {
+    //         App::abort(500, 'Error!');
+    //     }
+    //     $a=$clientId;
+    //     $sample=new Sample;
+    //     $sample->risNumber=$a;
+    // }
+
+    protected function addClient(Request $request)
+    {
+        // VALIDATION
+        // $validator = Validator::make($request->all(), [
+        //     'nameOfPerson' => 'required|string|max:255|min:4',
+        //     'nameOfEntity' => 'nullable|string|max:255',
+        //     'address' => 'required|string|max:50',
+        //     'contactNumber' => 'string|numeric',
+        //     'faxNumber' => 'nullable|string|numeric',
+        //     'emailAddress' => 'nullable|string|max:50|email',
+        //     'dateOfSubmission' => 'required|string|max:20',
+        //     'clientCode'=>'string|max:50',
+        //     'sampleMatrix'=>'string|max:50',
+        //     // 'samplePreservation' => 'required|string|max:50',
+
+            
+        // ]);
+        // // VALIDATION CHECKS
+        // if ($validator->fails()) {
+        //     return redirect('secretary/add')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+
+        //ELOQUENT INSERT
+        $client = new Client;
+        $client->nameOfPerson = trim($request->nameOfPerson);
+        $client->nameOfEntity = trim($request->nameOfEntity);
+        $client->address =  trim($request->address);
+        $client->contactNumber = trim($request->contactNumber);
+        $client->faxNumber = trim($request->faxNumber);
+        $client->emailAddress = trim($request->emailAddress);
+        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->managedBy = Auth::user()->employeeName;
+        $client->managedDate = new DateTime();
+        
+        $client->save();
+        
+        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+        $client->save();
+        //SAVE TO DB && CHECK
+      
+        $a=$client->risNumber;
+        $sample=new Sample;
+        $sample->risNumber=$a;
+        $sample->clientsCode = trim($request->clientsCode);
+        $sample->sampleMatrix = trim($request->sampleMatrix);
+        $sample->collectionTime = trim($request->collectionTime);
+        $sample->samplePreservation = trim($request->samplePreservation);
+        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        $sample->sampleSource = trim($request->sampleSource);
+        $sample->dueDate = trim($request->dueDate);
+        $sample->managedBy = Auth::user()->employeeName;
+        $sample->managedDate = new DateTime();
+        
+        $sample->save();
+
+        // return view('secretary-file.produit');
+        if($sample->save()){
+            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+            return view('produit');
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+        
     }
 }
