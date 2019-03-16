@@ -38,8 +38,12 @@
                             <label for="sampleType" class="col-md-4 col-form-label text-md-right">{{ __('Sample Type') }}</label>
 
                             <div class="col-md-6">
-                                <input id="sampleType" type="text" class="form-control{{ $errors->has('sampleType') ? ' is-invalid' : '' }}" name="sampleType" value="{{ old('sampleType') }}" required autofocus>
-
+                                <input id="sampleType" list="sampleTypes" class="form-control{{ $errors->has('sampleType') ? ' is-invalid' : '' }}" name="sampleType" value="{{ old('sampleType') }}" required autofocus>
+                                <datalist id="sampleTypes">
+                                    <option value="Drinking water">Drinking Water</option>
+                                    <option value="Ground water">Ground water</option>
+                                    <option value="Waste water">Waste water</option>
+                                </datalist>
                                 @if ($errors->has('sampleType'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('sampleType') }}</strong>
@@ -52,7 +56,7 @@
                             <label for="sampleCollection" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
 
                             <div class="col-md-6">
-                                <input id="sampleCollection" type="time" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ old('sampleCollection') }}" required autofocus>
+                                <input id="sampleCollection" type="datetime-local" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ old('sampleCollection') }}" required autofocus>
 
                                 @if ($errors->has('sampleCollection'))
                                     <span class="invalid-feedback" role="alert">
@@ -79,12 +83,11 @@
                         <div class="form-group row">
                             <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
     
-                            <div class="col-md-6">
-                                <select id="parameter" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="parameter">
-                                    @foreach($parameters as $value)
-                                        <option value="{{ $value->analysis }}">{{ $value->analysis }}</option>
-                                    @endforeach                              
-                                </select>
+                            <select class="js-example-basic-multiple" id="parameter" name="parameter[]" multiple="multiple">
+                                @foreach ($parameters as $parameter)
+                                    <option value="{{ $parameter }}">{{ $parameter }}</option>
+                                @endforeach
+                            </select>
                                 @if ($errors->has('parameter'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('parameter') }}</strong>
@@ -97,8 +100,16 @@
                             <label for="purposeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Purpose of Analysis') }}</label>
 
                             <div class="col-md-6">
-                                <input id="purposeOfAnalysis" type="text" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" placeholder="Optional" autofocus>
-
+                                <input id="purposeOfAnalysis" list="purposeOfAnalyses" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" placeholder="Optional" autofocus>
+                                <datalist id="purposeOfAnalyses">
+                                    <option value="Business">Business</option>
+                                    <option value="Economic">Economic</option>
+                                    <option value="Regulating Protocols">Regulating Protocols</option>
+                                    <option value="Health Related">Health Related</option>
+                                    <option value="Research">Research</option>
+                                    <option value="DA">DA</option>
+                                    <option value="Quality">Quality</option>
+                                </datalist>
                                 @if ($errors->has('purposeOfAnalysis'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('purposeOfAnalysis') }}</strong>
@@ -125,7 +136,7 @@
                             <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
 
                             <div class="col-md-6">
-                                <input type="date" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
+                                <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
                                 @if ($errors->has('dueDate'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('dueDate') }}</strong>

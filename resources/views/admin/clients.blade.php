@@ -47,7 +47,7 @@
                             <form method="POST" action="{{ route('addClient-admin') }}">
                                 @csrf
                                 <div class="form-group row">
-                                    <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
+                                    <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Name of Person') }}</label>
         
                                     <div class="col-md-6">
                                         <input id="nameOfPerson" type="text" class="form-control{{ $errors->has('nameOfPerson') ? ' is-invalid' : '' }}" name="nameOfPerson" value="{{ old('nameOfPerson') }}" required autofocus>
@@ -61,7 +61,7 @@
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="nameOfEntity" class="col-md-4 col-form-label text-md-right">{{ __('Entity Name') }}</label>
+                                    <label for="nameOfEntity" class="col-md-4 col-form-label text-md-right">{{ __('Name of Entity') }}</label>
         
                                     <div class="col-md-6">
                                         <input id="nameOfEntity" type="text" class="form-control{{ $errors->has('nameOfEntity') ? ' is-invalid' : '' }}" name="nameOfEntity" value="{{ old('nameOfEntity') }}" placeholder="Optional" autofocus>
@@ -91,7 +91,7 @@
                                 <div class="form-group row">
                                     <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
         
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
         
                                         @if ($errors->has('contactNumber'))
@@ -100,12 +100,9 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax') }}</label>
-        
-                                    <div class="col-md-6">
+
+                                    <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
+                                    <div class="col-md-3">
                                         <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
         
                                         @if ($errors->has('faxNumber'))
@@ -133,7 +130,7 @@
                                 <div class="form-group row">
                                     <label for="discount" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
         
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <input id="discount" type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}" placeholder="Optional">
         
                                         @if ($errors->has('discount'))
@@ -142,35 +139,74 @@
                                             </span>
                                         @endif
                                     </div>
+
+                                    <label for="deposit" class="col-form-label text-md-right">{{ __('Deposit') }}</label>
+                                    <div class="col-md-3">
+                                        <input id="deposit" type="number" class="form-control{{ $errors->has('deposit') ? ' is-invalid' : '' }}" name="deposit" value="{{ old('deposit') }}" placeholder="Optional">
+        
+                                        @if ($errors->has('deposit'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('deposit') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="testResult" class="col-md-4 col-form-label text-md-right">{{ __('Test Result') }}</label>
+        
+                                    <div class="col-md-2">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary active">
+                                                <input type="radio" name="testResult" id="testResult" value="Email" checked autocomplete="off"> Email
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="testResult" id="testResult" value="Fax" autocomplete="off"> Fax
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="testResult" id="testResult" value="LBC" autocomplete="off"> LBC
+                                            </label>
+                                        </div>
+        
+                                        @if ($errors->has('testResult'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('testResult') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <label for="reclaimSample" class="col-form-label text-md-right">{{ __('Reclaim Sample') }}</label>
+                                    <div class="col-md-2">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary active">
+                                                <input type="radio" name="reclaimSample" id="reclaimSample" value="1" checked autocomplete="off"> Yes
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="reclaimSample" id="reclaimSample" value="0" autocomplete="off"> No
+                                            </label>
+                                        </div>
+        
+                                        @if ($errors->has('reclaimSample'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('reclaimSample') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="addedCharges" class="col-md-4 col-form-label text-md-right">{{ __('Added Charges') }}</label>
+                                    <label for="remarks" class="col-md-4 col-form-label text-md-right">{{ __('Remarks') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="addedCharges" type="number" class="form-control{{ $errors->has('addedCharges') ? ' is-invalid' : '' }}" name="addedCharges" value="{{ old('addedCharges') }}" placeholder="Optional">
+                                        <input id="remarks" type="text" class="form-control{{ $errors->has('remarks') ? ' is-invalid' : '' }}" name="remarks" value="{{ old('remarks') }}" autofocus>
         
-                                        @if ($errors->has('addedCharges'))
+                                        @if ($errors->has('remarks'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('addedCharges') }}</strong>
+                                                <strong>{{ $errors->first('remarks') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
-    
-                                <div class="form-group row">
-                                    <label for="dateOfSubmission" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input type="date" name="dateOfSubmission" id="dateOfSubmission" class="form-control{{ $errors->has('dateOfSubmission') ? ' is-invalid' : '' }}" required>
-                                        @if ($errors->has('dateOfSubmission'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('dateOfSubmission') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-        
+
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-secondary">
@@ -189,15 +225,21 @@
                         <thead>
                             <tr>
                                 {{-- TABLE HEADER --}}
-                                <th>RIS #</th>
-                                <th>Client Name</th>
-                                <th>Entity Name</th>
-                                <th>Address</th>
-                                <th>Contact No.</th>
-                                <th>Fax</th>
-                                <th>Email</th>
-                                <th>Date Submitted</th>
-                                <th>Status</th>
+                                <th class="admin-table">RIS</th>
+                                <th class="admin-table">Name of Person</th>
+                                <th class="admin-table">Name of Entity</th>
+                                <th class="admin-table">Address</th>
+                                <th class="admin-table">Contact No.</th>
+                                <th class="admin-table">Fax</th>
+                                <th class="admin-table">Email</th>
+                                <th class="admin-table">Discount</th>
+                                <th class="admin-table">Deposit</th>
+                                <th class="admin-table">Test Result</th>
+                                <th class="admin-table">Reclaim Sample</th>
+                                <th class="admin-table">Remarks</th>
+                                <th class="admin-table">Managed By</th>
+                                <th class="admin-table">Date Submitted</th>
+                                <th class="admin-table">Functions</th>
                                 {{-- TABLE HEADER END --}}
                             </tr>
                         </thead>
@@ -205,17 +247,23 @@
                             @foreach($clients as $client)
                             <tr>
                                 {{-- TABLE BODY --}}
-                                <td>{{ $client->risNumber }}</td>
-                                <td>{{ $client->nameOfPerson }}</td>
-                                <td>{{ $client->nameOfEntity }}</td>
-                                <td>{{ $client->address }}</td>
-                                <td>{{ $client->contactNumber }}</td>
-                                <td>{{ $client->faxNumber }}</td>
-                                <td>{{ $client->emailAddress }}</td>
-                                <td>{{ date("F jS, Y", strtotime($client->dateOfSubmission)) }}</td>
+                                <td class="admin-table">{{ $client->risNumber }}</td>
+                                <td class="admin-table">{{ $client->nameOfPerson }}</td>
+                                <td class="admin-table">{{ $client->nameOfEntity }}</td>
+                                <td class="admin-table">{{ $client->address }}</td>
+                                <td class="admin-table">{{ $client->contactNumber }}</td>
+                                <td class="admin-table">{{ $client->faxNumber }}</td>
+                                <td class="admin-table">{{ $client->emailAddress }}</td>
+                                <td class="admin-table">{{ $client->discount }}</td>
+                                <td class="admin-table">{{ $client->deposit }}</td>
+                                <td class="admin-table">{{ $client->testResult }}</td>
+                                <td class="admin-table">{{ $client->reclaimSample }}</td>
+                                <td class="admin-table">{{ $client->remarks }}</td>
+                                <td class="admin-table">{{ $client->managedBy }}</td>
+                                <td class="admin-table">{{ date("F jS, Y", strtotime($client->created_at)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editClient{{ $count }}">Edit</button>
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editClient{{ $count }}">Edit</button>
                                     <div id="editClient{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -334,7 +382,7 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
                                     <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

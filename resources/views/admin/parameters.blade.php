@@ -70,53 +70,11 @@
                                     <label for="method" class="col-md-4 col-form-label text-md-right">{{ __('Method') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="method" type="textbox" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="method" value="{{ old('method') }}" required autofocus>
+                                        <input id="method" type="textbox" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="method" value="{{ old('method') }}" placeholder="Optional" autofocus>
         
                                         @if ($errors->has('method'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('method') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="typeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Analysis Type') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="typeOfAnalysis" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="typeOfAnalysis" required autofocus>
-        
-                                        @if ($errors->has('typeOfAnalysis'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('typeOfAnalysis') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="chargePerSample" class="col-md-4 col-form-label text-md-right">{{ __('Charge Per Sample') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="chargePerSample" type="number" class="form-control{{ $errors->has('chargePerSample') ? ' is-invalid' : '' }}" name="chargePerSample" required>
-        
-                                        @if ($errors->has('chargePerSample'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('chargePerSample') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="samplePrepCharge" class="col-md-4 col-form-label text-md-right">{{ __('Sample Prep Charge') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="samplePrepCharge" type="number" class="form-control{{ $errors->has('samplePrepCharge') ? ' is-invalid' : '' }}" name="samplePrepCharge" required>
-        
-                                        @if ($errors->has('samplePrepCharge'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('samplePrepCharge') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -127,9 +85,9 @@
         
                                     <div class="col-md-6">
                                         <select id="stationId" type="text" class="form-control{{ $errors->has('stationId') ? ' is-invalid' : '' }}" name="stationId">
-                                            <option value="1">Station 1</option>
-                                            <option value="2">Station 2</option>
-                                            <option value="3">Station 3</option>                                    
+                                            <option value="Station 1">Station 1</option>
+                                            <option value="Station 2">Station 2</option>
+                                            <option value="Station 3">Station 3</option>                                    
                                         </select>
                                         @if ($errors->has('stationId'))
                                             <span class="invalid-feedback" role="alert">
@@ -155,14 +113,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Analysis</th>
-                                <th>Method</th>
-                                <th>Analysis Type</th>
-                                <th>Charge Per Sample</th>
-                                <th>Sample Prep Charge</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
-                                <th>Status</th>
+                                <th class="admin-table">Analysis</th>
+                                <th class="admin-table">Method</th>
+                                <th class="admin-table">Station</th>
+                                <th class="admin-table">Managed By</th>
+                                <th class="admin-table">Managed At</th>
+                                <th class="admin-table">Functions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -170,7 +126,7 @@
                             <tr>
                                 <td>{{ $parameter->analysis }}</td>
                                 <td>{{ $parameter->method }}</td>
-                                <td>{{ $parameter->typeOfAnalysis }}</td>
+                                <td>{{ $parameter->station }}</td>
                                 <td>{{ $parameter->chargePerSample }}</td>
                                 <td>{{ $parameter->samplePrepCharge }}</td>
                                 <td>{{ $parameter->managedBy }}</td>

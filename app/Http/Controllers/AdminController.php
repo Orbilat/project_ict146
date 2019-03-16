@@ -29,8 +29,8 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $accounts = DB::table('samples')->orderBy('sampleId')->paginate(6);
-        return view('admin.samples', ['accounts' => $accounts]);
+        $samples = DB::table('samples')->orderBy('sampleId')->paginate(6);
+        return view('admin.samples', ['accounts' => $samples]);
     }
 
     // Admin Clients Page (/clients)
@@ -183,9 +183,10 @@ class AdminController extends Controller
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount' => 'nullable|numeric|between:0,100',
-            'addedCharges' => 'nullable|numeric|between:0,100000',
-            'depositedAmount' => 'nullable|numeric|between:0,100000',
-            'dateOfSubmission' => 'required|string|max:20',
+            'deposit' => 'nullable|numeric|between:0,100000',
+            'reclaimSample' => 'required|numeric',
+            'testResult' => 'nullable|string|max:5|min:1',
+            'remarks' => 'required|string|max:20',
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
@@ -201,27 +202,29 @@ class AdminController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->discount = $request->discount;
+        $client->deposit = $request->deposit;
+        $client->testResult = $request->testResult;
+        $client->reclaimSample = $request->reclaimSample;
+        $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
         $client->save();
-        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+        if (strlen((string)($client->clientId)) == 1) {
+            $idOfClient = (int)("000".$client->clientId);
+        } elseif (strlen((string)($client->clientId)) == 2) {
+            $idOfClient = (int)("00".$client->clientId);
+        } elseif (strlen((string)($client->clientId)) == 3) {
+            $idOfClient = (int)("0".$client->clientId);
+        } else {
+            $idOfClient = (int)$client->clientId;
+        }
+        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $idOfClient;
         $client->save();
-        // INSERT PAYMENT
-        $payment = new Payment;
-        $payment->testingCost = NULL;
-        $payment->discount = (float)$request->discount;
-        $payment->addedCharges = (float)$request->addedCharges;
-        $payment->depositedAmount = (float)$request->depositedAmount;
-        $payment->managedBy = Auth::user()->employeeName;
-        $payment->managedDate = new DateTime();
-        $payment->save();
         // INSERT TRANSACTION
         $transaction = new Transaction;
         $transaction->client = $client->clientId;
-        $transaction->payment = $payment->paymentId;
         $transaction->approvedBy = Auth::user()->employeeId;
-        $transaction->transactionDate = $client->dateOfSubmission;
         $transaction->managedBy = Auth::user()->employeeName;
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
@@ -238,8 +241,8 @@ class AdminController extends Controller
     // CLIENT DELETE
     protected function destroyClient($clientId)
     {
-        $account = Client::findOrFail($clientId);
-        if($account->delete()){
+        $client = Client::findOrFail($clientId);
+        if($client->delete()){
             Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
             return Redirect::back();
         }
@@ -258,7 +261,11 @@ class AdminController extends Controller
             'contactNumber' => 'string|numeric',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
-            'dateOfSubmission' => 'required|string|max:20',
+            'discount' => 'nullable|numeric|between:0,100',
+            'deposit' => 'nullable|numeric|between:0,100000',
+            'reclaimSample' => 'required|numeric',
+            'testResult' => 'nullable|string|max:5|min:1',
+            'remarks' => 'required|string|max:20',
         ]);
         // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
@@ -274,9 +281,14 @@ class AdminController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->discount = $request->discount;
+        $client->deposit = $request->deposit;
+        $client->testResult = $request->testResult;
+        $client->reclaimSample = $request->reclaimSample;
+        $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
+        $client->save();
     
         if($client->save()){
             Session::flash('flash_client_updated', 'Client information updated successfully!');
