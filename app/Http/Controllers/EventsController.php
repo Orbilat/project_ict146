@@ -25,7 +25,15 @@ class EventsController extends Controller
             );
         }
         
-    	$calendar_details = Calendar::addEvents($event_list); 
+    	$calendar_details = Calendar::addEvents($event_list)->setCallbacks([
+            ])->setOptions([
+            'header' => [
+                'right' => 'today listMonth prev,next ',
+                'center' => '',
+                // 'left' => 'listMonth',
+            ],
+            'defaultView' => 'month'
+        ]);
 
         return view('clients.client_home', compact('calendar_details') );
     }

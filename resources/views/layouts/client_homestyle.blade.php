@@ -1,148 +1,27 @@
 <style>
-body
-    {
-        margin: 0%;
-        padding: 0;
-   }
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
-nav {
-    top:0;
-    left:0;
-    width: 100%;
-    height: 80px;
-    box-sizing: border-box;
-    background: #1E90FF;
-    text-decoration: none;
-    border-radius: 3px;
-    }
-
-nav .logo {
-    padding: 22px 20px;
-    height: 80px;
-    float: left;
-    font-size: 20px;
-    color: #fff;
-    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    padding-left:100px;
-    
-    }
-
-nav ul  {
-    list-style:none;
-    float:right;
-    margin:0;
-    padding:0;
-    display: flex;
-
-    }
-
-nav ul li   {
-    list-style: none;
-
-    
-    }
-
-nav ul li a{
-    line-height:80px;
-    padding: 15px 35px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 16px;
-    font-family:"Times New Roman", Times, serif;
-    
+body, html {
+  height: 100%;
+  line-height: 1.8;
 }
 
-nav ul li a.active{
-    color: #fff;
-  
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("/w3images/mac.jpg");
+  min-height: 100%;
 }
 
-nav ul li a:hover{
-  border-bottom:3px solid #fff;
-  color: white;
-  text-decoration: none;
+.w3-bar .w3-button {
+  padding: 20px;
+	text-decoration:none;
 }
 
-form.example input[type=number] {
-  font-size: 17px;
-  border: 1px solid grey;
-  background: #f1f1f1;
-  font-family:"Times New Roman", Times, serif;
-  margin-top:22px;
-}
-
-form.example button {
-  padding: 10px 15px;
-  background: #2196F3;
-  color: white;
-  font-size: 22px;
-  border: 1px #f1f1f1;
-  cursor: pointer;
-  margin-top:10px;
-  
-}
-
-.foot{
-    width:100%;
-    padding:25px;
-    text-align: center;
-    background: #1E90FF;
-    display: inline-block;
-
-
-}
-i.fa.fa-facebook-square{
-    color:#fff;
-    padding:5px;
-    border:3px solid;
-    border-radius:100px;
-}
-i.fa.fa-facebook-square:hover{
-    color: #3b5998;
- 
-}
-i.fa.fa-twitter{
-    color:#fff;
-    padding:5px;
-    border:3px solid;
-    border-radius:100px;
-}
-i.fa.fa-twitter:hover{
-    color: #4099FF;
-
-}
-i.fa.fa-instagram{
-    color:#fff;
-    padding:5px;
-    border:3px solid;
-    border-radius:100px;
-}
-i.fa.fa-instagram:hover{
-	  color: #bc2a8d;
-
-}
-i.fa.fa-info-circle{
-  font-size:36px
-}
-i.fa.fa-map-marker{
-	font-size:29px;
-
-}
-i.fa.fa-envelope{
-  font-size:20px;
-
-}
-i.fa.fa-phone{
-  font-size:26px;
-  
-}
-i.fa.fa-mobile-phone{
-	font-size:32px;
-  
-}
 * {
 	margin:0;
+	z-index:0;
 	padding:0;
 	box-sizing:border-box;
 	-webkit-box-sizing:border-box;
@@ -150,31 +29,17 @@ i.fa.fa-mobile-phone{
 	-webkit-font-smoothing:antialiased;
 	-moz-font-smoothing:antialiased;
 	-o-font-smoothing:antialiased;
-	font-smoothing:antialiased;
 	text-rendering:optimizeLegibility;
 }
-.contactUs{
-  width: 100%;
-  padding: 20px;
-  font-size: 3vw; 
-  text-align: left;
-  color:#FFF;
-  background: #1E90FF;
-  padding-left:100px;
-  font-weight: bold;
-  font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  letter-spacing: 5px;
-  
-
+.titleText{
+	color: #F96;
 }
+
 .bg {
 	font-family:"Open Sans", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height:50px;
 	color:#000; 
-
-  
-
 }
 
 .wrapperContact{
@@ -182,22 +47,8 @@ i.fa.fa-mobile-phone{
   display: inline-block;
   background-color: #fff;
 }
-.container1 {
-  display: inline-block;
-  width:40%;
-  margin-left: 200px;
-
-}
-.container2 {
-  display: inline-block; 
-  margin-top: 10px;
-  padding: 25px 25px 35px 25px;
-}
-
-#contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, #contact button[type="submit"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
 
 #contact {
-	background:#F9F9F9;
 	padding:25px;
   
 }
@@ -205,14 +56,13 @@ i.fa.fa-mobile-phone{
 #contact h3 {
 	color: #F96;
 	display: block;
-	font-size: 30px;
-	font-weight: 400;
+	font-size: 40px;
 }
 
-#contact h4 {
-	margin:5px 0 15px;
-	display:block;
-	font-size:13px;
+#contact h2 {
+	color: #F96;
+	display: block;
+	font-size: 30px;
 }
 
 fieldset {
@@ -231,15 +81,6 @@ fieldset {
 	padding:10px;
 }
 
-#contact input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
-	-webkit-transition:border-color 0.3s ease-in-out;
-	-moz-transition:border-color 0.3s ease-in-out;
-	transition:border-color 0.3s ease-in-out;
-	border:1px solid #AAA;
-}
-
-
-
 #contact button[type="submit"] {
 	cursor:pointer;
 	width:100%;
@@ -252,6 +93,30 @@ fieldset {
 }
   .invalid-feedback{
     display: block;
+} 
+
+.search{
+  margin-top: 6px;
+}
+.SearchRis{
+  padding:3px;
+}
+.map-container-6{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+.map-container-6 iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+
+#myNavbar{
+	color:#000; 
 }
 
 </style>
