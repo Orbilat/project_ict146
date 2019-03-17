@@ -41,6 +41,13 @@ class SecretaryController extends Controller
         $samples=Sample::all();
         return view('dynamic_pdf',['samples'=>$samples]);
     }
+
+    public function form()
+    {
+        $clients = DB::table('clients')->orderBy('clientId','DESC')->get();
+        return view('secretary-file.secretary-form',['clients'=>$clients]);
+    }
+
     // protected function form(Request $request)
     // {
     //     $ris=new Ris;
@@ -152,39 +159,61 @@ class SecretaryController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->discount = trim($request->discount);
+        $client->deposit = trim($request->deposit);
+        $client->reclaimSample = trim($request->reclaimSample);
+        $client->testResult = trim($request->testResult);
+        $client->remarks =  trim($request->remarks);
+      
+        
         $client->managedBy = Auth::user()->employeeName;
-        $client->managedDate = new DateTime();
+        
         
         $client->save();
-        
+        $client->managedDate = new DateTime();
         $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
         $client->save();
+        if($client->save()){
+                    Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+                    // return view('secretary-file.create-secretary', ['clientRis' => $clientRis]);
+                    return view('secretary-file.sample-secretary',['risNumber' => $client->risNumber, 'clientId' => $client->clientId]);
+                }
+                else {
+                    App::abort(500, 'Error!');
+                }
         //SAVE TO DB && CHECK
       
-        $a=$client->risNumber;
-        $sample=new Sample;
-        $sample->risNumber=$a;
-        $sample->clientsCode = trim($request->clientsCode);
-        $sample->sampleMatrix = trim($request->sampleMatrix);
-        $sample->collectionTime = trim($request->collectionTime);
-        $sample->samplePreservation = trim($request->samplePreservation);
-        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
-        $sample->sampleSource = trim($request->sampleSource);
-        $sample->dueDate = trim($request->dueDate);
-        $sample->managedBy = Auth::user()->employeeName;
-        $sample->managedDate = new DateTime();
+        // $a=$client->risNumber;
+        // $sample=new Sample;
+        // $sample->risNumber=$a;
+        // $sample->clientsCode = trim($request->clientsCode);
+        // $sample->sampleMatrix = trim($request->sampleMatrix);
+        // $sample->collectionTime = trim($request->collectionTime);
+        // $sample->samplePreservation = trim($request->samplePreservation);
+        // $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        // $sample->sampleSource = trim($request->sampleSource);
+        // $sample->dueDate = trim($request->dueDate);
+        // $sample->managedBy = Auth::user()->employeeName;
+        // $sample->managedDate = new DateTime();
         
-        $sample->save();
+        // $sample->save();
 
-        // return view('secretary-file.produit');
-        if($sample->save()){
-            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('produit');
-        }
-        else {
-            App::abort(500, 'Error!');
-        }
+        // return view('secretary-file.create-secretary');
+        // if($sample->save()){
+        //     Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+        //     return view('produit');
+        // }
+        // else {
+        //     App::abort(500, 'Error!');
+        // }
+        
+    }
+
+    protected function  addSample(Request $request){
+
+
+        $sample = new Sample;
+        $sample->risNumber = $clientId;
         
     }
 }

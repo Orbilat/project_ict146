@@ -54,21 +54,18 @@ border: 2px solid #000;
 </head>
 <body>
     
-        @php
-            $produits->toArray();
-            $array = array('CODABAR','PHARMA2T','CODE11','IMB','KIX','RMS4CC','PLANET','POSTNET');
-        @endphp
-
-        <div class="row">
-        <div class="col-10">
+        
+        @foreach($produits as $p)
+    <div class="row">
+        <div class="col-4">
             <div>{!! DNS1D::getBarcodeHTML ($p->risNumber, 'C128A') !!}</div><br>
-            <h2>{{ $p->risNumber}}</h2>
-
-            
-        </div>
-   
-    
-        <div class="col-2 test1"> 
+            <h2>{{ $p->risNumber}}
+            @if($p->remarks == "rush" || $p->remarks == "Rush")
+                &emsp;&emsp;
+                Rush
+            @endif
+            </h2>
+            <div class="test1"> 
         <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
@@ -85,11 +82,35 @@ border: 2px solid #000;
             Analysis Requested:
             </h5>   
         </div> 
-        
+            
+            
+
+            
         </div>
+   
+    
+        <!-- <div class="col-4 test1"> 
+        <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
+            <h5>CHAIN OF CUSTODY SLIP
+            <br>
+            Lab.Code:
+            <br>
+            Client's Code:
+            <br>
+            Sample Type:
+            <br>
+            Date/Time Sample Submitted:
+            <br>
+            Date/Time Sample Collected:
+            <br>
+            Analysis Requested:
+            </h5>   
+        </div>  -->
+        
+    </div>
 
         @endforeach
-    
+       
     <input id ="printbtn" type="button" value="Print this page" onclick="window.print();" >
 </body>
 <script>

@@ -19,10 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- @include('secretary-file.secretary_style') --}}
+    @include('secretary-file.secretary_style')
 
-    {{-- CSS Table Style --}}
-    @include('custom_style')
+           
     <!-- Client Style -->
     {{-- @include('layouts/client_homestyle') --}}
 
@@ -52,26 +51,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('Add & View Status') }}</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Inventory
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('inventory-glassware') }}">
-                                            {{ __('Glassware') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
-                                            {{ __('Chemicals') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('inventory-chemicals') }}">
-                                                {{ __('Suppliers') }}
-                                        </a>
-                                    </div>
-                                </li>
-                            </li>
+                           
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('createReport') }}">{{ __('Create Report') }}</a>
+                                    <a class="nav-link" href="{{ route('createClient') }}">{{ __('Create Client') }}</a>
                                 </li>
+                                
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('form') }}">{{ __('Clients') }}</a>
+                            </li>
                         @endif
                     </ul>
 
