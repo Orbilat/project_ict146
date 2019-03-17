@@ -31,7 +31,7 @@ class AdminController extends Controller
     public function samples()
     {
         $samples = DB::table('samples')->orderBy('sampleId')->paginate(6);
-        return view('admin.samples', ['accounts' => $samples]);
+        return view('admin.samples', ['samples' => $samples]);
     }
 
     // Admin Clients Page (/clients)
