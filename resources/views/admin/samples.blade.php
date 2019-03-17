@@ -1,9 +1,9 @@
 @extends('layouts.admin_app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     Samples
@@ -26,8 +26,8 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="thead-light">
                             <tr>
                                 <th class="admin-table">RIS</th>
                                 <th class="admin-table">Lab Code</th>
@@ -43,8 +43,14 @@
                         </thead>
                         <tbody>
                             @foreach($samples as $sample)
-                            <tr>
-                                <td class="admin-table">{{ $sample->risNumber }}</td>
+                            <tr>    
+                                <td class="admin-table">
+                                    @php
+                                        $year = substr($sample->ris,  0, 4);
+                                        $id = substr($sample->ris, 4);
+                                        echo $year.'-'.$id;
+                                    @endphp
+                                </td>
                                 <td class="admin-table">
                                     @php
                                         $year = substr($sample->laboratoryCode,  0, 4);
@@ -108,7 +114,7 @@
                 </div>
             </div>
             <div class="offset-md-5 mt-3">
-                    {{ $samples->links() }}
+                {{ $samples->links() }}
             </div>
         </div>
     </div>

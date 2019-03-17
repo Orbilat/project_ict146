@@ -107,28 +107,28 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="thead-light">
                             <tr>
-                                <th>Company Name</th>
-                                <th>Email Address</th>
-                                <th>Contact No.</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
-                                <th>Status</th>
+                                <th class="admin-table">Company Name</th>
+                                <th class="admin-table">Email Address</th>
+                                <th class="admin-table">Contact No.</th>
+                                <th class="admin-table">Updated By</th>
+                                <th class="admin-table">Updated At</th>
+                                <th class="admin-table">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($suppliers as $supplier)
                             <tr>
-                                <td>{{ $supplier->companyName }}</td>
-                                <td>{{ $supplier->emailAddress }}</td>
-                                <td>{{ $supplier->contactNumber }}</td>
-                                <td>{{ $supplier->managedBy }}</td>
-                                <td>{{ $supplier->managedDate }}</td>
-                                <td>
+                                <td class="admin-table">{{ $supplier->companyName }}</td>
+                                <td class="admin-table">{{ $supplier->emailAddress }}</td>
+                                <td class="admin-table">{{ $supplier->contactNumber }}</td>
+                                <td class="admin-table">{{ $supplier->managedBy }}</td>
+                                <td class="admin-table">{{ $supplier->managedDate }}</td>
+                                <td class="admin-table">
                                     {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
                                     <div id="editSupplier{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -192,7 +192,7 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteSupplier{{ $count }}">Delete</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSupplier{{ $count }}">Delete</button>
                                     <div id="deleteSupplier{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -201,7 +201,7 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <p>Are you sure you want to delete {{ $supplier->companyName }} account?</p>                          
+                                                <p>Are you sure you want to delete supplier: {{ $supplier->companyName }}?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="{{ route('deleteSupplier-admin', [$supplier->supplierId]) }}" method="post">

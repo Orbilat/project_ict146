@@ -1,7 +1,6 @@
 <style>
 
   th.admin-table {
-    background-color: rgb(238, 252, 227);
     font-size: 12px;
   }
 

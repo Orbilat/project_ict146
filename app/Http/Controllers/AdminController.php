@@ -30,7 +30,9 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $samples = DB::table('samples')->orderBy('sampleId')->paginate(6);
+        $samples = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
+                    ->select('samples.*', 'clients.risNumber as ris')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+
         return view('admin.samples', ['samples' => $samples]);
     }
 
@@ -267,6 +269,7 @@ class AdminController extends Controller
             'reclaimSample' => 'required|numeric',
             'testResult' => 'nullable|string|max:5|min:1',
             'remarks' => 'required|string|max:20',
+            'newDateSubmit' => 'nullable|max:50'
         ]);
         // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
@@ -288,7 +291,11 @@ class AdminController extends Controller
         $client->reclaimSample = $request->reclaimSample;
         $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
-        $client->managedDate = new DateTime();
+        if ($request->newDateSubmit == NULL) {
+            $client->managedDate = DB::table('clients')->where('clientId', $clientId)->value('managedDate');
+        } else {
+            $client->managedDate = $request->newDateSubmit;
+        }
     
         if($client->save()){
             Session::flash('flash_client_updated', 'Client information updated successfully!');

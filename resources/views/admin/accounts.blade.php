@@ -174,8 +174,8 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="thead-light">
                             <tr>
                                 <th class="admin-table">Employee Name</th>
                                 <th class="admin-table">Username</th>
