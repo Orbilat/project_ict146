@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('faxNumber')->nullable();
             $table->string('emailAddress')->nullable();
             $table->integer('discount')->nullable()->default(0);
-            $table->float('deposit')->nullalbe()->default(0);
+            $table->float('deposit')->nullable()->default(0);
             $table->boolean('reclaimSample')->default(0);
             $table->string('testResult')->nullable();
             $table->string('remarks')->nullable();

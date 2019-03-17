@@ -17,12 +17,10 @@ class CreateParametersTable extends Migration
             $table->increments('parameterId');
             $table->string('analysis');
             $table->string('method');
-            $table->unsignedInteger('stationId');
+            $table->string('station');
             $table->string('managedBy');
             $table->dateTime('managedDate');
             $table->timestamps();
-
-            $table->foreign('stationId')->references('stationId')->on('stations');
         });
     }
 

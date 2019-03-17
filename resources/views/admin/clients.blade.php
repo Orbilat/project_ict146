@@ -247,7 +247,13 @@
                             @foreach($clients as $client)
                             <tr>
                                 {{-- TABLE BODY --}}
-                                <td class="admin-table">{{ $client->risNumber }}</td>
+                                <td class="admin-table">
+                                    @php
+                                        $year = substr($client->risNumber,  0, 4);
+                                        $id = substr($client->risNumber, 4);
+                                        echo $year.'-'.$id;
+                                    @endphp
+                                </td>
                                 <td class="admin-table">{{ $client->nameOfPerson }}</td>
                                 <td class="admin-table">{{ $client->nameOfEntity }}</td>
                                 <td class="admin-table">{{ $client->address }}</td>

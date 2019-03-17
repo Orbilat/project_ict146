@@ -8,6 +8,13 @@
     <strong>Notification:</strong> {!!Session::get('flash_client_added')!!}
 </div>
 @endif
+{{-- SUCCESS MESSAGE OF ADDING NEW SAMPLE --}}
+@if(Session::has('flash_sample_added'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
+</div>
+@endif
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -82,18 +89,17 @@
                         
                         <div class="form-group row">
                             <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
-    
-                            <select class="js-example-basic-multiple" id="parameter" name="parameter[]" multiple="multiple">
+                            &nbsp;&nbsp;&nbsp;
+                            <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple">
                                 @foreach ($parameters as $parameter)
-                                    <option value="{{ $parameter }}">{{ $parameter }}</option>
+                                    <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
                                 @endforeach
                             </select>
-                                @if ($errors->has('parameter'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('parameter') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                            @if ($errors->has('parameter'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('parameter') }}</strong>
+                                </span>
+                            @endif
                         </div>
 
                         <div class="form-group row">

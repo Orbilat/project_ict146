@@ -177,29 +177,29 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>ID No.</th>
-                                <th>License No.</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
-                                <th>Status</th>
+                                <th class="admin-table">Employee Name</th>
+                                <th class="admin-table">Username</th>
+                                <th class="admin-table">Position</th>
+                                <th class="admin-table">ID No.</th>
+                                <th class="admin-table">License No.</th>
+                                <th class="admin-table">Updated By</th>
+                                <th class="admin-table">Updated At</th>
+                                <th class="admin-table">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($accounts as $account)
                             <tr>
-                                <td>{{ $account->employeeName }}</td>
-                                <td>{{ $account->username }}</td>
-                                <td>{{ $account->userType }}</td>
-                                <td>{{ $account->idNumber }}</td>
-                                <td>{{ $account->licenseNumber }}</td>
-                                <td>{{ $account->managedBy }}</td>
-                                <td>{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
+                                <td class="admin-table">{{ $account->employeeName }}</td>
+                                <td class="admin-table">{{ $account->username }}</td>
+                                <td class="admin-table">{{ $account->userType }}</td>
+                                <td class="admin-table">{{ $account->idNumber }}</td>
+                                <td class="admin-table">{{ $account->licenseNumber }}</td>
+                                <td class="admin-table">{{ $account->managedBy }}</td>
+                                <td class="admin-table">{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
                                     <div id="editAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -330,7 +330,7 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
                                     <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

@@ -14,7 +14,7 @@ class AddLabCodeOnSamples extends Migration
     public function up()
     {
         Schema::table('samples', function (Blueprint $table) {
-            $table->bigInteger('laboratoryCode')->nullable()->after('risNumber');
+            $table->string('laboratoryCode')->nullable()->after('risNumber');
         });
     }
 
