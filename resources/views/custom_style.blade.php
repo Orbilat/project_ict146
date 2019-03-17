@@ -1,7 +1,12 @@
 <style>
 
-  th {
+  th.admin-table {
     background-color: rgb(238, 252, 227);
+    font-size: 12px;
+  }
+
+  td.admin-table {
+    font-size: 11px;
   }
   
   .editModal {

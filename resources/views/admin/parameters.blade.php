@@ -70,7 +70,7 @@
                                     <label for="method" class="col-md-4 col-form-label text-md-right">{{ __('Method') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="method" type="textbox" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="method" value="{{ old('method') }}" required autofocus>
+                                        <input id="method" type="textbox" class="form-control{{ $errors->has('method') ? ' is-invalid' : '' }}" name="method" value="{{ old('method') }}" placeholder="Optional" autofocus>
         
                                         @if ($errors->has('method'))
                                             <span class="invalid-feedback" role="alert">
@@ -79,61 +79,19 @@
                                         @endif
                                     </div>
                                 </div>
-        
-                                <div class="form-group row">
-                                    <label for="typeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Analysis Type') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="typeOfAnalysis" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="typeOfAnalysis" required autofocus>
-        
-                                        @if ($errors->has('typeOfAnalysis'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('typeOfAnalysis') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
                                 
                                 <div class="form-group row">
-                                    <label for="chargePerSample" class="col-md-4 col-form-label text-md-right">{{ __('Charge Per Sample') }}</label>
+                                    <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="chargePerSample" type="number" class="form-control{{ $errors->has('chargePerSample') ? ' is-invalid' : '' }}" name="chargePerSample" required>
-        
-                                        @if ($errors->has('chargePerSample'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('chargePerSample') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="samplePrepCharge" class="col-md-4 col-form-label text-md-right">{{ __('Sample Prep Charge') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="samplePrepCharge" type="number" class="form-control{{ $errors->has('samplePrepCharge') ? ' is-invalid' : '' }}" name="samplePrepCharge" required>
-        
-                                        @if ($errors->has('samplePrepCharge'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('samplePrepCharge') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="stationId" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <select id="stationId" type="text" class="form-control{{ $errors->has('stationId') ? ' is-invalid' : '' }}" name="stationId">
-                                            <option value="1">Station 1</option>
-                                            <option value="2">Station 2</option>
-                                            <option value="3">Station 3</option>                                    
+                                        <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
+                                            <option value="Station 1">Station 1</option>
+                                            <option value="Station 2">Station 2</option>
+                                            <option value="Station 3">Station 3</option>                                    
                                         </select>
-                                        @if ($errors->has('stationId'))
+                                        @if ($errors->has('station'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('stationId') }}</strong>
+                                                <strong>{{ $errors->first('station') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -155,29 +113,25 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Analysis</th>
-                                <th>Method</th>
-                                <th>Analysis Type</th>
-                                <th>Charge Per Sample</th>
-                                <th>Sample Prep Charge</th>
-                                <th>Updated By</th>
-                                <th>Updated At</th>
-                                <th>Status</th>
+                                <th class="admin-table">Analysis</th>
+                                <th class="admin-table">Method</th>
+                                <th class="admin-table">Station</th>
+                                <th class="admin-table">Managed By</th>
+                                <th class="admin-table">Managed At</th>
+                                <th class="admin-table">Functions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($parameters as $parameter)
                             <tr>
-                                <td>{{ $parameter->analysis }}</td>
-                                <td>{{ $parameter->method }}</td>
-                                <td>{{ $parameter->typeOfAnalysis }}</td>
-                                <td>{{ $parameter->chargePerSample }}</td>
-                                <td>{{ $parameter->samplePrepCharge }}</td>
-                                <td>{{ $parameter->managedBy }}</td>
-                                <td>{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>
+                                <td class="admin-table">{{ $parameter->analysis }}</td>
+                                <td class="admin-table">{{ $parameter->method }}</td>
+                                <td class="admin-table">{{ $parameter->station }}</td>
+                                <td class="admin-table">{{ $parameter->managedBy }}</td>
+                                <td class="admin-table">{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info float-left" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
+                                    <button type="button" class="btn btn-info float-left btn-sm" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
                                     <div id="editAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -188,76 +142,7 @@
                                                 <form method="POST" action="{{ route('updateParameter-admin', [$parameter->parameterId]) }}">
                                                     @method('PATCH')
                                                     @csrf
-                                                <div class="modal-body">
-                                                    <div class="form-group row">
-                                                        <label for="analysis" class="col-md-4 col-form-label text-md-right">{{ __('Analysis') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="analysis" type="text" class="form-control{{ $errors->has('analysis') ? ' is-invalid' : '' }}" name="analysis" value="{{ $parameter->analysis }}" required autofocus>
-                            
-                                                            @if ($errors->has('analysis'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('analysis') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                            
-                                                    <div class="form-group row">
-                                                        <label for="method" class="col-md-4 col-form-label text-md-right">{{ __('Method') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="method" type="textbox" class="form-control{{ $errors->has('employeeName') ? ' is-invalid' : '' }}" name="method" value="{{ $parameter->method }}" required autofocus>
-                            
-                                                            @if ($errors->has('method'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('method') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                            
-                                                    <div class="form-group row">
-                                                        <label for="typeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Analysis Type') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="typeOfAnalysis" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="typeOfAnalysis" value="{{ $parameter->typeOfAnalysis }}" required autofocus>
-                            
-                                                            @if ($errors->has('typeOfAnalysis'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('typeOfAnalysis') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="form-group row">
-                                                        <label for="chargePerSample" class="col-md-4 col-form-label text-md-right">{{ __('Charge Per Sample') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="chargePerSample" type="number" class="form-control{{ $errors->has('chargePerSample') ? ' is-invalid' : '' }}" name="chargePerSample" value="{{ $parameter->chargePerSample }}" required>
-                            
-                                                            @if ($errors->has('chargePerSample'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('chargePerSample') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                            
-                                                    <div class="form-group row">
-                                                        <label for="samplePrepCharge" class="col-md-4 col-form-label text-md-right">{{ __('Sample Prep Charge') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="samplePrepCharge" type="number" class="form-control{{ $errors->has('samplePrepCharge') ? ' is-invalid' : '' }}" name="samplePrepCharge" value="{{ $parameter->samplePrepCharge }}" required>
-                            
-                                                            @if ($errors->has('samplePrepCharge'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('samplePrepCharge') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+                                                
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -269,7 +154,7 @@
                                 </div>
                                     &nbsp;&nbsp; 
                                 {{-- DELETE BUTTON --}}
-                                <button type="button" class="btn btn-danger float-left" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
+                                <button type="button" class="btn btn-danger float-left btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
                                 <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

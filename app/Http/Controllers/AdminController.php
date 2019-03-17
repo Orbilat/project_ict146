@@ -9,6 +9,7 @@ use Session;
 use App\Employee;
 use App\Client;
 use App\Sample;
+use App\Sample_Tests;
 use App\Parameter;
 use App\Supplier;
 use App\Item;
@@ -29,8 +30,8 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $accounts = DB::table('samples')->orderBy('sampleId')->paginate(6);
-        return view('admin.samples', ['accounts' => $accounts]);
+        $samples = DB::table('samples')->orderBy('sampleId')->paginate(6);
+        return view('admin.samples', ['samples' => $samples]);
     }
 
     // Admin Clients Page (/clients)
@@ -69,7 +70,7 @@ class AdminController extends Controller
     // Admin Parameters Page (/parameters)
     public function parameters()
     {
-        $parameters = DB::table('parameters')->orderBy('typeOfAnalysis')->paginate(6);
+        $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
@@ -183,9 +184,10 @@ class AdminController extends Controller
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount' => 'nullable|numeric|between:0,100',
-            'addedCharges' => 'nullable|numeric|between:0,100000',
-            'depositedAmount' => 'nullable|numeric|between:0,100000',
-            'dateOfSubmission' => 'required|string|max:20',
+            'deposit' => 'nullable|numeric|between:0,100000',
+            'reclaimSample' => 'required|numeric',
+            'testResult' => 'nullable|string|max:5|min:1',
+            'remarks' => 'required|string|max:20',
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
@@ -201,27 +203,29 @@ class AdminController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->discount = $request->discount;
+        $client->deposit = $request->deposit;
+        $client->testResult = $request->testResult;
+        $client->reclaimSample = $request->reclaimSample;
+        $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
         $client->save();
-        $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
+        if (strlen((string)($client->clientId)) == 1) {
+            $idOfClient = (string)("000".$client->clientId);
+        } elseif (strlen((string)($client->clientId)) == 2) {
+            $idOfClient = (string)("00".$client->clientId);
+        } elseif (strlen((string)($client->clientId)) == 3) {
+            $idOfClient = (string)("0".$client->clientId);
+        } else {
+            $idOfClient = (string)$client->clientId;
+        }
+        $client->risNumber = date("Y", strtotime($client->created_at)) . $idOfClient;
         $client->save();
-        // INSERT PAYMENT
-        $payment = new Payment;
-        $payment->testingCost = NULL;
-        $payment->discount = (float)$request->discount;
-        $payment->addedCharges = (float)$request->addedCharges;
-        $payment->depositedAmount = (float)$request->depositedAmount;
-        $payment->managedBy = Auth::user()->employeeName;
-        $payment->managedDate = new DateTime();
-        $payment->save();
         // INSERT TRANSACTION
         $transaction = new Transaction;
         $transaction->client = $client->clientId;
-        $transaction->payment = $payment->paymentId;
         $transaction->approvedBy = Auth::user()->employeeId;
-        $transaction->transactionDate = $client->dateOfSubmission;
         $transaction->managedBy = Auth::user()->employeeName;
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
@@ -238,8 +242,8 @@ class AdminController extends Controller
     // CLIENT DELETE
     protected function destroyClient($clientId)
     {
-        $account = Client::findOrFail($clientId);
-        if($account->delete()){
+        $client = Client::findOrFail($clientId);
+        if($client->delete()){
             Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
             return Redirect::back();
         }
@@ -258,7 +262,11 @@ class AdminController extends Controller
             'contactNumber' => 'string|numeric',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
-            'dateOfSubmission' => 'required|string|max:20',
+            'discount' => 'nullable|numeric|between:0,100',
+            'deposit' => 'nullable|numeric|between:0,100000',
+            'reclaimSample' => 'required|numeric',
+            'testResult' => 'nullable|string|max:5|min:1',
+            'remarks' => 'required|string|max:20',
         ]);
         // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
@@ -274,7 +282,11 @@ class AdminController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->dateOfSubmission = $request->dateOfSubmission;
+        $client->discount = $request->discount;
+        $client->deposit = $request->deposit;
+        $client->testResult = $request->testResult;
+        $client->reclaimSample = $request->reclaimSample;
+        $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
     
@@ -294,12 +306,13 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
-            'sampleMatrix' => 'required|string|max:255',
-            'collectionTime' => 'required|max:50',
-            'samplePreservation' => 'required|string|max:30',
-            'purposeOfAnalysis' => 'required|string|max:50',
+            'sampleType' => 'required|string|max:255',
+            'sampleCollection' => 'required|string|max:50',
+            'samplePreservation' => 'nullable|string|max:50',
+            'parameter' => 'required',
+            'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|max:20',
+            'dueDate' => 'required|string|max:50',
         ]);
         //VALIDATION CHECKS
         if ($validator->fails()) {
@@ -307,42 +320,53 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-
+        $client = DB::table('clients')->where('risNumber', $request->clientId)->value('clientId');
         //ELOQUENT INSERT
         $sample = new Sample;
-        $sample->risNumber = $request->clientId;
+        $sample->risNumber = $client;
         $sample->clientsCode = trim($request->clientsCode);
-        $sample->sampleMatrix =  trim($request->sampleMatrix);
-        $sample->collectionTime = trim($request->collectionTime);
+        $sample->sampleType =  trim($request->sampleType);
+        $sample->sampleCollection = $request->sampleCollection;
         $sample->samplePreservation = trim($request->samplePreservation);
         $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
         $sample->sampleSource = $request->sampleSource;
         $sample->dueDate = $request->dueDate;
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
-        //SAVE TO DB
         $sample->save();
-        $client = DB::table('clients')->select('risNumber')->where('clientId', '=', $sample->sampleId)->get();
-        $sample->laboratoryCode = (int)date("Y", strtotime($client->created_at) . $client . $sample->sampleId);
-        //CHECK SAVE
-        $sampletests = new Sample_Test;
-        $sampletests->sampleCode = $sample->sampleId;
-        $sampletests->sampleDate = new DateTime();
-        $parameterId = DB::table('parameters')->select('parameterId')->where('analysis', '=', $request->analysis)->get();
-        $sampletests->parameters = $parameterId;
-        $sampletests->status = "In Progress";
-        $sampletests->managedBy = Auth::user()->employeeName;
-        $sampletests->managedDate = new DateTime();
-        $sampletests->save();
+        //INSERT LAB CODE TO SAMPLES
+        if (strlen((string)($sample->sampleId)) == 1) {
+            $idOfSample = (string)("000".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 2) {
+            $idOfSample = (string)("00".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 3) {
+            $idOfSample = (string)("0".$sample->sampleId);
+        } else {
+            $idOfSample = (string)$sample->sampleId;
+        }
+        $sample->laboratoryCode = $request->clientId . $idOfSample;
+        //INSERT SAMPLE TESTS IN LOOP
+        foreach ($request->parameter as $parameter => $analysis) {
+            $sampletests = new Sample_Tests;
+            $sampletests->sampleCode = $sample->sampleId;
+            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->status = "In Progress";
+            $sampletests->managedBy = Auth::user()->employeeName;
+            $sampletests->managedDate = new DateTime();
+            $sampletests->save();
+        }
+        //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
         if($sample->save()){
-            
-            return redirect('admin.samples');
+            $params = Parameter::all();
+            Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
+            return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
         }
         else {
             App::abort(500, 'Error!');
         }
+        
     }
-    // ACCOUNT DELETE
+    // SAMPLE DELETE
     protected function destroySample($sampleId)
     {
         $account = Employee::findOrFail($accountId);
@@ -398,10 +422,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'analysis' => 'required|string|max:255|unique:parameters',
             'method' => 'nullable|string|max:255',
-            'typeOfAnalysis' => 'required|string|max:50',
-            'chargePerSample' => 'required|string|numeric|max:100000',
-            'samplePrepCharge' => 'nullable|string|numeric|max:100000',
-            'stationId' => 'required|numeric|max:3',
+            'station' => 'required|string|max:10',
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
@@ -414,10 +435,7 @@ class AdminController extends Controller
         $parameter = new Parameter;
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->typeOfAnalysis =  trim($request->typeOfAnalysis);
-        $parameter->chargePerSample = $request->chargePerSample;
-        $parameter->samplePrepCharge = $request->samplePrepCharge;
-        $parameter->stationId = $request->stationId;
+        $parameter->station = $request->station;
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
         //SAVE TO DB && CHECK
@@ -432,8 +450,8 @@ class AdminController extends Controller
     // PARAMETER DELETE
     protected function destroyParameter($parameterId)
     {
-        $account = Parameter::findOrFail($parameterId);
-        if($account->delete()){
+        $parameter = Parameter::findOrFail($parameterId);
+        if($parameter->delete()){
             Session::flash('flash_parameter_deleted', 'Analysis has been deleted successfully!');
             return Redirect::back();
         }
@@ -446,11 +464,9 @@ class AdminController extends Controller
     {
         // VALIDATION
         $validatorUpdate = Validator::make($request->all(), [
-            'analysis' => 'required|string|max:255',
+            'analysis' => 'required|string|max:255|unique:parameters',
             'method' => 'nullable|string|max:255',
-            'typeOfAnalysis' => 'required|string|max:50',
-            'chargePerSample' => 'required|string|numeric|max:100000',
-            'samplePrepCharge' => 'nullable|string|numeric|max:100000',
+            'station' => 'required|string|max:10',
         ]);
         // VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
@@ -462,9 +478,7 @@ class AdminController extends Controller
         $parameter = Parameter::findOrFail($parameterId);
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->typeOfAnalysis =  trim($request->typeOfAnalysis);
-        $parameter->chargePerSample = $request->chargePerSample;
-        $parameter->samplePrepCharge = $request->samplePrepCharge;
+        $parameter->station = $request->station;
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
     

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLabCodeOnSamples extends Migration
+class DropDateSubmittedOnClients extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddLabCodeOnSamples extends Migration
      */
     public function up()
     {
-        Schema::table('samples', function (Blueprint $table) {
-            $table->string('laboratoryCode')->nullable()->after('risNumber');
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropColumn('dateSubmitted');
         });
     }
 
@@ -25,8 +25,8 @@ class AddLabCodeOnSamples extends Migration
      */
     public function down()
     {
-        Schema::table('samples', function (Blueprint $table) {
-            $table->dropColumn('laboratoryCode');
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dateTime('dateSubmitted');
         });
     }
 }
