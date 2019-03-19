@@ -1,27 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.analyst_app')
 
 @section('content')
 <h3 class="hblue pull-left ">Samples</h3> 
 <table id="sampledata" class="display sampledata" style="width:100%">
     <thead>
         <tr>
-            <th>Sample Id </th>
+            <th>Laboratory Code </th>
             <th>Parameters</th>
-            <th>Date and Time Received</th>
+            <th>Collection Time</th>
+            <th>Date Received</th>
             <th>Status</th>
             <th>Date and Time Completed</th>
-            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach($details as $data)
             <tr>
-                <td>{{ $data->sampleCode}} </td>
-                <td>{{ $data->method }}</td>
-                <td>{{ $data->collectionTime }}</td>
-                <td>{{ $data->status }}</a></td>
+                <td>{{ $data->laboratoryCode}} </td>
+                <td>{{ $data->parametername }}</td>
+                <td>{{ $data->sampleCollection }}</td>
+                <td>{{ $data->created_at}} </td>
+                <td>{{ $data->status }}</td>
                 <td>{{ $data->timecompleted }}</td>
-                <td></td>
             </tr>
         @endforeach
     </tbody>

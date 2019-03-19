@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.analyst_app')
 
 @section('content')
 <h3 class="hblue pull-left ">Station {{ $station }}</h3> 
@@ -8,7 +8,7 @@
     <table id="sampledata" class="display sampledata" style="width:100%">
         <thead>
             <tr>
-                <th>Sample Id</th>
+                <th>Laboratory Code</th>
                 <th>RIS Number</th>
                 <th>Status </th>
             </tr>
@@ -17,7 +17,7 @@
             @if(!empty($stationssample))
                 @foreach($stationssample as $data)
                     <tr>
-                        <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->sampleCode }}">{{ $data->sampleCode }}</a></td>
+                        <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
                         <td>{{ $data->risNumber }}</td>
                         <td>{{ $data->status}} </td>
                         
@@ -63,6 +63,7 @@
             "ordering": false
         });
         $('#scanid2').focus();
+        $('#scanid').focus();
     });
 </script>
 @endsection

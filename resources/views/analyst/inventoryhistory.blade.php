@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.analyst_app')
 
 @section('content')
 <div class="container">
@@ -7,8 +7,9 @@
             <tr>
                 <th>Inventory</th>
                 <th>Date of Use</th>
-                <th>Item Type</th>
+                <th>Item Name</th>
                 <th>Container Type</th>
+                <th>Volume Capacity</th>
                 <th>Quantity</th>
             </tr>
         </thead>
@@ -16,9 +17,10 @@
             @foreach($history as $data)
                 <tr>
                     <td>{{ $data->inventoryId }}</td>
-                    <td>{{ $data->dateOfUse }}</td>
-                    <td>{{ $data->itemType }}</td>
+                    <td>{{ $data->created_at }}</td>
+                    <td>{{ $data->itemName }}</td>
                     <td>{{ $data->containerType }}</td>
+                    <td>{{ $data->volumeCapacity }}</td>
                     <td>{{ $data->qty }}</td>
                 </tr>
             @endforeach

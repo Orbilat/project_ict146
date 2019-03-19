@@ -107,18 +107,20 @@ Route::middleware(['admin','auth'])->group(function (){
 // END ADMIN ROUTES
 
 
-// ANALYST ROUTES
-Route::redirect('/analyst', '/analyst/notification');
-Route::get('/analyst/notification', 'AnalystController@notification')->name('notification');
+//Route::middleware(['analyst','auth'])->group(function (){
+    // ANALYST ROUTES
+    Route::redirect('/analyst', '/analyst/notification');
+    Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
 
-Route::get('/analyst/inventory', 'AnalystController@inventory')->name('inventory');
-Route::post('/analyst/inventory/update', 'AnalystController@inventoryupdate')->name('inventoryupdate');
-Route::get('/analyst/inventory/history', 'AnalystController@history')->name('inventoryhistory');
+    Route::get('/analyst/inventory', 'AnalystController@inventory')->name('analystinventory');
+    Route::post('/analyst/inventory/update', 'AnalystController@inventoryupdate')->name('inventoryupdate');
+    Route::get('/analyst/inventory/history', 'AnalystController@history')->name('inventoryhistory');
 
-Route::get('/analyst/sample/station/{id}', 'AnalystController@samplePerStation')->name('samplestation');
-Route::get('/analyst/{stationid}/sample/{id}', 'AnalystController@sampleDetails')->name('sampledetails');
+    Route::get('/analyst/sample/station/{id}', 'AnalystController@samplePerStation')->name('samplestation');
+    Route::get('/analyst/{stationid}/sample/{id}', 'AnalystController@sampleDetails')->name('sampledetails');
 
-Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
-Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
-// END ANALYST ROUTES
-
+    Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
+    Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
+    Route::get('/analyst/sendmessage', 'AnalystController@sendMessage');
+    // END ANALYST ROUTES
+//});
