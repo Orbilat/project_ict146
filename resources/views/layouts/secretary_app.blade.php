@@ -10,7 +10,9 @@
     <title>USC Water Laboratory</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -102,6 +104,10 @@
         </main>
     
     <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
 
     function changeText() {
         var text = document.getElementById("addNew");

@@ -55,11 +55,11 @@ border: 2px solid #000;
 <body>
     
         
-        @foreach($produits as $p)
+        @foreach($samples as $p)
     <div class="row">
         <div class="col-4">
-            <div>{!! DNS1D::getBarcodeHTML ($p->risNumber, 'C128A') !!}</div><br>
-            <h2>{{ $p->risNumber}}
+            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A') !!}</div><br>
+            <h2>{{ $p->laboratoryCode}}
             @if($p->remarks == "rush" || $p->remarks == "Rush")
                 &emsp;&emsp;
                 Rush
@@ -69,7 +69,7 @@ border: 2px solid #000;
         <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
-            Lab.Code:
+            Lab.Code: {{$dueDate}}
             <br>
             Client's Code:
             <br>

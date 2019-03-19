@@ -54,7 +54,7 @@ Route::get('/secretary', 'SecretaryController@index')->name('notification-secret
 Route::get('/secretary/notification', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
-Route::get('/secretary/add', 'SecretaryController@add')->name('addSecretary');
+Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
 
 
 // Route::get('/secretary/form',function() {
