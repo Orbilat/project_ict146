@@ -28,6 +28,17 @@ class AdminController extends Controller
     }
 
     // Admin Samples Page (/samples)
+    public function transactions()
+    {
+        $transactions = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
+                    ->join('sample__tests', 'sample.sampleId', '=', 'sample__tests.sampleCode')
+                    ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
+                    ->select('samples.*', 'clients.risNumber as ris', '')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+
+        return view('admin.transactions', ['transactions' => $transactions]);
+    }
+
+    // Admin Samples Page (/samples)
     public function samples()
     {
         $samples = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')

@@ -15,5 +15,8 @@
   .deleteModal {
     background-color: rgb(244, 193, 193);
   }
+  .pointer {
+    cursor: pointer;
+  }
 
 </style>

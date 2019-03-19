@@ -42,7 +42,7 @@
                                 <a class="nav-link" href="{{ route('admin') }}">{{ __('Notifications') }}</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin') }}">{{ __('Transactions') }}</a>
+                                    <a class="nav-link" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
                                 </li>
                             <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
