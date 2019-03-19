@@ -18,7 +18,7 @@
                 Construction and Materials Testing Laboratory</p>
             <p>The USC Water Laboratory, which accepts third-party analysis and samples from the public for a fee, is attached to the Department of Chemistry.</p>
             </div>
-            <div class="col-md-6 ">
+            <div class="col-md-6">
             <h2 class="w3-center titleText">News</h2>
             <div class="panel panel-primary">
               <div class="panel-body" >
@@ -35,10 +35,7 @@
   <div class="w3-xlarge w3-section">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
     <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
