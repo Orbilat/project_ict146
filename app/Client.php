@@ -11,6 +11,7 @@ class Client extends Model
     protected $primaryKey = 'clientId';
 
     protected $fillable = [
-        'nameOfPerson', 'nameOfEntity', 'address', 'contactNumber', 'faxNumber', 'emailAddress', 'dateOfSubmission', 'managedBy', 'managedDate',
+        'nameOfPerson', 'nameOfEntity', 'address', 'contactNumber', 'faxNumber', 'emailAddress', 'discount', 'deposit', 
+        'reclaimSample', 'testResult', 'remarks', 'dateSubmitted', 'managedBy', 'managedDate',
     ];
 }

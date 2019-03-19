@@ -16,7 +16,7 @@
         <tbody>
             @foreach($sampledatas as $data)
                 <tr>
-                    <td>{{ $data->duedate }}</td>
+                    <td>{{ $data->dueDate }}</td>
                     <td>{{ $data->sampleId }}</td>
                     <td>{{ $data->risNumber }}</td>
                     <td>{{ $data->collectionTime }}</td>

@@ -1,7 +1,11 @@
 <style>
 
-  th {
-    background-color: rgb(238, 252, 227);
+  th.admin-table {
+    font-size: 12px;
+  }
+
+  td.admin-table {
+    font-size: 11px;
   }
   
   .editModal {
@@ -10,6 +14,9 @@
 
   .deleteModal {
     background-color: rgb(244, 193, 193);
+  }
+  .pointer {
+    cursor: pointer;
   }
 
 </style>

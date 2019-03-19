@@ -11,6 +11,6 @@ class Parameter extends Model
     protected $primaryKey = 'parameterId';
 
     protected $fillable = [
-        'analysis', 'method', 'typeOfAnalysis', 'chargePerSample', 'samplePrepCharge', 'managedBy', 'managedDate',
+        'analysis', 'method', 'stationId', 'managedBy', 'managedDate',
     ];
 }

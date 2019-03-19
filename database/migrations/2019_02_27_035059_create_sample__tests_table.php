@@ -16,11 +16,11 @@ class CreateSampleTestsTable extends Migration
         Schema::create('sample__tests', function (Blueprint $table) {
             $table->increments('testId');
             $table->unsignedInteger('sampleCode');
-            $table->date('sampleDate');
             $table->unsignedInteger('parameters');
-            $table->boolean('status')->default(0);
+            $table->string('status');
             $table->string('managedBy');
             $table->dateTime('managedDate');
+            $table->dateTime('timecompleted')->nullable();
             $table->timestamps();
         });
     }

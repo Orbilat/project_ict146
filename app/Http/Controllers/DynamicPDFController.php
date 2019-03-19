@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use PDF;
-use App\Samples;
+use App\Client;
+use App\Sample;
 
 class DynamicPDFController extends Controller
 {
@@ -25,9 +26,10 @@ class DynamicPDFController extends Controller
 
     function pdf()
     {
+     $data = Client::all();
      $pdf = \App::make('dompdf.wrapper');
-     $pdf->loadHTML($this->convert_customer_data_to_html());
-     return $pdf->setPaper('4', 'landscape')->stream();
+     $pdf = \PDF::loadView('produit', $data);
+     return $pdf->setPaper('Letter', 'landscape')->stream();
     }
 
     function convert_customer_data_to_html()

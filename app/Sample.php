@@ -11,7 +11,8 @@ class Sample extends Model
     protected $primaryKey = 'sampleId';
 
     protected $fillable = [
-        'clientsCode', 'sampleMatrix', 'collectionTime', 'samplePreservation', 'purposeOfAnalysis', 'sampleSource', 'dueDate', 'managedBy', 'managedDate',
+        'laboratoryCode', 'clientsCode', 'sampleType', 'sampleCollection', 'samplePreservation', 'purposeOfAnalysis', 'sampleSource', 
+        'dueDate', 'managedBy', 'managedDate',
     ];
     protected $hidden = [
         'risNumber',
