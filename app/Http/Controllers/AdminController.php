@@ -459,9 +459,9 @@ class AdminController extends Controller
     // SAMPLE DELETE
     protected function destroySample($sampleId)
     {
-        $account = Employee::findOrFail($accountId);
-        if($account->delete()){
-            Session::flash('flash_account_deleted', 'Account deleted successfully!');
+        $sample = Sample::findOrFail($sampleId);
+        if($sample->delete()){
+            Session::flash('flash_sample_deleted', 'Sample deleted successfully!');
             return Redirect::back();
         }
         else {
@@ -554,7 +554,7 @@ class AdminController extends Controller
     {
         // VALIDATION
         $validatorUpdate = Validator::make($request->all(), [
-            'analysis' => 'required|string|max:255|unique:parameters',
+            'analysis' => 'required|string|max:255',
             'method' => 'nullable|string|max:255',
             'station' => 'required|string|max:10',
         ]);
