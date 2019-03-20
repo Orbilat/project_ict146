@@ -1,33 +1,31 @@
-@extends('layouts.admin_app')
+@extends('layouts.secretary_app')
 
 <body>
 
 
 @section('content')
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <ul class="secretary-page">
-                  <li><a  href="{{url('secretary/notification')}}">Notification</a></li>
-                  <li><a href="{{url('secretary/inventory')}}">Inventory</a></li>
-                  <li><a href="{{url('secretary/view')}}">View Status</a></li>
-                  <li class = "active"><a href="{{url('secretary/add')}}">Add & View Status</a></li>
-                  <li><a href="{{url('secretary/create')}}">Create Report</a></li>
-                </ul>
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif                  
-                </div>
-            Add
-            </div>
-        </div>
-    </div>
-</div>
+<table id="customers">
+  <tr>
+    <th>RIS Number</th>
+    <th>Client ID</th>
+    <th>Client Name</th>
+    <th>Contact Number</th>
+    <th></th>
+  </tr>
+  @foreach($status as $p)
+
+
+<tr>
+<td>{{$p->risNumber}}</td>
+<td>{{$p->clientId}}</td>
+<td>{{$p->nameOfPerson}}</td>
+<td>{{$p->contactNumber}}</td>
+
+
+</tr>
+@endforeach
+</table>
 </body>
 
 @endsection

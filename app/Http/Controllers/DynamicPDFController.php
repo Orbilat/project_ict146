@@ -28,8 +28,13 @@ class DynamicPDFController extends Controller
     {
      $data = Client::all();
      $pdf = \App::make('dompdf.wrapper');
+<<<<<<< HEAD
+     $pdf->loadHTML($this->convert_customer_data_to_html());
+     return $pdf->setPaper('A3', 'landscape')->stream();
+=======
      $pdf = \PDF::loadView('produit', $data);
      return $pdf->setPaper('Letter', 'landscape')->stream();
+>>>>>>> 7eceea1245baaaa79dd91182cac893168885981d
     }
 
     function convert_customer_data_to_html()
@@ -61,6 +66,48 @@ class DynamicPDFController extends Controller
   <style type="text/css">
   * {
     box-sizing: border-box;
+  }
+  .secretary-page {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #4d4dff;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover:not(.active) {
+    background-color: #111;
+  }
+  
+  .active {
+    background-color: #4CAF50;
+  }
+  .bckg{
+    background-image: url("/img/RIS.png"); 
+    
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    
+  }
+  p.a {
+    font-family: "Times New Roman", Times, serif;
+  }
+  .margin{
+    margin-top: 100px;
+    margin-left:70px;
   }
   
   .header {

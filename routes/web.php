@@ -21,8 +21,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('barcode','ProduitController@index');
-
 
 //Auth routes
 // Route::get('/client-home', function () {
@@ -50,20 +48,28 @@ Route::post('/contact', [
 
 //SECRETARY ROUTES
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/secretary', 'SecretaryController@index')->name('secretary');
-Route::get('/secretary/notification', 'SecretaryController@noti')->name('notification');
+Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
+Route::get('/secretary/notification', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
-Route::get('/secretary/add', 'SecretaryController@add')->name('add');
-Route::get('/secretary/create','SecretaryController@create')->name('create');
+Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
+
+
 // Route::get('/secretary/form',function() {
 //     return view('secretary-file.ris');
 //  });
-Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
+// Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
 // Route::get('/dynamic_pdf', 'DynamicPDFController@index');
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
-Route::get('/notification', 'SecretaryController@noti')->name('notification');
+Route::get('/secretary/create','SecretaryController@create')->name('createClient');
+Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
+Route::post('/secretary/create-sample','SecretaryController@addSample')->name('createSample-secretary');
+Route::get('/secretary/form','SecretaryController@form')->name('form');
+Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
+Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
+
+
 //END SECRETARY ROUTES
 
 //ADMIN ROUTES

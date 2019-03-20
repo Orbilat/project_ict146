@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Barcode</title>
-   
+    
     
     <style type="text/css">
 @media print {
@@ -54,25 +54,42 @@ border: 2px solid #000;
 </head>
 <body>
     
-        @php
-            $produits->toArray();
-            $array = array('CODABAR','PHARMA2T','CODE11','IMB','KIX','RMS4CC','PLANET','POSTNET');
-        @endphp
-
-        <div class="row">
-            @for ($i = 0; $i < 8; $i++)
-            @if ($i%3 == 0)
-                <div class="row">
-            @endif
-            <div class="col-3">
-                {!! DNS1D::getBarcodeHTML ($produits[1]->risNumber, $array[$i],2,33) !!}
-                <h5>{{ $produits[1]->risNumber .'-'. $array[$i] }}</h5>
-            </div>
-            @endfor
-        </div>
         
+        @foreach($samples as $p)
+    <div class="row">
+        <div class="col-4">
+            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A') !!}</div><br>
+            <h2>{{ $p->laboratoryCode}}
+            @if($p->remarks == "rush" || $p->remarks == "Rush")
+                &emsp;&emsp;
+                Rush
+            @endif
+            </h2>
+            <div class="test1"> 
+        <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
+            <h5>CHAIN OF CUSTODY SLIP
+            <br>
+            Lab.Code: {{$dueDate}}
+            <br>
+            Client's Code:
+            <br>
+            Sample Type:
+            <br>
+            Date/Time Sample Submitted:
+            <br>
+            Date/Time Sample Collected:
+            <br>
+            Analysis Requested:
+            </h5>   
+        </div> 
+            
+            
 
-        {{-- <div class="col-4 test1"> 
+            
+        </div>
+   
+    
+        <!-- <div class="col-4 test1"> 
         <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
@@ -88,11 +105,12 @@ border: 2px solid #000;
             <br>
             Analysis Requested:
             </h5>   
-        </div>
-         --}}
+        </div>  -->
         
-        
-    
+    </div>
+
+        @endforeach
+       
     <input id ="printbtn" type="button" value="Print this page" onclick="window.print();" >
 </body>
 <script>
