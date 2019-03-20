@@ -79,7 +79,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Station</a>
             <div class="dropdown-menu">
                 @foreach(Session::get('stations') as $station)
-                    <a class="dropdown-item" href="/analyst/sample/station/{{ $station->stationId }}">{{ $station->stationname }}</a>
+                    <a class="dropdown-item" href="/analyst/sample/station/{{ $station->stationId }}">{{ $station->stationName }}</a>
                 @endforeach
           </li>
         </ul>

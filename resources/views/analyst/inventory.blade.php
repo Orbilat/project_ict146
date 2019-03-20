@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.analyst_app')
 
 @section('content')
 <h3 class="hblue pull-left ">Inventory</h3>
-<a class="btn btn-info btn-lg pull-right margintop" href="/analyst/inventory/history">View History</a>
+<a class="btn btn-secondary btn-lg pull-right margintop" href="/analyst/inventory/history">View History</a>
+<button type="button" class="btn btn-secondary btn-lg pull-right margintop" data-toggle="modal" data-target="#myModal">Transact</button>
 <br>
 <table id="sampledata" class="display sampledata" style="width:100%">
     <thead>
@@ -10,6 +11,7 @@
             <th>Item Id</th>
             <th>Item Type</th>
             <th>Container</th>
+            <th>Volume</th>
             <th>Quantity</th>
             <th>To use</th>
         </tr>
@@ -18,8 +20,9 @@
         @foreach($items as $item)
             <tr>
                 <td><input name="itemid[]" value="{{ $item->itemId }}" hidden>{{ $item->itemId }}</td>
-                <td>{{ $item->itemType }}</td>
+                <td>{{ $item->itemName }}</td>
                 <td>{{ $item->containerType }}</td>
+                <td>{{ $item->volumeCapacity }}
                 <td class="qty">{{ $item->quantity }}</td>
                 <td><input class="qtyinput" type="number" name="borrowqty[]" min="0" max="{{ $item->quantity }}" value="0"></td>
             </tr>
@@ -27,7 +30,7 @@
     </tbody>
 </table>
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Transact</button>
+
 
 
 <div id="myModal" class="modal fade">

@@ -14,7 +14,6 @@ class AddForeignKeyOnInventories extends Migration
     public function up()
     {
         Schema::table('inventories', function (Blueprint $table) {
-            $table->foreign('itemUsed')->references('itemId')->on('items')->onDelete('cascade');
             $table->foreign('usedBy')->references('employeeId')->on('employees')->onDelete('cascade');
         });
     }

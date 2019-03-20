@@ -15,7 +15,7 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->increments('inventoryId');
-            $table->unsignedInteger('itemUsed');
+            $table->unsignedInteger('itemUsed')->nullable();
             $table->unsignedInteger('usedBy');
             $table->string('managedBy')->nullable();
             $table->dateTime('managedDate')->nullable();
