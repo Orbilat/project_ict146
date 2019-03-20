@@ -2,38 +2,43 @@
 
 @section('content')
 
-<head>
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
-    {!! $calendar_details->script() !!}
-</head>
+
+
 
 <br>
 <br>
-      
-        <div class="container">
-          <h2>News</h2>
+<div class="w3-container" style="margin:5%;">
+        <div class="container"> 
 
+          <div class="row">
+            <div class="col-md-6">
+            <h2 class="titleText">ABOUT US</h2>
+            <br><br>
+            <p>The University of San Carlos Water Laboratory offers analytical services for water, soil, ore, and other special samples. The Water Laboratory is accredited as a testing laboratory by the Department of Environment and Natural Resources (DENR) and the Department of Health (DOH).
+                Construction and Materials Testing Laboratory</p>
+            <p>The USC Water Laboratory, which accepts third-party analysis and samples from the public for a fee, is attached to the Department of Chemistry.</p>
+            </div>
+            <div class="col-md-6">
+            <h2 class="w3-center titleText">News</h2>
             <div class="panel panel-primary">
-              <div class="panel-heading">USC WATER LABORATORY EVENTS</div>
               <div class="panel-body" >
               {!! $calendar_details->calendar() !!}
             </div>
             </div>
- 
+          </div>
+        </div>
+ </div>
+ </div>
             </div>
 
-<div class="foot">
-				<a href="https://www.facebook.com/warriorsturf" target="blank">
-					<i class="fa fa-facebook-square" style="font-size:25px"></i>
-				</a>
-				<a href="https://twitter.com/warriors_turf" target="blank">
-					<i class="fa fa-twitter" style="font-size:25px"></i>
-				</a>
-				<a href="https://www.instagram.com/warriorsturf" target="blank">
-					<i class="fa fa-instagram" style="font-size:25px"></i>
-				</a>
-</div>
+            <footer class="w3-center w3-black w3-padding-16">
+  <div class="w3-xlarge w3-section">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+  {!! $calendar_details->script() !!}
 @endsection

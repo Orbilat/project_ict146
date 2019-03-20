@@ -37,9 +37,7 @@ Route::post('/RIS', 'ClientController@RIS')->name('RIS');
 
 Route::get('/client-home', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
-Route::get('/S&R', function () {
-    return view('clients.client_S&R');
-});
+Route::get('/S&R', 'ClientController@parameters')->name('parameters-client');
 Route::get('/contact', [
     'uses' => 'ContactMessageController@create'
 ]);
