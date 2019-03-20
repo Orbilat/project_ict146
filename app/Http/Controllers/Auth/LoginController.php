@@ -30,7 +30,6 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        print_r(Auth::user());die();
         //Redirect Users according to User Type
         $type = Auth::user()->userType;
 
