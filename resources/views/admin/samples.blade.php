@@ -1,6 +1,41 @@
 @extends('layouts.admin_app')
 
 @section('content')
+{{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
+@if(Session::has('flash_sample_added'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
+</div>
+@endif
+{{-- SUCCESS MESSAGE OF DELETING SAMPLE --}}
+@if(Session::has('flash_sample_deleted'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_deleted')!!}
+</div>
+@endif
+{{-- SUCCESS MESSAGE OF UPDATING SAMPLE --}}
+@if(Session::has('flash_sample_updated'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_updated')!!}
+</div>
+@endif
+{{-- VALIDATION CHECKS --}}
+@if ($errors->any())
+<div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+<ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+        <p>Please try again.</p>
+</ul>
+</div>
+@endif
+{{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
+<?php $count = 0; ?>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -13,16 +48,157 @@
                         {{-- <input class="float-right" type="submit" value="Search"> --}}
                         <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search sample...">
                     </form>
-                    @if ($errors->any())
-                    <div class="alert alert-danger pb-0">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                                <p>Please try again.</p>
-                        </ul>
+                    <div id="addSample" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
+                        <div class="card-body">
+                            <form action="{{ route('insertSample-admin') }}" method="post">
+                                @csrf
+                                <div class="form-group row">
+                                    <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
+                                    
+                                    <div class="col-md-6">
+                                        <input id="clientId" type="text" class="form-control{{ $errors->has('clientId') ? ' is-invalid' : '' }}" name="clientId" value="{{ old('clientId') }}" placeholder="XXXX-XXXX" required autofocus>
+        
+                                        @if ($errors->has('clientId'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('clientId') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="clientsCode" type="text" class="form-control{{ $errors->has('clientsCode') ? ' is-invalid' : '' }}" name="clientsCode" value="{{ old('clientsCode') }}" required autofocus>
+        
+                                        @if ($errors->has('clientsCode'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('clientsCode') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="sampleType" class="col-md-4 col-form-label text-md-right">{{ __('Sample Type') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="sampleType" list="sampleTypes" class="form-control{{ $errors->has('sampleType') ? ' is-invalid' : '' }}" name="sampleType" value="{{ old('sampleType') }}" required autofocus>
+                                        <datalist id="sampleTypes">
+                                            <option value="Drinking water">Drinking Water</option>
+                                            <option value="Ground water">Ground water</option>
+                                            <option value="Waste water">Waste water</option>
+                                        </datalist>
+                                        @if ($errors->has('sampleType'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('sampleType') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="sampleCollection" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="sampleCollection" type="datetime-local" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ old('sampleCollection') }}" required autofocus>
+        
+                                        @if ($errors->has('sampleCollection'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('sampleCollection') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="samplePreservation" class="col-md-4 col-form-label text-md-right">{{ __('Sample Preservation') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="samplePreservation" type="text" class="form-control{{ $errors->has('samplePreservation') ? ' is-invalid' : '' }}" name="samplePreservation" value="{{ old('samplePreservation') }}" placeholder="Optional" autofocus>
+        
+                                        @if ($errors->has('samplePreservation'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('samplePreservation') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple">
+                                        @foreach ($parameters as $parameter)
+                                            <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('parameter'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('parameter') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="purposeOfAnalysis" class="col-md-4 col-form-label text-md-right">{{ __('Purpose of Analysis') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="purposeOfAnalysis" list="purposeOfAnalyses" class="form-control{{ $errors->has('purposeOfAnalysis') ? ' is-invalid' : '' }}" name="purposeOfAnalysis" value="{{ old('purposeOfAnalysis') }}" placeholder="Optional" autofocus>
+                                        <datalist id="purposeOfAnalyses">
+                                            <option value="Business">Business</option>
+                                            <option value="Economic">Economic</option>
+                                            <option value="Regulating Protocols">Regulating Protocols</option>
+                                            <option value="Health Related">Health Related</option>
+                                            <option value="Research">Research</option>
+                                            <option value="DA">DA</option>
+                                            <option value="Quality">Quality</option>
+                                        </datalist>
+                                        @if ($errors->has('purposeOfAnalysis'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('purposeOfAnalysis') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="sampleSource" class="col-md-4 col-form-label text-md-right">{{ __('Sample Source') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="sampleSource" type="text" class="form-control{{ $errors->has('sampleSource') ? ' is-invalid' : '' }}" name="sampleSource" value="{{ old('sampleSource') }}" required autofocus>
+        
+                                        @if ($errors->has('sampleSource'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('sampleSource') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row">
+                                    <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
+                                        @if ($errors->has('dueDate'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('dueDate') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+        
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-secondary">
+                                            {{ __('Add Sample') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    @endif
                 </div>
 
                 <div class="card-body">
@@ -68,8 +244,8 @@
                                 <td class="admin-table">{{ $sample->dueDate }}</td>
                                 <td class="admin-table">
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editAccount">Edit</button>
-                                    <div id="editAccount" class="modal fade" role="dialog">
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSample{{ $count }}">Edit</button>
+                                    <div id="editSample{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header editModal">
@@ -88,8 +264,8 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount">Delete</button>
-                                    <div id="deleteAccount" class="modal fade" role="dialog">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSample{{ $count }}">Delete</button>
+                                    <div id="deleteSample{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header deleteModal">
@@ -97,10 +273,17 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Are you sure you want to delete this account?</p>
+                                                    <p>Are you sure you want to delete Sample: 
+                                                        @php
+                                                            $year = substr($sample->laboratoryCode,  0, 4);
+                                                            $IDclient = substr($sample->laboratoryCode, 4, 4);
+                                                            $IDsample = substr($sample->laboratoryCode, 8);
+                                                            echo $year.'-'.$IDclient.'-'.$IDsample;
+                                                        @endphp
+                                                    ?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAccount()">Delete</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteSample()">Delete</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div> 
@@ -108,6 +291,8 @@
                                     </div>
                                 </td>
                             </tr>
+                            {{-- COUNT INCREMENTS --}}
+                            <?php $count++; ?>
                             @endforeach
                         </tbody>
                     </table>           

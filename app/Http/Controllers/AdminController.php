@@ -33,7 +33,7 @@ class AdminController extends Controller
         $transactions = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
                     ->join('sample__tests', 'sample.sampleId', '=', 'sample__tests.sampleCode')
                     ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
-                    ->select('samples.*', 'clients.risNumber as ris', '')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+                    ->select('samples.*', 'clients.risNumber as ris', 'parame')->orderBy('samples.dueDate', 'ASC')->paginate(6);
 
         return view('admin.transactions', ['transactions' => $transactions]);
     }
@@ -43,8 +43,9 @@ class AdminController extends Controller
     {
         $samples = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
                     ->select('samples.*', 'clients.risNumber as ris')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+        $parameters = Parameter::all();
 
-        return view('admin.samples', ['samples' => $samples]);
+        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
     }
 
     // Admin Clients Page (/clients)
@@ -317,7 +318,7 @@ class AdminController extends Controller
         }
 
     }
-    // SAMPLE INSERT
+    // SAMPLE ADD
     protected function addSample(Request $request)
     {
         // VALIDATION
@@ -378,6 +379,77 @@ class AdminController extends Controller
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
             return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+        
+    }
+    // SAMPLE INSERT
+    protected function insertSample(Request $request)
+    {
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'clientId' => 'required',
+            'clientsCode' => 'nullable|string|max:255',
+            'sampleType' => 'required|string|max:255',
+            'sampleCollection' => 'required|string|max:50',
+            'samplePreservation' => 'nullable|string|max:50',
+            'parameter' => 'required',
+            'purposeOfAnalysis' => 'nullable|string|max:50',
+            'sampleSource' => 'required|string|max:20',
+            'dueDate' => 'required|string|max:50',
+        ]);
+        //VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/clients')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        if(strlen($request->clientId) == 9){
+            $removeDash = explode('-', $request->clientId);
+            $finalId = $removeDash[0].$removeDash[1];
+        }
+        $client = DB::table('clients')->where('risNumber', $finalId)->value('clientId');
+
+        //ELOQUENT INSERT
+        $sample = new Sample;
+        $sample->risNumber = $client;
+        $sample->clientsCode = trim($request->clientsCode);
+        $sample->sampleType =  trim($request->sampleType);
+        $sample->sampleCollection = $request->sampleCollection;
+        $sample->samplePreservation = trim($request->samplePreservation);
+        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        $sample->sampleSource = $request->sampleSource;
+        $sample->dueDate = $request->dueDate;
+        $sample->managedBy = Auth::user()->employeeName;
+        $sample->managedDate = new DateTime();
+        $sample->save();
+        //INSERT LAB CODE TO SAMPLES
+        if (strlen((string)($sample->sampleId)) == 1) {
+            $idOfSample = (string)("000".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 2) {
+            $idOfSample = (string)("00".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 3) {
+            $idOfSample = (string)("0".$sample->sampleId);
+        } else {
+            $idOfSample = (string)$sample->sampleId;
+        }
+        $sample->laboratoryCode = $finalId . $idOfSample;
+        //INSERT SAMPLE TESTS IN LOOP
+        foreach ($request->parameter as $parameter => $analysis) {
+            $sampletests = new Sample_Tests;
+            $sampletests->sampleCode = $sample->sampleId;
+            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->status = "In Progress";
+            $sampletests->managedBy = Auth::user()->employeeName;
+            $sampletests->managedDate = new DateTime();
+            $sampletests->save();
+        }
+        //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
+        if($sample->save()){
+            Session::flash('flash_sample_added', 'Sample inserted successfully!');
+            return redirect()->action('AdminController@samples');;
         }
         else {
             App::abort(500, 'Error!');
