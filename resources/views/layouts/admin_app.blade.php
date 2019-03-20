@@ -132,6 +132,22 @@
             $('.js-example-basic-multiple').select2();
         });
 
+        function clickableRows() {
+            var table = document.getElementById('tableId');
+            var rows = table.getElementsByTagName('tr');
+            for (i = 0; i < rows.length; i++){
+                var currentRow = table.rows[i];
+                var clickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var id = cell.innerHTML;
+                        alert("id:" + id);
+                    };
+                };
+                currentRow.onclick = clickHandler(currentRow);
+            }
+        }
+
         function changeText() {
             var text = document.getElementById("addNew");
 
