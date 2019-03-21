@@ -11,6 +11,7 @@ use App\Client;
 use App\Sample;
 use App\Sample_Tests;
 use App\Parameter;
+use App\Station;
 use App\Supplier;
 use App\Item;
 use App\Transaction;
@@ -30,10 +31,15 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function transactions()
     {
-        $transactions = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
-                    ->join('sample__tests', 'sample.sampleId', '=', 'sample__tests.sampleCode')
+        $transactions = DB::table('transactions')->join('clients', 'transactions.client', '=', 'clients.clientId')
+                    ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
+                    ->join('sample__tests', 'samples.sampleId', '=', 'sample__tests.sampleCode')
                     ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
-                    ->select('samples.*', 'clients.risNumber as ris', 'parame')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+                    ->select('clients.risNumber as risNumber', 'samples.laboratoryCode as laboratoryCode', 
+                    'clients.nameOfPerson as nameOfPerson', 'clients.nameOfEntity as nameOfEntity', 'clients.discount as discount',
+                    'clients.deposit as deposit', 'clients.testResult as testResult', 'clients.reclaimSample as reclaimSample',
+                    'clients.remarks as remarks', 'clients.managedBy as managedBy', 'clients.created_at as managedDate')
+                    ->orderBy('samples.dueDate', 'ASC')->paginate(6);
 
         return view('admin.transactions', ['transactions' => $transactions]);
     }
@@ -62,10 +68,10 @@ class AdminController extends Controller
         return view('admin.accounts', ['accounts' => $accounts]);
     }
 
-    // Admin Inventory-Chemicals Page (/inventory/chemicals)
-    public function chemicals()
+    // Admin Inventory-History Page (/inventory/history)
+    public function history()
     {
-        return view('admin.inventory-chemicals');
+        return view('admin.inventory-history');
     }
 
     // Admin Inventory-Glassware Page (/inventory/glassware)
@@ -648,6 +654,34 @@ class AdminController extends Controller
         $supplier->managedDate = new DateTime();
         if($supplier->save()){
             Session::flash('flash_supplier_updated', 'Supplier updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // STATION INSERT
+    protected function addStation(Request $request)
+    {
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'stationName' => 'required|string|max:255|unique:stations'
+        ]);
+        //VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/stations')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        //ELOQUENT INSERT
+        $station = new Station;
+        $station->stationName = trim($request->stationName);
+        $station->managedBy = Auth::user()->employeeName;
+        $station->managedDate = new DateTime();
+        //CHECK SAVE
+        if($station->save()){
+            Session::flash('flash_station_added', 'Station added successfully!');
             return Redirect::back();
         }
         else {

@@ -18,13 +18,18 @@ class ProduitController extends Controller
         $samples = DB::table('samples')
             ->join('clients', 'samples.risNumber', '=', 'clients.clientId')
             ->select('samples.*', 'clients.risNumber as ris','clients.nameOfPerson as nameOfPerson','clients.nameOfEntity as nameOfEntity','clients.managedBy as managedBy','clients.remarks as remarks')
-            ->where('samples.risNumber',$clientId)
+            ->where('samples.risNumber', $clientId)
             ->get();
-        $dueDate = DB::table('samples')
-            ->join('clients', 'samples.risNumber', '=', 'clients.clientId')
-            ->max('dueDate');
-            
-        return view('produit',['samples'=>$samples, 'dueDate'=>$dueDate]);
+        $idOfSample = DB::table('samples')->where('samples.risNumber', $clientId)->value('sampleId');
+        $parameters = DB::table('sample__tests')
+            ->join('samples', 'sample__tests.sampleCode', '=', 'samples.sampleId')
+            ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
+            ->select('parameters.analysis as analysis')
+            ->where('samples.sampleId', $idOfSample)
+            ->where('samples.sampleId', 'sample__tests.sampleCode')
+            ->where('parameters.parameterId', 'sample__tests.parameters')
+            ->get();
+        return view('produit',['samples'=>$samples, 'parameters'=>$parameters]);
     }
 
     public function search(Request $request){

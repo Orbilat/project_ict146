@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ $data->dueDate }}</td>
                     <td>{{ $data->created_at}}</td>
-                    <td>{{ $data->sampleId }}</td>
+                    <td>{{ $data->laboratoryCode }}</td>
                     <td>{{ $data->risNumber }}</td>
                     <td>{{ $data->sampleCollection }}</td>
                     <td>{{ $data->purposeOfAnalysis }}</td>

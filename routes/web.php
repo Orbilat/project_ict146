@@ -107,7 +107,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');
     Route::delete('/admin/suppliers/{supplierId}', 'AdminController@destroySupplier')->name('deleteSupplier-admin');
     Route::patch('/admin/suppliers/{supplierId}', 'AdminController@updateSupplier')->name('updateSupplier-admin');
-    Route::get('/admin/inventory/chemicals', 'AdminController@history')->name('inventory-history-admin');
+    Route::get('/admin/inventory/history', 'AdminController@history')->name('inventory-history-admin');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware-admin');
 });
 // END ADMIN ROUTES

@@ -66,20 +66,20 @@ border: 2px solid #000;
             @endif
             </h2>
             <div class="test1"> 
-        <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
+            <h4>USC WATER LABORATORY &emsp;&emsp; RIS#: {{ $p->ris }}</h4>
             <h5>CHAIN OF CUSTODY SLIP
             <br>
-            Lab.Code: {{$dueDate}}
+            Lab.Code:{{ $p->laboratoryCode }}
             <br>
-            Client's Code:
+            Client's Code: {{ $p->clientsCode }}
             <br>
-            Sample Type:
+            Sample Type: {{ $p->sampleType }}
             <br>
-            Date/Time Sample Submitted:
+            Date/Time Sample Submitted: {{ $p->created_at }}
             <br>
-            Date/Time Sample Collected:
+            Date/Time Sample Collected: {{ $p->sampleCollection }}
             <br>
-            Analysis Requested:
+            Analysis Requested: @foreach($parameters as $parameter) {{ $parameter->analysis }} @endforeach
             </h5>   
         </div> 
             

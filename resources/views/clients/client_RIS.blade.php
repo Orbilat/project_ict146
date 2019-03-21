@@ -26,7 +26,7 @@
         
         <div class="col-md-4 w3-border">{{ $ris->managedDate }}</div>
           <div class="col-md-4 w3-border">{{ $ris->laboratoryCode }}</div>
-          <div class="col-md-4 w3-border"></div>
+        <div class="col-md-4 w3-border">{{ $ris->status }}</div>
 
     </div>
     </div>

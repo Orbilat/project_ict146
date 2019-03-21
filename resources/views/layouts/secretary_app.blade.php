@@ -48,10 +48,7 @@
                             </li>
                         
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('view') }}">{{ __('View Status') }}</a>
-                                </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('Add & View Status') }}</a>
+                                <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('View Status') }}</a>
                             </li>
                            
                             <li class="nav-item">
