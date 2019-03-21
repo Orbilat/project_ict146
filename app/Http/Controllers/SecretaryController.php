@@ -137,9 +137,11 @@ class SecretaryController extends Controller
         ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
         ->join('sample__tests', 'samples.sampleId', '=' ,'sample__tests.sampleCode')
         ->select('clients.*')
-        
+        ->where('clients.clientId', '=', 'samples.risNumber')
+        ->where('sample__tests.status', '=', "In Progress" || 'sample__tests.status', '=', "NULL")
         ->distinct()
         ->get();
+       
 
         return view('secretary-file.add-secretary',['status' => $status]);
     }
@@ -214,31 +216,7 @@ class SecretaryController extends Controller
         else {
             App::abort(500, 'Error!');
         }
-        //SAVE TO DB && CHECK
-      
-        // $a=$client->risNumber;
-        // $sample=new Sample;
-        // $sample->risNumber=$a;
-        // $sample->clientsCode = trim($request->clientsCode);
-        // $sample->sampleMatrix = trim($request->sampleMatrix);
-        // $sample->collectionTime = trim($request->collectionTime);
-        // $sample->samplePreservation = trim($request->samplePreservation);
-        // $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
-        // $sample->sampleSource = trim($request->sampleSource);
-        // $sample->dueDate = trim($request->dueDate);
-        // $sample->managedBy = Auth::user()->employeeName;
-        // $sample->managedDate = new DateTime();
-        
-        // $sample->save();
-
-        // return view('secretary-file.create-secretary');
-        // if($sample->save()){
-        //     Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-        //     return view('produit');
-        // }
-        // else {
-        //     App::abort(500, 'Error!');
-        // }
+       
         
     }
 

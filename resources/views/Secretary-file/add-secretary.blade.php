@@ -11,6 +11,7 @@
     <th>Client ID</th>
     <th>Client Name</th>
     <th>Contact Number</th>
+    <th> Ready for Pick Up </>
     <th></th>
   </tr>
   @foreach($status as $p)
@@ -21,6 +22,7 @@
 <td>{{$p->clientId}}</td>
 <td>{{$p->nameOfPerson}}</td>
 <td>{{$p->contactNumber}}</td>
+<td>{{$p->readyForPickUp}}</td>
 
 
 </tr>

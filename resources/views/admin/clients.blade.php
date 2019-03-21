@@ -45,6 +45,7 @@
                     <div class="card-body">
                             {{-- FORM FOR ADDING CLIENT HERE --}}
                             <form method="POST" action="{{ route('addClient-admin') }}">
+                            
                                 @csrf
                                 <div class="form-group row">
                                     <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Name of Person') }}</label>

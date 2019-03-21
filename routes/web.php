@@ -49,7 +49,6 @@ Route::post('/contact', [
 //SECRETARY ROUTES
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
-Route::get('/secretary/notification', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
