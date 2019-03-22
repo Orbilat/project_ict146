@@ -74,16 +74,16 @@ class AnalystController extends Controller
 
     public function samplePerStation($id){
     	$sampleperstation = DB::table('samples AS s')
-    			->select('s.laboratoryCode', 's.risNumber', 'p.stationId', 'st.status','st.testId' )
+    			->select('s.laboratoryCode', 's.risNumber', 'p.station', 'st.status','st.testId' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
-    			->leftJoin('stations AS sta', 'p.stationId', '=', 'sta.stationid')
-    			->where('p.stationId','=', $id)
+    			->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
+    			->where('p.station','=', $id)
                 ->where(function($query) {
                     $query->where('st.status','=', 'In Progress')
                     ->orwhere('st.status','=', 'Completed');
                 })
-                ->groupBy('s.laboratoryCode', 's.risNumber','p.stationId','st.status','st.testId' )
+                ->groupBy('s.laboratoryCode', 's.risNumber','p.station','st.status','st.testId' )
                 ->orderBy('st.testId','desc')
                 ->distinct()
     			->get();
@@ -97,7 +97,7 @@ class AnalystController extends Controller
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->where('s.laboratoryCode','=', $id)
-    			->where('p.stationId','=', $stationid)
+    			->where('p.station','=', $stationid)
     			->get();
 
     	return view('analyst.sampledetails', [ 'details' => $sampledetails ]);
@@ -110,7 +110,7 @@ class AnalystController extends Controller
             ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
             ->where('s.risNumber','=', $input['scanid'])
-            ->where('p.stationId','=', $id)
+            ->where('p.station','=', $id)
             ->where('st.status','=', 'New')
             ->update(array('st.status' => 'In Progress','s.managedBy' => 1, 'st.managedBy' => 1));
 
@@ -124,7 +124,7 @@ class AnalystController extends Controller
             ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
             ->where('s.risNumber','=', $input['scanid'])
-            ->where('p.stationId','=', $id)
+            ->where('p.station','=', $id)
             ->where('st.status','=', 'In Progress')
             ->update(array('st.status' => 'Completed', 'st.timecompleted' => now()));
 

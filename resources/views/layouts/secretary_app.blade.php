@@ -47,10 +47,7 @@
                                 <a class="nav-link" href="{{ route('notification-secretary') }}">{{ __('Notifications') }}</a>
                             </li>
                         
-                            <!-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('view') }}">{{ __('View Status') }}</a>
-                                </li>
-                            <li class="nav-item"> -->
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('View Status') }}</a>
                             </li>
                            

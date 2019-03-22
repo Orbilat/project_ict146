@@ -283,7 +283,11 @@
                                                     ?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteSample()">Delete</button>
+                                                    <form action="{{ route('destroySample-admin', [$sample->sampleId])}}" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div> 

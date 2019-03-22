@@ -10,7 +10,11 @@ class ClientController extends Controller
 {
     public function RIS(Request $request)
     {
-        $RisNumber = DB::table('samples')->where('risNumber',$request->search)->first();
+        $RisNumber = DB::table('clients')
+        ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
+        ->join('sample__tests', 'samples.sampleId', '=', 'sample__tests.sampleCode')
+        ->select('clients.risNumber as risNumber', 'samples.laboratoryCode as laboratoryCode', 'sample__tests.status as status', 'clients.managedDate as managedDate')
+        ->where('clients.risNumber', $request->search)->first();
         return view('clients.client_RIS')->with('ris', $RisNumber);
     }
 
