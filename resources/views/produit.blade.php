@@ -50,6 +50,9 @@ border: 2px solid #000;
         h2{
             margin-top:60px;
         }
+        b.thicker {
+  font-weight: 900;
+}
     </style>
 </head>
 <body>
@@ -57,59 +60,60 @@ border: 2px solid #000;
         
         @foreach($samples as $p)
     <div class="row">
-        <div class="col-4">
-            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A') !!}</div><br>
+        <div class="col-3">
+        <br><br>
+            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1.5,20) !!}</div><br>
             <h2>{{ $p->laboratoryCode}}
+            <br>
             @if($p->remarks == "rush" || $p->remarks == "Rush")
-                &emsp;&emsp;
+                
                 Rush
             @endif
-            </h2>
-            <div class="test1"> 
-            <h4>USC WATER LABORATORY &emsp;&emsp; RIS#: {{ $p->ris }}</h4>
-            <h5>CHAIN OF CUSTODY SLIP
-            <br>
-            Lab.Code:{{ $p->laboratoryCode }}
-            <br>
-            Client's Code: {{ $p->clientsCode }}
-            <br>
-            Sample Type: {{ $p->sampleType }}
-            <br>
-            Date/Time Sample Submitted: {{ $p->created_at }}
-            <br>
-            Date/Time Sample Collected: {{ $p->sampleCollection }}
-            <br>
-            Analysis Requested: @foreach($parameters as $parameter) {{ $parameter->analysis }} @endforeach
-            </h5>   
-        </div> 
-            
-            
-
-            
+            </h2>        
         </div>
-   
-    
-        <!-- <div class="col-4 test1"> 
-        <h4>USC WATER LABORATORY &emsp;&emsp; RIS#_____</h4>
-            <h5>CHAIN OF CUSTODY SLIP
+        <div class="col-1"></div>
+        <div class="col-6 test1"> 
+            <h4>USC WATER LABORATORY &emsp; <br> RIS#: {{ $p->ris }}</h4>
+            <p>
+            <b> CHAIN OF CUSTODY SLIP</b>
+            
             <br>
-            Lab.Code:
+            <b> LabCode:</b> {{ $p->laboratoryCode }}
             <br>
-            Client's Code:
+            <b> Client's Code:</b> {{ $p->clientsCode }}
             <br>
-            Sample Type:
+            <b> Sample Type:</b> {{ $p->sampleType }}
             <br>
-            Date/Time Sample Submitted:
+            <b> Date/Time Sample Submitted:</b> {{ $p->created_at }}
             <br>
-            Date/Time Sample Collected:
+            <b> Date/Time Sample Collected:</b> {{ $p->sampleCollection }}
             <br>
-            Analysis Requested:
-            </h5>   
-        </div>  -->
-        
+            <b> Analysis Requested: </b> @foreach($parameters as $parameter) {{ $parameter->analysis }} @endforeach
+            </p>   
+              </div> 
     </div>
+        <br><br><br><br>
 
         @endforeach
+
+        
+    <div class="row">
+    @foreach($slip as $s)
+        <div class= "test1">
+            <h3> CLAIM SLIP</h3>
+            <h4> RIS #: {{$s->risNumber}}
+            <br>
+             Name of Representative: {{$s->nameOfPerson}}
+            <br>
+             Name of Company: {{$s->nameOfEntity}}
+            <br>
+             Please follow up on:
+            <br>
+            <u> Call us 3453811/2300100 local 110 for confirmation. Test results will not be released without this claim slip.</u>
+            </h4>
+        </div>
+        @endforeach
+    </div>            
        
     <input id ="printbtn" type="button" value="Print this page" onclick="window.print();" >
 </body>

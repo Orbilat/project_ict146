@@ -4,6 +4,31 @@
 
 
 @section('content')
+{{-- SUCCESS MESSAGE OF DELETING CLIENT --}}
+@if(Session::has('flash_client_deleted'))
+    <div class="alert alert-info offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Notification:</strong> {!!Session::get('flash_client_deleted')!!}
+    </div>
+@endif
+{{-- SUCCESS MESSAGE OF UPDATING CLIENT --}}
+@if(Session::has('flash_client_updated'))
+    <div class="alert alert-info offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Notification:</strong> {!!Session::get('flash_client_updated')!!}
+    </div>
+@endif
+{{-- VALIDATION CHECKS --}}
+@if ($errors->any())
+<div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+            <p>&nbsp;Please try again.</p>
+    </ul>
+</div>
+@endif
 
 <form method="POST" action="{{ route('addClient-secretary') }}">
                                 @csrf

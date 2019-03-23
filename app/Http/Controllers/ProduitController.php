@@ -29,8 +29,13 @@ class ProduitController extends Controller
             ->where('samples.sampleId', 'sample__tests.sampleCode')
             ->where('parameters.parameterId', 'sample__tests.parameters')
             ->get();
-        return view('produit',['samples'=>$samples, 'parameters'=>$parameters]);
+
+        $slip = DB::table('clients')->where('clientId', $clientId)->get();
+
+
+        return view('produit',['samples'=>$samples, 'parameters'=>$parameters, 'slip' => $slip]);
     }
+
 
     public function search(Request $request){
 

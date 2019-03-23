@@ -11,7 +11,8 @@
     <th>Client ID</th>
     <th>Client Name</th>
     <th>Contact Number</th>
-    <th>Ready For Pickup</th>
+    <th> Ready for Pick Up </>
+    <th></th>
   </tr>
   @foreach($status as $p)
 
