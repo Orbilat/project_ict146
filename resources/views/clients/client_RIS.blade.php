@@ -37,7 +37,7 @@
 <br><br><br>
 <div class="container">
 <div class="alert alert-danger w3-padding-64">
-  <strong>Danger! YOUR RIS NUMBER DOES NOT EXIST.</strong> 
+  <strong>YOUR RIS NUMBER DOES NOT EXIST.</strong> 
 </div>
 </div>
 
