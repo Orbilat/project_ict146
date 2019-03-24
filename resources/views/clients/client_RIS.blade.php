@@ -13,19 +13,23 @@
       </div>
     </div>
       <div class="row">
-        <div class="col-sm-4 text-center w3-border">
+        <div class="col-sm-3 text-center w3-border">
            <h4 style="margin-top:20px;">Date</h3>
         </div>
-        <div class="col-sm-4 text-center w3-border">
+        <div class="col-sm-3 text-center w3-border">
             <h4 style="margin-top:20px;">Lab-Code</h3>
         </div>
-        <div class="col-sm-4 text-center w3-border">
+        <div class="col-sm-3 text-center w3-border">
+            <h4 style="margin-top:20px;">Analysis</h3>
+        </div>
+        <div class="col-sm-3 text-center w3-border">
             <h4 style="margin-top:10px;">Status</h4>
           </div>
   
         @foreach($ris as $sample)
           <div class="col-md-4 w3-border">{{ $sample->managedDate }}</div>
           <div class="col-md-4 w3-border">{{ $sample->laboratoryCode }}</div>
+          <div class="col-md-4 w3-border">{{ $sample->analysis }}</div>
           <div class="col-md-4 w3-border">{{ $sample->status }}</div>
         @endforeach
         
