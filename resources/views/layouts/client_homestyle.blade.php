@@ -122,6 +122,10 @@ position:absolute;
 	color:#000; 
 }
 
+.servicesAndRates {
+	background-color: white;
+}
+
 /* vietnamese */
 @font-face {
   font-family: 'Quicksand';

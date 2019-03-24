@@ -17,6 +17,6 @@ class Client extends Model
 
     public function samples()
     {
-        return $this->hasMany('Sample', 'risNumber', 'clientId');
+        return $this->hasMany(Sample::class, 'risNumber', 'clientId');
     }
 }

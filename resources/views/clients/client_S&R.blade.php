@@ -7,7 +7,7 @@
 <div class="container" style="margin-bottom:30%;">
 <div class="card-body"> 
 
-                    <table class="table">
+                    <table class="servicesAndRates table">
                         <thead>
                             <tr class="text-center">
                                 <th class="border SRheader">Analysis</th>
