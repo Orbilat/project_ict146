@@ -15,11 +15,10 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap4.0/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('w3css/w3.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/fontgoogleapi.css') }}">
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

@@ -9,9 +9,10 @@
 
                     <table class="table">
                         <thead>
-                            <tr class="bg-success text-center">
-                                <th class="border">Analysis</th>
-                                <th class="border">Method</th>
+                            <tr class="text-center">
+                                <th class="border SRheader">Analysis</th>
+                                <th class="border SRheader">Method</th>
+                                <th class="border SRheader">Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -19,6 +20,7 @@
                             <tr>
                                 <td class="border">{{ $parameter->analysis }}</td>
                                 <td class="border">{{ $parameter->method }}</td>
+                                <td class="border"></td>
                                 @endforeach
                             </tr>    
                         </tbody>
