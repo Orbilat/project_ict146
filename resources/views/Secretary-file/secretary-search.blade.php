@@ -5,6 +5,7 @@
 
 @section('content')
 
+<div class="container">
 <a href="{{route('form')}}"><button class="button button3">  Back</button></a>
 
 <table id="customers">
@@ -40,6 +41,7 @@
   </tr>
   @endforeach
 </table>
+</div>
 
 
 

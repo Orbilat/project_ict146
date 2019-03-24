@@ -51,8 +51,11 @@ border: 2px solid #000;
             margin-top:60px;
         }
         b.thicker {
-  font-weight: 900;
-}
+            font-weight: 900;
+        }
+        .header {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -62,31 +65,42 @@ border: 2px solid #000;
     <div class="row">
         <div class="col-3">
         <br><br>
-            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1.5,20) !!}</div><br>
-            <h2>{{ $p->laboratoryCode}}
-            <br>
+            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1.5,60) !!}</div>
+            <h2 class="header">{{ $p->laboratoryCode}}
             @if($p->remarks == "rush" || $p->remarks == "Rush")
-                
+                <br>
                 Rush
             @endif
             </h2>        
         </div>
         <div class="col-1"></div>
         <div class="col-6 test1"> 
-            <h4>USC WATER LABORATORY &emsp; <br> RIS#: {{ $p->ris }}</h4>
+            <h4>USC WATER LABORATORY &emsp; <br> RIS#: 
+                @php
+                    $year = substr($p->ris,  0, 4);
+                    $id = substr($p->ris, 4);
+                    echo $year.'-'.$id;
+                @endphp
+            </h4>
             <p>
             <b> CHAIN OF CUSTODY SLIP</b>
             
             <br>
-            <b> LabCode:</b> {{ $p->laboratoryCode }}
+            <b> LabCode:</b> 
+            @php
+                $year = substr($p->laboratoryCode,  0, 4);
+                $IDclient = substr($p->laboratoryCode, 4, 4);
+                $IDsample = substr($p->laboratoryCode, 8);
+                echo $year.'-'.$IDclient.'-'.$IDsample;
+            @endphp
             <br>
             <b> Client's Code:</b> {{ $p->clientsCode }}
             <br>
             <b> Sample Type:</b> {{ $p->sampleType }}
             <br>
-            <b> Date/Time Sample Submitted:</b> {{ $p->created_at }}
+            <b> Date/Time Sample Submitted:</b> {{  date("F j, Y g:m A", strtotime($p->created_at)) }}
             <br>
-            <b> Date/Time Sample Collected:</b> {{ $p->sampleCollection }}
+            <b> Date/Time Sample Collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}
             <br>
             <b> Analysis Requested: </b> @foreach($parameters as $parameter) {{ $parameter->analysis }} @endforeach
             </p>   

@@ -4,7 +4,7 @@
 
 
 @section('content')
-
+<div class="container">
 <table id="customers">
   <tr>
     <th>RIS Number</th>
@@ -28,6 +28,7 @@
 </tr>
 @endforeach
 </table>
+</div>
 </body>
 
 @endsection

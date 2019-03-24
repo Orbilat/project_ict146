@@ -14,7 +14,8 @@ class ClientController extends Controller
         ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
         ->join('sample__tests', 'samples.sampleId', '=', 'sample__tests.sampleCode')
         ->select('clients.risNumber as risNumber', 'samples.laboratoryCode as laboratoryCode', 'sample__tests.status as status', 'clients.managedDate as managedDate')
-        ->where('clients.risNumber', $request->search)->first();
+        ->where('clients.risNumber', $request->search)
+        ->get();
         return view('clients.client_RIS')->with('ris', $RisNumber);
     }
 

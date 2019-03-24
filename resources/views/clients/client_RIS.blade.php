@@ -8,7 +8,7 @@
         @if(isset($ris))
       <div class="col-sm-12 text-info">
         <div>RIS NUMBER: 
-        <h3 class="d-inline-block text-danger">{{ $ris->risNumber }} </h3>
+        <h3 class="d-inline-block text-danger"></h3>
         </div>
       </div>
     </div>
@@ -23,10 +23,12 @@
             <h4 style="margin-top:10px;">Status</h4>
           </div>
   
+        @foreach($ris as $sample)
+          <div class="col-md-4 w3-border">{{ $sample->managedDate }}</div>
+          <div class="col-md-4 w3-border">{{ $sample->laboratoryCode }}</div>
+          <div class="col-md-4 w3-border">{{ $sample->status }}</div>
+        @endforeach
         
-        <div class="col-md-4 w3-border">{{ $ris->managedDate }}</div>
-          <div class="col-md-4 w3-border">{{ $ris->laboratoryCode }}</div>
-        <div class="col-md-4 w3-border">{{ $ris->status }}</div>
 
     </div>
     </div>

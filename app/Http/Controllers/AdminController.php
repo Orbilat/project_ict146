@@ -531,7 +531,7 @@ class AdminController extends Controller
         $parameter = new Parameter;
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->station = $request->station;
+        $parameter->station = DB::table('stations')->where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
         //SAVE TO DB && CHECK
