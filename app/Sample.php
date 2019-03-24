@@ -17,4 +17,9 @@ class Sample extends Model
     protected $hidden = [
         'risNumber',
     ];
+
+    public function clients()
+    {
+        return $this->belongsTo('Client', 'risNumber', 'sampleId');
+    }
 }

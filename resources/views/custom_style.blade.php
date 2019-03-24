@@ -18,5 +18,8 @@
   .pointer {
     cursor: pointer;
   }
+  .event {
+    border-style: outset;
+  }
 
 </style>

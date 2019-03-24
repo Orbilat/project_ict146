@@ -14,4 +14,9 @@ class Client extends Model
         'nameOfPerson', 'nameOfEntity', 'address', 'contactNumber', 'faxNumber', 'emailAddress', 'discount', 'deposit', 
         'reclaimSample', 'testResult', 'remarks', 'dateSubmitted', 'managedBy', 'managedDate',
     ];
+
+    public function samples()
+    {
+        return $this->hasMany('Sample', 'risNumber', 'clientId');
+    }
 }

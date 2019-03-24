@@ -94,7 +94,7 @@
                                 <td class="admin-table">{{ $station->stationName }}</td>
                                 <td class="admin-table">{{ $station->managedBy }}</td>
                                 <td class="admin-table">{{ $station->managedDate }}</td>
-                                <td class="admin-table">
+                                <td>
                                     {{-- EDIT BUTTON --}}
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
                                     <div id="editSupplier{{ $count }}" class="modal fade" role="dialog">
@@ -129,7 +129,7 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <p>Are you sure you want to delete {{ $station->stationName }} account?</p>                          
+                                                <p>Are you sure you want to delete {{ $station->stationName }}?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="{{ route('deleteSupplier-admin', [$station->stationId]) }}" method="post">
