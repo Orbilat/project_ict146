@@ -22,3 +22,28 @@ div#sampledata_wrapper{
 .margintop{
 	margin: 15px;
 }
+
+th.sorting {
+  font-size: 12px;
+}
+
+th.sorting_asc {
+  font-size: 12px;
+}
+
+.odd td {
+  font-size: 12px;
+}
+
+.even td {
+  font-size: 12px;
+}
+
+
+#sampledata_length label {
+  font-size: 12px;
+}
+
+#sampledata_filter label {
+  font-size: 12px;
+}

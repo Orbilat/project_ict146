@@ -1,7 +1,13 @@
 @extends('layouts.analyst_app')
 
 @section('content')
-<h3 class="hblue">Notifications</h3>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Notifications</div>
+                
+
     <br>
     <table id="sampledata" class="display sampledata" style="width:100%">
         <thead>
