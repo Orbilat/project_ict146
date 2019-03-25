@@ -47,3 +47,15 @@ th.sorting_asc {
 #sampledata_filter label {
   font-size: 12px;
 }
+
+.btn.btn-secondary.btn-lg.pull-right.analystbtn {
+    height: 9%;
+}
+
+button.btn.btn-info.btn-lg.pull-right.analystbtn {
+    height: 9%;
+}
+
+.card-header {
+    font-size: 16px;
+}

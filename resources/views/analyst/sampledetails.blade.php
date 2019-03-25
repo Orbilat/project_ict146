@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Samples - Station {{ $station }}</div>
+                <div class="card-header ">Samples</div> 
                 <br>
-                <table id="sampledata" class="display sampledata" style="width:100%">
-                    <thead>
+                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
+                    <thead class="thead-light">
                         <tr>
-                            <th>Laboratory Code </th>
-                            <th>Parameters</th>
-                            <th>Collection Time</th>
-                            <th>Date Received</th>
-                            <th>Status</th>
-                            <th>Date and Time Completed</th>
+                            <th class="admin-table">Laboratory Code </th>
+                            <th class="admin-table">Parameters</th>
+                            <th class="admin-table">Collection Time</th>
+                            <th class="admin-table">Date Received</th>
+                            <th class="admin-table">Status</th>
+                            <th class="admin-table">Date and Time Completed</th>
                         </tr>
                     </thead>
                     <tbody>

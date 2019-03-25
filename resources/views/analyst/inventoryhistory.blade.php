@@ -5,8 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Inventory History</div>
-                <br>
+                <div class="card-header "> Inventory History</div>
+                <br/>
+
                 <table id="historytable" class="display sampledata" style="width:100%">
                     <thead>
                         <tr>
