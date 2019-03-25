@@ -93,8 +93,8 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient-admin');
     Route::post('/admin/samples', 'AdminController@addSample')->name('addSample-admin');
     Route::post('/admin/samples', 'AdminController@insertSample')->name('insertSample-admin');
-    Route::delete('/admin/stations/{sampleId}', 'AdminController@destroySample')->name('destroySample-admin');
-    Route::patch('/admin/stations/{sampleId}', 'AdminController@updateSample')->name('updateSample-admin');
+    Route::delete('/admin/samples/{sampleId}', 'AdminController@destroySample')->name('destroySample-admin');
+    Route::patch('/admin/samples/{sampleId}', 'AdminController@updateSample')->name('updateSample-admin');
     Route::post('/admin/stations', 'AdminController@addStation')->name('addStation-admin');
     Route::delete('/admin/stations/{stationId}', 'AdminController@destroyStation')->name('destroyStation-admin');
     Route::patch('/admin/stations/{stationId}', 'AdminController@updateStation')->name('updateStation-admin');
@@ -107,6 +107,9 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');
     Route::delete('/admin/suppliers/{supplierId}', 'AdminController@destroySupplier')->name('deleteSupplier-admin');
     Route::patch('/admin/suppliers/{supplierId}', 'AdminController@updateSupplier')->name('updateSupplier-admin');
+    Route::post('/admin/inventory/glassware', 'AdminController@addItem')->name('addItem-admin');
+    Route::delete('/admin/inventory/glassware/{itemId}', 'AdminController@destroyItem')->name('destroyItem-admin');
+    Route::patch('/admin/inventory/glassware/{itemId}', 'AdminController@updateItem')->name('updateItem-admin');
     Route::get('/admin/inventory/history', 'AdminController@history')->name('inventory-history-admin');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware-admin');
 });

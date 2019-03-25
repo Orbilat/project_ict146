@@ -727,7 +727,14 @@ class AdminController extends Controller
     // STATION DELETE
     protected function destroyStation($stationId)
     {
-
+        $station = Station::findOrFail($stationId);
+        if($station->delete()){
+            Session::flash('flash_station_deleted', 'Station deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
     }
     // EVENT ADD
     protected function addEvent(Request $request)
@@ -757,5 +764,10 @@ class AdminController extends Controller
         else {
             App::abort(500, 'Error!');
         }
+    }
+    // ADD ITEM (GLASSWARE)
+    protected function addItem(Request $request)
+    {
+        
     }
 }
