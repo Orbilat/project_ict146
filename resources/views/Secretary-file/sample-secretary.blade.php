@@ -1,6 +1,35 @@
 @extends('layouts.secretary_app')
 
-
+{{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
+@if(Session::has('flash_sample_added'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
+</div>
+@endif
+{{-- SUCCESS MESSAGE OF DELETING SAMPLE --}}
+@if(Session::has('flash_sample_deleted'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_deleted')!!}
+</div>
+@endif
+{{-- SUCCESS MESSAGE OF UPDATING SAMPLE --}}
+@if(Session::has('flash_sample_updated'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_updated')!!}
+</div>
+@endif
+{{-- VALIDATION CHECKS --}}
+@if ($errors->any())
+<div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+<ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+        <p>Please try again.</p>
+</ul>
 
 
 @section('content')

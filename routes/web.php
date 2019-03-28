@@ -47,18 +47,13 @@ Route::post('/contact', [
 
 
 //SECRETARY ROUTES
+Route::middleware(['secretary','auth'])->group(function (){
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
 
-
-// Route::get('/secretary/form',function() {
-//     return view('secretary-file.ris');
-//  });
-// Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
-// Route::get('/dynamic_pdf', 'DynamicPDFController@index');
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
@@ -67,7 +62,7 @@ Route::post('/secretary/create-sample','SecretaryController@addSample')->name('c
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
-
+});
 
 //END SECRETARY ROUTES
 
@@ -91,7 +86,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::post('/admin/clients', 'AdminController@addClient')->name('addClient-admin');
     Route::delete('/admin/clients/{clientId}', 'AdminController@destroyClient')->name('deleteClient-admin');
     Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient-admin');
-    Route::post('/admin/samples', 'AdminController@addSample')->name('addSample-admin');
+    Route::post('/admin/samplesadd', 'AdminController@addSample')->name('addSample-admin');
     Route::post('/admin/samples', 'AdminController@insertSample')->name('insertSample-admin');
     Route::delete('/admin/samples/{sampleId}', 'AdminController@destroySample')->name('destroySample-admin');
     Route::patch('/admin/samples/{sampleId}', 'AdminController@updateSample')->name('updateSample-admin');

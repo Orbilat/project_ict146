@@ -14,7 +14,8 @@
     </form>
   </div>
 
-<table id="customers">
+<table class="table">
+<thead class="thead-light">
   <tr>
     <th>RIS Number</th>
     <th>Client ID</th>
@@ -46,6 +47,7 @@
   
   </tr>
   @endforeach
+  </thead>
 </table>
 
 </div>
