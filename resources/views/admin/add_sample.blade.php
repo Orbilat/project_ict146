@@ -1,20 +1,7 @@
 @extends('layouts.admin_app')
 
 @section('content')
-{{-- SUCCESS MESSAGE OF ADDING CLIENT --}}
-@if(Session::has('flash_client_added'))
-<div class="alert alert-info offset-md-1 col-md-10">
-    <a class="close" data-dismiss="alert">×</a>
-    <strong>Notification:</strong> {!!Session::get('flash_client_added')!!}
-</div>
-@endif
-{{-- SUCCESS MESSAGE OF ADDING NEW SAMPLE --}}
-@if(Session::has('flash_sample_added'))
-<div class="alert alert-info offset-md-1 col-md-10">
-    <a class="close" data-dismiss="alert">×</a>
-    <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
-</div>
-@endif
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">

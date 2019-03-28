@@ -32,7 +32,6 @@
 
 <form method="POST" action="{{ route('addClient-secretary') }}">
                                 @csrf
-        
                                 <div class="form-group row">
                                     <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
         
@@ -116,7 +115,12 @@
                                         @endif
                                     </div>
                                 </div>
+<<<<<<< HEAD
+=======
+                             
+>>>>>>> 1e2ef142b7703284627de2f75af5021e8685e841
 
+                  
                                 <div class="form-group row">
 
                                     <label for="reclaimSample" class="col-md-4 col-form-label text-md-right">{{ __('Reclaim Sample') }}</label>
@@ -195,11 +199,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                
-
-                              
-
 
 
                                 <div class="form-group row">

@@ -124,6 +124,181 @@
             </div>
         </nav>
         <main class="py-4">
+
+
+            {{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
+                @if(Session::has('flash_sample_added'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
+                    </div>
+            @endif
+            {{-- SUCCESS MESSAGE OF DELETING SAMPLE --}}
+                @if(Session::has('flash_sample_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_sample_deleted')!!}
+                    </div>
+            @endif
+            {{-- SUCCESS MESSAGE OF UPDATING SAMPLE --}}
+                @if(Session::has('flash_sample_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_sample_updated')!!}
+                    </div>
+            @endif
+            
+            {{-- SUCCESS MESSAGE OF ADDING CLIENT --}}
+                @if(Session::has('flash_client_added'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_client_added')!!}
+                </div>
+                @endif
+
+
+            {{-- SUCCESS MESSAGE OF ADDING ACCOUNT --}}
+                @if(Session::has('flash_account_added'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_account_added')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF DELETING ACCOUNT --}}
+                @if(Session::has('flash_account_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_account_deleted')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF UPDATING ACCOUNT --}}
+                @if(Session::has('flash_account_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_account_updated')!!}
+                    </div>
+                @endif
+            
+
+
+            {{-- SUCCESS MESSAGE OF DELETING CLIENT --}}
+                @if(Session::has('flash_client_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_client_deleted')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF UPDATING CLIENT --}}
+                @if(Session::has('flash_client_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_client_updated')!!}
+                    </div>
+                @endif
+
+            {{-- SUCCESS MESSAGE OF ADDING ITEM --}}
+                @if(Session::has('flash_item_added'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_item_added')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF DELETING ITEM --}}
+                @if(Session::has('flash_item_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_item_deleted')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF UPDATING ITEM --}}
+                @if(Session::has('flash_item_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_item_updated')!!}
+                    </div>
+                @endif
+                   
+
+
+            {{-- SUCCESS MESSAGE OF ADDING PARAMETER --}}
+                @if(Session::has('flash_parameter_added'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_parameter_added')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF DELETING PARAMETER --}}
+                @if(Session::has('flash_parameter_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_parameter_deleted')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF UPDATING PARAMETER --}}
+                @if(Session::has('flash_parameter_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_parameter_updated')!!}
+                    </div>
+                @endif
+
+            {{-- SUCCESS MESSAGE OF ADDING STATION --}}
+                @if(Session::has('flash_station_added'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_station_added')!!}
+                </div>
+            @endif
+            {{-- SUCCESS MESSAGE OF DELETING STATION --}}
+                @if(Session::has('flash_station_deleted'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_station_deleted')!!}
+                </div>
+            @endif
+            {{-- SUCCESS MESSAGE OF UPDATING STATION --}}
+                @if(Session::has('flash_station_updated'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_station_updated')!!}
+                </div>
+            @endif
+
+
+            {{-- SUCCESS MESSAGE OF ADDING SUPPLIER --}}
+                @if(Session::has('flash_supplier_added'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_supplier_added')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF DELETING SUPPLIER --}}
+                @if(Session::has('flash_supplier_deleted'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_supplier_deleted')!!}
+                    </div>
+                @endif
+            {{-- SUCCESS MESSAGE OF UPDATING SUPPLIER --}}
+                @if(Session::has('flash_supplier_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_supplier_updated')!!}
+                    </div>
+                @endif
+            {{-- VALIDATION CHECKS --}}
+                @if ($errors->any())
+                <div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                            <p>Please try again.</p>
+                    </ul>
+                </div>
+                @endif
+
+
             @yield('content')
         </main>
     
