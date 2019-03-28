@@ -16,6 +16,6 @@ class Parameter extends Model
 
     public function samples()
     {
-        return $this->belongsToMany(Sample::class, 'sample__tests', 'parameters', 'sampleCode');
+        return $this->belongsToMany(Sample::class, 'sample__tests', 'parameters', 'sampleCode')->withPivot('status', 'timecompleted');
     }
 }
