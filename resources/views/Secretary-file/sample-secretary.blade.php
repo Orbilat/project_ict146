@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header">
                     Add Samples to Client
-                    <a href="{{ route('clients-admin') }}" class="glyphicon glyphicon-plus float-right">Back</a>
+                    <a href="{{ route('addClient-secretary') }}" class="glyphicon glyphicon-plus float-right">Back</a>
                 </div>   
                 <div class="card-body">
                     <form action="{{ route('createSample-secretary') }}" method="post">
