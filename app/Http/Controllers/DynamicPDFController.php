@@ -28,13 +28,8 @@ class DynamicPDFController extends Controller
     {
      $data = Client::all();
      $pdf = \App::make('dompdf.wrapper');
-<<<<<<< HEAD
-     $pdf->loadHTML($this->convert_customer_data_to_html());
-     return $pdf->setPaper('A3', 'landscape')->stream();
-=======
      $pdf = \PDF::loadView('produit', $data);
      return $pdf->setPaper('Letter', 'landscape')->stream();
->>>>>>> 7eceea1245baaaa79dd91182cac893168885981d
     }
 
     function convert_customer_data_to_html()

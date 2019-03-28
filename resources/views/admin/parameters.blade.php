@@ -79,6 +79,20 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="0.00" autofocus>
+        
+                                        @if ($errors->has('price'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('price') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group row">
                                     <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
@@ -115,6 +129,7 @@
                             <tr>
                                 <th class="admin-table">Analysis</th>
                                 <th class="admin-table">Method</th>
+                                <th class="admin-table">Price</th>
                                 <th class="admin-table">Station</th>
                                 <th class="admin-table">Managed By</th>
                                 <th class="admin-table">Managed At</th>
@@ -171,6 +186,20 @@
                                                         </div>
                                                     </div>
                                                     
+                                                    <div class="form-group row">
+                                                        <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ $parameter->price }}" autofocus>
+                            
+                                                            @if ($errors->has('price'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('price') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div> 
+
                                                     <div class="form-group row">
                                                         <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
                             

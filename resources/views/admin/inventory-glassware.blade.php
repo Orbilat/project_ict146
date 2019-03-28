@@ -47,48 +47,76 @@
                 </form>
                 <div id="addItem" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('addParameter-admin') }}">
+                        <form method="POST" action="{{ route('addItem-admin') }}">
                             @csrf
                             <div class="form-group row">
-                                <label for="analysis" class="col-md-4 col-form-label text-md-right">{{ __('Analysis') }}</label>
+                                <label for="itemName" class="col-md-4 col-form-label text-md-right">{{ __('Name of Item') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="analysis" type="text" class="form-control{{ $errors->has('analysis') ? ' is-invalid' : '' }}" name="analysis" value="{{ old('analysis') }}" required autofocus>
+                                    <input id="itemName" type="text" class="form-control{{ $errors->has('itemName') ? ' is-invalid' : '' }}" name="itemName" value="{{ old('itemName') }}" required autofocus>
     
-                                    @if ($errors->has('analysis'))
+                                    @if ($errors->has('itemName'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('analysis') }}</strong>
+                                            <strong>{{ $errors->first('itemName') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
     
                             <div class="form-group row">
-                                <label for="method" class="col-md-4 col-form-label text-md-right">{{ __('Method') }}</label>
+                                <label for="containerType" class="col-md-4 col-form-label text-md-right">{{ __('Container Type') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="method" type="textbox" class="form-control{{ $errors->has('method') ? ' is-invalid' : '' }}" name="method" value="{{ old('method') }}" placeholder="Optional" autofocus>
+                                    <input id="containerType" type="text" class="form-control{{ $errors->has('containerType') ? ' is-invalid' : '' }}" name="containerType" value="{{ old('containerType') }}" required autofocus>
     
-                                    @if ($errors->has('method'))
+                                    @if ($errors->has('containerType'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('method') }}</strong>
+                                            <strong>{{ $errors->first('containerType') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="volumeCapacity" class="col-md-4 col-form-label text-md-right">{{ __('Volume Capacity') }}</label>
+    
+                                <div class="col-md-6">
+                                    <input id="volumeCapacity" type="number" class="form-control{{ $errors->has('volumeCapacity') ? ' is-invalid' : '' }}" name="volumeCapacity" value="{{ old('volumeCapacity') }}" required autofocus>
+    
+                                    @if ($errors->has('volumeCapacity'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('volumeCapacity') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Quantity') }}</label>
+    
+                                <div class="col-md-6">
+                                    <input id="quantity" type="number" class="form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" name="quantity" value="1" required autofocus>
+    
+                                    @if ($errors->has('quantity'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('quantity') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
                             
                             <div class="form-group row">
-                                <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
-    
+                                <label for="supplier" class="col-md-4 col-form-label text-md-right">{{ __('Supplier') }}</label>
+                                
                                 <div class="col-md-6">
-                                    <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                        <option value="Station 1">Station 1</option>
-                                        <option value="Station 2">Station 2</option>
-                                        <option value="Station 3">Station 3</option>                                    
+                                    <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;" required>
+                                        @foreach($suppliers as $supplier)
+                                            <option value="{{ $supplier->companyName }}">{{ $supplier->companyName }}</option>
+                                        @endforeach
                                     </select>
-                                    @if ($errors->has('station'))
+                                    @if ($errors->has('supplier'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('station') }}</strong>
+                                            <strong>{{ $errors->first('supplier') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -97,7 +125,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-secondary">
-                                        {{ __('Add Parameter') }}
+                                        {{ __('Add Item') }}
                                     </button>
                                 </div>
                             </div>
@@ -119,11 +147,65 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($items as $item)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="admin-table">{{ $item->itemName }}</td>
+                            <td class="admin-table">{{ $item->containerType }}</td>
+                            <td class="admin-table">{{ $item->volumeCapacity }}</td>
+                            <td class="admin-table">{{ $item->quantity }}</td>
+                            <td class="admin-table">{{ $item->companyName }}</td>
+                            <td>
+                                {{-- EDIT BUTTON --}}
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editItem{{ $count }}">Edit</button>
+                                <div id="editItem{{ $count }}" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header editModal">
+                                                <h5 class="modal-title">Edit Item</h5>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <form method="POST" action="{{ route('updateItem-admin', [$item->itemId]) }}">
+                                                @method('PATCH')
+                                                @csrf
+                                            <div class="modal-body">
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                                &nbsp;&nbsp; 
+                            {{-- DELETE BUTTON --}}
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteItem{{ $count }}">Delete</button>
+                            <div id="deleteItem{{ $count }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header deleteModal">
+                                            <h5 class="modal-title">Delete Item</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete {{ $item->itemName }}?</p>                   
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="{{ route('destroyItem-admin', [$item->itemId])}}" method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                      
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

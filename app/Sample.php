@@ -22,4 +22,9 @@ class Sample extends Model
     {
         return $this->belongsTo(Client::class, 'risNumber', 'clientId');
     }
+
+    public function parameters()
+    {
+        return $this->belongsToMany(Parameter::class, 'sample__tests', 'sampleCode', 'parameters');
+    }
 }

@@ -13,4 +13,9 @@ class Supplier extends Model
     protected $fillable = [
         'companyName', 'emailAddress', 'contactNumber', 'managedBy', 'managedDate',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'supplier', 'supplierId');
+    }
 }
