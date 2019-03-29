@@ -53,7 +53,6 @@ class SecretaryController extends Controller
     }
 
     
-    
     protected function status(){
         
         $cli = Client::with('samples.parameters')->get();
@@ -130,9 +129,12 @@ class SecretaryController extends Controller
         $client->discount = trim($request->discount);
         $client->deposit = trim($request->deposit);
         $client->reclaimSample = trim($request->reclaimSample);
+        $client->followUp= trim($request->dueDate);
         $client->testResult = trim($request->testResult);
         $client->remarks =  trim($request->remarks);    
         $client->managedBy = Auth::user()->employeeName;
+
+
         
         
         $client->save();

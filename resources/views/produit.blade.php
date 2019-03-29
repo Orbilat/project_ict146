@@ -14,9 +14,9 @@
 </style> 
     <style>
         div.test1
-{
-border: 2px solid #000;
-}
+        {
+        border: 2px solid #000;
+        }
 
 .row::after {
     content: "";
@@ -65,7 +65,8 @@ border: 2px solid #000;
     <div class="row">
         <div class="col-3">
         <br><br>
-            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1.5,60) !!}</div>
+            <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1,60) !!}</div>
+            <br>
             <h2 class="header">{{ $p->laboratoryCode}}
             @if($p->remarks == "rush" || $p->remarks == "Rush")
                 <br>
@@ -74,7 +75,7 @@ border: 2px solid #000;
             </h2>        
         </div>
         <div class="col-1"></div>
-        <div class="col-6 test1"> 
+        <div class="col-7 test1"> 
             <h4>USC WATER LABORATORY &emsp; <br> RIS#: 
                 @php
                     $year = substr($p->ris,  0, 4);
@@ -98,30 +99,33 @@ border: 2px solid #000;
             <br>
             <b> Sample Type:</b> {{ $p->sampleType }}
             <br>
-            <b> Date/Time Sample Submitted:</b> {{  date("F j, Y g:m A", strtotime($p->created_at)) }}
+            <b> Date Submitted:</b> {{  date("F j, Y g:m A", strtotime($p->created_at)) }}
             <br>
-            <b> Date/Time Sample Collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}
+            <b> Date Collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}
             <br>
             <b> Analysis Requested: </b> @foreach($parameters as $parameter) {{ $parameter->analysis }} @endforeach
+            
             </p>   
               </div> 
     </div>
-        <br><br><br><br>
+        <br><br>
 
         @endforeach
 
         
     <div class="row">
+    
     @foreach($slip as $s)
-        <div class= "test1">
+    <div class="col-1"></div>
+        <div class= "col-11 test1">
             <h3> CLAIM SLIP</h3>
-            <h4> RIS #: {{$s->risNumber}}
+            <h4> <b> RIS #: </b>{{$s->risNumber}}
             <br>
-             Name of Representative: {{$s->nameOfPerson}}
+             <b> Name of Representative: </b>{{$s->nameOfPerson}}
             <br>
-             Name of Company: {{$s->nameOfEntity}}
+            <b> Name of Company: </b>{{$s->nameOfEntity}}
             <br>
-             Please follow up on:
+            <b> Please follow up on:</b> 
             <br>
             <u> Call us 3453811/2300100 local 110 for confirmation. Test results will not be released without this claim slip.</u>
             </h4>
