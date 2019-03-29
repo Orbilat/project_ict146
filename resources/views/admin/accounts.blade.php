@@ -308,9 +308,9 @@
                                 
                                                             <div class="col-md-6">
                                                                 <select id="userType" type="text" class="form-control{{ $errors->has('userType') ? ' is-invalid' : '' }}" name="userType">
-                                                                    <option value="administrator">Admin</option>
-                                                                    <option value="analyst">Analyst</option>
-                                                                    <option value="secretary">Secretary</option>                                    
+                                                                    <option value="administrator" @if($account->userType == 'administrator') selected @endif>Admin</option>
+                                                                    <option value="analyst" @if($account->userType == 'analyst') selected @endif>Analyst</option>
+                                                                    <option value="secretary" @if($account->userType == 'secretary') selected @endif>Secretary</option>                                    
                                                                 </select>
                                                                 @if ($errors->has('userType'))
                                                                     <span class="invalid-feedback" role="alert">

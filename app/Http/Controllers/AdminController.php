@@ -6,6 +6,7 @@ use DateTime;
 use Redirect;
 use Validator;
 use Session;
+use App\Event;
 use App\Employee;
 use App\Client;
 use App\Sample;
@@ -47,8 +48,7 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $samples = DB::table('samples')->join('clients', 'samples.risNumber', '=', 'clients.clientId')
-                    ->select('samples.*', 'clients.risNumber as ris')->orderBy('samples.dueDate', 'ASC')->paginate(6);
+        $samples = Sample::paginate(6);
         $parameters = Parameter::all();
 
         return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
@@ -90,7 +90,10 @@ class AdminController extends Controller
     // Admin Parameters Page (/parameters)
     public function parameters()
     {
-        $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
+        $parameters = DB::table('parameters')
+                    ->join('stations', 'parameters.station', '=', 'stations.stationId')
+                    ->select('parameters.*', 'stations.stationName as stationName')
+                    ->orderBy('analysis')->paginate(6);
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
@@ -479,29 +482,62 @@ class AdminController extends Controller
     {
         // VALIDATION
         $validatorUpdate = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|min:4',
-            'employeeName' => 'required|string|max:50',
-            'position' => 'required|string|max:30',
-            'idNumber' => 'required|string|numeric',
-            'licenseNumber' => 'required|string|max:50',
-            'userType' => 'required|string|max:20',
+            'clientId' => 'required',
+            'clientsCode' => 'nullable|string|max:255',
+            'sampleType' => 'required|string|max:255',
+            'sampleCollection' => 'required|string|max:50',
+            'samplePreservation' => 'nullable|string|max:50',
+            'parameter' => 'required',
+            'purposeOfAnalysis' => 'nullable|string|max:50',
+            'sampleSource' => 'required|string|max:20',
+            'dueDate' => 'required|string|max:50',
         ]);
-        // VALIDATION CHECKS
+        //VALIDATION CHECKS
         if ($validatorUpdate->fails()) {
-            return redirect('admin/accounts')
+            return redirect('admin/clients')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        // FIND ACCOUNT AND UPDATE
-        $account = Employee::findOrFail($accountId);
-        $account->username = trim($request->username);
-        $account->employeeName =  trim($request->employeeName);
-        $account->position = trim($request->position);
-        $account->idNumber = trim($request->idNumber);
-        $account->licenseNumber = trim($request->licenseNumber);
-        $account->userType = $request->userType;
-        $account->managedBy = Auth::user()->employeeName;
-        $account->managedDate = new DateTime();
+        if(strlen($request->clientId) == 9){
+            $removeDash = explode('-', $request->clientId);
+            $finalId = $removeDash[0].$removeDash[1];
+        }
+        $client = DB::table('clients')->where('risNumber', $finalId)->value('clientId');
+
+        //ELOQUENT INSERT
+        $sample = Sample::findOrFail($sampleId);
+        $sample->risNumber = $client;
+        $sample->clientsCode = trim($request->clientsCode);
+        $sample->sampleType =  trim($request->sampleType);
+        $sample->sampleCollection = $request->sampleCollection;
+        $sample->samplePreservation = trim($request->samplePreservation);
+        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        $sample->sampleSource = $request->sampleSource;
+        $sample->dueDate = $request->dueDate;
+        $sample->managedBy = Auth::user()->employeeName;
+        $sample->managedDate = new DateTime();
+        $sample->save();
+        //INSERT LAB CODE TO SAMPLES
+        if (strlen((string)($sample->sampleId)) == 1) {
+            $idOfSample = (string)("000".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 2) {
+            $idOfSample = (string)("00".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 3) {
+            $idOfSample = (string)("0".$sample->sampleId);
+        } else {
+            $idOfSample = (string)$sample->sampleId;
+        }
+        $sample->laboratoryCode = $finalId . $idOfSample;
+        //INSERT SAMPLE TESTS IN LOOP
+        foreach ($request->parameter as $parameter => $analysis) {
+            $sampletests = new Sample_Tests;
+            $sampletests->sampleCode = $sample->sampleId;
+            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->status = "In Progress";
+            $sampletests->managedBy = Auth::user()->employeeName;
+            $sampletests->managedDate = new DateTime();
+            $sampletests->save();
+        }
         if($account->save()){
             Session::flash('flash_account_updated', 'Account updated successfully!');
             return Redirect::back();
@@ -574,7 +610,7 @@ class AdminController extends Controller
         $parameter = Parameter::findOrFail($parameterId);
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->station = $request->station;
+        $parameter->station = DB::table('stations')->where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
     
@@ -682,6 +718,40 @@ class AdminController extends Controller
         //CHECK SAVE
         if($station->save()){
             Session::flash('flash_station_added', 'Station added successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // STATION DELETE
+    protected function destroyStation($stationId)
+    {
+
+    }
+    // EVENT ADD
+    protected function addEvent(Request $request)
+    {
+        // VALIDATION
+        $validator = Validator::make($request->all(), [
+            'eventName' => 'required|string|max:255',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date'
+        ]);
+        //VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('admin/home')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        //ELOQUENT INSERT
+        $event = new Event;
+        $event->event_name = trim($request->eventName);
+        $event->start_date = $request->startDate;
+        $event->end_date = $request->endDate;
+        //CHECK SAVE
+        if($event->save()){
+            Session::flash('flash_event_added', 'Event added successfully!');
             return Redirect::back();
         }
         else {

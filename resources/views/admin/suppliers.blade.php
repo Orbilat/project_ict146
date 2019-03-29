@@ -126,7 +126,7 @@
                                 <td class="admin-table">{{ $supplier->contactNumber }}</td>
                                 <td class="admin-table">{{ $supplier->managedBy }}</td>
                                 <td class="admin-table">{{ $supplier->managedDate }}</td>
-                                <td class="admin-table">
+                                <td>
                                     {{-- EDIT BUTTON --}}
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
                                     <div id="editSupplier{{ $count }}" class="modal fade" role="dialog">

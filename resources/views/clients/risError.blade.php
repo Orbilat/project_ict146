@@ -1,32 +1,17 @@
 @extends('layouts.clientapp')
 
 @section('content')
-<br><br>
-<br><br>
 
-<div class="container" style="margin-bottom:30%;">
-    <div class="card-body"> 
-        <table class="table">
-            <thead>
-                <tr class="text-center">
-                  <th class="SRheader bg-dark">Analysis</th>
-                  <th class="SRheader bg-dark">Method</th>
-                  <th class="SRheader bg-dark">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-              @foreach($parameters as $parameter)
-                <tr class="text-center">
-                  <td class="border">{{ $parameter->analysis }}</td>
-                  <td class="border">{{ $parameter->method }}</td>
-                  <td class="border"></td>
-              @endforeach
-                </tr>    
-            </tbody>
-        </table>           
+
+<div class="container "  style="padding:130px;margin-bottom:80px; ">
+    <div class="row bg-white w3-padding-16">           
+        <div class="container">
+            <div class="alert alert-danger w3-padding-64">
+                <strong>YOUR RIS NUMBER DOES NOT EXIST.</strong> 
+            </div>
+        </div>
     </div>
 </div>
-
       <footer class="w3-center w3-black w3-padding-32">
           <div class="w3-section">
               <div class="col-md-4 text-center"> <h2 class="titleText">Address</h2>
@@ -48,4 +33,7 @@
               </div>
           </div>
       </footer>
+
+
+
 @endsection

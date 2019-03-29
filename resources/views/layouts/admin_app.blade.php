@@ -16,7 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}"> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -28,7 +28,8 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ 'Laboratory Information Management System' }}
+                    <img src="/img/logo.png" style="height: 22px;">
+                    {{ 'USC WATER LABORATORY' }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -131,22 +132,6 @@
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
         });
-
-        function clickableRows() {
-            var table = document.getElementById('tableId');
-            var rows = table.getElementsByTagName('tr');
-            for (i = 0; i < rows.length; i++){
-                var currentRow = table.rows[i];
-                var clickHandler = function(row) {
-                    return function() {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var id = cell.innerHTML;
-                        alert("id:" + id);
-                    };
-                };
-                currentRow.onclick = clickHandler(currentRow);
-            }
-        }
 
         function changeText() {
             var text = document.getElementById("addNew");

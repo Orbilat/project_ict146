@@ -126,7 +126,7 @@
                             <tr>
                                 <td class="admin-table">{{ $parameter->analysis }}</td>
                                 <td class="admin-table">{{ $parameter->method }}</td>
-                                <td class="admin-table">{{ $parameter->station }}</td>
+                                <td class="admin-table">{{ $parameter->stationName }}</td>
                                 <td class="admin-table">{{ $parameter->managedBy }}</td>
                                 <td class="admin-table">{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>
                                 <td>
@@ -176,9 +176,9 @@
                             
                                                         <div class="col-md-6">
                                                             <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                                                <option value="Station 1" @if($parameter->station == 'Station 1') selected @endif>Station 1</option>
-                                                                <option value="Station 2" @if($parameter->station == 'Station 2') selected @endif>Station 2</option>
-                                                                <option value="Station 3" @if($parameter->station == 'Station 3') selected @endif>Station 3</option>                                    
+                                                                <option value="Station 1" @if($parameter->stationName == 'Station 1') selected @endif>Station 1</option>
+                                                                <option value="Station 2" @if($parameter->stationName == 'Station 2') selected @endif>Station 2</option>
+                                                                <option value="Station 3" @if($parameter->stationName == 'Station 3') selected @endif>Station 3</option>                                    
                                                             </select>
                                                             @if ($errors->has('station'))
                                                                 <span class="invalid-feedback" role="alert">

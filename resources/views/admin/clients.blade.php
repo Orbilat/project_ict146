@@ -420,14 +420,14 @@
                             
                                                         <div class="col-md-2">
                                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                <label class="btn btn-secondary btn-sm active">
-                                                                    <input type="radio" name="testResult" id="testResult" value="Email" checked autocomplete="off"> Email
+                                                                <label class="btn btn-secondary btn-sm @if($client->testResult == 'Email') active @endif">
+                                                                    <input type="radio" name="testResult" id="testResult" value="Email" @if($client->testResult == 'Email') checked @endif autocomplete="off"> Email
                                                                 </label>
-                                                                <label class="btn btn-secondary btn-sm">
-                                                                    <input type="radio" name="testResult" id="testResult" value="Fax" autocomplete="off"> Fax
+                                                                <label class="btn btn-secondary btn-sm @if($client->testResult == 'Fax') active @endif">
+                                                                    <input type="radio" name="testResult" id="testResult" value="Fax" @if($client->testResult == 'Fax') checked @endif autocomplete="off"> Fax
                                                                 </label>
-                                                                <label class="btn btn-secondary btn-sm">
-                                                                    <input type="radio" name="testResult" id="testResult" value="LBC" autocomplete="off"> LBC
+                                                                <label class="btn btn-secondary btn-sm @if($client->testResult == 'LBC' || $client->testResult == 'lbc') active @endif">
+                                                                    <input type="radio" name="testResult" id="testResult" value="LBC" @if($client->testResult == 'LBC' || $client->testResult == 'lbc') checked @endif autocomplete="off"> LBC
                                                                 </label>
                                                             </div>
                             
@@ -443,11 +443,11 @@
                                                         <label for="reclaimSample" class="col-md-4 col-form-label text-md-right">{{ __('Reclaim Sample') }}</label>
                                                         <div class="col-md-6">
                                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                <label class="btn btn-secondary btn-sm active">
-                                                                    <input type="radio" name="reclaimSample" id="reclaimSample" value="1" checked autocomplete="off"> Yes
+                                                                <label class="btn btn-secondary btn-sm @if($client->reclaimSample == 1) active @endif">
+                                                                    <input type="radio" name="reclaimSample" id="reclaimSample" value="1" @if($client->reclaimSample == 1) checked @endif autocomplete="off"> Yes
                                                                 </label>
-                                                                <label class="btn btn-secondary btn-sm">
-                                                                    <input type="radio" name="reclaimSample" id="reclaimSample" value="0" autocomplete="off"> No
+                                                                <label class="btn btn-secondary btn-sm @if($client->reclaimSample == 0) active @endif">
+                                                                    <input type="radio" name="reclaimSample" id="reclaimSample" value="0" @if($client->reclaimSample == 0) checked @endif autocomplete="off"> No
                                                                 </label>
                                                             </div>
                             
@@ -477,7 +477,7 @@
                                                         <label for="newDateSubmit" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
                             
                                                         <div class="col-md-6">
-                                                            <input id="newDateSubmit" type="datetime-local" class="form-control{{ $errors->has('newDateSubmit') ? ' is-invalid' : '' }}" name="newDateSubmit" value="{{ $client->managedDate }}" autofocus>
+                                                            <input id="newDateSubmit" type="datetime-local" class="form-control{{ $errors->has('newDateSubmit') ? ' is-invalid' : '' }}" name="newDateSubmit" value="{{ date("Y-m-d\TH:i:sP", strtotime($client->managedDate)) }}" autofocus>
                             
                                                             @if ($errors->has('newDateSubmit'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -508,7 +508,13 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
-                                                        Deleting RIS: {{ $client->risNumber }} will remove other related data (samples, payments).
+                                                        Deleting RIS: 
+                                                    @php
+                                                        $year = substr($client->risNumber,  0, 4);
+                                                        $id = substr($client->risNumber, 4);
+                                                        echo $year.'-'.$id;
+                                                    @endphp
+                                                        will remove other related data (samples, payments).
                                                         <br><br>
                                                         Do you wish to continue?
                                                     </p>
