@@ -115,11 +115,6 @@
                                         @endif
                                     </div>
                                 </div>
-<<<<<<< HEAD
-=======
-                             
->>>>>>> 1e2ef142b7703284627de2f75af5021e8685e841
-
                   
                                 <div class="form-group row">
 

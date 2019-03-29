@@ -52,99 +52,49 @@ class SecretaryController extends Controller
         return view('secretary-file.secretary-form',['clients'=>$clients]);
     }
 
-    // protected function form(Request $request)
-    // {
-    //     $ris=new Ris;
-    //     $ris->nameOfPerson= $request->Name;
-    //     $ris->risNumber= $request->risNumber;
-    //     $ris->nameOfEntity= $request->nameOfEntity;
-    //     $ris->address= $request->address;
-        
-    //     $saved = $ris->save();
-    //     if(!$saved){
-    //         abort(500, 'Unsuccessful!');
-    //     }
-    //     else{
-    //         return view('secretary-file.ris');
-    //     }  
-    // }
-    protected function ris(Request $request)
-    {  
-        // $ris=new Ris;
-        // $ris->nameOfPerson= $request->Name;
-        // $ris->risNumber= $request->risNumber;
-        // $ris->nameOfEntity= $request->nameOfEntity;
-        // $ris->address= $request->address;
-        
-        // $saved = $ris->save();
-        // if(!$saved){
-        //     abort(500, 'Unsuccessful!');
-        // }
-        // else{
-        // return view('secretary-file.ris-form');
-        // }
-
-        return view('secretary-file.ris-form');
-    }
-    // protected function addClient(Request $request)
-    // {
-    //     // VALIDATION
-    //     $validator = Validator::make($request->all(), [
-    //         'nameOfPerson' => 'required|string|max:255|min:4',
-    //         'nameOfEntity' => 'nullable|string|max:255',
-    //         'address' => 'required|string|max:50',
-    //         'contactNumber' => 'string|numeric',
-    //         'faxNumber' => 'nullable|string|numeric',
-    //         'emailAddress' => 'nullable|string|max:50|email',
-    //         'dateOfSubmission' => 'required|string|max:20',
-    //     ]);
-    //     // VALIDATION CHECKS
-    //     if ($validator->fails()) {
-    //         return redirect('admin/clients')
-    //                     ->withErrors($validator)
-    //                     ->withInput();
-    //     }
-
-    //     //ELOQUENT INSERT
-    //     $client = new Client;
-    //     $client->nameOfPerson = trim($request->nameOfPerson);
-    //     $client->nameOfEntity = trim($request->nameOfEntity);
-    //     $client->address =  trim($request->address);
-    //     $client->contactNumber = trim($request->contactNumber);
-    //     $client->faxNumber = trim($request->faxNumber);
-    //     $client->emailAddress = trim($request->emailAddress);
-    //     $client->dateOfSubmission = $request->dateOfSubmission;
-    //     $client->managedBy = Auth::user()->employeeName;
-    //     $client->managedDate = new DateTime();
-    //     $client->save();
-    //     $client->risNumber = (int)date("Y", strtotime($client->created_at)) . $client->clientId;
-    //     //SAVE TO DB && CHECK
-    //     if($client->save()){
-    //         Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-    //         return view('admin.add_sample');
-    //     }
-    //     else {
-    //         App::abort(500, 'Error!');
-    //     }
-    //     $a=$clientId;
-    //     $sample=new Sample;
-    //     $sample->risNumber=$a;
-    // }
-
+    
+    
     protected function status(){
         
-        $status = DB::Table('clients')
-        ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
-        ->join('sample__tests', 'samples.sampleId', '=' ,'sample__tests.sampleCode')
-        ->select('clients.*')
-        ->where('clients.clientId', '=', 'samples.risNumber')
-        ->where('sample__tests.status', '=', "In Progress" || 'sample__tests.status', '=', "NULL")
-        ->distinct()
-        ->get();
-       
+        $cli = Client::with('samples.parameters')->get();
 
-        return view('secretary-file.add-secretary',['status' => $status]);
+        foreach($cli as $cl){
+            foreach($cl->samples as $sample){
+                foreach($sample->parameters as $parameter){
+                    if($parameter->pivot->status == "In Progress"){
+                        $isComplete = 'false';
+                        break;
+                    }
+                    $isComplete = 'true';
+                }
+            }
+            if($isComplete == 'true'){
+                $ready = Client::findOrFail($cl->clientId);
+                $ready->readyForPickUp = 'yes';
+                $ready->save();
+            }
+        }
+       
+        $client = Client::where('readyForPickUp','yes')->paginate(15);
+
+        return view('secretary-file.add-secretary', ['status'=>$client]);
     }
+
+    protected function paid($clientId){
+
+        $client = Client::findOrFail($clientId);
+        $client->paid = "yes";
+        if($client->save()){
+            $client = Client::where('readyForPickUp','yes')->paginate(15);
+
+            return view('secretary-file.add-secretary', ['status'=>$client]);
+        }
+        else {
+            dd($client->paid);
+        }
+
+    }
+
     protected function addClient(Request $request)
     {
         // VALIDATION
@@ -293,4 +243,5 @@ class SecretaryController extends Controller
         }
         
     }
+    
 }

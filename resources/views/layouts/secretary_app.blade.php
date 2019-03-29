@@ -46,17 +46,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('notification-secretary') }}">{{ __('Notifications') }}</a>
                             </li>
-                        
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('View Status') }}</a>
-                            </li>
                            
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('createClient') }}">{{ __('Create Client') }}</a>
                                 </li>
                                 
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('form') }}">{{ __('Clients') }}</a>
+                                    <a class="nav-link" href="{{ route('form') }}">{{ __('Create Client Forms') }}</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('Manage Clients') }}</a>
                             </li>
                         @endif
                     </ul>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
+use Session;
 use Illuminate\Support\Facades\DB;
 
 class ProduitController extends Controller
@@ -41,7 +42,15 @@ class ProduitController extends Controller
 
         $produits = DB::table('clients')->where('clientId', $request->search)->get();
 
-        return view('secretary-file.secretary-search',['clients'=>$produits]);
+        if(count($produits)<1){
+            Session::flash('flash_not_found', 'No Client ID exists.');
+            return view('secretary-file.search-fail');
+          }
 
+        else{
+            
+            return view('secretary-file.secretary-search',['clients'=>$produits]);
+            
+        }
     }
 }
