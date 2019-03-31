@@ -82,14 +82,21 @@ class SecretaryController extends Controller
     protected function paid($clientId){
 
         $client = Client::findOrFail($clientId);
-        $client->paid = "yes";
-        if($client->save()){
-            $client = Client::where('readyForPickUp','yes')->paginate(15);
+        if($client->paid == "no"){
+            $client->paid = "yes";
+            if($client->save()){
+                $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-            return view('secretary-file.add-secretary', ['status'=>$client]);
+                return view('secretary-file.add-secretary', ['status'=>$client]);
+            }
         }
-        else {
-            dd($client->paid);
+        else{
+            $client->paid = "no";
+            if($client->save()){
+                $client = Client::where('readyForPickUp','yes')->paginate(15);
+
+                return view('secretary-file.add-secretary', ['status'=>$client]);
+            }
         }
 
     }

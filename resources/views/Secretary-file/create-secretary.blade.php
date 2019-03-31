@@ -155,7 +155,7 @@
                                     <label for="discount" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="discount" type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" required autofocus>
+                                        <input id="discount" type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" placeholder=Optional autofocus>
         
                                         @if ($errors->has('discount'))
                                             <span class="invalid-feedback" role="alert">
@@ -170,7 +170,7 @@
                                     <label for="deposit" class="col-md-4 col-form-label text-md-right">{{ __('Deposit') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="deposit" type="number" class="form-control{{ $errors->has('deposit') ? ' is-invalid' : '' }}" name="deposit" required autofocus>
+                                        <input id="deposit" type="number" class="form-control{{ $errors->has('deposit') ? ' is-invalid' : '' }}" name="deposit" placeholder=Optional autofocus>
         
                                         @if ($errors->has('deposit'))
                                             <span class="invalid-feedback" role="alert">
@@ -216,7 +216,7 @@
                                         </button>
                                     </div>
                                 </div> 
-                            </form>
+</form>
 
 
 @endsection

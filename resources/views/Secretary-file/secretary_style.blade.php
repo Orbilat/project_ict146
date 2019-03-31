@@ -86,4 +86,16 @@ p.a {
 .smol {
   width: 70px;
 }
+.div1 {
+  width: 600px;
+  height: 100px;
+  border: 1px solid blue;
+}
+
+.div2 {
+  width: 600x;
+  height: 100px;  
+  padding: 50px;
+  border: 1px solid red;
+}
 </style>
