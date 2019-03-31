@@ -18,4 +18,9 @@ class Parameter extends Model
     {
         return $this->belongsToMany(Sample::class, 'sample__tests', 'parameters', 'sampleCode')->withPivot('status', 'timecompleted');
     }
+
+    public function station()
+    {
+        return $this->belongsTo(Station::class, 'station', 'stationId');
+    }
 }

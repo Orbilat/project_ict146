@@ -19,4 +19,9 @@ class Client extends Model
     {
         return $this->hasMany(Sample::class, 'risNumber', 'clientId');
     }
+
+    public function parameters()
+    {
+        return $this->hasManyThrough(Parameter::class, Sample::with('parameters'), '', '')
+    }
 }

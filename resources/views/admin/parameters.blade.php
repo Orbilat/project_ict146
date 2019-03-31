@@ -141,6 +141,7 @@
                             <tr>
                                 <td class="admin-table">{{ $parameter->analysis }}</td>
                                 <td class="admin-table">{{ $parameter->method }}</td>
+                                <td class="admin-table">{{ $parameter->price }}</td>
                                 <td class="admin-table">{{ $parameter->stationName }}</td>
                                 <td class="admin-table">{{ $parameter->managedBy }}</td>
                                 <td class="admin-table">{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>

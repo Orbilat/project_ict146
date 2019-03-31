@@ -13,4 +13,9 @@ class Station extends Model
     protected $fillable = [
         'stationName', 'timeReceived', 'timeCompleted', 'managedBy', 'managedDate',
     ];
+
+    public function parameters()
+    {
+        return $this->hasMany(Parameter::class, 'station', 'stationId');
+    }
 }

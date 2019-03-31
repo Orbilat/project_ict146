@@ -18,7 +18,6 @@ use App\Item;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -50,14 +49,14 @@ class AdminController extends Controller
     // Admin Clients Page (/clients)
     public function clients()
     {
-        $clients = DB::table('clients')->orderBy('clientId')->paginate(6);
+        $clients = Client::orderBy('clientId')->paginate(6);
         return view('admin.clients', ['clients' => $clients]);
     }
 
     // Admin Accounts Page (/accounts)
     public function accounts()
     {
-        $accounts = DB::table('employees')->orderBy('employeeName')->paginate(6);
+        $accounts = Employee::orderBy('employeeName')->paginate(6);
         return view('admin.accounts', ['accounts' => $accounts]);
     }
 
@@ -70,32 +69,28 @@ class AdminController extends Controller
     // Admin Inventory-Glassware Page (/inventory/glassware)
     public function glassware()
     {
-        $items = Item::with('supplier')->join('suppliers', 'supplier', '=', 'suppliers.supplierId')->select('items.*', 'suppliers.companyName as companyName')->paginate(6);
-        $suppliers = Supplier::all();
-        return view('admin.inventory-glassware', ['suppliers' => $suppliers, 'items' => $items]);
+        $items = Item::with('suppliers')->paginate(6);
+        return view('admin.inventory-glassware', ['items' => $items]);
     }
 
     // Admin Parameters Page (/parameters)
     public function stations()
     {
-        $stations = DB::table('stations')->paginate(6);
+        $stations = Station::paginate(6);
         return view('admin.stations', ['stations' => $stations]);
     }
 
     // Admin Parameters Page (/parameters)
     public function parameters()
     {
-        $parameters = DB::table('parameters')
-                    ->join('stations', 'parameters.station', '=', 'stations.stationId')
-                    ->select('parameters.*', 'stations.stationName as stationName')
-                    ->orderBy('analysis')->paginate(6);
+        $parameters = Parameter::with('station')->orderBy('analysis')->paginate(6);
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
      // Admin Suppliers Page (/suppliers)
      public function suppliers()
      {
-         $suppliers = DB::table('suppliers')->orderBy('companyName')->paginate(6);
+         $suppliers = Supplier::orderBy('companyName')->paginate(6);
          return view('admin.suppliers', ['suppliers' => $suppliers]);
      }
 
@@ -238,7 +233,7 @@ class AdminController extends Controller
         } else {
             $idOfClient = (string)$client->clientId;
         }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . $idOfClient;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
         $client->save();
         // INSERT TRANSACTION
         $transaction = new Transaction;
@@ -308,7 +303,7 @@ class AdminController extends Controller
         $client->remarks = trim($request->remarks);
         $client->managedBy = Auth::user()->employeeName;
         if ($request->newDateSubmit == NULL) {
-            $client->managedDate = DB::table('clients')->where('clientId', $clientId)->value('managedDate');
+            $client->managedDate = Client::where('clientId', $clientId)->value('managedDate');
         } else {
             $client->managedDate = $request->newDateSubmit;
         }
@@ -343,7 +338,7 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        $client = DB::table('clients')->where('risNumber', $request->clientId)->value('clientId');
+        $client = Client::where('risNumber', $request->clientId)->value('clientId');
         //ELOQUENT INSERT
         $sample = new Sample;
         $sample->risNumber = $client;
@@ -367,12 +362,12 @@ class AdminController extends Controller
         } else {
             $idOfSample = (string)$sample->sampleId;
         }
-        $sample->laboratoryCode = $request->clientId . $idOfSample;
+        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
         //INSERT SAMPLE TESTS IN LOOP
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
-            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
             $sampletests->status = "In Progress";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
@@ -414,7 +409,7 @@ class AdminController extends Controller
             $removeDash = explode('-', $request->clientId);
             $finalId = $removeDash[0].$removeDash[1];
         }
-        $client = DB::table('clients')->where('risNumber', $finalId)->value('clientId');
+        $client = Client::where('risNumber', $finalId)->value('clientId');
 
         //ELOQUENT INSERT
         $sample = new Sample;
@@ -439,12 +434,12 @@ class AdminController extends Controller
         } else {
             $idOfSample = (string)$sample->sampleId;
         }
-        $sample->laboratoryCode = $finalId . $idOfSample;
+        $sample->laboratoryCode = $finalId . '-' . $idOfSample;
         //INSERT SAMPLE TESTS IN LOOP
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
-            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
             $sampletests->status = "In Progress";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
@@ -497,7 +492,7 @@ class AdminController extends Controller
             $removeDash = explode('-', $request->clientId);
             $finalId = $removeDash[0].$removeDash[1];
         }
-        $client = DB::table('clients')->where('risNumber', $finalId)->value('clientId');
+        $client = Client::where('risNumber', $finalId)->value('clientId');
 
         //ELOQUENT INSERT
         $sample = Sample::findOrFail($sampleId);
@@ -522,12 +517,12 @@ class AdminController extends Controller
         } else {
             $idOfSample = (string)$sample->sampleId;
         }
-        $sample->laboratoryCode = $finalId . $idOfSample;
+        $sample->laboratoryCode = $finalId . '-' . $idOfSample;
         //INSERT SAMPLE TESTS IN LOOP
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
-            $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
+            $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
             $sampletests->status = "In Progress";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
