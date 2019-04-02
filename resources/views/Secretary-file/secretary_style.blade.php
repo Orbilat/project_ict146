@@ -82,4 +82,20 @@ p.a {
 .button3 {background-color: #f44336;} /* Red */ 
 .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
 .button5 {background-color: #555555;} /* Black */
+
+.smol {
+  width: 70px;
+}
+.div1 {
+  width: 600px;
+  height: 100px;
+  border: 1px solid blue;
+}
+
+.div2 {
+  width: 600x;
+  height: 100px;  
+  padding: 50px;
+  border: 1px solid red;
+}
 </style>

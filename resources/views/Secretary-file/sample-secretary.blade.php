@@ -1,16 +1,35 @@
 @extends('layouts.secretary_app')
 
 
-
-
 @section('content')
+{{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
+@if(Session::has('flash_sample_added'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
+</div>
+@endif
+
+
+{{-- VALIDATION CHECKS --}}
+@if ($errors->any())
+<div class="alert alert-danger pb-0 offset-md-1 col-md-10">
+<ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+        <p>Please try again.</p>
+</ul>
+@endif
+
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     Add Samples to Client
-                    <a href="{{ route('clients-admin') }}" class="glyphicon glyphicon-plus float-right">Back</a>
+                    <a href="{{ route('addClient-secretary') }}" class="glyphicon glyphicon-plus float-right">Back</a>
                 </div>   
                 <div class="card-body">
                     <form action="{{ route('createSample-secretary') }}" method="post">

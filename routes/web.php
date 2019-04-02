@@ -47,18 +47,14 @@ Route::post('/contact', [
 
 
 //SECRETARY ROUTES
+Route::middleware(['secretary','auth'])->group(function (){
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
+Route::post('/secretary/add/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
 
-
-// Route::get('/secretary/form',function() {
-//     return view('secretary-file.ris');
-//  });
-// Route::get('/secretary/ris', 'SecretaryController@ris')->name('ris');
-// Route::get('/dynamic_pdf', 'DynamicPDFController@index');
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
@@ -67,7 +63,8 @@ Route::post('/secretary/create-sample','SecretaryController@addSample')->name('c
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
-
+// Route::post('/secretary/search/not_found','ProduitController@search')->name('search-fail');
+});
 
 //END SECRETARY ROUTES
 
