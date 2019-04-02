@@ -27,8 +27,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($transactions as $transaction)
-                            <tr class="pointer">
+                           @foreach($transactions as $transaction)
+                           <tr class="pointer">
                                 {{-- TABLE BODY --}}
                                 <td class="admin-table">
                                     @php
@@ -38,24 +38,30 @@
                                     @endphp
                                 </td>
                                 <td class="admin-table">
-                                    @php
-                                        $year = substr($transaction->laboratoryCode,  0, 4);
-                                        $IDclient = substr($transaction->laboratoryCode, 4, 4);
-                                        $IDtransaction = substr($transaction->laboratoryCode, 8);
-                                        echo $year.'-'.$IDclient.'-'.$IDtransaction;
-                                    @endphp
+                                    @foreach($transaction->samples as $sample)
+                                        @php
+                                            $year = substr($sample->laboratoryCode,  0, 4);
+                                            $IDclient = substr($sample->laboratoryCode, 4, 4);
+                                            $IDtransaction = substr($sample->laboratoryCode, 8);
+                                            echo $year.'-'.$IDclient.'-'.$IDtransaction;
+                                        @endphp
+                                        <br>
+                                        @foreach($sample->parameters as $parameter)
+                                            {{ $parameter->analysis }}
+                                        @endforeach
+                                    @endforeach
                                 </td>
                                 <td class="admin-table">{{ $transaction->nameOfPerson }}</td>
                                 <td class="admin-table">{{ $transaction->nameOfEntity }}</td>
                                 <td class="admin-table">
-                                        @php
-                                            if($transaction->discount < 1){
-                                                echo "0%";
-                                            }
-                                            else {
-                                                echo $transaction->discount.'%';
-                                            }
-                                        @endphp
+                                    @php
+                                        if($transaction->discount < 1){
+                                            echo "0%";
+                                        }
+                                        else {
+                                            echo $transaction->discount.'%';
+                                        }
+                                    @endphp
                                 </td>
                                 <td class="admin-table">
                                         @php
@@ -81,8 +87,8 @@
                                 <td class="admin-table">{{ $transaction->remarks }}</td>
                                 <td class="admin-table">{{ $transaction->managedBy }}</td>
                                 <td class="admin-table">{{ date("F jS, Y g:m A", strtotime($transaction->managedDate)) }}</td>
-                            </tr>
-                            @endforeach
+                            </tr> 
+                           @endforeach
                         </tbody>
                     </table>
                 </div>

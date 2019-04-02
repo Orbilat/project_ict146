@@ -15,13 +15,6 @@
             <strong>Notification:</strong> {!!Session::get('flash_station_deleted')!!}
         </div>
     @endif
-{{-- SUCCESS MESSAGE OF UPDATING STATION --}}
-    @if(Session::has('flash_station_updated'))
-        <div class="alert alert-info offset-md-1 col-md-10">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_station_updated')!!}
-        </div>
-    @endif
 {{-- VALIDATION CHECKS --}}
     @if ($errors->any())
     <div class="alert alert-danger pb-0 offset-md-1 col-md-10">
@@ -95,33 +88,9 @@
                                 <td class="admin-table">{{ $station->managedBy }}</td>
                                 <td class="admin-table">{{ $station->managedDate }}</td>
                                 <td>
-                                    {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
-                                    <div id="editSupplier{{ $count }}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header editModal">
-                                                    <h5 class="modal-title">Edit Station</h5>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <form method="POST" action="{{ route('updateSupplier-admin', [$station->stationId])}}">
-                                                    @method('PATCH')
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Save</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </form>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                    &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSupplier{{ $count }}">Delete</button>
-                                    <div id="deleteSupplier{{ $count }}" class="modal fade" role="dialog">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#destroyStation{{ $count }}">Delete</button>
+                                    <div id="destroyStation{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header deleteModal">
@@ -132,7 +101,7 @@
                                                 <p>Are you sure you want to delete {{ $station->stationName }}?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{{ route('deleteSupplier-admin', [$station->stationId]) }}" method="post">
+                                                    <form action="{{ route('destroyStation-admin', [$station->stationId]) }}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger">Delete</button>

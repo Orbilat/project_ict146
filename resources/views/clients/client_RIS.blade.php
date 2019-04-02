@@ -8,11 +8,10 @@
         <div class="col-sm-12 text-info">
             <div class="titleText">RIS NUMBER: 
                 <h3 class="d-inline-block text-danger">
-                    @php
-                      $year = substr($ris->risNumber,  0, 4);
-                      $id = substr($ris->risNumber, 4);
-                      echo $year.'-'.$id;
-                    @endphp
+                    {{ $ris->risNumber}}
+                </h3>
+                <h3 class="d-inline-block">
+                    Payment
                 </h3>
             </div>
         </div>

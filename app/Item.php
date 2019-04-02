@@ -13,4 +13,9 @@ class Item extends Model
     protected $fillable = [
         'itemName', 'containerType', 'quantity', 'supplier'
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier', 'supplierId');
+    }
 }

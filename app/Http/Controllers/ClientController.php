@@ -27,7 +27,7 @@ class ClientController extends Controller
 
     public function parameters()
     {
-    $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
-    return view('clients.client_S&R', ['parameters' => $parameters]);
+        $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
+        return view('clients.client_S&R', ['parameters' => $parameters]);
     }
 }

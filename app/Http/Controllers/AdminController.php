@@ -32,15 +32,8 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function transactions()
     {
-        $transactions = DB::table('transactions')->join('clients', 'transactions.client', '=', 'clients.clientId')
-                    ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
-                    ->join('sample__tests', 'samples.sampleId', '=', 'sample__tests.sampleCode')
-                    ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
-                    ->select('clients.risNumber as risNumber', 'samples.laboratoryCode as laboratoryCode', 
-                    'clients.nameOfPerson as nameOfPerson', 'clients.nameOfEntity as nameOfEntity', 'clients.discount as discount',
-                    'clients.deposit as deposit', 'clients.testResult as testResult', 'clients.reclaimSample as reclaimSample',
-                    'clients.remarks as remarks', 'clients.managedBy as managedBy', 'clients.created_at as managedDate')
-                    ->orderBy('samples.dueDate', 'ASC')->paginate(6);
+        $transactions = Client::with('samples.parameters')
+                        ->paginate(6);
 
         return view('admin.transactions', ['transactions' => $transactions]);
     }
@@ -48,7 +41,7 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $samples = Sample::paginate(6);
+        $samples = Sample::with('client')->join('clients', 'clients.clientId', '=', 'samples.risNumber')->select('samples.*', 'clients.risNumber as ris')->paginate(6);
         $parameters = Parameter::all();
 
         return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
@@ -77,7 +70,9 @@ class AdminController extends Controller
     // Admin Inventory-Glassware Page (/inventory/glassware)
     public function glassware()
     {
-        return view('admin.inventory-glassware');
+        $items = Item::with('supplier')->join('suppliers', 'supplier', '=', 'suppliers.supplierId')->select('items.*', 'suppliers.companyName as companyName')->paginate(6);
+        $suppliers = Supplier::all();
+        return view('admin.inventory-glassware', ['suppliers' => $suppliers, 'items' => $items]);
     }
 
     // Admin Parameters Page (/parameters)
@@ -554,6 +549,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'analysis' => 'required|string|max:255|unique:parameters',
             'method' => 'nullable|string|max:255',
+            'price' => 'required|numeric',
             'station' => 'required|string|max:10',
         ]);
         // VALIDATION CHECKS
@@ -567,7 +563,8 @@ class AdminController extends Controller
         $parameter = new Parameter;
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->station = DB::table('stations')->where('stationName', $request->station)->value('stationId');
+        $parameter->price = $request->price;
+        $parameter->station = Station::where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
         //SAVE TO DB && CHECK
@@ -598,6 +595,7 @@ class AdminController extends Controller
         $validatorUpdate = Validator::make($request->all(), [
             'analysis' => 'required|string|max:255',
             'method' => 'nullable|string|max:255',
+            'price' => 'required|numeric',
             'station' => 'required|string|max:10',
         ]);
         // VALIDATION CHECKS
@@ -610,7 +608,8 @@ class AdminController extends Controller
         $parameter = Parameter::findOrFail($parameterId);
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
-        $parameter->station = DB::table('stations')->where('stationName', $request->station)->value('stationId');
+        $parameter->price = $request->price;
+        $parameter->station = Station::where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
     
@@ -727,7 +726,14 @@ class AdminController extends Controller
     // STATION DELETE
     protected function destroyStation($stationId)
     {
-
+        $station = Station::findOrFail($stationId);
+        if($station->delete()){
+            Session::flash('flash_station_deleted', 'Station deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
     }
     // EVENT ADD
     protected function addEvent(Request $request)
@@ -757,5 +763,43 @@ class AdminController extends Controller
         else {
             App::abort(500, 'Error!');
         }
+    }
+    // ADD ITEM (GLASSWARE)
+    protected function addItem(Request $request)
+    {
+        // VALIDATION
+        $validator = $request->validate([
+            'itemName' => 'required|string|min:3|max:255',
+            'containerType' => 'required|string|min:6|max:255',
+            'volumeCapacity' => 'required|numeric',
+            'quantity' => 'required|numeric',
+            'supplier' => 'required|string'
+        ]);
+
+        $item = new Item;
+        $item->itemName = trim($request->itemName);
+        $item->containerType = trim($request->containerType);
+        $item->volumeCapacity = $request->volumeCapacity;
+        $item->quantity = $request->quantity;
+        $item->supplier = Supplier::where('companyName', $request->supplier)->value('supplierId');
+        $item->managedBy = Auth::user()->employeeName;
+        $item->managedDate = new DateTime;
+        if($item->save()) {
+            Session::flash('flash_event_added', 'Event added successfully!');
+            return Redirect::back();
+        }
+        else {
+            App::abort(500, 'Error!');
+        }
+    }
+    // DESTROY ITEM
+    protected function destroyItem($itemId)
+    {
+
+    }
+    // UPDATE ITEM
+    protected function updateItem(Request $request, $itemId)
+    {
+
     }
 }

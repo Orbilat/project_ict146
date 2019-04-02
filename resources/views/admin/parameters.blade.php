@@ -1,38 +1,7 @@
 @extends('layouts.admin_app')
 
 @section('content')
-{{-- SUCCESS MESSAGE OF ADDING PARAMETER --}}
-    @if(Session::has('flash_parameter_added'))
-        <div class="alert alert-info offset-md-1 col-md-10">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_parameter_added')!!}
-        </div>
-    @endif
-{{-- SUCCESS MESSAGE OF DELETING PARAMETER --}}
-    @if(Session::has('flash_parameter_deleted'))
-        <div class="alert alert-info offset-md-1 col-md-10">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_parameter_deleted')!!}
-        </div>
-    @endif
-{{-- SUCCESS MESSAGE OF UPDATING PARAMETER --}}
-    @if(Session::has('flash_parameter_updated'))
-        <div class="alert alert-info offset-md-1 col-md-10">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_parameter_updated')!!}
-        </div>
-    @endif
-{{-- VALIDATION CHECKS --}}
-    @if ($errors->any())
-    <div class="alert alert-danger pb-0 offset-md-1 col-md-10">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-                <p>Please try again.</p>
-        </ul>
-    </div>
-    @endif
+
 {{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
 <?php $count = 0; ?>
 
@@ -79,6 +48,20 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="0.00" autofocus>
+        
+                                        @if ($errors->has('price'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('price') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group row">
                                     <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
@@ -115,6 +98,7 @@
                             <tr>
                                 <th class="admin-table">Analysis</th>
                                 <th class="admin-table">Method</th>
+                                <th class="admin-table">Price</th>
                                 <th class="admin-table">Station</th>
                                 <th class="admin-table">Managed By</th>
                                 <th class="admin-table">Managed At</th>
@@ -171,6 +155,20 @@
                                                         </div>
                                                     </div>
                                                     
+                                                    <div class="form-group row">
+                                                        <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
+                            
+                                                        <div class="col-md-6">
+                                                            <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ $parameter->price }}" autofocus>
+                            
+                                                            @if ($errors->has('price'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('price') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div> 
+
                                                     <div class="form-group row">
                                                         <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
                             
