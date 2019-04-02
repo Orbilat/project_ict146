@@ -308,6 +308,7 @@ class AdminController extends Controller
         $client->testResult = $request->testResult;
         $client->reclaimSample = $request->reclaimSample;
         $client->remarks = trim($request->remarks);
+        $client->followUp = $request->followUp;
         $client->managedBy = Auth::user()->employeeName;
         if ($request->newDateSubmit == NULL) {
             $client->managedDate = Client::where('clientId', $clientId)->value('managedDate');

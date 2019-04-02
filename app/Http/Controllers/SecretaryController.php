@@ -104,26 +104,22 @@ class SecretaryController extends Controller
     protected function addClient(Request $request)
     {
         // VALIDATION
-        // $validator = Validator::make($request->all(), [
-        //     'nameOfPerson' => 'required|string|max:255|min:4',
-        //     'nameOfEntity' => 'nullable|string|max:255',
-        //     'address' => 'required|string|max:50',
-        //     'contactNumber' => 'string|numeric',
-        //     'faxNumber' => 'nullable|string|numeric',
-        //     'emailAddress' => 'nullable|string|max:50|email',
-        //     'dateOfSubmission' => 'required|string|max:20',
-        //     'clientCode'=>'string|max:50',
-        //     'sampleMatrix'=>'string|max:50',
-        //     // 'samplePreservation' => 'required|string|max:50',
+        $validator = Validator::make($request->all(), [
+            'nameOfPerson' => 'required|string|max:255|min:4',
+            'nameOfEntity' => 'nullable|string|max:255',
+            'address' => 'required|string|max:50',
+            'contactNumber' => 'string|numeric',
+            'faxNumber' => 'nullable|string|numeric',
+            'emailAddress' => 'nullable|string|max:50|email',
 
             
-        // ]);
-        // // VALIDATION CHECKS
-        // if ($validator->fails()) {
-        //     return redirect('secretary/add')
-        //                 ->withErrors($validator)
-        //                 ->withInput();
-        // }
+        ]);
+        // VALIDATION CHECKS
+        if ($validator->fails()) {
+            return redirect('secretary-file.sample-secretary')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         //ELOQUENT INSERT
         $client = new Client;
@@ -133,8 +129,18 @@ class SecretaryController extends Controller
         $client->contactNumber = trim($request->contactNumber);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
-        $client->discount = trim($request->discount);
-        $client->deposit = trim($request->deposit);
+        if($request->discount == NULL){
+            $client->discount = 0;
+        }
+        else {
+            $client->discount = trim($request->discount);
+        }
+        if($request->deposit == NULL){
+            $client->deposit = 0;
+        }
+        else {
+            $client->deposit = trim($request->deposit);
+        }
         $client->reclaimSample = trim($request->reclaimSample);
         $client->followUp= trim($request->dueDate);
         $client->testResult = trim($request->testResult);
