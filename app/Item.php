@@ -14,7 +14,7 @@ class Item extends Model
         'itemName', 'containerType', 'quantity', 'supplier'
     ];
 
-    public function supplier()
+    public function suppliers()
     {
         return $this->belongsTo(Supplier::class, 'supplier', 'supplierId');
     }

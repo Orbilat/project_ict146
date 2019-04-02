@@ -1,32 +1,40 @@
 @extends('layouts.analyst_app')
 
 @section('content')
-<h3 class="hblue">Notifications</h3>
-    <br>
-    <table id="sampledata" class="display sampledata" style="width:100%">
-        <thead>
-            <tr>
-                <th>Due Date</th>
-                <th>Date Received</th>
-                <th>Laboratory Code</th>
-                <th>RIS Number</th>
-                <th>Collection Time</th>
-                <th>Purpose of Analysis</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($sampledatas as $data)
-                <tr>
-                    <td>{{ $data->dueDate }}</td>
-                    <td>{{ $data->created_at}}</td>
-                    <td>{{ $data->laboratoryCode }}</td>
-                    <td>{{ $data->risNumber }}</td>
-                    <td>{{ $data->sampleCollection }}</td>
-                    <td>{{ $data->purposeOfAnalysis }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header ">Notification</div>
+                <br>
+                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="admin-table">Due Date</th>
+                            <th class="admin-table">Date Received</th>
+                            <th class="admin-table">Laboratory Code</th>
+                            <th class="admin-table">RIS Number</th>
+                            <th class="admin-table">Collection Time</th>
+                            <th class="admin-table">Purpose of Analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sampledatas as $data)
+                            <tr>
+                                <td>{{ $data->dueDate }}</td>
+                                <td>{{ $data->created_at}}</td>
+                                <td>{{ $data->laboratoryCode }}</td>
+                                <td>{{ $data->risNumber }}</td>
+                                <td>{{ $data->sampleCollection }}</td>
+                                <td>{{ $data->purposeOfAnalysis }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function() {

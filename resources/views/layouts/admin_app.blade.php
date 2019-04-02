@@ -304,9 +304,38 @@
     
     <script type="text/javascript">
 
+        var coll = document.getElementsByClassName("collapsible");
+        console.log(coll);
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                console.log(content);
+                if (content.style.maxHeight){
+                content.style.maxHeight = null;
+                } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        }
+
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
             $('.js-example-basic-single').select2();
+        });
+
+        $(document).ready(function() {
+            $("tr").click(function (){
+                var row = document.getElementById("showSamples");
+                if(row.className == "collapse"){
+                    row.className = "collapse.show";
+                }
+                else {
+                    row.className = "collapse";
+                }
+            })
         });
 
         function changeText() {

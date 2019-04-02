@@ -79,8 +79,8 @@
                                 
                                 <div class="col-md-6">
                                     <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;" required>
-                                        @foreach($suppliers as $supplier)
-                                            <option value="{{ $supplier->companyName }}">{{ $supplier->companyName }}</option>
+                                        @foreach($items as $item)
+                                            <option value="{{ $item->suppliers->companyName }}">{{ $item->suppliers->companyName }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('supplier'))

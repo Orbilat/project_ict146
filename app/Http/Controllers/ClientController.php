@@ -11,6 +11,19 @@ class ClientController extends Controller
 {
     public function RIS(Request $request)
     {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        $RisNumber = DB::table('clients')
+        ->join('samples', 'clients.clientId', '=', 'samples.risNumber')
+        ->join('sample__tests', 'samples.sampleId', '=', 'sample__tests.sampleCode')
+        ->join('parameters', 'sample__tests.parameters', '=', 'parameters.parameterId')
+        ->select('samples.laboratoryCode as laboratoryCode', 'sample__tests.status  as status', 'parameters.analysis  as analysis', 'clients.managedDate as managedDate')
+        ->where('clients.risNumber', $request->search)
+        ->get();
+        return view('clients.client_RIS')->with('ris', $RisNumber);
+=======
+>>>>>>> 95bd6a1366ebd82c7973c98431686b893a7aba51
         $risExplode = explode("-", $request->search);
         if(count($risExplode) > 1){
             $risNoDash = $risExplode[0].$risExplode[1];
@@ -23,6 +36,10 @@ class ClientController extends Controller
             return view('clients.risError');
         }
         
+<<<<<<< HEAD
+=======
+>>>>>>> 93c8009382dd7aff74466657f358791dfc6ef3ac
+>>>>>>> 95bd6a1366ebd82c7973c98431686b893a7aba51
     }
 
     public function parameters()

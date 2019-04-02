@@ -311,7 +311,7 @@
                                                 <p>Are you sure you want to delete {{ $account->employeeName }} account?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{{ route('deleteAccount-admin', [$account->employeeId])}}" method="post">
+                                                    <form action="{{ route('deleteAccount-admin', [$account->employeeId]) }}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger">Delete</button>

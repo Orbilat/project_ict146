@@ -115,6 +115,7 @@ Route::middleware(['admin','auth'])->group(function (){
 
 //Route::middleware(['analyst','auth'])->group(function (){
     // ANALYST ROUTES
+    Route::middleware(['auth'])->group(function (){
     Route::redirect('/analyst', '/analyst/notification');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
 
@@ -128,5 +129,6 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::post('/analyst/receive/sample/{id}', 'AnalystController@receiveSample')->name('receivesample');
     Route::post('/analyst/complete/sample/{id}', 'AnalystController@completeSample')->name('completesample');
     Route::get('/analyst/sendmessage', 'AnalystController@sendMessage');
+});
     // END ANALYST ROUTES
 //});

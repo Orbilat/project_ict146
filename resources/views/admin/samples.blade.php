@@ -189,21 +189,8 @@
                         <tbody>
                             @foreach($samples as $sample)
                             <tr class="pointer">
-                                <td class="admin-table">
-                                    @php
-                                        $year = substr($sample->ris,  0, 4);
-                                        $id = substr($sample->ris, 4);
-                                        echo $year.'-'.$id;
-                                    @endphp
-                                </td>
-                                <td class="admin-table">
-                                    @php
-                                        $year = substr($sample->laboratoryCode,  0, 4);
-                                        $IDclient = substr($sample->laboratoryCode, 4, 4);
-                                        $IDsample = substr($sample->laboratoryCode, 8);
-                                        echo $year.'-'.$IDclient.'-'.$IDsample;
-                                    @endphp
-                                </td>
+                                <td class="admin-table">{{ $sample->ris }}</td>
+                                <td class="admin-table">{{ $sample->laboratoryCode }}</td>
                                 <td class="admin-table">{{ $sample->clientsCode }}</td>
                                 <td class="admin-table">{{ $sample->sampleType }}</td>
                                 <td class="admin-table">{{ $sample->sampleCollection }}</td>
@@ -382,14 +369,7 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Are you sure you want to delete Sample: 
-                                                        @php
-                                                            $year = substr($sample->laboratoryCode,  0, 4);
-                                                            $IDclient = substr($sample->laboratoryCode, 4, 4);
-                                                            $IDsample = substr($sample->laboratoryCode, 8);
-                                                            echo $year.'-'.$IDclient.'-'.$IDsample;
-                                                        @endphp
-                                                    ?</p>
+                                                    <p>Are you sure you want to delete Sample: {{ $sample->laboratoryCode }} ?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="{{ route('destroySample-admin', [$sample->sampleId])}}" method="post">

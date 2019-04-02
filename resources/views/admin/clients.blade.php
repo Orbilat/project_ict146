@@ -69,7 +69,12 @@
                                     <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
         
                                     <div class="col-md-3">
-                                        <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">+63</div>
+                                            </div>
+                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
+                                        </div>
         
                                         @if ($errors->has('contactNumber'))
                                             <span class="invalid-feedback" role="alert">
@@ -224,13 +229,7 @@
                             @foreach($clients as $client)
                             <tr>
                                 {{-- TABLE BODY --}}
-                                <td class="admin-table">
-                                    @php
-                                        $year = substr($client->risNumber,  0, 4);
-                                        $id = substr($client->risNumber, 4);
-                                        echo $year.'-'.$id;
-                                    @endphp
-                                </td>
+                                <td class="admin-table">{{ $client->risNumber }}</td>
                                 <td class="admin-table">{{ $client->nameOfPerson }}</td>
                                 <td class="admin-table">{{ $client->nameOfEntity }}</td>
                                 <td class="admin-table">{{ $client->address }}</td>
@@ -484,13 +483,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
-                                                        Deleting RIS: 
-                                                    @php
-                                                        $year = substr($client->risNumber,  0, 4);
-                                                        $id = substr($client->risNumber, 4);
-                                                        echo $year.'-'.$id;
-                                                    @endphp
-                                                        will remove other related data (samples, payments).
+                                                        Deleting RIS: {{ $client->risNumber }} will remove other related data (samples, payments).
                                                         <br><br>
                                                         Do you wish to continue?
                                                     </p>

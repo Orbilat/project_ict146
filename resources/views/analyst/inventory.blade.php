@@ -1,34 +1,44 @@
 @extends('layouts.analyst_app')
 
 @section('content')
-<h3 class="hblue pull-left ">Inventory</h3>
-<a class="btn btn-secondary btn-lg pull-right margintop" href="/analyst/inventory/history">View History</a>
-<button type="button" class="btn btn-secondary btn-lg pull-right margintop" data-toggle="modal" data-target="#myModal">Transact</button>
-<br>
-<table id="sampledata" class="display sampledata" style="width:100%">
-    <thead>
-        <tr>
-            <th>Item Id</th>
-            <th>Item Type</th>
-            <th>Container</th>
-            <th>Volume</th>
-            <th>Quantity</th>
-            <th>To use</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($items as $item)
-            <tr>
-                <td><input name="itemid[]" value="{{ $item->itemId }}" hidden>{{ $item->itemId }}</td>
-                <td>{{ $item->itemName }}</td>
-                <td>{{ $item->containerType }}</td>
-                <td>{{ $item->volumeCapacity }}
-                <td class="qty">{{ $item->quantity }}</td>
-                <td><input class="qtyinput" type="number" name="borrowqty[]" min="0" max="{{ $item->quantity }}" value="0"></td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header ">Inventory
+                    <a class="btn btn-secondary btn-lg pull-right analystbtn"  style="margin-left: 10px;" href="/analyst/inventory/history">View History</a>
+                    <button type="button" class="btn btn-secondary btn-lg pull-right analystbtn" data-toggle="modal" data-target="#myModal">Transact</button>
+                </div>
+                <br>
+                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="admin-table">Item Id</th>
+                            <th class="admin-table">Item Type</th>
+                            <th class="admin-table">Container</th>
+                            <th class="admin-table">Volume</th>
+                            <th class="admin-table">Quantity</th>
+                            <th class="admin-table">To use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($items as $item)
+                            <tr>
+                                <td><input name="itemid[]" value="{{ $item->itemId }}" hidden>{{ $item->itemId }}</td>
+                                <td>{{ $item->itemName }}</td>
+                                <td>{{ $item->containerType }}</td>
+                                <td>{{ $item->volumeCapacity }}</td>
+                                <td class="qty">{{ $item->quantity }}</td>
+                                <td><input class="qtyinput" type="number" name="borrowqty[]" min="0" max="{{ $item->quantity }}" value="0"></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
