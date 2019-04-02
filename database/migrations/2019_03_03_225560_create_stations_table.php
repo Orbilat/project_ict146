@@ -16,8 +16,8 @@ class CreateStationsTable extends Migration
         Schema::create('stations', function (Blueprint $table) {
             $table->increments('stationId');
             $table->string('stationName');
-            $table->string('managedBy');
-            $table->date('managedDate');
+            $table->string('managedBy')->nullable();
+            $table->dateTime('managedDate')->nullable();
             $table->timestamps();
         });
     }

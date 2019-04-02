@@ -18,8 +18,8 @@ class CreateParametersTable extends Migration
             $table->string('analysis');
             $table->string('method');
             $table->string('station');
-            $table->string('managedBy');
-            $table->dateTime('managedDate');
+            $table->string('managedBy')->nullable();
+            $table->dateTime('managedDate')->nullable();
             $table->timestamps();
         });
     }

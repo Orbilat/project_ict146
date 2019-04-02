@@ -20,7 +20,6 @@ class Client extends Model
     public function samples()
     {
         return $this->hasMany(Sample::class, 'risNumber', 'clientId');
-<<<<<<< HEAD
     }
 
     public function parameters()
@@ -31,7 +30,5 @@ class Client extends Model
     public function routeNotificationForNexmo($notification)
     {
         return $this->contactNumber;
-=======
->>>>>>> 93c8009382dd7aff74466657f358791dfc6ef3ac
     }
 }
