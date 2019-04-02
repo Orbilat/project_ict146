@@ -44,7 +44,7 @@
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
-                                </li>
+                            </li>
                             <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Manage
@@ -84,6 +84,9 @@
                                         </a>
                                     </div>
                                 </li>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('events-admin') }}">{{ __('Create Event') }}</a>
                             </li>
                         @endif
                     </ul>

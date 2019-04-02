@@ -81,6 +81,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts-admin');
     Route::get('/admin/stations', 'AdminController@stations')->name('stations-admin');
     Route::get('/admin/parameters', 'AdminController@parameters')->name('parameters-admin');
+    Route::get('/admin/events', 'AdminController@events')->name('events-admin');
     //ADD, DELETE AND UPDATE ROUTES
     Route::post('/admin/accounts', 'AdminController@addAccount')->name('addAccount-admin');
     Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount-admin');
@@ -98,7 +99,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::post('/admin/parameters', 'AdminController@addParameter')->name('addParameter-admin');
     Route::delete('/admin/parameters/{parameterId}', 'AdminController@destroyParameter')->name('deleteParameter-admin');
     Route::patch('/admin/parameters/{parameterId}', 'AdminController@updateParameter')->name('updateParameter-admin');
-    Route::post('/admin/home', 'AdminController@addEvent')->name('addEvent-admin');
+    Route::post('/admin/events', 'AdminController@addEvent')->name('addEvent-admin');
     //Inventory routes
     Route::get('/admin/suppliers', 'AdminController@suppliers')->name('suppliers-admin');
     Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');

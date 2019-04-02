@@ -89,11 +89,16 @@ class AdminController extends Controller
     }
 
      // Admin Suppliers Page (/suppliers)
-     public function suppliers()
-     {
-         $suppliers = Supplier::orderBy('companyName')->paginate(6);
-         return view('admin.suppliers', ['suppliers' => $suppliers]);
-     }
+    public function suppliers()
+    {
+        $suppliers = Supplier::orderBy('companyName')->paginate(6);
+        return view('admin.suppliers', ['suppliers' => $suppliers]);
+    }
+
+    public function events()
+    {
+        return view('admin.create_event');
+    }
 
     // ACCOUNT INSERT
     protected function addAccount(Request $request)
@@ -235,9 +240,7 @@ class AdminController extends Controller
             $idOfClient = (string)$client->clientId;
         }
         $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
-        if($client->save()){
-            $client->notify(new ReadyForPickUp($client));
-        }
+        $client->save();
         // INSERT TRANSACTION
         $transaction = new Transaction;
         $transaction->client = $client->clientId;
