@@ -100,7 +100,7 @@ class AnalystController extends Controller
     			->where('p.station','=', $stationid)
     			->get();
 
-    	return view('analyst.sampledetails', [ 'details' => $sampledetails ]);
+    	return view('analyst.sampledetails', [ 'details' => $sampledetails, 'station' => $stationid ]);
     }
 
     public function receiveSample($id,Request $request){
@@ -109,7 +109,7 @@ class AnalystController extends Controller
         DB::table('sample__tests AS st')
             ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
-            ->where('s.risNumber','=', $input['scanid'])
+            ->where('s.laboratoryCode','=', $input['scanid'])
             ->where('p.station','=', $id)
             ->where('st.status','=', 'New')
             ->update(array('st.status' => 'In Progress','s.managedBy' => 1, 'st.managedBy' => 1));
@@ -123,7 +123,7 @@ class AnalystController extends Controller
         DB::table('sample__tests AS st')
             ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
-            ->where('s.risNumber','=', $input['scanid'])
+            ->where('s.laboratoryCode','=', $input['scanid'])
             ->where('p.station','=', $id)
             ->where('st.status','=', 'In Progress')
             ->update(array('st.status' => 'Completed', 'st.timecompleted' => now()));

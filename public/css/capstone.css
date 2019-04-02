@@ -22,3 +22,40 @@ div#sampledata_wrapper{
 .margintop{
 	margin: 15px;
 }
+
+th.sorting {
+  font-size: 12px;
+}
+
+th.sorting_asc {
+  font-size: 12px;
+}
+
+.odd td {
+  font-size: 12px;
+}
+
+.even td {
+  font-size: 12px;
+}
+
+
+#sampledata_length label {
+  font-size: 12px;
+}
+
+#sampledata_filter label {
+  font-size: 12px;
+}
+
+.btn.btn-secondary.btn-lg.pull-right.analystbtn {
+    height: 9%;
+}
+
+button.btn.btn-info.btn-lg.pull-right.analystbtn {
+    height: 9%;
+}
+
+.card-header {
+    font-size: 16px;
+}

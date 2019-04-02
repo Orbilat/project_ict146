@@ -1,31 +1,40 @@
 @extends('layouts.analyst_app')
 
 @section('content')
-<h3 class="hblue pull-left ">Station {{ $station }}</h3> 
- <button type="button" class="btn btn-info btn-lg pull-right margintop" data-toggle="modal" data-target="#completescan">Complete</button>
- <button type="button" class="btn btn-info btn-lg pull-right margintop" data-toggle="modal" data-target="#scanmodal">Receive</button>
-<br>
-    <table id="sampledata" class="display sampledata" style="width:100%">
-        <thead>
-            <tr>
-                <th>Laboratory Code</th>
-                <th>RIS Number</th>
-                <th>Status </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!empty($stationssample))
-                @foreach($stationssample as $data)
-                    <tr>
-                        <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
-                        <td>{{ $data->risNumber }}</td>
-                        <td>{{ $data->status}} </td>
-                        
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Station {{ $station }}
+                    <button type="button" class="btn btn-info btn-lg pull-right analystbtn" style="margin-left: 10px;" data-toggle="modal" data-target="#completescan">Complete</button>
+                    <button type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
+                </div> 
+                <br>
+                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="admin-table">Laboratory Code</th>
+                            <th class="admin-table">RIS Number</th>
+                            <th class="admin-table">Status </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(!empty($stationssample))
+                            @foreach($stationssample as $data)
+                                <tr>
+                                    <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
+                                    <td>{{ $data->risNumber }}</td>
+                                    <td>{{ $data->status}} </td>
+                                    
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
     <div id="completescan" class="modal fade">
         <div class="modal-dialog">
