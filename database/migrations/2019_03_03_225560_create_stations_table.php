@@ -17,7 +17,7 @@ class CreateStationsTable extends Migration
             $table->increments('stationId');
             $table->string('stationName');
             $table->string('managedBy');
-            $table->dateTime('managedDate');
+            $table->date('managedDate');
             $table->timestamps();
         });
     }
