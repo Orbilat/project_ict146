@@ -16,6 +16,7 @@ use App\Station;
 use App\Supplier;
 use App\Item;
 use App\Transaction;
+use App\Notifications\ReadyForPickUp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -213,7 +214,7 @@ class AdminController extends Controller
         $client->nameOfPerson = trim($request->nameOfPerson);
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
-        $client->contactNumber = trim($request->contactNumber);
+        $client->contactNumber = ("63".trim($request->contactNumber));
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         $client->discount = $request->discount;
@@ -234,7 +235,9 @@ class AdminController extends Controller
             $idOfClient = (string)$client->clientId;
         }
         $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
-        $client->save();
+        if($client->save()){
+            $client->notify(new ReadyForPickUp($client));
+        }
         // INSERT TRANSACTION
         $transaction = new Transaction;
         $transaction->client = $client->clientId;
@@ -245,6 +248,7 @@ class AdminController extends Controller
         if($transaction->save()){
             $parameter = Parameter::all();
             $clientRis = $client->risNumber;
+
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
             return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
         }

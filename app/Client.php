@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    //
+    use Notifiable;
+
     protected $table = 'clients';
     protected $primaryKey = 'clientId';
 
@@ -22,6 +24,11 @@ class Client extends Model
 
     public function parameters()
     {
-        return $this->hasManyThrough(Parameter::class, Sample::with('parameters'), '', '')
+        return $this->hasManyThrough(Parameter::class, Sample::with('parameters'), '', '');
+    }
+
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->contactNumber;
     }
 }
