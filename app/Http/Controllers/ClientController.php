@@ -11,6 +11,7 @@ class ClientController extends Controller
 {
     public function RIS(Request $request)
     {
+        
         $risExplode = explode("-", $request->search);
         if(count($risExplode) > 1){
             $risNoDash = $risExplode[0].$risExplode[1];

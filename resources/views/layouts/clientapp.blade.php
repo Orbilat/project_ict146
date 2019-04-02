@@ -45,7 +45,7 @@ USC WATER LABORATORY</a>
         <a href="{{ url('/contact') }}" class="w3-bar-item w3-button" ><i class="fa fa-envelope"></i> CONTACT</a>
         <form class="w3-bar-item search" method="post" action="{{ route('RIS') }}" > 
           @csrf
-          <input type="text" class="SearchRis" placeholder="Type your RIS number" name="search" >
+          <input type="text" class="SearchRis" placeholder="Type your RIS number" name="search" class="form-control" required>
           <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
         </form>
       </div>

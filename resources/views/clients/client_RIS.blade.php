@@ -10,9 +10,14 @@
                 <h3 class="d-inline-block text-danger">
                     {{ $ris->risNumber}}
                 </h3>
-                <h3 class="d-inline-block">
-                    Payment
-                </h3>
+                <h4 class="d-inline-block float-right">
+                    Payment:
+                    @if ( $ris->paid == "yes" || $ris->paid == "Yes")
+                        Done
+                    @else 
+                        Pending
+                    @endif
+                </h4>
             </div>
         </div>
     </div>
@@ -37,6 +42,11 @@
           <div class="col-md-3 w3-border text-center">{{ $sample->status }}</div>
         @endforeach
     </div>
+         @if ( $ris->readyForPickUp == "yes" || $ris->paid == "Yes")
+            Ready for Pick Up
+        @else
+            Need to settle your account
+        @endif
 </div>
 
 

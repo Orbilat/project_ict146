@@ -35,7 +35,7 @@
                     <div class="md-form">
                         <i class="fa fa-user"></i>
                         <label for="form-name">Your name</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" required>
                           @if ($errors->has('name'))
                             <small class="form-text invalid-feedback">{{ $errors->first('name') }}</small>
                           @endif
@@ -43,7 +43,7 @@
                     <div class="md-form">
                         <i class="fa fa-envelope"></i>
                         <label for="form-email">Your email</label>
-                        <input type="email" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email" required>
                           @if ($errors->has('email'))
                             <small class="form-text invalid-feedback">{{ $errors->first('email') }}</small>
                           @endif
@@ -51,7 +51,7 @@
                     <div class="md-form">
                         <i class="fa fa-comment"></i>
                         <label for="form-Subject">Message</label>
-                        <textarea name="message" class="form-control"></textarea>
+                        <textarea name="message" class="form-control" required></textarea>
                           @if ($errors->has('message'))
                             <small class="form-text invalid-feedback">{{ $errors->first('message') }}</small>
                           @endif        
