@@ -17,15 +17,9 @@
             <tbody>
               @foreach($parameters as $parameter)
                 <tr class="text-center">
-<<<<<<< HEAD
                   <td class="border">{{ $parameter->analysis }}</td>
                   <td class="border">{{ $parameter->method }}</td>
                   <td class="border">{{ $parameter->price }}</td>
-=======
-                    <td class="border">{{ $parameter->analysis }}</td>
-                    <td class="border">{{ $parameter->method }}</td>
-                    <td class="border">{{ $parameter->price }}</td>
->>>>>>> 95bd6a1366ebd82c7973c98431686b893a7aba51
               @endforeach
                 </tr>    
             </tbody>
