@@ -20,11 +20,15 @@ class Sample extends Model
 
     public function client()
     {
+<<<<<<< HEAD
         return $this->belongsTo(Client::class, 'risNumber', 'clientId');
     }
 
     public function parameters()
     {
         return $this->belongsToMany(Parameter::class, 'sample__tests', 'sampleCode', 'parameters')->withPivot('status', 'timecompleted');
+=======
+        return $this->belongsTo(Client::class, 'risNumber', 'sampleId');
+>>>>>>> 93c8009382dd7aff74466657f358791dfc6ef3ac
     }
 }

@@ -38,6 +38,7 @@ body, html {
 	color: #F96;
 	font-size: 18px;
 }
+
 .bg {
 	font-family:"Open Sans", Helvetica, Arial, sans-serif;
 	font-size: 12px;
