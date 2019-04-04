@@ -42,12 +42,23 @@
           <div class="col-md-3 w3-border text-center">{{ $sample->status }}</div>
         @endforeach
     </div>
+    <div class="container">
          @if ( $ris->readyForPickUp == "yes" || $ris->paid == "Yes")
-            Ready for Pick Up
+            <div class="p-5 alert alert-success w3-padding-64 FontError">
+                <i class="glyphicon glyphicon-thumbs-up fa-2x"></i> 
+                <strong>Ready for Pick Up</strong>
+            </div>
         @else
-            Need to settle your account
+            <div class="p-5 alert alert-danger w3-padding-64 FontError">
+                <i class="fa fa-exclamation-triangle fa-2x"></i> 
+                <strong>Please settle your account</strong>
+            </div>
         @endif
+    </div>
 </div>
+
+           
+        
 
 
                                                               
