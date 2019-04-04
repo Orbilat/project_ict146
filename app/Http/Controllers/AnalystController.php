@@ -93,7 +93,7 @@ class AnalystController extends Controller
 
     public function sampleDetails($stationid,$id){
     	$sampledetails = DB::table('samples AS s')
-    			->select('s.laboratoryCode','p.parametername', 's.sampleCollection', 'st.status', 'st.timecompleted', 's.created_at' )
+    			->select('s.laboratoryCode','p.analysis', 's.sampleCollection', 'st.status', 'st.timecompleted', 's.created_at' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->where('s.laboratoryCode','=', $id)
