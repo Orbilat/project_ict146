@@ -15,7 +15,7 @@
     <!--Grid column-->
       <div class="col-lg-5 mb-4">
         <!--Form with header-->
-          <div class="card">
+          <div class="card ">
               <div class="card-body">
                   <!--Header-->
                     <div class="form-header blue accent-1 w3-center">
@@ -62,61 +62,63 @@
              </div>
           </div>
       </div>
-      <div class="col-lg-7">
+      <div class="col-lg-7 center text-center ">
         <!--Google map-->
         <div>
-          <img src="/img/map.PNG" style="height: 400px; width: 720px;">   
+          <img src="/img/map.PNG" style="height: 400px; width: 600px; border: 1px solid rgba(0, 0, 0, 0.125);">   
         </div>
         <br>
         <!--Buttons-->
         <div class="row text-center">
             <div class="col-md-4">
-                <i class="glyphicon glyphicon-map-marker fa-fw w3-xxlarge w3-text-red"></i>
-                <address>
+                <i class="glyphicon glyphicon-map-marker fa-fw w3-xlarge w3-text-red"></i>
+                <address style="font-size: 11px;">
                   Room 320, 3rd Floor Bunzel Building,
                   University of San Carlos Talamban Campus, Nasipit Talamban
                   Cebu City Philippines 6000
                 </address>
             </div>
             <div class="col-md-3">
-                <i class="glyphicon glyphicon-earphone fa-fw w3-xxlarge w3-text-red"></i>
-                <p>(63 32)345 3811</p>
-                <p>Mon - Fri, 8:00-22:00</p>
+                <i class="glyphicon glyphicon-earphone fa-fw w3-xlarge w3-text-red"></i>
+                <p style="font-size: 11px;">(63 32)345 3811<br>
+                Mon-Fri 7:30AM-4:30PM<br>
+                Sat 7:30AM-11:30AM</p>
             </div>
             <div class="col-md-2">
-                <i class="glyphicon glyphicon-phone fa-fw w3-xxlarge w3-text-red"></i>
-                <p>(63 32)230 0100</p>
-                <p>loc 110</p>
+                <i class="glyphicon glyphicon-phone fa-fw w3-xlarge w3-text-red"></i>
+                <p style="font-size: 11px;">(63 32) 230 0100
+                loc 110</p>
             </div>
             <div class="col-md-3">
-                <i class="glyphicon glyphicon-envelope fa-fw w3-xxlarge w3-text-red"></i>
-                <p>waterlab@usc.edu.ph</p>
+                <i class="glyphicon glyphicon-envelope fa-fw w3-xlarge w3-text-red"></i>
+                <p style="font-size: 13px;">waterlab@usc.edu.ph</p>
             </div>
         </div>
       </div>
   </div>
 </div>
       <footer class="w3-center w3-black w3-padding-32">
-          <div class="w3-section">
-              <div class="col-md-4 text-center"> <h2 class="titleText">Address</h2>
-                  <p class="text-center">Room 320, 3rd Floor Bunzel Building,<br> University of San Carlos Talamban Campus, <br>
+          <div class="row">
+            <div class="col-md-1"></div>
+              <div class="col-md-3 text-center"> <h2 class="titleText" style="font-size: 15px;">Address</h2>
+                  <p class="text-center" style="font-size: 10px;">Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, 
                   Nasipit Talamban Cebu City Philippines 6000</p>
               </div>
-              <div class="col-md-4 text-center"> <h2 class="titleText">Contacts</h2>
-                  <p class="text-center">Email:waterlab@usc.edu.ph<br>
+              <div class="col-md-4 text-center"> <h2 class="titleText" style="font-size: 15px;">Contacts</h2>
+                  <p class="text-center" style="font-size: 10px;">Email:waterlab@usc.edu.ph<br>
                   Phone: (63 32)345 3811<br>
                   Fax: (63 32)230 0100 loc 110</p>
               </div>
-              <div class="col-md-4 text-center"> <h2 class="titleText">Feedbacks</h2>
-                  <p class="text-center">Please send us your ideas, bug reports, suggestions! <br>
+              <div class="col-md-3 text-center"> <h2 class="titleText" style="font-size: 15px;">Feedbacks</h2>
+                  <p class="text-center" style="font-size: 10px;">Please send us your ideas, bug reports, suggestions! <br>
                   Any feedback would be appreciated.</p>
                   <br>
               </div>
-              <div class=" text-center titleText" style="font-size: 25px;">Connect with us:
-                  <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379" style="color: #fff; font-size:30px;"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-              </div>
+          </div>
+              <div class="col-md-12 col-xs-12 col-centered w3-black">
+                <div class=" text-center titleText" style="font-size: 15px; align-content: center;" >Connect with us:
+                    <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379" style="color: #fff; font-size:20px;"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+                </div>
           </div>
       </footer>
-
-
   @endsection

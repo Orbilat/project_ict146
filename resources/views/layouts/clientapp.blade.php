@@ -36,8 +36,9 @@
 <div class="w3-top ">
     <div class="w3-bar w3-white w3-card">
   
-      <a href="{{ url('/client-home') }}" class="w3-bar-item w3-button w3-wide">   <img src="/img/logo.png" style="height: 22px;">  
-USC WATER LABORATORY</a>
+      <a href="{{ url('/client-home') }}" class="w3-bar-item w3-button w3-wide"> <img src="/img/logo.png" style="height: 22px;">  
+        USC WATER LABORATORY
+      </a>
       <!-- Right-sided navbar links -->
       <div class="w3-right">
         <a href="{{ url('/client-home') }}" class="w3-bar-item w3-button" ><i class="fa fa-home"></i> HOME</a>
@@ -45,7 +46,7 @@ USC WATER LABORATORY</a>
         <a href="{{ url('/contact') }}" class="w3-bar-item w3-button" ><i class="fa fa-envelope"></i> CONTACT</a>
         <form class="w3-bar-item search" method="post" action="{{ route('RIS') }}" > 
           @csrf
-          <input type="text" class="SearchRis" placeholder="Type your RIS number" name="search" class="form-control" required>
+          <input type="text" class="SearchRis" placeholder="RIS NUMBER" name="search" oninvalid="this.setCustomValidity('Input your  RIS Number')"  title='RIS NUMBER'  oninput="setCustomValidity('')" required/> 
           <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
         </form>
       </div>
