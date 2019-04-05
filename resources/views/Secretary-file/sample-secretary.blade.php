@@ -8,7 +8,7 @@
     <a class="close" data-dismiss="alert">×</a>
     <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
 </div>
-@endif
+@endif  
 {{-- SUCCESS MESSAGE OF ADDING CLIENT --}}
 @if(Session::has('flash_client_added'))
 <div class="alert alert-info offset-md-1 col-md-10">

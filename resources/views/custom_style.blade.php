@@ -23,8 +23,6 @@
   }
 
   .collapsible {
-    background-color: #777;
-    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -34,7 +32,7 @@
     font-size: 15px;
   }
 
-  .active, .collapsible:hover {
+  .collapsible:hover {
     background-color: #555;
   }
 
@@ -44,6 +42,38 @@
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: #f1f1f1;
+  }
+
+  .samples {
+    background-color: lightgoldenrodyellow;
+  }
+
+  #collapse-td {
+    padding: 0;
+  }
+
+  .sample-parameter {
+    padding: 10px;
+  }
+
+  .sample-header {
+    font-size: 14px;
+  }
+
+  .sample-code {
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 60px;
+  }
+
+  .params {
+    padding-left: 100px;
+  }
+
+  .param-item {
+    display: inline;
+    font-size: 12px;
+    padding-right: 30px;
   }
 
 </style>
