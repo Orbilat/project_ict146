@@ -9,17 +9,17 @@
         <table class="table">
             <thead>
                 <tr class="text-center">
-                  <th class="SRheader bg-dark">Analysis</th>
-                  <th class="SRheader bg-dark">Method</th>
-                  <th class="SRheader bg-dark">Price</th>
+                  <th class="text-light bg-secondary TS">Analysis</th>
+                  <th class="text-light bg-secondary TS">Method</th>
+                  <th class="text-light bg-secondary TS">Price</th>
                 </tr>
             </thead>
             <tbody>
               @foreach($parameters as $parameter)
                 <tr class="text-center">
-                    <td class="border">{{ $parameter->analysis }}</td>
-                    <td class="border">{{ $parameter->method }}</td>
-                    <td class="border">{{ $parameter->price }}</td>
+                  <td class="border">{{ $parameter->analysis }}</td>
+                  <td class="border">{{ $parameter->method }}</td>
+                  <td class="border">{{ $parameter->price }}</td>
               @endforeach
                 </tr>    
             </tbody>

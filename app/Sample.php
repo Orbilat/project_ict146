@@ -20,6 +20,7 @@ class Sample extends Model
 
     public function client()
     {
+        return $this->belongsTo(Client::class, 'risNumber', 'sampleId');
         return $this->belongsTo(Client::class, 'risNumber', 'clientId');
     }
 

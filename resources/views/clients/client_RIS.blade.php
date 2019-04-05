@@ -8,12 +8,16 @@
         <div class="col-sm-12 text-info">
             <div class="titleText">RIS NUMBER: 
                 <h3 class="d-inline-block text-danger">
-                    @php
-                      $year = substr($ris->risNumber,  0, 4);
-                      $id = substr($ris->risNumber, 4);
-                      echo $year.'-'.$id;
-                    @endphp
+                    {{ $ris->risNumber}}
                 </h3>
+                <h4 class="d-inline-block float-right">
+                    Payment:
+                    @if ( $ris->paid == "yes" || $ris->paid == "Yes")
+                        Done
+                    @else 
+                        Pending
+                    @endif
+                </h4>
             </div>
         </div>
     </div>
@@ -38,7 +42,23 @@
           <div class="col-md-3 w3-border text-center">{{ $sample->status }}</div>
         @endforeach
     </div>
+    <div class="container">
+         @if ( $ris->readyForPickUp == "yes" || $ris->paid == "Yes")
+            <div class="p-5 alert alert-success w3-padding-64 FontError">
+                <i class="glyphicon glyphicon-thumbs-up fa-2x"></i> 
+                <strong>Ready for Pick Up</strong>
+            </div>
+        @else
+            <div class="p-5 alert alert-danger w3-padding-64 FontError">
+                <i class="fa fa-exclamation-triangle fa-2x"></i> 
+                <strong>Please settle your account</strong>
+            </div>
+        @endif
+    </div>
 </div>
+
+           
+        
 
 
                                                               

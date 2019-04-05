@@ -28,7 +28,7 @@ class ChangeStationsOnParameters extends Migration
     public function down()
     {
         Schema::table('parameters', function (Blueprint $table) {
-            $tablie->string('station')->change();
+            $table->string('station')->change();
 
             $table->dropForeign('station');
         });
