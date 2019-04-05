@@ -18,9 +18,10 @@ class CreateSampleTestsTable extends Migration
             $table->unsignedInteger('sampleCode');
             $table->unsignedInteger('parameters');
             $table->string('status');
+            $table->dateTime('timeReceived')->nullable();
+            $table->dateTime('timeCompleted')->nullable();
             $table->string('managedBy');
             $table->dateTime('managedDate');
-            $table->dateTime('timecompleted')->nullable();
             $table->timestamps();
         });
     }

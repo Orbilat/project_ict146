@@ -139,6 +139,7 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
+            
             App::abort(500, 'Error!');
         }
     }
