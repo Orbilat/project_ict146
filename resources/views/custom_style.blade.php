@@ -76,4 +76,20 @@
     padding-right: 30px;
   }
 
+  .fa-trash {
+    font-size: 22px;
+  }
+
+  .fa-edit {
+    font-size: 22px;
+  }
+
+  .fa-trash:hover {
+    color: red;
+  }
+
+  .fa-edit:hover {
+    color: blue;
+  }
+
 </style>

@@ -41,7 +41,7 @@ class AdminController extends Controller
     // Admin Samples Page (/samples)
     public function samples()
     {
-        $samples = Sample::with('client')->join('clients', 'clients.clientId', '=', 'samples.risNumber')->select('samples.*', 'clients.risNumber as ris')->paginate(6);
+        $samples = Sample::with('client')->paginate(6);
         $parameters = Parameter::all();
 
         return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);

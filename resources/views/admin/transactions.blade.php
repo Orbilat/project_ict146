@@ -80,9 +80,9 @@
                                                         <li>
                                                             <h6 class="param-item">{{ $parameter->analysis }}</h6>
                                                             <h6 class="param-item">{{ $parameter->pivot->status }}</h6>
-                                                            <h6 class="param-item">Start Time:{{ date("F jS, Y g:m A", strtotime($parameter->managedDate)) }}</h6>
+                                                            <h6 class="param-item">Start Time: {{ date("F jS, Y g:m A", strtotime($parameter->managedDate)) }}</h6>
                                                             @if($parameter->pivot->timecompleted != NULL)
-                                                                <h6 class="param-item">End Time:{{ date("F jS, Y g:m A", strtotime($parameter->pivot->timecompleted)) }}</h6>
+                                                                <h6 class="param-item">End Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timecompleted)) }}</h6>
                                                             @else
                                                                 <h6 class="param-item">End Time: Not available</h6>
                                                             @endif
@@ -103,4 +103,26 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $("td[colspan=10]").find(".sample-parameter").hide();
+        $('h5').click(false);
+        $('h6').click(false);
+        $('ol').click(false);   
+        $("table").click(function(event) {
+            event.stopPropagation();
+            var $target = $(event.target);
+            if ( $target.closest("td").attr("colspan") > 1 ) {
+                $target.slideUp();
+            } else {
+                $target.closest("tr").next().find(".sample-parameter").slideToggle();
+            }                    
+        });
+    });
+</script>
+
 @endsection
+
+
+

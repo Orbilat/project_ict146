@@ -16,6 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}"> --}}
 
     <!-- Styles -->
@@ -309,9 +310,8 @@
 
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
-            $('.js-example-basic-single').select2();
         });
-
+        
         function changeText() {
             var text = document.getElementById("addNew");
 
@@ -322,22 +322,6 @@
                 text.innerHTML = "Add new";
             }
         }
-
-        $(function() {
-            $("td[colspan=10]").find(".sample-parameter").hide();
-            $('h5').click(false);
-            $('h6').click(false);
-            $('ol').click(false);   
-            $("table").click(function(event) {
-                event.stopPropagation();
-                var $target = $(event.target);
-                if ( $target.closest("td").attr("colspan") > 1 ) {
-                    $target.slideUp();
-                } else {
-                    $target.closest("tr").next().find(".sample-parameter").slideToggle();
-                }                    
-            });
-        });
 
     </script>
 </body>

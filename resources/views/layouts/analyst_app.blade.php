@@ -1,4 +1,4 @@
-<title>Capstone</title>
+<title>USC Water Laboratory</title>
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="/css/app.css" />
 <link rel="stylesheet" href="/css/datatables.min.css" />
