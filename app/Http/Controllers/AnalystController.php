@@ -109,7 +109,7 @@ class AnalystController extends Controller
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
             ->where('s.laboratoryCode','=', $input['scanid'])
             ->where('p.station','=', $id)
-            ->where('st.status','=', 'New')
+            ->where('st.status','=', 'Not Started')
             ->update(array('st.status' => 'In Progress','s.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'timeReceived' => date("Y-m-d")));
         
         return redirect('/analyst/sample/station/'.$id);
