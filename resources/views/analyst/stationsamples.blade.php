@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Station {{ $station }}
+                <div class="card-header">{{ $station->stationName }}
                     <button type="button" class="btn btn-info btn-lg pull-right analystbtn" style="margin-left: 10px;" data-toggle="modal" data-target="#completescan">Complete</button>
                     <button type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
                 </div> 
@@ -22,7 +22,7 @@
                         @if(!empty($stationssample))
                             @foreach($stationssample as $data)
                                 <tr>
-                                    <td><a href="/analyst/{{ $data->stationId}}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
+                                    <td><a href="/analyst/{{ $data->station }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
                                     <td>{{ $data->risNumber }}</td>
                                     <td>{{ $data->status}} </td>
                                     
@@ -41,10 +41,10 @@
             <div class="modal-content">
               <div class="modal-body">
                 <h3>Complete?</h3>
-                <form action="/analyst/complete/sample/{{ $station }}" method="post" class="bookingInput">
+                <form action="/analyst/complete/sample/{{ $station->stationId }}" method="post" class="bookingInput">
                     {{ csrf_field() }}
                     <input type="text" id="scanid2" name="scanid" autofocus>
-                    <input type="submit" class="accept" value="Proceed">
+                    <input id="acceptbtn" type="submit" class="accept" value="Proceed">
                 </form>
               </div>
             </div>
@@ -56,10 +56,10 @@
             <div class="modal-content">
               <div class="modal-body">
                 <h3>Receive?</h3>
-                <form action="/analyst/receive/sample/{{ $station }}" method="post" class="bookingInput">
+                <form action="/analyst/receive/sample/{{ $station->stationId }}" method="post" class="bookingInput">
                     {{ csrf_field() }}
                     <input type="text" id="scanid" name="scanid" autofocus>
-                    <input type="submit" class="accept" value="Proceed">
+                    <input id="receivebtn" type="submit" class="accept" value="Proceed">
                 </form>
               </div>
             </div>
@@ -73,6 +73,20 @@
         });
         $('#scanid2').focus();
         $('#scanid').focus();
+
+        $('#receivebtn').click(function(e){
+            if($('#scanid').val() == ""){
+                e.preventDefault();
+                alert('Input the laboratory Code');  
+            }
+        });
+
+        $('#acceptbtn').click(function(e){
+            if($('#scanid2').val() == ""){
+                e.preventDefault();
+                alert('Input the laboratory Code');  
+            }
+        });
     });
 </script>
 @endsection
