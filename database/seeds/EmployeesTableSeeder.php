@@ -13,7 +13,7 @@ class EmployeesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('employees')->insert([
+        Employee::insert([
             [
                 'username'  => 'tester',
                 'password'  => bcrypt('tester'),

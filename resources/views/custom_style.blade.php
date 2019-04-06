@@ -56,14 +56,11 @@
     padding: 10px;
   }
 
-  .sample-header {
-    font-size: 14px;
-  }
-
   .sample-code {
     font-size: 12px;
     font-weight: bold;
-    padding-left: 60px;
+    padding: 10px;
+    margin: 0;
   }
 
   .params {
@@ -73,7 +70,7 @@
   .param-item {
     display: inline;
     font-size: 12px;
-    padding-right: 30px;
+    margin-right: 50px;
   }
 
   .fa-trash {

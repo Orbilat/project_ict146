@@ -67,33 +67,43 @@
                                     <td class="admin-table">{{ $transaction->managedBy }}</td>
                                     <td class="admin-table">{{ date("F jS, Y g:m A", strtotime($transaction->managedDate)) }}</td>
                                 </tr>
-                                <tr class="samples"><td id="collapse-td" class="admin-table" colspan="10">
-                                    <div class="sample-parameter">
-                                        @if($transaction->samples->isEmpty())
-                                            The client has no samples!
-                                        @else
-                                            <h5 class="sample-header">Samples:</h5>                                    
-                                            @foreach($transaction->samples as $sample)
-                                                <h6 class="sample-code">{{ $sample->laboratoryCode }}</h6>
-                                                @foreach($sample->parameters as $parameter)
-                                                    <ol class="params">
-                                                        <li>
-                                                            <h6 class="param-item">{{ $parameter->analysis }}</h6>
-                                                            <h6 class="param-item">{{ $parameter->pivot->status }}</h6>
-                                                            <h6 class="param-item">Start Time: {{ date("F jS, Y g:m A", strtotime($parameter->managedDate)) }}</h6>
-                                                            @if($parameter->pivot->timecompleted != NULL)
-                                                                <h6 class="param-item">End Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timecompleted)) }}</h6>
-                                                            @else
-                                                                <h6 class="param-item">End Time: Not available</h6>
-                                                            @endif
-                                                        </li>
-                                                    </ol>
+                                <tr class="samples">
+                                    <td id="collapse-td" class="admin-table" colspan="10">
+                                        <div class="sample-parameter">
+                                            @if($transaction->samples->isEmpty())
+                                                The client has no samples!
+                                            @else                              
+                                                @foreach($transaction->samples as $sample)
+                                                    <h6 class="sample-code">{{ $sample->laboratoryCode }}</h6>
+                                                    @foreach($sample->parameters as $parameter)
+                                                        <div class="row pl-5">
+                                                            <div class="col-md-3">
+                                                                {{ $parameter->analysis }}
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                {{ $parameter->pivot->status }}
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                @if($parameter->pivot->timeReceived == NULL)
+                                                                    Start Time: Not Available
+                                                                @else
+                                                                    Start Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timeReceived)) }}
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                @if($parameter->pivot->timeCompleted == NULL)
+                                                                    End Time: Not Available
+                                                                @else
+                                                                    End Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timeCompleted)) }}
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
-                                            
-                                        @endif
-                                    </div>
-                                </td></tr>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
                            @endforeach
                         </tbody>
                     </table>
@@ -107,9 +117,9 @@
 <script type="text/javascript">
     $(function() {
         $("td[colspan=10]").find(".sample-parameter").hide();
-        $('h5').click(false);
         $('h6').click(false);
-        $('ol').click(false);   
+        $('.row').click(false);
+        $('.col-md-3').click(false);
         $("table").click(function(event) {
             event.stopPropagation();
             var $target = $(event.target);

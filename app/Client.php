@@ -24,7 +24,7 @@ class Client extends Model
 
     public function parameters()
     {
-        return $this->hasManyThrough(Parameter::class, Sample::with('parameters')->pivot(), 'sampleCode', 'parameters', 'clientId', 'sampleId');
+        return $this->hasManyThroughMany(Parameter::class, Sample_Tests::class, 'sampleCode', 'parameters', 'clientId', 'testId');
     }
 
     public function routeNotificationForNexmo($notification)

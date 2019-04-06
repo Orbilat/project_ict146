@@ -144,7 +144,7 @@
 
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th class="admin-table">Employee Name</th>
                                 <th class="admin-table">Username</th>
@@ -153,7 +153,7 @@
                                 <th class="admin-table">License No.</th>
                                 <th class="admin-table">Updated By</th>
                                 <th class="admin-table">Updated At</th>
-                                <th class="admin-table">Status</th>
+                                <th class="admin-table">Functions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -168,7 +168,7 @@
                                 <td class="admin-table">{{ date("F jS, Y H:m", strtotime($account->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
+                                    <a data-toggle="modal" data-target="#editAccount{{ $count }}"><i class="fa fa-edit"></i></a>
                                     <div id="editAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -299,7 +299,7 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
+                                    <a data-toggle="modal" data-target="#deleteAccount{{ $count }}"><i class="fa fa-trash"></i></a>
                                     <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

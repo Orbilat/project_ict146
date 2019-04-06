@@ -11,7 +11,7 @@ class ParametersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('parameters')->insert([
+        Parameter::insert([
             [
                 'analysis' => '(Cd) Cadmium',
                 'method' => 'none',

@@ -12,7 +12,7 @@ class StationsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('stations')->insert([
+        Station::insert([
             [
                 'stationName' => 'Station 1',
                 'managedBy' => 'Test Admin',
