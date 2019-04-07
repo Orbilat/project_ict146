@@ -32,3 +32,4 @@ class CreateTableStations extends Migration
         Schema::dropIfExists('stations');
     }
 }
+

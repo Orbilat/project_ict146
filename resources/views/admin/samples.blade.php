@@ -216,7 +216,7 @@
                                                         <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
                                                         
                                                         <div class="col-md-6">
-                                                            <input id="clientId" type="text" class="form-control{{ $errors->has('clientId') ? ' is-invalid' : '' }}" name="clientId" value="{{ $sample->client->risNumber }}" placeholder="XXXX-XXXX" required autofocus>
+                                                            <input id="clientId" type="text" class="form-control{{ $errors->has('clientId') ? ' is-invalid' : '' }}" name="clientId" value="{{ $sample->client->risNumber }}" placeholder="xxxx-xxxx" required autofocus>
                             
                                                             @if ($errors->has('clientId'))
                                                                 <span class="invalid-feedback" role="alert">
