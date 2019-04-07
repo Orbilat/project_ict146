@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use DateTime;
 use Redirect;
 use Validator;
@@ -23,89 +24,95 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // Admin Home Page (/)
+    // Admin home page
     public function admin()
     {
         return view('admin.home');
     }
 
-    // Admin Samples Page (/samples)
+    // Summary of clients with samples
     public function transactions()
     {
         $transactions = Client::with('samples.parameters')
-                        ->paginate(6);
+                        ->paginate(10);
 
         return view('admin.transactions', ['transactions' => $transactions]);
     }
 
-    // Admin Samples Page (/samples)
+    // Samples page
     public function samples()
     {
-        $samples = Sample::with('client')->join('clients', 'clients.clientId', '=', 'samples.risNumber')->select('samples.*', 'clients.risNumber as ris')->paginate(6);
+        $samples = Sample::with('client')->paginate(10);
         $parameters = Parameter::all();
 
         return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
     }
 
-    // Admin Clients Page (/clients)
+    // Clients page
     public function clients()
     {
-        $clients = Client::orderBy('clientId')->paginate(6);
+        $clients = Client::orderBy('clientId')->paginate(10);
+
         return view('admin.clients', ['clients' => $clients]);
     }
 
-    // Admin Accounts Page (/accounts)
+    // Employee accounts page
     public function accounts()
     {
-        $accounts = Employee::orderBy('employeeName')->paginate(6);
+        $accounts = Employee::orderBy('employeeName')->paginate(10);
+
         return view('admin.accounts', ['accounts' => $accounts]);
     }
 
-    // Admin Inventory-History Page (/inventory/history)
+    // Item use history page
     public function history()
     {
         return view('admin.inventory-history');
     }
 
-    // Admin Inventory-Glassware Page (/inventory/glassware)
+    // Glassware page
     public function glassware()
     {
-        $items = Item::with('suppliers')->paginate(6);
+        $items = Item::with('suppliers')->paginate(10);
+
         return view('admin.inventory-glassware', ['items' => $items]);
     }
 
-    // Admin Parameters Page (/parameters)
+    // Stations page
     public function stations()
     {
-        $stations = Station::paginate(6);
+        $stations = Station::paginate(5);
+
         return view('admin.stations', ['stations' => $stations]);
     }
 
-    // Admin Parameters Page (/parameters)
+    // Parameters page
     public function parameters()
     {
-        $parameters = Parameter::with('station')->orderBy('analysis')->paginate(6);
+        $parameters = Parameter::with('station')->orderBy('analysis')->paginate(10);
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
-     // Admin Suppliers Page (/suppliers)
+     // Suppliers page
     public function suppliers()
     {
-        $suppliers = Supplier::orderBy('companyName')->paginate(6);
+        $suppliers = Supplier::orderBy('companyName')->paginate(10);
+
         return view('admin.suppliers', ['suppliers' => $suppliers]);
     }
 
+    // Create event page
     public function events()
     {
         return view('admin.create_event');
     }
 
-    // ACCOUNT INSERT
+    // Add employee account
     protected function addAccount(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|min:4|unique:employees',
+            'username' => 'required|string|max:30|min:4|unique:employees',
             'password' => 'required|string|min:6|confirmed',
             'employeeName' => 'required|string|max:50|unique:employees',
             'position' => 'required|string|max:30',
@@ -113,14 +120,13 @@ class AdminController extends Controller
             'licenseNumber' => 'required|string|max:50|unique:employees',
             'userType' => 'required|string|max:20',
         ]);
-        //VALIDATION CHECKS
+        // Validation checks
         if ($validator->fails()) {
             return redirect('admin/accounts')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        //ELOQUENT INSERT
         $account = new Employee;
         $account->username = trim($request->username);
         $account->password = Hash::make($request->password);
@@ -131,33 +137,32 @@ class AdminController extends Controller
         $account->userType = $request->userType;
         $account->managedBy = Auth::user()->employeeName;
         $account->managedDate = new DateTime();
-        //SAVE TO DB
-        $account->save();
-        //CHECK SAVE
+
         if($account->save()){
-            Session::flash('flash_account_added', 'Account added successfully!');
+            Session::flash('flash_account_added', 'Employee account added successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(403, 'Oh no! Employee was not added successfully.');
         }
     }
-    // ACCOUNT DELETE
+    // Delete employee account
     protected function destroyAccount($accountId)
     {
         $account = Employee::findOrFail($accountId);
+
         if($account->delete()){
             Session::flash('flash_account_deleted', 'Account deleted successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Account was not removed successfully.');
         }
     }
-    // ACCOUNT UPDATE
+    // Update employee account
     protected function updateAccount(Request $request, $accountId)
     {
-        // VALIDATION
+        // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'username' => 'required|string|max:255|min:4',
             'employeeName' => 'required|string|max:50',
@@ -166,13 +171,13 @@ class AdminController extends Controller
             'licenseNumber' => 'required|string|max:50',
             'userType' => 'required|string|max:20',
         ]);
-        // VALIDATION CHECKS
+        // Validation check
         if ($validatorUpdate->fails()) {
             return redirect('admin/accounts')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        // FIND ACCOUNT AND UPDATE
+
         $account = Employee::findOrFail($accountId);
         $account->username = trim($request->username);
         $account->employeeName =  trim($request->employeeName);
@@ -182,19 +187,20 @@ class AdminController extends Controller
         $account->userType = $request->userType;
         $account->managedBy = Auth::user()->employeeName;
         $account->managedDate = new DateTime();
+
         if($account->save()){
             Session::flash('flash_account_updated', 'Account updated successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Account was not updated successfully.');
         }
-
     }
-    // CLIENT INSERT
+
+    // Add client
     protected function addClient(Request $request)
     {
-        // VALIDATION
+        // Validation0.
         $validator = Validator::make($request->all(), [
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
@@ -227,6 +233,7 @@ class AdminController extends Controller
         $client->testResult = $request->testResult;
         $client->reclaimSample = $request->reclaimSample;
         $client->remarks = trim($request->remarks);
+        $client->followUp = $request->followUp;
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
         $client->save();
@@ -308,6 +315,7 @@ class AdminController extends Controller
         $client->testResult = $request->testResult;
         $client->reclaimSample = $request->reclaimSample;
         $client->remarks = trim($request->remarks);
+        $client->followUp = $request->followUp;
         $client->managedBy = Auth::user()->employeeName;
         if ($request->newDateSubmit == NULL) {
             $client->managedDate = Client::where('clientId', $clientId)->value('managedDate');
@@ -375,7 +383,6 @@ class AdminController extends Controller
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
             $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
-            $sampletests->status = "In Progress";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
             $sampletests->save();

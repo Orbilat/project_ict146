@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EmployeesTableSeeder::class,
             StationsTableSeeder::class,
+            ParametersTableSeeder::class,
         ]);
     }
 }

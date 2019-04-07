@@ -22,7 +22,7 @@
                         @foreach($details as $data)
                             <tr>
                                 <td>{{ $data->laboratoryCode}} </td>
-                                <td>{{ $data->parametername }}</td>
+                                <td>{{ $data->analysis }}</td>
                                 <td>{{ $data->sampleCollection }}</td>
                                 <td>{{ $data->created_at}} </td>
                                 <td>{{ $data->status }}</td>

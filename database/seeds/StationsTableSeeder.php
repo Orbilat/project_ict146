@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Station;
 
 class StationsTableSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class StationsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('stations')->insert([
+        Station::insert([
             [
                 'stationName' => 'Station 1',
                 'managedBy' => 'Test Admin',

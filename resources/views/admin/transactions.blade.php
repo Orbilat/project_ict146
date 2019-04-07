@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 {{-- TABLE HEADER --}}
                                 <th class="admin-table">RIS</th>
@@ -66,11 +66,43 @@
                                     <td class="admin-table">{{ $transaction->remarks }}</td>
                                     <td class="admin-table">{{ $transaction->managedBy }}</td>
                                     <td class="admin-table">{{ date("F jS, Y g:m A", strtotime($transaction->managedDate)) }}</td>
-                                    <tr>
-                                        <td class="content">
-                                            Hello
-                                        </td>
-                                    </tr>
+                                </tr>
+                                <tr class="samples">
+                                    <td id="collapse-td" class="admin-table" colspan="10">
+                                        <div class="sample-parameter">
+                                            @if($transaction->samples->isEmpty())
+                                                The client has no samples!
+                                            @else                              
+                                                @foreach($transaction->samples as $sample)
+                                                    <h6 class="sample-code">{{ $sample->laboratoryCode }}</h6>
+                                                    @foreach($sample->parameters as $parameter)
+                                                        <div class="row pl-5">
+                                                            <div class="col-md-2">
+                                                                {{ $parameter->analysis }}
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                {{ $parameter->pivot->status }}
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                @if($parameter->pivot->timeReceived == NULL)
+                                                                    Start Time: Not Available
+                                                                @else
+                                                                    Start Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timeReceived)) }}
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                @if($parameter->pivot->timeCompleted == NULL)
+                                                                    End Time: Not Available
+                                                                @else
+                                                                    End Time: {{ date("F jS, Y g:m A", strtotime($parameter->pivot->timeCompleted)) }}
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </td>
                                 </tr>
                            @endforeach
                         </tbody>
@@ -81,4 +113,26 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $("td[colspan=10]").find(".sample-parameter").hide();
+        $('h6').click(false);
+        $('.row').click(false);
+        $('.col-md-3').click(false);
+        $("table").click(function(event) {
+            event.stopPropagation();
+            var $target = $(event.target);
+            if ( $target.closest("td").attr("colspan") > 1 ) {
+                $target.slideUp();
+            } else {
+                $target.closest("tr").next().find(".sample-parameter").slideToggle();
+            }                    
+        });
+    });
+</script>
+
 @endsection
+
+
+

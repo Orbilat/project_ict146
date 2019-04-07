@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCompletedClient extends Migration
+class CreateTablePasswordResets extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddCompletedClient extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('readyForPickUp')->nullable()->default("no")->after('emailAddress');
-        
-        
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at');
         });
     }
 
@@ -27,8 +27,6 @@ class AddCompletedClient extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('readyForPickUp');
-        });
+        Schema::drop('password_resets');
     }
 }

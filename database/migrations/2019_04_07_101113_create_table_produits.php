@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropDateSubmittedOnClients extends Migration
+class CreateTableProduits extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class DropDateSubmittedOnClients extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('dateSubmitted');
+        Schema::create('produits', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('barcode');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class DropDateSubmittedOnClients extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dateTime('dateSubmitted');
-        });
+        Schema::dropIfExists('produits');
     }
 }

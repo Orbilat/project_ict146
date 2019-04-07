@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSampleTestsTable extends Migration
+class CreateTableItems extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateSampleTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sample__tests', function (Blueprint $table) {
-            $table->increments('testId');
-            $table->unsignedInteger('sampleCode');
-            $table->unsignedInteger('parameters');
-            $table->string('status');
+        Schema::create('items', function (Blueprint $table) {
+            $table->increments('itemId');
+            $table->string('itemName');
+            $table->string('containerType');
+            $table->string('volumeCapacity')->nullable();
+            $table->integer('quantity')->default(1);
+            $table->unsignedInteger('supplier');
             $table->string('managedBy');
             $table->dateTime('managedDate');
-            $table->dateTime('timecompleted')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateSampleTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sample__tests');
+        Schema::dropIfExists('items');
     }
 }

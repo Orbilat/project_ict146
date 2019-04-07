@@ -16,6 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}"> --}}
 
     <!-- Styles -->
@@ -307,40 +308,10 @@
     
     <script type="text/javascript">
 
-        var coll = document.getElementsByClassName("collapsible");
-        console.log(coll);
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                console.log(content);
-                if (content.style.maxHeight){
-                content.style.maxHeight = null;
-                } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                } 
-            });
-        }
-
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
-            $('.js-example-basic-single').select2();
         });
-
-        $(document).ready(function() {
-            $("tr").click(function (){
-                var row = document.getElementById("showSamples");
-                if(row.className == "collapse"){
-                    row.className = "collapse.show";
-                }
-                else {
-                    row.className = "collapse";
-                }
-            })
-        });
-
+        
         function changeText() {
             var text = document.getElementById("addNew");
 

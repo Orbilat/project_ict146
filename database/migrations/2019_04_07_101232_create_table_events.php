@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DeleteParameternameOnParameters extends Migration
+class CreateTableEvents extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class DeleteParameternameOnParameters extends Migration
      */
     public function up()
     {
-        Schema::table('parameters', function (Blueprint $table) {
-            $table->dropColumn('parametername');
+        Schema::create('events', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('event_name');
+            $table->date('start_date');
+            $table->date('end_date');
         });
     }
 
@@ -25,8 +29,6 @@ class DeleteParameternameOnParameters extends Migration
      */
     public function down()
     {
-        Schema::table('parameters', function (Blueprint $table) {
-            $table->string('parametername')->after('parameterId')->nullable();
-        });
+        Schema::dropIfExists('events');
     }
 }

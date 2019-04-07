@@ -8,7 +8,15 @@
     <a class="close" data-dismiss="alert">×</a>
     <strong>Notification:</strong> {!!Session::get('flash_sample_added')!!}
 </div>
+@endif  
+{{-- SUCCESS MESSAGE OF ADDING CLIENT --}}
+@if(Session::has('flash_client_added'))
+<div class="alert alert-info offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('flash_client_added')!!}
+</div>
 @endif
+
 
 
 {{-- VALIDATION CHECKS --}}
@@ -98,7 +106,7 @@
                         <div class="form-group row">
                             <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
                             &nbsp;&nbsp;&nbsp;
-                            <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple">
+                            <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple" required>
                                 @foreach ($parameters as $parameter)
                                     <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
                                 @endforeach
