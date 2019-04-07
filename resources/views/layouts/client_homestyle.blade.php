@@ -156,6 +156,6 @@ position:absolute;
 	font-size: 15px;
 }
 .FontError{
-	font-size: 25px;
+	font-size: 20px;
 }
 </style>

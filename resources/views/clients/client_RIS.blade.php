@@ -13,14 +13,15 @@
                 <div class="float-right TS">
                     Payment:   
                     @if ( $ris->paid == "yes" || $ris->paid == "Yes")
-                    <div class="d-inline-block text-success float-right">Done</div>   
+                    <div class="d-inline-block text-success float-right"> Done</div>   
                     @else 
-                    <div class="d-inline-block text-danger float-right">Pending</div>    
+                    <div class="d-inline-block text-danger float-right"> Pending</div>    
                     @endif
                 </div> 
             </div>
         </div>
     </div>
+    <br>
     <div class="row" style="background-color:#e9ecef;">
         <div class="col-sm-3" >
             <h4 class="text-center text-dark TS" style="margin-top:15px;">Date</h3>
@@ -39,7 +40,7 @@
           <div class="col-md-3 w3-border text-center TS">{{ $sample->managedDate }}</div>
           <div class="col-md-3 w3-border text-center TS">{{ $sample->laboratoryCode }}</div>
           <div class="col-md-3 w3-border text-center TS">{{ $sample->analysis }}</div>
-          <div class="col-md-3 w3-border text-center TS">{{ $sample->status }}</div>
+          <div class="col-md-3 w3-border text-center TS ">{{ $sample->status }}</div>
         @endforeach
          @if ( $ris->readyForPickUp == "yes" || $ris->paid == "Yes")
             <div class="p-5 alert alert-success text-center FontError">

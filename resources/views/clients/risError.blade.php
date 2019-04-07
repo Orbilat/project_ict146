@@ -7,7 +7,7 @@
     <div class="row bg-white w3-padding-16">           
         <div class="container">
             <div class="p-5 alert alert-danger w3-padding-64 FontError">
-                <i class="fa fa-exclamation-triangle fa-2x"></i> 
+                <i class="fa fa-exclamation-triangle fa-1x"></i> 
                 <strong>Error:</strong>
                 YOUR RIS NUMBER DOES NOT EXIST.
             </div>
