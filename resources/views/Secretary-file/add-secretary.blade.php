@@ -29,6 +29,9 @@
         @csrf
         <button type="submit" class="btn smol btn-sm @if($p->paid == 'yes') btn-success @else btn-danger @endif">@if($p->paid == 'yes') PAID @else UNPAID @endif</button>
       </form>
+      <form method="POST" action="{{ route('send', [$p->clientId]) }}">
+      <button type="submit" class="btn smol btn-sm @if($p->paid == 'yes') btn-success @else btn-danger @endif">@if($p->paid == 'yes') SEND @else SENT @endif</button>
+      </form>
       </td>
     </tr>
 </thead>

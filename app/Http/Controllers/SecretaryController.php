@@ -56,6 +56,7 @@ class SecretaryController extends Controller
     protected function status(){
         
         $cli = Client::with('samples.parameters')->get();
+        $isComplete = 'false';
 
         foreach($cli as $cl){
             foreach($cl->samples as $sample){
@@ -101,6 +102,14 @@ class SecretaryController extends Controller
 
     }
 
+    protected function send($clientId){
+
+        $client = Client::findOrFail($clientId);
+        $client->notify(new ReadyForPickUp($client));
+        return view('secretary-file.add-secretary', ['status'=>$client]);
+
+    }
+
     protected function addClient(Request $request)
     {
         // VALIDATION
@@ -111,12 +120,12 @@ class SecretaryController extends Controller
             'contactNumber' => 'string|numeric',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
-
-            
+            'discount'=> 'nullable|numeric|max:100|min:0',
+         
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('secretary-file.sample-secretary')
+            return redirect('secretary-file.create-secretary')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -147,9 +156,7 @@ class SecretaryController extends Controller
         $client->remarks =  trim($request->remarks);    
         $client->managedBy = Auth::user()->employeeName;
 
-
-        
-        
+       
         $client->save();
         $client->managedDate = new DateTime();
         if (strlen((string)($client->clientId)) == 1) {
@@ -161,7 +168,7 @@ class SecretaryController extends Controller
         } else {
             $idOfClient = (string)$client->clientId;
         }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . $idOfClient;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
         $client->save();
         
 

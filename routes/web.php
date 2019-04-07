@@ -54,6 +54,7 @@ Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory'
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
 Route::post('/secretary/add/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
+Route::post('/secretary/add/{clientId}', 'SecretaryController@send')->name('send');
 
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
