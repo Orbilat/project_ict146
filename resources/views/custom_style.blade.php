@@ -83,10 +83,12 @@
 
   .fa-trash:hover {
     color: red;
+    cursor: pointer;
   }
 
   .fa-edit:hover {
     color: blue;
+    cursor: pointer;
   }
 
 </style>

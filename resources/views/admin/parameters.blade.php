@@ -68,7 +68,7 @@
         
                                     <div class="col-md-6">
                                         <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                            <option value="Station 1">Station 1</option>
+                                            <option value="Station 1" selected>Station 1</option>
                                             <option value="Station 2">Station 2</option>
                                             <option value="Station 3">Station 3</option>                                    
                                         </select>
@@ -94,7 +94,7 @@
 
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th class="admin-table">Analysis</th>
                                 <th class="admin-table">Method</th>
@@ -111,13 +111,13 @@
                                 <td class="admin-table">{{ $parameter->analysis }}</td>
                                 <td class="admin-table">{{ $parameter->method }}</td>
                                 <td class="admin-table">{{ $parameter->price }}</td>
-                                <td class="admin-table">{{ $parameter->stationName }}</td>
+                                <td class="admin-table">{{ $parameter->station }}</td>
                                 <td class="admin-table">{{ $parameter->managedBy }}</td>
                                 <td class="admin-table">{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editAccount{{ $count }}">Edit</button>
-                                    <div id="editAccount{{ $count }}" class="modal fade" role="dialog">
+                                    <a data-toggle="modal" data-target="#editParameter{{ $count }}"><i class="fa fa-edit"></i></a>
+                                    <div id="editParameter{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header editModal">
@@ -175,9 +175,9 @@
                             
                                                         <div class="col-md-6">
                                                             <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                                                <option value="Station 1" @if($parameter->stationName == 'Station 1') selected @endif>Station 1</option>
-                                                                <option value="Station 2" @if($parameter->stationName == 'Station 2') selected @endif>Station 2</option>
-                                                                <option value="Station 3" @if($parameter->stationName == 'Station 3') selected @endif>Station 3</option>                                    
+                                                                <option value="Station 1" @if($parameter->station == 1) selected @endif>Station 1</option>
+                                                                <option value="Station 2" @if($parameter->station == 2) selected @endif>Station 2</option>
+                                                                <option value="Station 3" @if($parameter->station == 3) selected @endif>Station 3</option>                                    
                                                             </select>
                                                             @if ($errors->has('station'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -198,8 +198,8 @@
                                 </div>
                                     &nbsp;&nbsp; 
                                 {{-- DELETE BUTTON --}}
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
-                                <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
+                                <a data-toggle="modal" data-target="#deleteParameter{{ $count }}"><i class="fa fa-trash"></i></a>
+                                <div id="deleteParameter{{ $count }}" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header deleteModal">
