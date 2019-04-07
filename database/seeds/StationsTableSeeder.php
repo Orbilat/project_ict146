@@ -17,18 +17,21 @@ class StationsTableSeeder extends Seeder
             [
                 'stationName' => 'Station 1',
                 'managedBy' => 'Test Admin',
+                'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ],
             [
                 'stationName'  => 'Station 2',
                 'managedBy' => 'Test Admin',
+                'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ],
             [
                 'stationName'  => 'Station 3',
                 'managedBy' => 'Test Admin',
+                'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ]
