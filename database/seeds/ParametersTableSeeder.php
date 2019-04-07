@@ -277,14 +277,6 @@ class ParametersTableSeeder extends Seeder
                 'managedDate' => new DateTime,
             ],
             [
-                'analysis' => 'Free Carbon Dioxide',
-                'method' => 'none',
-                'price' => '330.00',
-                'station' => '2',
-                'managedBy' => 'Test Admin',
-                'managedDate' => new DateTime,
-            ],
-            [
                 'analysis' => 'Total Carbon Dioxide',
                 'method' => 'none',
                 'price' => '330.00',
@@ -324,6 +316,6 @@ class ParametersTableSeeder extends Seeder
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
             ],
-        ]);
+        ]); 
     }
 }

@@ -240,7 +240,6 @@ class SecretaryController extends Controller
                 $sampletests = new Sample_Tests;
                 $sampletests->sampleCode = $sample->sampleId;
                 $sampletests->parameters = DB::table('parameters')->where('analysis', $analysis)->value('parameterId');
-                $sampletests->status = "Not Started";
                 $sampletests->managedBy = Auth::user()->employeeName;
                 $sampletests->managedDate = new DateTime();
                 $sampletests->save();

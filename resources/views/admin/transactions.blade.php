@@ -77,7 +77,7 @@
                                                     <h6 class="sample-code">{{ $sample->laboratoryCode }}</h6>
                                                     @foreach($sample->parameters as $parameter)
                                                         <div class="row pl-5">
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 {{ $parameter->analysis }}
                                                             </div>
                                                             <div class="col-md-1">
