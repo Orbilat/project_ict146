@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Employee;
 
 class EmployeesTableSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class EmployeesTableSeeder extends Seeder
         Employee::insert([
             [
                 'username'  => 'tester',
-                'password'  => bcrypt('tester'),
+                'password'  => Hash::make('tester'),
                 'employeeName' => 'Test Admin',
                 'position'  => 'Admin',
                 'idNumber'  => '14102706',
@@ -27,7 +27,7 @@ class EmployeesTableSeeder extends Seeder
             ],
             [
                 'username'  => 'secretary',
-                'password'  => bcrypt('secretary'),
+                'password'  => Hash::make('secretary'),
                 'employeeName' => 'The Secretary',
                 'position'  => 'Secretary',
                 'idNumber'  => '14102707',
@@ -38,7 +38,7 @@ class EmployeesTableSeeder extends Seeder
             ],
             [
                 'username'  => 'analyst',
-                'password'  => bcrypt('analyst'),
+                'password'  => Hash::make('analyst'),
                 'employeeName' => 'The Analyst',
                 'position'  => 'Analyst',
                 'idNumber'  => '14102708',

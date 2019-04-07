@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Station;
 
 class StationsTableSeeder extends Seeder
 {
