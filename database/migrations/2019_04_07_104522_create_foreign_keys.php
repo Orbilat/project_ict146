@@ -54,35 +54,35 @@ class CreateForeignKeys extends Migration
     public function down()
     {
         Schema::table('inventory_list', function (Blueprint $table) {
-            $table->dropForeign('itemId');
-            $table->dropForeign('inventoryId');
+            $table->dropForeign(['itemId']);
+            $table->dropForeign(['inventoryId']);
         });
 
         Schema::table('inventories', function (Blueprint $table) {
-            $table->dropForeign('itemUsed');
-            $table->dropForeign('usedBy');
+            $table->dropForeign(['itemUsed']);
+            $table->dropForeign(['usedBy']);
         });
 
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropForeign('client');
-            $table->dropForeign('approvedBy');
+            $table->dropForeign(['client']);
+            $table->dropForeign(['approvedBy']);
         });
 
         Schema::table('items', function (Blueprint $table) {
-            $table->dropForeign('supplier');
+            $table->dropForeign(['supplier']);
         });
 
         Schema::table('sample__tests', function (Blueprint $table) {
-            $table->dropForeign('sampleCode');
-            $table->dropForeign('parameters');
+            $table->dropForeign(['sampleCode']);
+            $table->dropForeign(['parameters']);
         });
         
         Schema::table('parameters', function (Blueprint $table) {
-            $table->dropForeign('station');
+            $table->dropForeign(['station']);
         });
         
         Schema::table('samples', function (Blueprint $table) {
-            $table->dropForeign('risNumber');
+            $table->dropForeign(['risNumber']);
         });
     }
 }
