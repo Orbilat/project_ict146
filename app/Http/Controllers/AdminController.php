@@ -90,6 +90,7 @@ class AdminController extends Controller
     public function parameters()
     {
         $parameters = Parameter::with('station')->orderBy('analysis')->paginate(10);
+
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
@@ -136,14 +137,14 @@ class AdminController extends Controller
         $account->licenseNumber = trim($request->licenseNumber);
         $account->userType = $request->userType;
         $account->managedBy = Auth::user()->employeeName;
-        $account->managedDate = new DateTime();
+        $account->managedDate = new DateTime;
 
         if($account->save()){
             Session::flash('flash_account_added', 'Employee account added successfully!');
             return Redirect::back();
         }
         else {
-            abort(403, 'Oh no! Employee was not added successfully.');
+            abort(500, 'Error! Employee was not added successfully.');
         }
     }
     // Delete employee account
@@ -193,14 +194,14 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            abort(500, 'Error! Account was not updated successfully.');
+            abort(403, 'Error! Account was not updated successfully.');
         }
     }
 
     // Add client
     protected function addClient(Request $request)
     {
-        // Validation0.
+        // Validation
         $validator = Validator::make($request->all(), [
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
@@ -211,10 +212,11 @@ class AdminController extends Controller
             'discount' => 'nullable|numeric|between:0,100',
             'deposit' => 'nullable|numeric|between:0,100000',
             'reclaimSample' => 'required|numeric',
+            'followUp' => 'required|date',
             'testResult' => 'nullable|string|max:5|min:1',
             'remarks' => 'required|string|max:20',
         ]);
-        // VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validator)
@@ -225,7 +227,7 @@ class AdminController extends Controller
         $client->nameOfPerson = trim($request->nameOfPerson);
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
-        $client->contactNumber = ("63".trim($request->contactNumber));
+        $client->contactNumber = ("63" . trim($request->contactNumber));
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         $client->discount = $request->discount;
@@ -237,6 +239,7 @@ class AdminController extends Controller
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
         $client->save();
+
         if (strlen((string)($client->clientId)) == 1) {
             $idOfClient = (string)("000".$client->clientId);
         } elseif (strlen((string)($client->clientId)) == 2) {
@@ -246,24 +249,32 @@ class AdminController extends Controller
         } else {
             $idOfClient = (string)$client->clientId;
         }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
-        $client->save();
-        // INSERT TRANSACTION
-        $transaction = new Transaction;
-        $transaction->client = $client->clientId;
-        $transaction->approvedBy = Auth::user()->employeeId;
-        $transaction->managedBy = Auth::user()->employeeName;
-        $transaction->managedDate = new DateTime();
-        //SAVE TO DB && CHECK
-        if($transaction->save()){
-            $parameter = Parameter::all();
-            $clientRis = $client->risNumber;
 
-            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
+
+        if($client->save()) {
+
+            $transaction = new Transaction;
+            $transaction->client = $client->clientId;
+            $transaction->approvedBy = Auth::user()->employeeId;
+            $transaction->managedBy = Auth::user()->employeeName;
+            $transaction->managedDate = new DateTime();
+
+            if($transaction->save()){
+                $parameter = Parameter::all();
+                $clientRis = $client->risNumber;
+    
+                Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+                return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
+            }
+            else {
+                App::abort(500, 'Error!');
+            }
         }
         else {
-            App::abort(500, 'Error!');
+
+
+
         }
     }
     // CLIENT DELETE

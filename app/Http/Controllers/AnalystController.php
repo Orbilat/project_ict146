@@ -69,7 +69,7 @@ class AnalystController extends Controller
 
     public function samplePerStation($id){
     	$sampleperstation = DB::table('samples AS s')
-    			->select('s.laboratoryCode', 's.risNumber', 'p.station', 'st.status','st.testId' )
+    			->select('s.laboratoryCode', 's.dueDate', 'st.status' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
@@ -78,7 +78,7 @@ class AnalystController extends Controller
                     $query->where('st.status','=', 'In Progress')
                     ->orwhere('st.status','=', 'Completed');
                 })
-                ->groupBy('s.laboratoryCode', 's.risNumber','p.station','st.status','st.testId' )
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status')
                 ->orderBy('st.testId','desc')
                 ->distinct()
                 ->get();

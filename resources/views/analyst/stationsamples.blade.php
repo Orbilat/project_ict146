@@ -14,7 +14,7 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="admin-table">Laboratory Code</th>
-                            <th class="admin-table">RIS Number</th>
+                            <th class="admin-table">Due Date</th>
                             <th class="admin-table">Status </th>
                         </tr>
                     </thead>
@@ -22,8 +22,8 @@
                         @if(!empty($stationssample))
                             @foreach($stationssample as $data)
                                 <tr>
-                                    <td><a href="/analyst/{{ $data->station }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
-                                    <td>{{ $data->risNumber }}</td>
+                                    <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
+                                    <td>{{ $data->dueDate }}</td>
                                     <td>{{ $data->status}} </td>
                                     
                                 </tr>
