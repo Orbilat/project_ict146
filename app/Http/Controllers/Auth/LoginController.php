@@ -36,13 +36,13 @@ class LoginController extends Controller
         //Checking type..
         switch ($type) {
             case 'administrator':
-                return redirect('/admin/home');
+                return '/admin/home';
                 break;
             case 'secretary':
-                return redirect('/secretary');
+                return '/secretary';
                 break;
             case 'analyst':
-                return redirect('/analyst/notification');
+                return '/analyst/notification';
                 break;
             default:
                 return '/home';
