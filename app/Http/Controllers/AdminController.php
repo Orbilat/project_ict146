@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use DateTime;
+use DateInterval;
 use Redirect;
 use Validator;
 use Session;
@@ -18,6 +19,7 @@ use App\Supplier;
 use App\Item;
 use App\Transaction;
 use App\Notifications\ReadyForPickUp;
+use App\Notifications\SampleDueDate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -194,7 +196,7 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            abort(403, 'Error! Account was not updated successfully.');
+            abort(500, 'Error! Account was not updated successfully.');
         }
     }
 
@@ -343,10 +345,10 @@ class AdminController extends Controller
         }
 
     }
-    // SAMPLE ADD
+    // Adding of sample
     protected function addSample(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
@@ -358,14 +360,15 @@ class AdminController extends Controller
             'sampleSource' => 'required|string|max:20',
             'dueDate' => 'required|string|max:50',
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validator)
                         ->withInput();
         }
+        // Find id of client
         $client = Client::where('risNumber', $request->clientId)->value('clientId');
-        //ELOQUENT INSERT
+        // Insert sample
         $sample = new Sample;
         $sample->risNumber = $client;
         $sample->clientsCode = trim($request->clientsCode);
@@ -400,12 +403,18 @@ class AdminController extends Controller
         }
         //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
         if($sample->save()){
+
+            // Send notifications
+            $oneMinuteAfter = now()->addMinutes(1);
+            $threeDaysBefore = $sample->dueDate->sub(new DateInterval('P3D'));
+            $sample->notify(new SampleDueDate($sample))->delay($oneMinuteAfter);
+
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
             return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error!');
         }
         
     }

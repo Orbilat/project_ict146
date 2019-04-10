@@ -28,7 +28,7 @@ class HomeController extends Controller
         //Checking type..
         switch ($type) {
             case 'administrator':
-                return redirect('/admin');
+                return redirect('/admin/home');
                 break;
             case 'secretary':
                 return redirect('/secretary');
