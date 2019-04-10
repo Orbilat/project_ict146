@@ -856,7 +856,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => '0.02 N EDTA Solution',
                 'method' => 'none',
-                'price' => '715.00/L',
+                'price' => '715.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -864,7 +864,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Calcium Carbonate Solution',
                 'method' => 'none',
-                'price' => '715.00/L',
+                'price' => '715.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -872,7 +872,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Standard Iodine Solution 0.10 N',
                 'method' => 'none',
-                'price' => '1100.00/L',
+                'price' => '1100.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -880,7 +880,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Sodium Carbonate Standard 0.05 N',
                 'method' => 'none',
-                'price' => '605.00/L',
+                'price' => '605.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -888,7 +888,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Total Alk indicator',
                 'method' => 'none',
-                'price' => '1100.00/500mL',
+                'price' => '1100.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -896,7 +896,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Phenolphthalein indicator',
                 'method' => 'none',
-                'price' => '770.00/500mL',
+                'price' => '770.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -904,7 +904,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'TH buffer solution',
                 'method' => 'none',
-                'price' => '605.00/500mL',
+                'price' => '605.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -912,7 +912,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'TH indicator',
                 'method' => 'none',
-                'price' => '935.00/250mL',
+                'price' => '935.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -920,7 +920,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'NaOH Buffer Solution',
                 'method' => 'none',
-                'price' => '605.00/500mL',
+                'price' => '605.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -928,7 +928,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'Methyl Orange indicator',
                 'method' => 'none',
-                'price' => '605.00/500mL',
+                'price' => '605.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,
@@ -936,7 +936,7 @@ class ParametersTableSeeder extends Seeder
             [
                 'analysis' => 'CaH indicator',
                 'method' => 'none',
-                'price' => '605.00/100g',
+                'price' => '605.00',
                 'station' => '2',
                 'managedBy' => 'Test Admin',
                 'managedDate' => new DateTime,

@@ -18,7 +18,7 @@ class SampleDueDate extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Sample $sample)
+    public function __construct($sample)
     {
         $this->sample = $sample;
     }
@@ -54,12 +54,12 @@ class SampleDueDate extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
-            'sampleId' => $this->sample->sampleId,
-            'dueDate' => $this->sample->dueDate,
-            ''
+            'sampleId' => $this->sample['laboratoryCode'],
+            'dueDate' => $this->sample['dueDate'],
+            'message' => 'This is a test notification',
         ];
     }
 }

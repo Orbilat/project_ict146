@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
 class Sample extends Model
@@ -14,6 +15,7 @@ class Sample extends Model
         'laboratoryCode', 'clientsCode', 'sampleType', 'sampleCollection', 'samplePreservation', 'purposeOfAnalysis', 'sampleSource', 
         'dueDate', 'managedBy', 'managedDate',
     ];
+
     protected $hidden = [
         'risNumber',
     ];

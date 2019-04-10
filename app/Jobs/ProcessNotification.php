@@ -33,8 +33,8 @@ class ProcessNotification implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Sample $sample)
     {
-        //
+        
     }
 }

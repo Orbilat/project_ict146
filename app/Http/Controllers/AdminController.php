@@ -20,6 +20,7 @@ use App\Item;
 use App\Transaction;
 use App\Notifications\ReadyForPickUp;
 use App\Notifications\SampleDueDate;
+use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -404,10 +405,7 @@ class AdminController extends Controller
         //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
         if($sample->save()){
 
-            // Send notifications
-            $oneMinuteAfter = now()->addMinutes(1);
-            $threeDaysBefore = $sample->dueDate->sub(new DateInterval('P3D'));
-            $sample->notify(new SampleDueDate($sample))->delay($oneMinuteAfter);
+            $sample->notify(new SampleDueDate($sample));
 
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
@@ -444,7 +442,7 @@ class AdminController extends Controller
             $finalId = $removeDash[0].$removeDash[1];
         }
         $client = Client::where('risNumber', $finalId)->value('clientId');
-
+        dd($client);
         //ELOQUENT INSERT
         $sample = new Sample;
         $sample->risNumber = $client;
@@ -481,6 +479,9 @@ class AdminController extends Controller
         }
         //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
         if($sample->save()){
+
+            $sample->notify(new SampleDueDate($sample));
+
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
             return redirect()->action('AdminController@samples');;
         }
