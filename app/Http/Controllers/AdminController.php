@@ -437,12 +437,8 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        if(strlen($request->clientId) == 9){
-            $removeDash = explode('-', $request->clientId);
-            $finalId = $removeDash[0].$removeDash[1];
-        }
-        $client = Client::where('risNumber', $finalId)->value('clientId');
-        dd($client);
+        $client = Client::where('risNumber', $request->clientId)->value('clientId');
+
         //ELOQUENT INSERT
         $sample = new Sample;
         $sample->risNumber = $client;
@@ -466,7 +462,7 @@ class AdminController extends Controller
         } else {
             $idOfSample = (string)$sample->sampleId;
         }
-        $sample->laboratoryCode = $finalId . '-' . $idOfSample;
+        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
         //INSERT SAMPLE TESTS IN LOOP
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
