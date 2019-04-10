@@ -23,8 +23,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }}</a>
+                  </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notifications') }}</a>
+                      <a class="nav-link" href="{{ route('analystsamples') }}">{{ __('Samples') }}</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('analystinventory') }}">{{ __('Inventory') }}</a>

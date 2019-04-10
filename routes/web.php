@@ -117,8 +117,9 @@ Route::middleware(['admin','auth'])->group(function (){
 //Route::middleware(['analyst','auth'])->group(function (){
     // ANALYST ROUTES
     Route::middleware(['auth'])->group(function (){
-    Route::redirect('/analyst', '/analyst/notification');
+    Route::redirect('/analyst', '/analyst/samples');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
+    Route::get('/analyst/samples', 'AnalystController@samples')->name('analystsamples');
 
     Route::get('/analyst/inventory', 'AnalystController@inventory')->name('analystinventory');
     Route::post('/analyst/inventory/update', 'AnalystController@inventoryupdate')->name('inventoryupdate');

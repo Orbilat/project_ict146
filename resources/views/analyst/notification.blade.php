@@ -11,25 +11,13 @@
                 <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
                     <thead class="thead-light">
                         <tr>
-                            <th class="admin-table">Due Date</th>
-                            <th class="admin-table">Date Received</th>
-                            <th class="admin-table">Laboratory Code</th>
-                            <th class="admin-table">RIS Number</th>
-                            <th class="admin-table">Collection Time</th>
-                            <th class="admin-table">Purpose of Analysis</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($sampledatas as $data)
-                            <tr>
-                                <td>{{ $data->dueDate }}</td>
-                                <td>{{ $data->created_at}}</td>
-                                <td>{{ $data->laboratoryCode }}</td>
-                                <td>{{ $data->risNumber }}</td>
-                                <td>{{ $data->sampleCollection }}</td>
-                                <td>{{ $data->purposeOfAnalysis }}</td>
+                      
                             </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
@@ -37,9 +25,5 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#sampledata').DataTable(); // to use the datatable jquery (datables.min.js)
-    });
-</script>
+
 @endsection

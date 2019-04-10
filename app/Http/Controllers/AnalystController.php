@@ -16,15 +16,26 @@ use DB;
 
 class AnalystController extends Controller
 {  
-    public function notification(){
+    public function samples(){
         //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
     	$sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
     					->orderBy('dueDate')
     					->get();
 
         //print_r($sampledata);die();
-    	return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
+    	return view('analyst.samples',[ 'sampledatas' => $sampledata ]);
     }
+    
+        public function notification(){
+            //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
+            //$sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                           // ->orderBy('dueDate')
+                           //->get();
+    
+            //print_r($sampledata);die();
+            return view('analyst.notification');
+        }
+    
 
     public function inventory(){
     	$itemdata = Item::all();
