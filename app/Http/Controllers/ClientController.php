@@ -12,15 +12,12 @@ class ClientController extends Controller
     public function RIS(Request $request)
     {
         
-        $risExplode = explode("-", $request->search);
-        if(count($risExplode) > 1){
-            $risNoDash = $risExplode[0].$risExplode[1];
-            $RisNumber = Client::with('samples')->where('risNumber', '=', $risNoDash)->first();
-            if(isset($RisNumber)){
-            return view('clients.client_RIS')->with('ris', $RisNumber);
-            }
+        $risNumber = Client::where('risNumber', '=', $request->search)->first();
+        
+        if($risNumber != NULL) {
+            return view('clients.client_RIS', ['ris' => $risNumber]);
         }
-        else{
+        else {
             return view('clients.risError');
         }
     }
