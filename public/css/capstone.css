@@ -65,3 +65,15 @@ button.btn.btn-info.btn-lg.pull-right.analystbtn {
 .navbar-brand>img {
   display: inline;
 }
+
+ul.nav.nav-tabs {
+    margin: 10px;
+}
+
+.tab-content {
+    padding: 10px;
+}
+
+.exclamationicon{
+  height: 20px;
+}
