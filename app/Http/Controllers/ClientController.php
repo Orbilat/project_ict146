@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Parameter;
@@ -15,7 +16,9 @@ class ClientController extends Controller
         $risNumber = Client::where('risNumber', '=', $request->search)->first();
         
         if($risNumber != NULL) {
-            return view('clients.client_RIS', ['ris' => $risNumber]);
+            $samples = Sample::with('client')->where('risNumber', $risNumber->clientId)->get();
+           
+            return view('clients.client_RIS', ['ris' => $risNumber, 'samples' => $samples]);
         }
         else {
             return view('clients.risError');
