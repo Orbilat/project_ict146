@@ -107,6 +107,9 @@
         $('#sampledatainprogress').DataTable({
             "ordering": false
         });
+        $('#sampledatacomplete').DataTable({
+            "ordering": false
+        });
         $('#scanid2').focus();
         $('#scanid').focus();
 
