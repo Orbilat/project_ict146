@@ -292,7 +292,7 @@
                                 <td class="admin-table">{{ date("F jS, Y g:m A", strtotime($client->managedDate)) }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editClient{{ $count }}">Edit</button>
+                                    <a data-toggle="modal" data-target="#editClient{{ $count }}"><i class="fa fa-edit"></i></a>
                                     <div id="editClient{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -348,9 +348,16 @@
                             
                                                     <div class="form-group row">
                                                         <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
-                            
-                                                        <div class="col-md-3">
-                                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ $client->contactNumber }}" required autofocus>
+                                                        @php
+                                                            $contact = substr($client->contactNumber, 2); 
+                                                        @endphp
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">+63</div>
+                                                                </div>
+                                                                <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber"  value="{{ $contact }}" required autofocus>
+                                                            </div>
                             
                                                             @if ($errors->has('contactNumber'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -358,9 +365,12 @@
                                                                 </span>
                                                             @endif
                                                         </div>
-                    
-                                                        <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
-                                                        <div class="col-md-3">
+                                                    </div>
+                                                    
+                                                    <div class="form-group row">
+                                                        <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax No.') }}</label>
+
+                                                        <div class="col-md-6">
                                                             <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ $client->faxNumber }}">
                             
                                                             @if ($errors->has('faxNumber'))
@@ -370,7 +380,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                            
+
                                                     <div class="form-group row">
                                                         <label for="emailAddress" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                             
@@ -467,22 +477,8 @@
                                                             @endif
                                                         </div>
                                                     </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="newDateSubmit" class="col-md-4 col-form-label text-md-right">{{ __('Date Submitted') }}</label>
-                            
-                                                        <div class="col-md-6">
-                                                            <input id="newDateSubmit" type="datetime-local" class="form-control{{ $errors->has('newDateSubmit') ? ' is-invalid' : '' }}" name="newDateSubmit" value="{{ date("Y-m-d\TH:i:sP", strtotime($client->managedDate)) }}" autofocus>
-                            
-                                                            @if ($errors->has('newDateSubmit'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('newDateSubmit') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-
                                                 </div>
+
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -493,8 +489,8 @@
                                     </div>
                                     &nbsp;&nbsp; 
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccount{{ $count }}">Delete</button>
-                                    <div id="deleteAccount{{ $count }}" class="modal fade" role="dialog">
+                                    <a data-toggle="modal" data-target="#deleteClient{{ $count }}"><i class="fa fa-trash"></i></a>
+                                    <div id="deleteClient{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header deleteModal">
@@ -503,7 +499,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
-                                                        Deleting RIS: {{ $client->risNumber }} will remove other related data (samples, payments).
+                                                        Deleting RIS: {{ $client->risNumber }} will remove other related data (samples).
                                                         <br><br>
                                                         Do you wish to continue?
                                                     </p>

@@ -4,8 +4,6 @@
 <br><br>
 <br><br>
 
-<?php $count = 0; ?>
-
 <div class="container" style="margin-bottom:50px;">
     <div class="card">
         <div class="card-header">
@@ -30,13 +28,12 @@
                   <td class="border">{{ $parameter->method }}</td>
                   <td class="border">{{ $parameter->price }}</td>
                 </tr>  
-                <?php $count++; ?>
                 @endforeach  
             </tbody>
         </table>  
         </div>         
     </div>
-            <div class="d-flex justify-content-center mt-3">
+         <div class="d-flex justify-content-center mt-3">
                     {{ $parameters->links() }}
             </div>
     </div>

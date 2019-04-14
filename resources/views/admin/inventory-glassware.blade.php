@@ -125,7 +125,7 @@
                             <td class="admin-table">{{ $item->companyName }}</td>
                             <td>
                                 {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editItem{{ $count }}">Edit</button>
+                                <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>
                                 <div id="editItem{{ $count }}" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

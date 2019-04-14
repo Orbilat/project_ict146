@@ -97,7 +97,7 @@
                                 <td class="admin-table">{{ $supplier->managedDate }}</td>
                                 <td>
                                     {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editSupplier{{ $count }}">Edit</button>
+                                    <a data-toggle="modal" data-target="#editSupplier{{ $count }}"><i class="fa fa-edit"></i></a>
                                     <div id="editSupplier{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -159,9 +159,9 @@
                                             </div> 
                                         </div>
                                     </div>
-                                    &nbsp;&nbsp; 
+            
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSupplier{{ $count }}">Delete</button>
+                                    <a data-toggle="modal" data-target="#deleteSupplier{{ $count }}"><i class="fa fa-trash"></i></a>
                                     <div id="deleteSupplier{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
