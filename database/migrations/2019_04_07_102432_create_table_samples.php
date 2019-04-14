@@ -16,7 +16,7 @@ class CreateTableSamples extends Migration
         Schema::create('samples', function (Blueprint $table) {
             $table->increments('sampleId');
             $table->unsignedInteger('risNumber');
-            $table->string('laboratoryCode')->nullable();
+            $table->string('laboratoryCode')->nullable()->default('0');
             $table->string('clientsCode');
             $table->string('sampleType');
             $table->dateTime('sampleCollection');

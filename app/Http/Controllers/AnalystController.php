@@ -16,16 +16,23 @@ use DB;
 
 class AnalystController extends Controller
 {  
-    public function notification(){
+    public function samples(){
         //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
-    	$sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
-    					->orderBy('dueDate')
-    					->get();
+    	$sampledata = Sample::all();
 
         //print_r($sampledata);die();
-    	return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
+    	return view('analyst.samples',[ 'sampledatas' => $sampledata ]);
     }
-
+    
+    public function notification(Request $request){
+        //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
+        $sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                        ->orderBy('dueDate')
+                        ->get();
+        //print_r($sampledata);die();
+        return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
+    }
+    
     public function inventory(){
     	$itemdata = Item::all();
 
@@ -68,24 +75,31 @@ class AnalystController extends Controller
     }
 
     public function samplePerStation($id){
-    	$sampleperstation = DB::table('samples AS s')
-    			->select('s.laboratoryCode', 's.risNumber', 'p.station', 'st.status','st.testId' )
+    	$completeperstation = DB::table('samples AS s')
+    			->select('s.laboratoryCode', 's.dueDate', 'st.status' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
     			->where('p.station','=', $id)
-                ->where(function($query) {
-                    $query->where('st.status','=', 'In Progress')
-                    ->orwhere('st.status','=', 'Completed');
-                })
-                ->groupBy('s.laboratoryCode', 's.risNumber','p.station','st.status','st.testId' )
-                ->orderBy('st.testId','desc')
+                ->where('st.status','=', 'Completed')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status')
+                ->distinct()
+                ->get();
+
+        $progressperstation = DB::table('samples AS s')
+                ->select('s.laboratoryCode', 's.dueDate', 'st.status' )
+                ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+                ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+                ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
+                ->where('p.station','=', $id)
+                ->where('st.status','=', 'In Progress')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status')
                 ->distinct()
                 ->get();
 
         $station = Station::where('stationId','=',$id)->get();
              
-    	return view('analyst.stationsamples', [ 'stationssample' => $sampleperstation ,'station' => $station[0]]);
+    	return view('analyst.stationsamples', ['inprogresssample' => $progressperstation ,'station' => $station[0], 'completedsample' => $completeperstation]);
     }
 
     public function sampleDetails($stationid,$id){

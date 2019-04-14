@@ -4,8 +4,17 @@
 <br><br>
 <br><br>
 
-<div class="container" style="margin-bottom:25%;">
-    <div class="card-body"> 
+<?php $count = 0; ?>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <form class="float-right" action="GET">
+                {{-- <input class="float-right" type="submit" value="Search"> --}}
+                <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search analysis...">
+            </form>
+        </div>
+    <div class="card-body">
         <table class="table">
             <thead style="background-color:#A1CDA8;">
                 <tr class="text-center">
@@ -20,10 +29,16 @@
                   <td class="border">{{ $parameter->analysis }}</td>
                   <td class="border">{{ $parameter->method }}</td>
                   <td class="border">{{ $parameter->price }}</td>
-              @endforeach
-                </tr>    
+                </tr>  
+                <?php $count++; ?>
+                @endforeach  
             </tbody>
-        </table>           
+        </table>  
+        </div>         
+    </div>
+            <div class="offset-md-5 mt-3">
+                    {{ $parameters->links() }}
+            </div>
     </div>
 </div>
 

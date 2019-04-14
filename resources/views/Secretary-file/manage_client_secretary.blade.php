@@ -1,8 +1,5 @@
 @extends('layouts.secretary_app')
 
-<body>
-
-
 @section('content')
 <div class="container">
 <table class="table">
@@ -36,10 +33,13 @@
         <div class="col-md-4">
           <form method="POST" action="{{ route('send', [$p->clientId]) }}">
           @csrf
-          <button type="submit" class="btn smol btn-sm @if($p->sendText == 'yes') btn-success @else btn-danger @endif">@if($p->paid == 'yes') SENT @else SEND @endif</button>
+          <button type="submit" class="btn smol btn-sm @if($p->sendText == 'Yes') btn-success @else btn-danger @endif">@if($p->sendText == 'Yes') SENT @else SEND @endif</button>
           </form>
         </div>
         </td>
+      </div>
+      <div class="offset-md-5 mt-3">
+          {{ $status->links() }}
       </div>
     </tr>
 </thead>

@@ -89,7 +89,7 @@
                                 <td class="admin-table">{{ $station->managedDate }}</td>
                                 <td>
                                     {{-- DELETE BUTTON --}}
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#destroyStation{{ $count }}">Delete</button>
+                                    <a data-toggle="modal" data-target="#destroyStation{{ $count }}"><i class="fa fa-trash"></i></a>
                                     <div id="destroyStation{{ $count }}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use DateTime;
+use DateInterval;
 use Redirect;
 use Validator;
 use Session;
@@ -18,9 +19,12 @@ use App\Supplier;
 use App\Item;
 use App\Transaction;
 use App\Notifications\ReadyForPickUp;
+use App\Notifications\SampleDueDate;
+use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -44,8 +48,9 @@ class AdminController extends Controller
     {
         $samples = Sample::with('client')->paginate(10);
         $parameters = Parameter::all();
+        $clients = Client::orderBy('risNumber')->get();
 
-        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
+        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters, 'clients' => $clients]);
     }
 
     // Clients page
@@ -73,9 +78,10 @@ class AdminController extends Controller
     // Glassware page
     public function glassware()
     {
-        $items = Item::with('suppliers')->paginate(10);
+        $items = Item::with('suppliers')->orderBy('itemName')->paginate(10);
+        $suppliers = Supplier::all();
 
-        return view('admin.inventory-glassware', ['items' => $items]);
+        return view('admin.inventory-glassware', ['items' => $items, 'suppliers' => $suppliers]);
     }
 
     // Stations page
@@ -90,6 +96,7 @@ class AdminController extends Controller
     public function parameters()
     {
         $parameters = Parameter::with('station')->orderBy('analysis')->paginate(10);
+
         return view('admin.parameters', ['parameters' => $parameters]);
     }
 
@@ -136,14 +143,14 @@ class AdminController extends Controller
         $account->licenseNumber = trim($request->licenseNumber);
         $account->userType = $request->userType;
         $account->managedBy = Auth::user()->employeeName;
-        $account->managedDate = new DateTime();
+        $account->managedDate = new DateTime;
 
         if($account->save()){
             Session::flash('flash_account_added', 'Employee account added successfully!');
             return Redirect::back();
         }
         else {
-            abort(403, 'Oh no! Employee was not added successfully.');
+            abort(500, 'Error! Employee was not added successfully.');
         }
     }
     // Delete employee account
@@ -200,7 +207,7 @@ class AdminController extends Controller
     // Add client
     protected function addClient(Request $request)
     {
-        // Validation0.
+        // Validation
         $validator = Validator::make($request->all(), [
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
@@ -211,21 +218,22 @@ class AdminController extends Controller
             'discount' => 'nullable|numeric|between:0,100',
             'deposit' => 'nullable|numeric|between:0,100000',
             'reclaimSample' => 'required|numeric',
+            'followUp' => 'required|date',
             'testResult' => 'nullable|string|max:5|min:1',
             'remarks' => 'required|string|max:20',
         ]);
-        // VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validator)
                         ->withInput();
         }
-        // INSERT CLIENT
+        // Add a client
         $client = new Client;
         $client->nameOfPerson = trim($request->nameOfPerson);
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
-        $client->contactNumber = ("63".trim($request->contactNumber));
+        $client->contactNumber = ("63" . trim($request->contactNumber));
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         $client->discount = $request->discount;
@@ -237,6 +245,7 @@ class AdminController extends Controller
         $client->managedBy = Auth::user()->employeeName;
         $client->managedDate = new DateTime();
         $client->save();
+        // Add ris number
         if (strlen((string)($client->clientId)) == 1) {
             $idOfClient = (string)("000".$client->clientId);
         } elseif (strlen((string)($client->clientId)) == 2) {
@@ -247,26 +256,31 @@ class AdminController extends Controller
             $idOfClient = (string)$client->clientId;
         }
         $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
-        $client->save();
-        // INSERT TRANSACTION
-        $transaction = new Transaction;
-        $transaction->client = $client->clientId;
-        $transaction->approvedBy = Auth::user()->employeeId;
-        $transaction->managedBy = Auth::user()->employeeName;
-        $transaction->managedDate = new DateTime();
-        //SAVE TO DB && CHECK
-        if($transaction->save()){
-            $parameter = Parameter::all();
-            $clientRis = $client->risNumber;
 
-            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
+        if($client->save()) {
+            // Insert transaction
+            $transaction = new Transaction;
+            $transaction->client = $client->clientId;
+            $transaction->approvedBy = Auth::user()->employeeId;
+            $transaction->managedBy = Auth::user()->employeeName;
+            $transaction->managedDate = new DateTime();
+
+            if($transaction->save()){
+                $parameter = Parameter::all();
+                $clientRis = $client->risNumber;
+    
+                Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+                return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
+            }
+            else {
+                abort(500, 'Error! Transaction was unsuccessful.');
+            }
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Client was not added successfully.');
         }
     }
-    // CLIENT DELETE
+    // Delete a client
     protected function destroyClient($clientId)
     {
         $client = Client::findOrFail($clientId);
@@ -275,13 +289,13 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Deletion was unsuccessful.');
         }
     }
-    // CLIENT UPDATE
+    // Update client
     protected function updateClient(Request $request, $clientId)
     {
-        // VALIDATION
+        // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
@@ -292,22 +306,23 @@ class AdminController extends Controller
             'discount' => 'nullable|numeric|between:0,100',
             'deposit' => 'nullable|numeric|between:0,100000',
             'reclaimSample' => 'required|numeric',
+            'followUp' => 'required|date',
             'testResult' => 'nullable|string|max:5|min:1',
             'remarks' => 'required|string|max:20',
-            'newDateSubmit' => 'nullable|max:50'
         ]);
-        // VALIDATION CHECKS
+        // Validation fails...
         if ($validatorUpdate->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        // FIND CLIENT AND UPDATE
+        // Find client
         $client = Client::findOrFail($clientId);
+        // Update values
         $client->nameOfPerson = trim($request->nameOfPerson);
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
-        $client->contactNumber = trim($request->contactNumber);
+        $client->contactNumber = ("63" . trim($request->contactNumber));
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         $client->discount = $request->discount;
@@ -317,25 +332,21 @@ class AdminController extends Controller
         $client->remarks = trim($request->remarks);
         $client->followUp = $request->followUp;
         $client->managedBy = Auth::user()->employeeName;
-        if ($request->newDateSubmit == NULL) {
-            $client->managedDate = Client::where('clientId', $clientId)->value('managedDate');
-        } else {
-            $client->managedDate = $request->newDateSubmit;
-        }
+        $client->managedDate = new DateTime();
     
         if($client->save()){
             Session::flash('flash_client_updated', 'Client information updated successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error!');
         }
 
     }
-    // SAMPLE ADD
+    // Adding of sample
     protected function addSample(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
@@ -347,14 +358,15 @@ class AdminController extends Controller
             'sampleSource' => 'required|string|max:20',
             'dueDate' => 'required|string|max:50',
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validator)
                         ->withInput();
         }
+        // Find id of client
         $client = Client::where('risNumber', $request->clientId)->value('clientId');
-        //ELOQUENT INSERT
+        // Insert sample
         $sample = new Sample;
         $sample->risNumber = $client;
         $sample->clientsCode = trim($request->clientsCode);
@@ -367,7 +379,7 @@ class AdminController extends Controller
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         $sample->save();
-        //INSERT LAB CODE TO SAMPLES
+        // Add lab code
         if (strlen((string)($sample->sampleId)) == 1) {
             $idOfSample = (string)("000".$sample->sampleId);
         } elseif (strlen((string)($sample->sampleId)) == 2) {
@@ -378,7 +390,7 @@ class AdminController extends Controller
             $idOfSample = (string)$sample->sampleId;
         }
         $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
-        //INSERT SAMPLE TESTS IN LOOP
+        // Insert sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
@@ -387,21 +399,25 @@ class AdminController extends Controller
             $sampletests->managedDate = new DateTime();
             $sampletests->save();
         }
-        //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
+        // Return to add sample page
         if($sample->save()){
+
+            $sample->notify(new SampleDueDate($sample))->addMinutes(15);
+
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
+
             return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Sample not added.');
         }
         
     }
-    // SAMPLE INSERT
+    // Add samples manually to client
     protected function insertSample(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
@@ -413,19 +429,17 @@ class AdminController extends Controller
             'sampleSource' => 'required|string|max:20',
             'dueDate' => 'required|string|max:50',
         ]);
-        //VALIDATION CHECKS
+        // Check validation
         if ($validator->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validator)
                         ->withInput();
         }
-        if(strlen($request->clientId) == 9){
-            $removeDash = explode('-', $request->clientId);
-            $finalId = $removeDash[0].$removeDash[1];
-        }
-        $client = Client::where('risNumber', $finalId)->value('clientId');
 
-        //ELOQUENT INSERT
+        // Find client
+        $client = Client::where('risNumber', $request->clientId)->value('clientId');
+
+        // Insert new sample
         $sample = new Sample;
         $sample->risNumber = $client;
         $sample->clientsCode = trim($request->clientsCode);
@@ -438,7 +452,7 @@ class AdminController extends Controller
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         $sample->save();
-        //INSERT LAB CODE TO SAMPLES
+        // Add lab code 
         if (strlen((string)($sample->sampleId)) == 1) {
             $idOfSample = (string)("000".$sample->sampleId);
         } elseif (strlen((string)($sample->sampleId)) == 2) {
@@ -448,28 +462,34 @@ class AdminController extends Controller
         } else {
             $idOfSample = (string)$sample->sampleId;
         }
-        $sample->laboratoryCode = $finalId . '-' . $idOfSample;
-        //INSERT SAMPLE TESTS IN LOOP
+        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
+
+        // Add sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
             $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
-            $sampletests->status = "In Progress";
+            $sampletests->status = "Not Started";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
             $sampletests->save();
         }
-        //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
+        // Return to samples page
         if($sample->save()){
+
+            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
+            
+            // $emailJob = (new SendAnnouncementEmail($user->email))->delay(Carbon::now()->addSeconds(3));
+
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
-            return redirect()->action('AdminController@samples');;
+            return redirect()->action('AdminController@samples');
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Sample not added.');
         }
         
     }
-    // SAMPLE DELETE
+    // Delete a sample
     protected function destroySample($sampleId)
     {
         $sample = Sample::findOrFail($sampleId);
@@ -478,13 +498,13 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Sample not deleted.');
         }
     }
-    // ACCOUNT UPDATE
+    // Update sample
     protected function updateSample(Request $request, $sampleId)
     {
-        // VALIDATION
+        // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
@@ -496,19 +516,16 @@ class AdminController extends Controller
             'sampleSource' => 'required|string|max:20',
             'dueDate' => 'required|string|max:50',
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validatorUpdate->fails()) {
             return redirect('admin/clients')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        if(strlen($request->clientId) == 9){
-            $removeDash = explode('-', $request->clientId);
-            $finalId = $removeDash[0].$removeDash[1];
-        }
-        $client = Client::where('risNumber', $finalId)->value('clientId');
+        // Get id of client
+        $client = Client::where('risNumber', $request->clientId)->value('clientId');
 
-        //ELOQUENT INSERT
+        // Find sample
         $sample = Sample::findOrFail($sampleId);
         $sample->risNumber = $client;
         $sample->clientsCode = trim($request->clientsCode);
@@ -521,7 +538,7 @@ class AdminController extends Controller
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         $sample->save();
-        //INSERT LAB CODE TO SAMPLES
+        // Add lab code
         if (strlen((string)($sample->sampleId)) == 1) {
             $idOfSample = (string)("000".$sample->sampleId);
         } elseif (strlen((string)($sample->sampleId)) == 2) {
@@ -532,43 +549,43 @@ class AdminController extends Controller
             $idOfSample = (string)$sample->sampleId;
         }
         $sample->laboratoryCode = $finalId . '-' . $idOfSample;
-        //INSERT SAMPLE TESTS IN LOOP
+        // Add sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
             $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
-            $sampletests->status = "In Progress";
+            $sampletests->status = "Not Started";
             $sampletests->managedBy = Auth::user()->employeeName;
             $sampletests->managedDate = new DateTime();
             $sampletests->save();
         }
-        if($account->save()){
-            Session::flash('flash_account_updated', 'Account updated successfully!');
+        
+        if($sample->save()){
+            Session::flash('flash_sample_updated', 'Sample updated successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Sample not updated.');
         }
-
     }
-    // PARAMETER INSERT
+    // Add parameter
     protected function addParameter(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'analysis' => 'required|string|max:255|unique:parameters',
             'method' => 'nullable|string|max:255',
             'price' => 'required|numeric',
             'station' => 'required|string|max:10',
         ]);
-        // VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/parameters')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        //ELOQUENT INSERT
+        // Insert parameter
         $parameter = new Parameter;
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
@@ -576,16 +593,16 @@ class AdminController extends Controller
         $parameter->station = Station::where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
-        //SAVE TO DB && CHECK
+        // Save
         if($parameter->save()){
             Session::flash('flash_parameter_added', 'Analysis added successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Parameter not added.');
         }
     }
-    // PARAMETER DELETE
+    // Delete parameter
     protected function destroyParameter($parameterId)
     {
         $parameter = Parameter::findOrFail($parameterId);
@@ -594,26 +611,26 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Parameter not deleted.');
         }
     }
-    // PARAMETER UPDATE
+    // Update parameter
     protected function updateParameter(Request $request, $parameterId)
     {
-        // VALIDATION
+        // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'analysis' => 'required|string|max:255',
             'method' => 'nullable|string|max:255',
             'price' => 'required|numeric',
             'station' => 'required|string|max:10',
         ]);
-        // VALIDATION CHECKS
+        // Validation fails
         if ($validatorUpdate->fails()) {
             return redirect('admin/parameters')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        // FIND CLIENT AND UPDATE
+        // Find parameter
         $parameter = Parameter::findOrFail($parameterId);
         $parameter->analysis = trim($request->analysis);
         $parameter->method = trim($request->method);
@@ -621,48 +638,48 @@ class AdminController extends Controller
         $parameter->station = Station::where('stationName', $request->station)->value('stationId');
         $parameter->managedBy = Auth::user()->employeeName;
         $parameter->managedDate = new DateTime();
-    
+        // Save
         if($parameter->save()){
             Session::flash('flash_parameter_updated', 'Analysis information updated successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Parameter not updated.');
         }
     }
-    // SUPPLIER INSERT
+    // Add supplier
     protected function addSupplier(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'companyName' => 'required|string|max:255|unique:suppliers',
             'emailAddress' => 'nullable|string|min:6',
             'contactNumber' => 'required|string|max:50|unique:suppliers',
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/suppliers')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        //ELOQUENT INSERT
+        // Insert supplier
         $supplier = new Supplier;
         $supplier->companyName = trim($request->companyName);
         $supplier->emailAddress = trim($request->emailAddress);
         $supplier->contactNumber =  trim($request->contactNumber);
         $supplier->managedBy = Auth::user()->employeeName;
         $supplier->managedDate = new DateTime();
-        //CHECK SAVE
+        // Save
         if($supplier->save()){
             Session::flash('flash_supplier_added', 'Supplier added successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Supplier not added.');
         }
     }
-    // SUPPLIER DELETE
+    // Delete supplier
     protected function destroySupplier($supplierId)
     {
         $supplier = Supplier::findOrFail($supplierId);
@@ -671,68 +688,69 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Supplier not deleted.');
         }
     }
-    // SUPPLIER UPDATE
+    // Update supplier
     protected function updateSupplier(Request $request, $supplierId)
     {
-        // VALIDATION
+        // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'companyName' => 'required|string|max:255',
             'emailAddress' => 'nullable|string|min:6',
             'contactNumber' => 'required|string|max:50',
         ]);
-        // VALIDATION CHECKS
+        // Validation fails
         if ($validatorUpdate->fails()) {
             return redirect('admin/suppliers')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
-        // FIND SUPPLIER AND UPDATE
+        // Find supplier
         $supplier = Supplier::findOrFail($supplierId);
         $supplier->companyName = trim($request->companyName);
         $supplier->emailAddress = trim($request->emailAddress);
         $supplier->contactNumber =  trim($request->contactNumber);
         $supplier->managedBy = Auth::user()->employeeName;
         $supplier->managedDate = new DateTime();
+        // Save
         if($supplier->save()){
             Session::flash('flash_supplier_updated', 'Supplier updated successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Supplier not updated.');
         }
     }
-    // STATION INSERT
+    // Add station
     protected function addStation(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'stationName' => 'required|string|max:255|unique:stations'
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
             return redirect('admin/stations')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        //ELOQUENT INSERT
+        // Insert station
         $station = new Station;
         $station->stationName = trim($request->stationName);
         $station->managedBy = Auth::user()->employeeName;
         $station->managedDate = new DateTime();
-        //CHECK SAVE
+        // Save
         if($station->save()){
             Session::flash('flash_station_added', 'Station added successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Station not added.');
         }
     }
-    // STATION DELETE
+    // Delete Station
     protected function destroyStation($stationId)
     {
         $station = Station::findOrFail($stationId);
@@ -741,50 +759,56 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Station not deleted.');
         }
     }
-    // EVENT ADD
+    // Add event
     protected function addEvent(Request $request)
     {
-        // VALIDATION
+        // Validation
         $validator = Validator::make($request->all(), [
             'eventName' => 'required|string|max:255',
             'startDate' => 'required|date',
             'endDate' => 'required|date'
         ]);
-        //VALIDATION CHECKS
+        // Validation fails
         if ($validator->fails()) {
-            return redirect('admin/home')
+            return redirect('admin/events')
                         ->withErrors($validator)
                         ->withInput();
         }
-        //ELOQUENT INSERT
+        // Insert event
         $event = new Event;
         $event->event_name = trim($request->eventName);
         $event->start_date = $request->startDate;
         $event->end_date = $request->endDate;
-        //CHECK SAVE
+        // Save
         if($event->save()){
             Session::flash('flash_event_added', 'Event added successfully!');
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error!');
         }
     }
-    // ADD ITEM (GLASSWARE)
+    // Add glassware
     protected function addItem(Request $request)
     {
-        // VALIDATION
-        $validator = $request->validate([
+        // Validation
+        $validator = Validator::make($request->all(), [
             'itemName' => 'required|string|min:3|max:255',
             'containerType' => 'required|string|min:6|max:255',
             'volumeCapacity' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'supplier' => 'required|string'
+            'supplier' => 'required|string',
         ]);
-
+        // Validation fails
+        if ($validator->fails()) {
+            return redirect('admin/inventory/glassware')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        // Add item
         $item = new Item;
         $item->itemName = trim($request->itemName);
         $item->containerType = trim($request->containerType);
@@ -798,17 +822,53 @@ class AdminController extends Controller
             return Redirect::back();
         }
         else {
-            App::abort(500, 'Error!');
+            abort(500, 'Error! Item not added.');
         }
     }
     // DESTROY ITEM
     protected function destroyItem($itemId)
     {
-
+        $item = Item::findOrFail($itemId);
+        if($item->delete()){
+            Session::flash('flash_item_deleted', 'Item deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            abort(500, 'Error! Item not deleted.');
+        }
     }
     // UPDATE ITEM
     protected function updateItem(Request $request, $itemId)
     {
-
+        // Validation
+        $validatorUpdate = Validator::make($request->all(), [
+            'itemName' => 'required|string|min:3|max:255',
+            'containerType' => 'required|string|min:6|max:255',
+            'volumeCapacity' => 'required|numeric',
+            'quantity' => 'required|numeric',
+            'supplier' => 'required|string',
+        ]);
+        // Validation fails
+        if ($validatorUpdate->fails()) {
+            return redirect('admin/inventory/glassware')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        // Find item
+        $item = Item::findOrFail($itemId);
+        $item->itemName = trim($request->itemName);
+        $item->containerType = trim($request->containerType);
+        $item->volumeCapacity = $request->volumeCapacity;
+        $item->quantity = $request->quantity;
+        $item->supplier = Supplier::where('companyName', $request->supplier)->value('supplierId');
+        $item->managedBy = Auth::user()->employeeName;
+        $item->managedDate = new DateTime;
+        if($item->save()) {
+            Session::flash('flash_item_updated', 'Item updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            abort(500, 'Error! Item was not updated.');
+        }
     }
 }

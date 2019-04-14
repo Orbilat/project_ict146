@@ -14,7 +14,8 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
-                {{ 'Laboratory Information Management System' }}
+                <img src="/img/logo.png" style="height: 22px;">
+                    {{ 'USC WATER LABORATORY' }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -23,7 +24,14 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notifications') }}</a>
+                    @if( !$sampledata->isEmpty())
+                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }}<img class="exclamationicon" src="/img/redexclamation.png"></a>
+                    @else
+                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }}</a>
+                    @endif
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ route('analystsamples') }}">{{ __('Samples') }}</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('analystinventory') }}">{{ __('Inventory') }}</a>

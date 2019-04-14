@@ -60,7 +60,7 @@ Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
-Route::post('/secretary/creyate-sample','SecretaryController@createSample')->name('createSample-secretary');
+Route::post('/secretary/create-sample','SecretaryController@createSample')->name('createSample-secretary');
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
@@ -119,9 +119,10 @@ Route::middleware(['admin','auth'])->group(function (){
 
 //Route::middleware(['analyst','auth'])->group(function (){
     // ANALYST ROUTES
-    Route::middleware(['auth'])->group(function (){
-    Route::redirect('/analyst', '/analyst/notification');
+    Route::middleware(['analyst','auth'])->group(function (){
+    Route::redirect('/analyst', '/analyst/samples');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
+    Route::get('/analyst/samples', 'AnalystController@samples')->name('analystsamples');
 
     Route::get('/analyst/inventory', 'AnalystController@inventory')->name('analystinventory');
     Route::post('/analyst/inventory/update', 'AnalystController@inventoryupdate')->name('inventoryupdate');

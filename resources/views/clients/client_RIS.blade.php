@@ -36,7 +36,7 @@
             <h4 class="text-center text-dark TS" style="margin-top:15px;">Status</h4>
         </div>
     </div>
-        @foreach($ris->samples as $sample)
+        @foreach($samples as $sample)
           <div class="col-md-3 w3-border text-center TS">{{ $sample->managedDate }}</div>
           <div class="col-md-3 w3-border text-center TS">{{ $sample->laboratoryCode }}</div>
           <div class="col-md-3 w3-border text-center TS">{{ $sample->analysis }}</div>

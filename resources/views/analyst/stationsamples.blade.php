@@ -10,27 +10,58 @@
                     <button type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
                 </div> 
                 <br>
-                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
-                    <thead class="thead-light">
-                        <tr>
-                            <th class="admin-table">Laboratory Code</th>
-                            <th class="admin-table">RIS Number</th>
-                            <th class="admin-table">Status </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(!empty($stationssample))
-                            @foreach($stationssample as $data)
+                <ul class="nav nav-tabs">
+                   <li><a href="#inprogress" data-toggle="tab">In Progress</a></li>
+                   <li><a href="#completed" data-toggle="tab">Completed</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="inprogress">
+                        <table id="sampledatainprogress" class="display sampledata table table-hover" style="width:100%">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td><a href="/analyst/{{ $data->station }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
-                                    <td>{{ $data->risNumber }}</td>
-                                    <td>{{ $data->status}} </td>
-                                    
+                                    <th class="admin-table">Laboratory Code</th>
+                                    <th class="admin-table">Due Date</th>
+                                    <th class="admin-table">Status </th>
                                 </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                @if(!empty($inprogresssample))
+                                    @foreach($inprogresssample as $data)
+                                        <tr>
+                                            <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
+                                            <td>{{ $data->dueDate }}</td>
+                                            <td>{{ $data->status}} </td>
+                                            
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="completed">
+                        <table id="sampledatacomplete" class="display sampledata table table-hover" style="width:100%">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="admin-table">Laboratory Code</th>
+                                    <th class="admin-table">Due Date</th>
+                                    <th class="admin-table">Status </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!empty($completedsample))
+                                    @foreach($completedsample as $data)
+                                        <tr>
+                                            <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
+                                            <td>{{ $data->dueDate }}</td>
+                                            <td>{{ $data->status}} </td>
+                                            
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +99,10 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#sampledata').DataTable({
+        $('#sampledatainprogress').DataTable({
+            "ordering": false
+        });
+        $('#sampledatacomplete').DataTable({
             "ordering": false
         });
         $('#scanid2').focus();

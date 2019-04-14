@@ -31,13 +31,18 @@
                     <a href="{{ route('addClient-secretary') }}" class="glyphicon glyphicon-plus float-right">Back</a>
                 </div>   
                 <div class="card-body">
-                    <form action="{{ route('createSample-secretary') }}" method="post">
+                    <form action="{{ route('postAddSample') }}" method="post">
                         @csrf
                         <div class="form-group row">
                             <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
                             
                             <div class="col-md-6">
-                                <input id="clientId" type="text" class="form-control{{ $errors->has('clientId') ? ' is-invalid' : '' }}" name="clientId" value="{{ old('clientId') }}" placeholder="XXXX-XXXX" required autofocus>
+                                <select class="form-control" id="clientId" name="clientId" required autofocus>
+                                        <option value="" selected>SELECT A CLIENT</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->risNumber }}">{{ $client->risNumber }} - {{ $client->nameOfPerson }}</option>
+                                    @endforeach
+                                </select>
 
                                 @if ($errors->has('clientId'))
                                     <span class="invalid-feedback" role="alert">
@@ -46,9 +51,22 @@
                                 @endif
                             </div>
                         </div>
-                       
-                        
 
+                        <div class="form-group row">
+                            <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="clientsCode" type="text" class="form-control{{ $errors->has('clientsCode') ? ' is-invalid' : '' }}" name="clientsCode" value="{{ old('clientsCode') }}" required autofocus>
+
+                                @if ($errors->has('clientsCode'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('clientsCode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                       
                         <div class="form-group row">
                             <label for="sampleType" class="col-md-4 col-form-label text-md-right">{{ __('Sample Type') }}</label>
 

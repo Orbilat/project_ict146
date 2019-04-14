@@ -79,8 +79,8 @@
                                 
                                 <div class="col-md-6">
                                     <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;" required>
-                                        @foreach($items as $item)
-                                            <option value="{{ $item->suppliers->companyName }}">{{ $item->suppliers->companyName }}</option>
+                                        @foreach($suppliers as $supplier)
+                                            <option value="{{ $supplier->companyName }}">{{ $supplier->companyName }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('supplier'))
@@ -125,7 +125,7 @@
                             <td class="admin-table">{{ $item->companyName }}</td>
                             <td>
                                 {{-- EDIT BUTTON --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editItem{{ $count }}">Edit</button>
+                                <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>
                                 <div id="editItem{{ $count }}" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -150,7 +150,7 @@
                             </div>
                                 &nbsp;&nbsp; 
                             {{-- DELETE BUTTON --}}
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteItem{{ $count }}">Delete</button>
+                            <a data-toggle="modal" data-target="#deleteItem{{ $count }}"><i class="fa fa-trash"></i></a>
                             <div id="deleteItem{{ $count }}" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
