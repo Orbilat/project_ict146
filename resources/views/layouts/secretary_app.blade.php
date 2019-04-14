@@ -53,7 +53,7 @@
                                  </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="nav-link" href="{{ route('createClient') }}">{{ __('Create Client') }}</a>
-                                        <a class="nav-link" href="{{ route('createClient') }}">{{ __('Add Sample') }}</a>
+                                        <a class="nav-link" href="{{ route('addSample') }}">{{ __('Add Sample') }}</a>
                                     </div>
                             </li>
                                 

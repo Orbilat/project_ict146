@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\ReadyForPickUp;
 
 
 class SecretaryController extends Controller
@@ -29,13 +30,13 @@ class SecretaryController extends Controller
     {
         return view('secretary-file.inventory-secretary');
     }
+    public function addSample(){
+        $parameter = Parameter::all();
+        return view ('secretary-file.add-sample', ['parameters' => $parameter]);
+    }
     public function stat()
     {
         return view('secretary-file.view-secretary');
-    }
-    public function add()
-    {
-        return view('secretary-file.add-secretary');
     }
     public function create()
     {
@@ -61,7 +62,7 @@ class SecretaryController extends Controller
         foreach($cli as $cl){
             foreach($cl->samples as $sample){
                 foreach($sample->parameters as $parameter){
-                    if($parameter->pivot->status == "In Progress"){
+                    if($parameter->pivot->status == "Not Started"){
                         $isComplete = 'false';
                         break;
                     }
@@ -77,7 +78,7 @@ class SecretaryController extends Controller
        
         $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-        return view('secretary-file.add-secretary', ['status'=>$client]);
+        return view('secretary-file.manage_client_secretary', ['status'=>$client]);
     }
 
     protected function paid($clientId){
@@ -88,7 +89,7 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.add-secretary', ['status'=>$client]);
+                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
         else{
@@ -96,7 +97,7 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.add-secretary', ['status'=>$client]);
+                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
 
@@ -106,7 +107,7 @@ class SecretaryController extends Controller
 
         $client = Client::findOrFail($clientId);
         $client->notify(new ReadyForPickUp($client));
-        return view('secretary-file.add-secretary', ['status'=>$client]);
+        return view('secretary-file.manage_client_secretary', ['status' => $client]);
 
     }
 
@@ -155,10 +156,10 @@ class SecretaryController extends Controller
         $client->testResult = trim($request->testResult);
         $client->remarks =  trim($request->remarks);    
         $client->managedBy = Auth::user()->employeeName;
-
+        $client->managedDate = new DateTime();
        
         $client->save();
-        $client->managedDate = new DateTime();
+       
         if (strlen((string)($client->clientId)) == 1) {
             $idOfClient = (string)("000".$client->clientId);
         } elseif (strlen((string)($client->clientId)) == 2) {
@@ -192,7 +193,7 @@ class SecretaryController extends Controller
         
     }
 
-    protected function  addSample(Request $request){
+    protected function  createSample(Request $request){
 
 
         // $sample = new Sample;
