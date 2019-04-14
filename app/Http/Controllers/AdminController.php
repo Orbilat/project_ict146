@@ -778,9 +778,12 @@ class AdminController extends Controller
         }
         //ELOQUENT INSERT
         $event = new Event;
-        $event->event_name = trim($request->eventName);
+        // $event->event_name = trim($request->eventName);
+        $event->event_name = $request->eventName;
         $event->start_date = $request->startDate;
         $event->end_date = $request->endDate;
+
+        // dd($event);
         //CHECK SAVE
         if($event->save()){
             Session::flash('flash_event_added', 'Event added successfully!');

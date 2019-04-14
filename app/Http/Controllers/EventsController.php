@@ -11,6 +11,8 @@ use App\Event;
 
 use Calendar;
 
+use DateTime;
+
 class EventsController extends Controller
 {
     public function index(){
@@ -19,22 +21,23 @@ class EventsController extends Controller
     	foreach ($events as $key => $event) {
     		$event_list[] = Calendar::event(
                 $event->event_name,
-                true,
+                false,
                 new \DateTime($event->start_date),
-                new \DateTime($event->end_date.' +1 day')
+                new \DateTime($event->end_date),
             );
         }
         
     	$calendar_details = Calendar::addEvents($event_list)->setCallbacks([
             ])->setOptions([
             'header' => [
-                'right' => 'today listMonth prev,next ',
-                'center' => '',
-                // 'left' => 'listMonth',
+                'right' => ' month agendaDay list  ',
+                'center' => 'title',
+                'left' => ' prev,next today',
             ],
-            'defaultView' => 'month'
+            'defaultView' => 'month',
+            "eventLimit" => 4,
+            "allDay" => false
         ]);
-
-        return view('clients.client_home', compact('calendar_details') );
+        return view('clients.client_home')->with(compact('calendar_details'));
     }
 }
