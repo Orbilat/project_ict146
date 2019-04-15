@@ -25,7 +25,12 @@
                                     <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <input id="clientId" type="text" class="form-control{{ $errors->has('clientId') ? ' is-invalid' : '' }}" name="clientId" value="{{ old('clientId') }}" placeholder="XXXX-XXXX" required autofocus>
+                                        <select class="form-control" id="clientId" name="clientId" required autofocus>
+                                                <option value="" selected>SELECT A CLIENT</option>
+                                            @foreach ($clients as $client)
+                                                <option value="{{ $client->risNumber }}">{{ $client->risNumber }} - {{ $client->nameOfPerson }}</option>
+                                            @endforeach
+                                        </select>
         
                                         @if ($errors->has('clientId'))
                                             <span class="invalid-feedback" role="alert">

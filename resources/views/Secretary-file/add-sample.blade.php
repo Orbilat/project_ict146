@@ -9,12 +9,6 @@
 </div>
 @endif  
 {{-- SUCCESS MESSAGE OF ADDING CLIENT --}}
-@if(Session::has('flash_client_added'))
-<div class="alert alert-info offset-md-1 col-md-10">
-    <a class="close" data-dismiss="alert">×</a>
-    <strong>Notification:</strong> {!!Session::get('flash_client_added')!!}
-</div>
-@endif
 
 {{-- VALIDATION CHECKS --}}
 @if ($errors->any())
@@ -37,9 +31,27 @@
                     <a href="{{ route('addClient-secretary') }}" class="glyphicon glyphicon-plus float-right">Back</a>
                 </div>   
                 <div class="card-body">
-                    <form action="{{ route('createSample-secretary') }}" method="post">
+                    <form action="{{ route('postAddSample') }}" method="post">
                         @csrf
-                        <input type="hidden" name="clientId" value="{{ $risNumber }}">
+                        <div class="form-group row">
+                            <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
+                            
+                            <div class="col-md-6">
+                                <select class="form-control" id="clientId" name="clientId" required autofocus>
+                                        <option value="" selected>SELECT A CLIENT</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->risNumber }}">{{ $client->risNumber }} - {{ $client->nameOfPerson }}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('clientId'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('clientId') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
 
@@ -53,7 +65,8 @@
                                 @endif
                             </div>
                         </div>
-
+                        
+                       
                         <div class="form-group row">
                             <label for="sampleType" class="col-md-4 col-form-label text-md-right">{{ __('Sample Type') }}</label>
 

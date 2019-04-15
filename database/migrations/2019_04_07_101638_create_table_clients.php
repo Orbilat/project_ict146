@@ -23,6 +23,7 @@ class CreateTableClients extends Migration
             $table->string('faxNumber')->nullable();
             $table->string('emailAddress', 191)->nullable();
             $table->string('paid', 3)->default('No');
+            $table->string('sendText', 3)->default('No');
             $table->string('readyForPickUp')->default('No');
             $table->integer('discount')->nullable()->default(0);
             $table->float('deposit')->nullable()->default(0);
