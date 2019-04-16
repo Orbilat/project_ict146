@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\ReadyForPickUp;
 
 
 class SecretaryController extends Controller
@@ -29,13 +30,14 @@ class SecretaryController extends Controller
     {
         return view('secretary-file.inventory-secretary');
     }
+    public function addSample(){
+        $parameter = Parameter::all();
+        $clients = Client::all();
+        return view ('secretary-file.add-sample', ['parameters' => $parameter, 'clients' => $clients]);
+    }
     public function stat()
     {
         return view('secretary-file.view-secretary');
-    }
-    public function add()
-    {
-        return view('secretary-file.add-secretary');
     }
     public function create()
     {
@@ -45,6 +47,77 @@ class SecretaryController extends Controller
         $samples=Sample::all();
         return view('dynamic_pdf',['samples'=>$samples]);
     }
+    public function postAddSample(Request $request){
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'clientId' => 'required',
+            'clientsCode' => 'nullable|string|max:255',
+            'sampleType' => 'required|string|max:255',
+            'sampleCollection' => 'required|string|max:50',
+            'samplePreservation' => 'nullable|string|max:50',
+            'parameter' => 'required',
+            'purposeOfAnalysis' => 'nullable|string|max:50',
+            'sampleSource' => 'required|string|max:20',
+            'dueDate' => 'required|string|max:50',
+        ]);
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('/secretary/add-sample')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        // Find client
+        $client = Client::where('risNumber', $request->clientId)->value('clientId');
+
+        // Insert new sample
+        $sample = new Sample;
+        $sample->risNumber = $client;
+        $sample->clientsCode = trim($request->clientsCode);
+        $sample->sampleType =  trim($request->sampleType);
+        $sample->sampleCollection = $request->sampleCollection;
+        $sample->samplePreservation = trim($request->samplePreservation);
+        $sample->purposeOfAnalysis = trim($request->purposeOfAnalysis);
+        $sample->sampleSource = $request->sampleSource;
+        $sample->dueDate = $request->dueDate;
+        $sample->managedBy = Auth::user()->employeeName;
+        $sample->managedDate = new DateTime();
+        $sample->save();
+        // Add lab code 
+        if (strlen((string)($sample->sampleId)) == 1) {
+            $idOfSample = (string)("000".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 2) {
+            $idOfSample = (string)("00".$sample->sampleId);
+        } elseif (strlen((string)($sample->sampleId)) == 3) {
+            $idOfSample = (string)("0".$sample->sampleId);
+        } else {
+            $idOfSample = (string)$sample->sampleId;
+        }
+        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
+
+        // Add sample tests
+        foreach ($request->parameter as $parameter => $analysis) {
+            $sampletests = new Sample_Tests;
+            $sampletests->sampleCode = $sample->sampleId;
+            $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
+            $sampletests->status = "Not Started";
+            $sampletests->managedBy = Auth::user()->employeeName;
+            $sampletests->managedDate = new DateTime();
+            $sampletests->save();
+        }
+        // Return to samples page
+        if($sample->save()){
+
+            $clients=Client::all();
+            $parameters = Parameter::all();
+            Session::flash('flash_sample_added', 'Sample inserted successfully!');
+            return view('secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
+        }
+        else {
+            abort(500, 'Error! Sample not added.');
+        }
+        
+    }
 
     public function form()
     {
@@ -52,15 +125,17 @@ class SecretaryController extends Controller
         return view('secretary-file.secretary-form',['clients'=>$clients]);
     }
 
+
     
     protected function status(){
         
-        $cli = Client::with('samples.parameters')->get();
+        $cli = Client::with('samples.parameters')->paginate(10);
+        $isComplete = 'false';
 
         foreach($cli as $cl){
             foreach($cl->samples as $sample){
                 foreach($sample->parameters as $parameter){
-                    if($parameter->pivot->status == "In Progress"){
+                    if($parameter->pivot->status == "Not Started"){
                         $isComplete = 'false';
                         break;
                     }
@@ -76,7 +151,7 @@ class SecretaryController extends Controller
        
         $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-        return view('secretary-file.add-secretary', ['status'=>$client]);
+        return view('secretary-file.manage_client_secretary', ['status'=>$client]);
     }
 
     protected function paid($clientId){
@@ -87,7 +162,7 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.add-secretary', ['status'=>$client]);
+                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
         else{
@@ -95,9 +170,21 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.add-secretary', ['status'=>$client]);
+                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
+
+    }
+
+    protected function send($clientId){
+
+        $client = Client::findOrFail($clientId);       
+        $client->sendText="Yes";
+
+        if($client->save()){
+            $client->notify(new ReadyForPickUp($client));
+        }
+        return redirect()->action('SecretaryController@status');
 
     }
 
@@ -111,12 +198,12 @@ class SecretaryController extends Controller
             'contactNumber' => 'string|numeric',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
-
-            
+            'discount'=> 'nullable|numeric|max:100|min:0',
+         
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('secretary-file.sample-secretary')
+            return redirect('secretary-file.create-secretary')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -146,12 +233,10 @@ class SecretaryController extends Controller
         $client->testResult = trim($request->testResult);
         $client->remarks =  trim($request->remarks);    
         $client->managedBy = Auth::user()->employeeName;
-
-
-        
-        
-        $client->save();
         $client->managedDate = new DateTime();
+       
+        $client->save();
+       
         if (strlen((string)($client->clientId)) == 1) {
             $idOfClient = (string)("000".$client->clientId);
         } elseif (strlen((string)($client->clientId)) == 2) {
@@ -161,7 +246,7 @@ class SecretaryController extends Controller
         } else {
             $idOfClient = (string)$client->clientId;
         }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . $idOfClient;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
         $client->save();
         
 
@@ -185,7 +270,7 @@ class SecretaryController extends Controller
         
     }
 
-    protected function  addSample(Request $request){
+    protected function  createSample(Request $request){
 
 
         // $sample = new Sample;
@@ -234,7 +319,8 @@ class SecretaryController extends Controller
             } else {
                 $idOfSample = (string)$sample->sampleId;
             }
-            $sample->laboratoryCode = $request->clientId . $idOfSample;
+            $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
+            
             //INSERT SAMPLE TESTS IN LOOP
             foreach ($request->parameter as $parameter => $analysis) {
                 $sampletests = new Sample_Tests;
