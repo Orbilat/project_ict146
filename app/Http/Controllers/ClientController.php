@@ -17,7 +17,6 @@ class ClientController extends Controller
         
         if($risNumber != NULL) {
             $clients = Client::where('risNumber', $request->search)->with('samples.parameters')->get();
-            
             return view('clients.client_RIS', ['clients' => $clients]);
         }
         else {

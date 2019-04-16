@@ -1,13 +1,13 @@
 <title>USC Water Laboratory</title>
 <meta charset="UTF-8" />
-<link rel="stylesheet" href="/css/app.css" />
-<link rel="stylesheet" href="/css/datatables.min.css" />
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/capstone.css" />
-<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/datatables.min.js"></script>
-<script src="/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/capstone.css') }}" />
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('js/datatables.min.js')}}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
 </head>
 
 <body>

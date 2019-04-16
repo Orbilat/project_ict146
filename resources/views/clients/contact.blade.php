@@ -65,7 +65,7 @@
       <div class="col-lg-7 center text-center ">
         <!--Google map-->
         <div>
-          <img src="/img/map.PNG" style="height: 400px; width: 600px; border: 1px solid rgba(0, 0, 0, 0.125);">   
+          <img src="{{ asset('img/map.PNG') }}" style="height: 400px; width: 600px; border: 1px solid rgba(0, 0, 0, 0.125);">   
         </div>
         <br>
         <!--Buttons-->
