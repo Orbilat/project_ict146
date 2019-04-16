@@ -1,8 +1,15 @@
 @extends('layouts.secretary_app')
 
 @section('content')
-
-<form method="POST" action="{{ route('addClient-secretary') }}">
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header" >
+                    Add Client
+                </div>
+                <div class="card-body">
+                            <form method="POST" style="margin-top:40px" action="{{ route('addClient-secretary') }}">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="nameOfPerson" class="col-md-4 col-form-label text-md-right">{{ __('Client Name') }}</label>
@@ -188,7 +195,11 @@
                                         </button>
                                     </div>
                                 </div> 
-</form>
-
+                            </form>
+                        </div>
+                </div>
+            </div>
+     </div>
+</div>
 
 @endsection

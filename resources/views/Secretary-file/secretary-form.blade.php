@@ -7,7 +7,7 @@
   <div class="float-right">
     <form method="POST" action="{{ route('search-barcode') }}">
       @csrf
-      <input type="number" placeholder="Search client ID" name="search">
+      <input type="text" placeholder="Search client RIS" name="search">
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
   </div>
@@ -16,7 +16,6 @@
 <thead class="thead-light">
   <tr>
     <th>RIS Number</th>
-    <th>Client ID</th>
     <th>Client Name</th>
     <th>Name Of Entity</th>
     <th>Address</th>
@@ -27,7 +26,6 @@
 
   <tr>
   <td>{{$client->risNumber}}</td>
-  <td>{{$client->clientId}}</td>
   <td>{{$client->nameOfPerson}}</td>
   <td>{{$client->nameOfEntity}}</td>
   <td>{{$client->address}}</td>
