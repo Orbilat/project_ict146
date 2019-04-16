@@ -17,7 +17,14 @@ use DB;
 class AnalystController extends Controller
 {  
     public function samples(){
-        //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
+        //SEELCT s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived 
+        //FROM samples s 
+        //LEFT JOIN sample__tests st ON st.sampleCode=s.sampleId 
+        //LEFT JOIN parameters p ON p.parameterId=st.parameters
+        //LEFT JOIN stations AS sta ON p.station=sta.stationid
+        //WHERE st.status = 'In Progress'
+        //GROUP BY s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived
+        
         $sampledata = DB::table('samples AS s')
         ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName','s.purposeOfAnalysis','st.timeReceived')
         ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -28,16 +35,18 @@ class AnalystController extends Controller
         ->distinct()
         ->get();
 
-        //print_r($sampledata);die();
     	return view('analyst.samples',[ 'sampledatas' => $sampledata ]);
     }
     
     public function notification(Request $request){
-        //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
-        /*$sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
-                        ->orderBy('dueDate')
-                        ->get();
-        */
+        //SEELCT s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived 
+        //FROM samples s 
+        //LEFT JOIN sample__tests st ON st.sampleCode=s.sampleId 
+        //LEFT JOIN parameters p ON p.parameterId=st.parameters
+        //LEFT JOIN stations AS sta ON p.station=sta.stationid
+        //WHERE st.status = 'In Progress' AND dueDate < (currentDate+4)
+        //GROUP BY s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived
+        
         $sampledata = DB::table('samples AS s')
                     ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName')
                     ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -49,11 +58,11 @@ class AnalystController extends Controller
                     ->distinct()
                     ->get();
 
-        //print_r($sampledata);die();
         return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
     }
     
     public function inventory(){
+        // SELECT * FROM item
     	$itemdata = Item::all();
 
     	return view('analyst.inventory', [ 'items' => $itemdata ]);
@@ -72,9 +81,11 @@ class AnalystController extends Controller
     	for($i=0; $i < sizeof($input['itemid']); $i++){
     		if($input['borrowqty'][$i] > 0){
     			$id = $input['itemid'][$i];
-    			$item = Item::find($id);
+                $item = Item::find($id);
+                //UPDATE item SET quantity = currentqty - inputbrwqty WHERE itemId=id
     			$updateresult = Item::find($id)->update(array('quantity' => $item->quantity - $input['borrowqty'][$i]));
-    			$invListResult = InventoryList::create(array('inventoryId' => $invresult->inventoryId , 'itemId' => $id, 'qty' => $input['borrowqty'][$i]));
+                //INSERT INTO CREATE(inventoryId,itemId,qty) VALUES ($invresult->inventoryId,$itemId,$input[borrowqty])
+                $invListResult = InventoryList::create(array('inventoryId' => $invresult->inventoryId , 'itemId' => $id, 'qty' => $input['borrowqty'][$i]));
     		}
     	}
 		return redirect('/analyst/inventory');	
@@ -82,7 +93,10 @@ class AnalystController extends Controller
 
     public function history(){
 
-        // SELECT inventory_list.qty, inventory.inventoryId, inventory.dateofuse, item.itemType, item.containerType FROM inventory LEFT JOIN inventory_list ON inventory_list.inventoryId=inventory.inventoryId LEFT JOIN item ON item.itemId=inventory_list.itemId WHERE inventory.empId = 1 ORDER BY inventory_list.created_at
+        // SELECT inventory_list.qty, inventory.inventoryId, inventory.dateofuse, item.itemType, item.containerType 
+        // FROM inventory LEFT JOIN inventory_list ON inventory_list.inventoryId=inventory.inventoryId 
+        // LEFT JOIN item ON item.itemId=inventory_list.itemId WHERE inventory.empId = 1 
+        // ORDER BY inventory_list.created_at
     	$history = DB::table('inventory_list')
     		->select('inventory_list.qty', 'inventories.inventoryId' , 'inventories.created_at', 'items.itemName', 'items.containerType', 'items.volumeCapacity')
     		->leftJoin('inventories','inventory_list.inventoryId','=','inventories.inventoryId')
@@ -95,6 +109,14 @@ class AnalystController extends Controller
     }
 
     public function samplePerStation($id){
+        //SEELCT s.laboratoryCode,s.dueDate,st.status,st.timecompleted 
+        //FROM samples s 
+        //LEFT JOIN sample__tests st ON st.sampleCode=s.sampleId 
+        //LEFT JOIN parameters p ON p.parameterId=st.parameters
+        //LEFT JOIN stations AS sta ON p.station=sta.stationid
+        //WHERE st.status = 'Completed' AND p.station = $id
+        //GROUP BY s.laboratoryCode,s.dueDate,st.status,st.timecompleted
+        
     	$completeperstation = DB::table('samples AS s')
     			->select('s.laboratoryCode', 's.dueDate', 'st.status','st.timecompleted' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -105,6 +127,14 @@ class AnalystController extends Controller
                 ->groupBy('s.laboratoryCode', 's.dueDate','st.status','st.timecompleted')
                 ->distinct()
                 ->get();
+
+        //SEELCT s.laboratoryCode,s.dueDate,st.status,st.timecompleted 
+        //FROM samples s 
+        //LEFT JOIN sample__tests st ON st.sampleCode=s.sampleId 
+        //LEFT JOIN parameters p ON p.parameterId=st.parameters
+        //LEFT JOIN stations AS sta ON p.station=sta.stationid
+        //WHERE st.status = 'In Progress' AND p.station = $id
+        //GROUP BY s.laboratoryCode,s.dueDate,st.status,st.timecompleted
 
         $progressperstation = DB::table('samples AS s')
                 ->select('s.laboratoryCode', 's.dueDate', 'st.status','st.timeReceived' )
@@ -123,6 +153,12 @@ class AnalystController extends Controller
     }
 
     public function sampleDetails($stationid,$id){
+        //SEELCT s.laboratoryCode,p.analysis,s.sampleCollection,st.status,st.timecompleted,s.created_at 
+        //FROM samples s 
+        //LEFT JOIN sample__tests st ON st.sampleCode=s.sampleId 
+        //LEFT JOIN parameters p ON p.parameterId=st.parameters
+        //WHERE s.laboratoryCode = $id AND p.station = $stationid
+
     	$sampledetails = DB::table('samples AS s')
     			->select('s.laboratoryCode','p.analysis', 's.sampleCollection', 'st.status', 'st.timecompleted', 's.created_at' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -137,7 +173,6 @@ class AnalystController extends Controller
     public function receiveSample($id,Request $request){
         $input = $request->all();
 
-        
         $updateresult = DB::table('sample__tests AS st')
             ->leftJoin('samples AS s','st.sampleCode','=','s.sampleId')
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
