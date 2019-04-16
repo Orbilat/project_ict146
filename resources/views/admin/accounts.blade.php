@@ -330,7 +330,7 @@
                     </table>           
                 </div>
             </div>
-            <div class="offset-md-5 mt-3">
+            <div class="row justify-content-center mt-2">
                     {{ $accounts->links() }}
             </div>
         </div>

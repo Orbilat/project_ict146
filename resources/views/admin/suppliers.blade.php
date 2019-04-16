@@ -77,7 +77,7 @@
 
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th class="admin-table">Company Name</th>
                                 <th class="admin-table">Email Address</th>
@@ -192,8 +192,8 @@
                     </table>           
                 </div>
             </div>
-            <div class="offset-md-5 mt-3">
-                    {{ $suppliers->links() }}
+            <div class="row justify-content-center mt-2">
+                {{ $suppliers->links() }}
             </div>
         </div>
     </div>

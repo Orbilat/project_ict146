@@ -111,6 +111,7 @@
                                 <td class="admin-table">{{ $parameter->analysis }}</td>
                                 <td class="admin-table">{{ $parameter->method }}</td>
                                 <td class="admin-table">{{ $parameter->price }}</td>
+                                @php dd($parameter) @endphp
                                 <td class="admin-table">{{ $parameter->station }}</td>
                                 <td class="admin-table">{{ $parameter->managedBy }}</td>
                                 <td class="admin-table">{{ date("F jS, Y H:m", strtotime($parameter->managedDate)) }}</td>
@@ -229,7 +230,7 @@
                     </table>           
                 </div>
             </div>
-            <div class="offset-md-5 mt-3">
+            <div class="row justify-content-center mt-2">
                     {{ $parameters->links() }}
             </div>
         </div>

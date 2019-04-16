@@ -528,7 +528,7 @@
                 </div>
             </div>
             {{-- PAGINATION LINKS (PAGINATION:6) --}}
-            <div class="offset-md-5 mt-3">
+            <div class="row justify-content-center mt-2">
                     {{ $clients->links() }}
             </div>
             {{-- PAGINATION END --}}

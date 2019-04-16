@@ -79,8 +79,8 @@
                                 
                                 <div class="col-md-6">
                                     <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;" required>
-                                        @foreach($items as $item)
-                                            <option value="{{ $item->suppliers->companyName }}">{{ $item->suppliers->companyName }}</option>
+                                        @foreach($suppliers as $supplier)
+                                            <option value="{{ $supplier->companyName }}">{{ $supplier->companyName }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('supplier'))
@@ -105,7 +105,7 @@
 
             <div class="card-body">
                 <table class="table">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th class="admin-table">Name of Item</th>
                             <th class="admin-table">Container Type</th>
@@ -122,7 +122,7 @@
                             <td class="admin-table">{{ $item->containerType }}</td>
                             <td class="admin-table">{{ $item->volumeCapacity }}</td>
                             <td class="admin-table">{{ $item->quantity }}</td>
-                            <td class="admin-table">{{ $item->companyName }}</td>
+                            <td class="admin-table">{{ $item->suppliers->companyName }}</td>
                             <td>
                                 {{-- EDIT BUTTON --}}
                                 <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>
@@ -150,7 +150,7 @@
                             </div>
                                 &nbsp;&nbsp; 
                             {{-- DELETE BUTTON --}}
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteItem{{ $count }}">Delete</button>
+                            <a data-toggle="modal" data-target="#deleteItem{{ $count }}"><i class="fa fa-trash"></i></a>
                             <div id="deleteItem{{ $count }}" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -178,7 +178,9 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="row justify-content-center mt-2">
+                {{ $items->links() }}
+            </div>
         </div>
     </div>
 </div>

@@ -24,6 +24,7 @@ use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -47,8 +48,9 @@ class AdminController extends Controller
     {
         $samples = Sample::with('client')->paginate(10);
         $parameters = Parameter::all();
+        $clients = Client::orderBy('risNumber')->get();
 
-        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters]);
+        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters, 'clients' => $clients]);
     }
 
     // Clients page
@@ -76,9 +78,10 @@ class AdminController extends Controller
     // Glassware page
     public function glassware()
     {
-        $items = Item::with('suppliers')->paginate(10);
+        $items = Item::with('suppliers')->orderBy('itemName')->paginate(10);
+        $suppliers = Supplier::all();
 
-        return view('admin.inventory-glassware', ['items' => $items]);
+        return view('admin.inventory-glassware', ['items' => $items, 'suppliers' => $suppliers]);
     }
 
     // Stations page
@@ -399,7 +402,7 @@ class AdminController extends Controller
         // Return to add sample page
         if($sample->save()){
 
-            $sample->notify(new SampleDueDate($sample));
+            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
 
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
@@ -474,10 +477,12 @@ class AdminController extends Controller
         // Return to samples page
         if($sample->save()){
 
-            $sample->notify(new SampleDueDate($sample));
+            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
+            
+            // $emailJob = (new SendAnnouncementEmail($user->email))->delay(Carbon::now()->addSeconds(3));
 
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
-            return redirect()->action('AdminController@samples');;
+            return redirect()->action('AdminController@samples');
         }
         else {
             abort(500, 'Error! Sample not added.');
