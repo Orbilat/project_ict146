@@ -45,7 +45,7 @@ class LoginController extends Controller
                 return '/analyst/notification';
                 break;
             default:
-                return '/home';
+                return '/';
                 break;
         }
     }
