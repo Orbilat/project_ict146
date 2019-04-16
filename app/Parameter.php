@@ -11,7 +11,7 @@ class Parameter extends Model
     protected $primaryKey = 'parameterId';
 
     protected $fillable = [
-        'analysis', 'method', 'stationId', 'managedBy', 'managedDate',
+        'analysis', 'method', 'price', 'station', 'managedBy', 'managedDate',
     ];
 
     public function samples()

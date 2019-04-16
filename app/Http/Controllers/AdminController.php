@@ -402,7 +402,7 @@ class AdminController extends Controller
         // Return to add sample page
         if($sample->save()){
 
-            $sample->notify(new SampleDueDate($sample))->addMinutes(15);
+            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
 
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');

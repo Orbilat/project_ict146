@@ -105,7 +105,7 @@
 
             <div class="card-body">
                 <table class="table">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th class="admin-table">Name of Item</th>
                             <th class="admin-table">Container Type</th>
@@ -122,7 +122,7 @@
                             <td class="admin-table">{{ $item->containerType }}</td>
                             <td class="admin-table">{{ $item->volumeCapacity }}</td>
                             <td class="admin-table">{{ $item->quantity }}</td>
-                            <td class="admin-table">{{ $item->companyName }}</td>
+                            <td class="admin-table">{{ $item->suppliers->companyName }}</td>
                             <td>
                                 {{-- EDIT BUTTON --}}
                                 <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>
@@ -178,7 +178,9 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="row justify-content-center mt-2">
+                {{ $items->links() }}
+            </div>
         </div>
     </div>
 </div>
