@@ -18,7 +18,15 @@ class AnalystController extends Controller
 {  
     public function samples(){
         //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
-    	$sampledata = Sample::all();
+        $sampledata = DB::table('samples AS s')
+        ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName','s.purposeOfAnalysis','st.timeReceived')
+        ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+        ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+        ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
+        ->where('st.status','=', 'In Progress')
+        ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName','s.purposeOfAnalysis','st.timeReceived')
+        ->distinct()
+        ->get();
 
         //print_r($sampledata);die();
     	return view('analyst.samples',[ 'sampledatas' => $sampledata ]);
@@ -26,9 +34,21 @@ class AnalystController extends Controller
     
     public function notification(Request $request){
         //select * from sample where duedate <= 'currentday+4' ORDER BY duedate;
-        $sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
+        /*$sampledata = Sample::where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
                         ->orderBy('dueDate')
                         ->get();
+        */
+        $sampledata = DB::table('samples AS s')
+                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName')
+                    ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+                    ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+                    ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
+                    ->where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                    ->where('st.status','=', 'In Progress')
+                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName')
+                    ->distinct()
+                    ->get();
+
         //print_r($sampledata);die();
         return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
     }
@@ -76,24 +96,24 @@ class AnalystController extends Controller
 
     public function samplePerStation($id){
     	$completeperstation = DB::table('samples AS s')
-    			->select('s.laboratoryCode', 's.dueDate', 'st.status' )
+    			->select('s.laboratoryCode', 's.dueDate', 'st.status','st.timecompleted' )
     			->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
     			->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
     			->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
     			->where('p.station','=', $id)
                 ->where('st.status','=', 'Completed')
-                ->groupBy('s.laboratoryCode', 's.dueDate','st.status')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','st.timecompleted')
                 ->distinct()
                 ->get();
 
         $progressperstation = DB::table('samples AS s')
-                ->select('s.laboratoryCode', 's.dueDate', 'st.status' )
+                ->select('s.laboratoryCode', 's.dueDate', 'st.status','st.timeReceived' )
                 ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                 ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                 ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
                 ->where('p.station','=', $id)
                 ->where('st.status','=', 'In Progress')
-                ->groupBy('s.laboratoryCode', 's.dueDate','st.status')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','st.timeReceived')
                 ->distinct()
                 ->get();
 
@@ -123,8 +143,8 @@ class AnalystController extends Controller
             ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
             ->where('s.laboratoryCode','=', $input['scanid'])
             ->where('p.station','=', $id)
-            ->where('st.status','=', 'Not Started')
-            ->update(array('st.status' => 'In Progress','s.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'timeReceived' => date("Y-m-d")));
+            //where('st.status','=', 'Not Started')
+            ->update(array('st.status' => 'In Progress','s.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'timeReceived' => date("Y-m-d H:m:s")));
         
         return redirect('/analyst/sample/station/'.$id);
     }

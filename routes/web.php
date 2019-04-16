@@ -119,7 +119,7 @@ Route::middleware(['admin','auth'])->group(function (){
 
 //Route::middleware(['analyst','auth'])->group(function (){
     // ANALYST ROUTES
-    Route::middleware(['analyst','auth'])->group(function (){
+Route::middleware(['analyst','auth'])->group(function (){
     Route::redirect('/analyst', '/analyst/samples');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
     Route::get('/analyst/samples', 'AnalystController@samples')->name('analystsamples');

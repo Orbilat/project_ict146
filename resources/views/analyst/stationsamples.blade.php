@@ -22,6 +22,7 @@
                                     <th class="admin-table">Laboratory Code</th>
                                     <th class="admin-table">Due Date</th>
                                     <th class="admin-table">Status </th>
+                                    <th class="admin-table">Time Received</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,6 +32,7 @@
                                             <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
                                             <td>{{ $data->dueDate }}</td>
                                             <td>{{ $data->status}} </td>
+                                            <td>{{ $data->timeReceived}} </td>
                                             
                                         </tr>
                                     @endforeach
@@ -45,6 +47,8 @@
                                     <th class="admin-table">Laboratory Code</th>
                                     <th class="admin-table">Due Date</th>
                                     <th class="admin-table">Status </th>
+                                    <th class="admin-table">Time Completed </th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +58,7 @@
                                             <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
                                             <td>{{ $data->dueDate }}</td>
                                             <td>{{ $data->status}} </td>
+                                            <td>{{ $data->timecompleted}} </td>
                                             
                                         </tr>
                                     @endforeach
