@@ -16,9 +16,9 @@ class ClientController extends Controller
         $risNumber = Client::where('risNumber', '=', $request->search)->first();
         
         if($risNumber != NULL) {
-            $samples = Sample::with('client')->where('risNumber', $risNumber->clientId)->get();
-           
-            return view('clients.client_RIS', ['ris' => $risNumber, 'samples' => $samples]);
+            $clients = Client::where('risNumber', $request->search)->with('samples.parameters')->get();
+            
+            return view('clients.client_RIS', ['clients' => $clients]);
         }
         else {
             return view('clients.risError');

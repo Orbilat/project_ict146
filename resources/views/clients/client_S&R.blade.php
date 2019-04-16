@@ -4,9 +4,7 @@
 <br><br>
 <br><br>
 
-<?php $count = 0; ?>
-
-<div class="container">
+<div class="container" style="margin-bottom:50px;">
     <div class="card">
         <div class="card-header">
             <form class="float-right" action="GET">
@@ -30,13 +28,12 @@
                   <td class="border">{{ $parameter->method }}</td>
                   <td class="border">{{ $parameter->price }}</td>
                 </tr>  
-                <?php $count++; ?>
                 @endforeach  
             </tbody>
         </table>  
         </div>         
     </div>
-            <div class="offset-md-5 mt-3">
+         <div class="d-flex justify-content-center mt-3">
                     {{ $parameters->links() }}
             </div>
     </div>
@@ -60,11 +57,9 @@
                   <br>
               </div>
           </div>
-            <div class="col-md-12 col-xs-12 col-centered w3-black">
                 <div class=" text-center titleText" style="font-size: 15px; align-content: center;" >Connect with us:
                     <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379" style="color: #fff; font-size:20px;"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
                 </div>
-            </div>
       </footer>
 
 @endsection
