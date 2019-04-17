@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @if(Auth::check())
+                       
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('notification-secretary') }}">{{ __('Notifications') }}</a>
                             </li>
@@ -64,7 +64,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('addSecretary') }}">{{ __('Manage Clients') }}</a>
                             </li>
-                        @endif
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
