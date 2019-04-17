@@ -48,8 +48,7 @@ Route::post('/contact', [
 
 //SECRETARY ROUTES
 Route::middleware(['secretary','auth'])->group(function (){
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
+Route::get('/secretary/home', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');

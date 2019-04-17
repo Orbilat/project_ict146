@@ -39,7 +39,7 @@ class LoginController extends Controller
                 return '/admin/home';
                 break;
             case 'secretary':
-                return '/secretary';
+                return '/secretary/home';
                 break;
             case 'analyst':
                 return '/analyst/notification';
