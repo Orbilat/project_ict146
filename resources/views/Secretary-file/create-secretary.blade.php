@@ -1,8 +1,5 @@
 @extends('layouts.secretary_app')
 
-
-
-
 @section('content')
 
 <form method="POST" action="{{ route('addClient-secretary') }}">

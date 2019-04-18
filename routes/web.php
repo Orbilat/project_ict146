@@ -48,21 +48,23 @@ Route::post('/contact', [
 
 //SECRETARY ROUTES
 Route::middleware(['secretary','auth'])->group(function (){
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/secretary', 'SecretaryController@index')->name('notification-secretary');
+Route::get('/secretary/home', 'SecretaryController@index')->name('notification-secretary');
 Route::get('/secretary/inventory', 'SecretaryController@inve')->name('inventory');
 Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
-Route::post('/secretary/add/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
+Route::post('/secretary/paid/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
+Route::post('/secretary/send/{clientId}', 'SecretaryController@send')->name('send');
 
 Route::get('/dynamic_pdf', 'SecretaryController@samples');
 Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
-Route::post('/secretary/create-sample','SecretaryController@addSample')->name('createSample-secretary');
+Route::post('/secretary/create-sample','SecretaryController@createSample')->name('createSample-secretary');
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
+Route::get('/secretary/add-sample','SecretaryController@addSample')->name('addSample');
+Route::post('/secretary/add-sample','SecretaryController@postAddSample')->name('postAddSample');
 // Route::post('/secretary/search/not_found','ProduitController@search')->name('search-fail');
 });
 
@@ -116,7 +118,7 @@ Route::middleware(['admin','auth'])->group(function (){
 
 //Route::middleware(['analyst','auth'])->group(function (){
     // ANALYST ROUTES
-    Route::middleware(['analyst','auth'])->group(function (){
+Route::middleware(['analyst','auth'])->group(function (){
     Route::redirect('/analyst', '/analyst/samples');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
     Route::get('/analyst/samples', 'AnalystController@samples')->name('analystsamples');

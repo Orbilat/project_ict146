@@ -16,16 +16,18 @@
                             <th class="admin-table">Laboratory Code</th>
                             <th class="admin-table">Collection Time</th>
                             <th class="admin-table">Purpose of Analysis</th>
+                            <th class="admin-table">Station</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($sampledatas as $data)
                             <tr>
                                 <td>{{ $data->dueDate }}</td>
-                                <td>{{ $data->created_at}}</td>
+                                <td>{{ $data->timeReceived}}</td>
                                 <td>{{ $data->laboratoryCode }}</td>
                                 <td>{{ $data->sampleCollection }}</td>
                                 <td>{{ $data->purposeOfAnalysis }}</td>
+                                <td>{{ $data->stationName }}</td>
                             </tr>
                         @endforeach
                     </tbody>

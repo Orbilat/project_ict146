@@ -23,7 +23,7 @@ class EventsController extends Controller
                 $event->event_name,
                 false,
                 new \DateTime($event->start_date),
-                new \DateTime($event->end_date),
+                new \DateTime($event->end_date)
             );
         }
         
