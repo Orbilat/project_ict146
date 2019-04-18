@@ -36,7 +36,7 @@
     </div>
 </div>
       
-      <!-- Footer -->
+       <!-- Footer -->
 <footer class="page-footer font-small indigo w3-black text-white">
 
 <!-- Footer Links -->
@@ -49,7 +49,7 @@
     <div class="col-md-3 mx-auto">
 
       <!-- Links -->
-      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 ">About</h5>
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">About</h5>
           <p>The Water Laboratory is accredited as a testing laboratory by the Department of Environment and Natural Resources (DENR) and the Department of Health (DOH).</p>
     </div>
     <!-- Grid column -->
@@ -60,7 +60,7 @@
     <div class="col-md-3 mx-auto">
 
       <!-- Links -->
-      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 ">Address</h5>
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Address</h5>
 
       <p>Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, 
                   Nasipit Talamban Cebu City Philippines 6000</p>
@@ -73,7 +73,7 @@
     <div class="col-md-3 mx-auto">
 
       <!-- Links -->
-      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 ">Contact Us </h5>
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Contact Us </h5>
 
       <p>Email:waterlab@usc.edu.ph<br>
          Phone: (63 32)345 3811<br>
@@ -87,7 +87,7 @@
     <div class="col-md-3 mx-auto">
 
       <!-- Links -->
-      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 ">Feedbacks</h5>
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Feedbacks</h5>
 
       <p>Please send us your ideas, bug reports, suggestions! <br>
                   Any feedback would be appreciated.</p>
@@ -105,8 +105,8 @@
 
 </div>
 <!-- Footer Links -->
-<h5 class="text-center"  style="font-size:30px; border-radius: 35px;">Follow us:
-    <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379"><i class="fa fa-facebook-official w3-hover-opacity " style=" font-size:30px; border-radius: 35px;"></i></a> 
+<h5 class="text-center"  style="font-size:25px; border-radius: 35px;">Follow us:
+    <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379"><i class="fa fa-facebook-official w3-hover-opacity " style=" font-size:25px; border-radius: 35px;"></i></a> 
 </h5>
 <!-- Copyright -->
 <div class="footer-copyright text-center py-3">© 2019 Copyright:

@@ -48,17 +48,17 @@
         </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+        <li class="nav-item nav-link nav-link-ltr active">
           <a class="nav-link" href="{{ url('/client-home') }}"><i class="fa fa-home"></i>Home
               </a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item nav-link nav-link-ltr active">
           <a class="nav-link" href="{{ url('/S&R') }}"><i class="fa fa-user"></i>Service & Rates</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item nav-link nav-link-ltr active">
           <a class="nav-link" href="{{ url('/contact') }}"><i class="fa fa-envelope"></i>Contact</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item link ">
         <form class="nav-item" method="post" action="{{ route('RIS') }}" > 
           @csrf
           <input type="text" class="SearchRis" placeholder="RIS NUMBER" name="search" oninvalid="this.setCustomValidity('Input your  RIS Number')"  title='RIS NUMBER'  oninput="setCustomValidity('')" required/> 

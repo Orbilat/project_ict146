@@ -20,7 +20,7 @@ body{
     height: 100%;
     z-index: 0;
     opacity: 0.5;
-    background:       url("http://lorempixel.com/1000/600/") no-repeat center center;
+    background:       url("{{ asset('img/Homepage.png') }}") no-repeat center center;
     background-size: cover;
 }
 
@@ -134,4 +134,53 @@ fieldset {
 .FontError{
 	font-size: 20px;
 }
+.link{
+	margin-top: 2%;
+}
+.nav-link {
+  position: relative;
+  opacity: 0.75;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link::before {
+  transition: 300ms;
+  height: 5px;
+  content: "";
+  position: absolute;
+  background-color: #fff;
+}
+
+.nav-link-ltr::before {
+  width: 0%;
+  bottom: 10px;
+}
+
+.nav-link-ltr:hover::before {
+  width: 100%;
+}
+
+.nav-link-fade-up::before {
+  width: 100%;
+  bottom: 5px;
+  opacity: 0;
+}
+
+.nav-link-fade-up:hover::before {
+  bottom: 10px;
+  opacity: 1;
+}
+
+.nav-link-grow-up::before {
+  height: 0%;
+  width: 100%;
+  bottom: 0px;
+}
+
+.nav-link-grow-up:hover::before {
+  height: 5px;
+}
+
 </style>
