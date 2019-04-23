@@ -106,7 +106,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($parameters as $parameter)
+                            @foreach($stations as $station)
                             <tr>
                                 <td class="admin-table">{{ $parameter->analysis }}</td>
                                 <td class="admin-table">{{ $parameter->method }}</td>
