@@ -15,10 +15,7 @@ use App\Station;
 Auth::routes();
 
 Route::get('/', function () {
-    $stations = Station::all();
-
-    session(['stations' => $stations]);
-    return view('auth.login');
+    return view('clients.client_home');
 });
 
 
