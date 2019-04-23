@@ -1,24 +1,41 @@
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
-body, html {
-  height: 100%;
-  line-height: 1.8;
+body{
+  margin: 0;
 }
 
-/* Full height image header */
-.bgimg-1 {
-  background-position: center;
-  background-size: cover;
-  background-image: url("/w3images/mac.jpg");
-  min-height: 100%;
+.bg-opacity{
+    position: relative;
+    background-color: #000;
+}
+
+.bg-opacity::before{
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.5;
+    background:       url("{{ asset('img/Homepage.png') }}") no-repeat center center;
+    background-size: cover;
+}
+
+.content{
+  position: relative;
+  width: 100%;
+  height: 600px;
 }
 
 .w3-bar .w3-button {
-  padding: 20px;
 	text-decoration:none;
 }
-
+.cliNavLogo{
+	margin-top: 5%;
+}
 * {
 	margin:0;
 	z-index:0;
@@ -31,6 +48,10 @@ body, html {
 	-o-font-smoothing:antialiased;
 	text-rendering:optimizeLegibility;
 }
+.containerRow {
+	background-color: rgba(38, 38, 38, 0.5);
+	padding:10px;
+    }
 .titleText{
 	color: #F96;
 }
@@ -103,53 +124,8 @@ fieldset {
   margin-top: 6px;
 }
 .SearchRis{
+	margin-top: 8px;
   padding:3px;
-}
-.map-container-6{
-overflow:hidden;
-padding-bottom:56.25%;
-position:relative;
-height:0;
-}
-.map-container-6 iframe{
-left:0;
-top:0;
-height:100%;
-width:100%;
-position:absolute;
-}
-
-#myNavbar{
-	color:#000; 
-}
-
-.servicesAndRates {
-	background-color: white;
-}
-
-/* vietnamese */
-@font-face {
-  font-family: 'Quicksand';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Quicksand Medium'), local('Quicksand-Medium'), url(https://fonts.gstatic.com/s/quicksand/v9/6xKodSZaM9iE8KbpRA_p2HcYQML_B48.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Quicksand';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Quicksand Medium'), local('Quicksand-Medium'), url(https://fonts.gstatic.com/s/quicksand/v9/6xKodSZaM9iE8KbpRA_p2HcYQcL_B48.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Quicksand';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Quicksand Medium'), local('Quicksand-Medium'), url(https://fonts.gstatic.com/s/quicksand/v9/6xKodSZaM9iE8KbpRA_p2HcYT8L_.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 .TS{
@@ -158,4 +134,53 @@ position:absolute;
 .FontError{
 	font-size: 20px;
 }
+.link{
+	margin-top: 2%;
+}
+.nav-link {
+  position: relative;
+  opacity: 0.75;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link::before {
+  transition: 300ms;
+  height: 5px;
+  content: "";
+  position: absolute;
+  background-color: #fff;
+}
+
+.nav-link-ltr::before {
+  width: 0%;
+  bottom: 10px;
+}
+
+.nav-link-ltr:hover::before {
+  width: 100%;
+}
+
+.nav-link-fade-up::before {
+  width: 100%;
+  bottom: 5px;
+  opacity: 0;
+}
+
+.nav-link-fade-up:hover::before {
+  bottom: 10px;
+  opacity: 1;
+}
+
+.nav-link-grow-up::before {
+  height: 0%;
+  width: 100%;
+  bottom: 0px;
+}
+
+.nav-link-grow-up:hover::before {
+  height: 5px;
+}
+
 </style>

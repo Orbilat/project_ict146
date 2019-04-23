@@ -33,25 +33,42 @@
 </head>
 <body>
 <!-- Navbar (sit on top) -->
-<div class="w3-top ">
-    <div class="w3-bar w3-white w3-card">
-  
-      <a href="{{ url('/client-home') }}" class="w3-bar-item w3-button w3-wide"> <img src="/img/logo.png" style="height: 22px;">  
-        USC WATER LABORATORY
-      </a>
-      <!-- Right-sided navbar links -->
-      <div class="w3-right">
-        <a href="{{ url('/client-home') }}" class="w3-bar-item w3-button" ><i class="fa fa-home"></i> HOME</a>
-        <a href="{{ url('/S&R') }}" class="w3-bar-item w3-button" ><i class="fa fa-user"></i> SERVICE & RATES</a>
-        <a href="{{ url('/contact') }}" class="w3-bar-item w3-button" ><i class="fa fa-envelope"></i> CONTACT</a>
-        <form class="w3-bar-item search" method="post" action="{{ route('RIS') }}" > 
-          @csrf
-          <input type="text" class="SearchRis" placeholder="RIS NUMBER" name="search" oninvalid="this.setCustomValidity('Input your  RIS Number')"  title='RIS NUMBER'  oninput="setCustomValidity('')" required/> 
-          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-        </form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  <div class="container-fluid w3-bar">
+    <div class="row">
+      <div class="col-lg-12 text-white cliNavLogo">
+    <a class="navbar-brand" href="{{ url('/client-home') }}">
+          <img src="/img/logo.png" alt="logo" class="d-inline-block align-top" style="height: 30px; ">
+          USC WATER LABORATORY
+        </a>
       </div>
     </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item nav-link nav-link-ltr active">
+          <a class="nav-link" href="{{ url('/client-home') }}"><i class="fa fa-home"></i>Home
+              </a>
+        </li>
+        <li class="nav-item nav-link nav-link-ltr active">
+          <a class="nav-link" href="{{ url('/S&R') }}"><i class="fa fa-user"></i>Service & Rates</a>
+        </li>
+        <li class="nav-item nav-link nav-link-ltr active">
+          <a class="nav-link" href="{{ url('/contact') }}"><i class="fa fa-envelope"></i>Contact</a>
+        </li>
+        <li class="nav-item link ">
+        <form class="nav-item" method="post" action="{{ route('RIS') }}" > 
+          @csrf
+          <input type="text" class="SearchRis" placeholder="RIS NUMBER" name="search" oninvalid="this.setCustomValidity('Input your  RIS Number')"  title='RIS NUMBER'  oninput="setCustomValidity('')" required/> 
+          <button type="submit" class="btn btn-outline-light btn-md my-0 my-sm-0 ml-2"><i class="fa fa-search"></i></button>
+        </form>
+        </li>
+      </ul>
+    </div>
   </div>
+</nav>
 
   
         <main>

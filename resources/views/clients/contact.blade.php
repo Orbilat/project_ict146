@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="w3-container" style="margin-top:5%;" id="contact">
+<div class="w3-container" id="contact">
       <!--Section heading-->
     <h3 class="w3-center">
         CONTACT
@@ -13,12 +13,12 @@
     </p>
   <div class="row">
     <!--Grid column-->
-      <div class="col-lg-5 mb-4">
+      <div class="col-lg-6">
         <!--Form with header-->
           <div class="card ">
               <div class="card-body">
                   <!--Header-->
-                    <div class="form-header blue accent-1 w3-center">
+                    <div class="form-header w3-center">
                         <h2>
                           <i class="fa fa-pencil"></i> 
                             Write to us:
@@ -32,7 +32,7 @@
                           @if (Session::has('flash_message'))
                             <div class="alert alert-success">{{ Session::get('flash_message') }}</div>
                           @endif
-                    <div class="md-form">
+                    <div class="lg-form">
                         <i class="fa fa-user"></i>
                         <label for="form-name">Your name</label>
                         <input type="text" class="form-control" name="name" required>
@@ -40,7 +40,7 @@
                             <small class="form-text invalid-feedback">{{ $errors->first('name') }}</small>
                           @endif
                     </div>
-                    <div class="md-form">
+                    <div class="lg-form">
                         <i class="fa fa-envelope"></i>
                         <label for="form-email">Your email</label>
                         <input type="email" class="form-control" name="email" required>
@@ -48,7 +48,7 @@
                             <small class="form-text invalid-feedback">{{ $errors->first('email') }}</small>
                           @endif
                     </div>
-                    <div class="md-form">
+                    <div class="lg-form">
                         <i class="fa fa-comment"></i>
                         <label for="form-Subject">Message</label>
                         <textarea name="message" class="form-control" required></textarea>
@@ -56,21 +56,19 @@
                             <small class="form-text invalid-feedback">{{ $errors->first('message') }}</small>
                           @endif        
                     </div>
-                        <button class="w3-button w3-info " type="submit">
+                        <button class="w3-button w3-info" type="submit">
                           <i class="glyphicon glyphicon-send"></i> SEND MESSAGE
                         </button>
              </div>
           </div>
       </div>
-      <div class="col-lg-7 center text-center ">
+      <div class="col-lg-6 text-center ">
         <!--Google map-->
-        <div>
-          <img src="{{ asset('img/map.PNG') }}" style="height: 400px; width: 600px; border: 1px solid rgba(0, 0, 0, 0.125);">   
-        </div>
+          <img class="img-responsive img-fluid rounded mx-auto d-block" src="{{ asset('img/map.png') }}" style="border: 1px solid rgba(0, 0, 0, 0.125);">   
         <br>
         <!--Buttons-->
         <div class="row text-center">
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <i class="glyphicon glyphicon-map-marker fa-fw w3-xlarge w3-text-red"></i>
                 <address style="font-size: 11px;">
                   Room 320, 3rd Floor Bunzel Building,
@@ -78,18 +76,18 @@
                   Cebu City Philippines 6000
                 </address>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <i class="glyphicon glyphicon-earphone fa-fw w3-xlarge w3-text-red"></i>
                 <p style="font-size: 11px;">(63 32)345 3811<br>
                 Mon-Fri 7:30AM-4:30PM<br>
                 Sat 7:30AM-11:30AM</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-lg-2">
                 <i class="glyphicon glyphicon-phone fa-fw w3-xlarge w3-text-red"></i>
                 <p style="font-size: 11px;">(63 32) 230 0100
                 loc 110</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <i class="glyphicon glyphicon-envelope fa-fw w3-xlarge w3-text-red"></i>
                 <p style="font-size: 13px;">waterlab@usc.edu.ph</p>
             </div>
@@ -97,28 +95,86 @@
       </div>
   </div>
 </div>
-      <footer class="w3-center w3-black w3-padding-32">
-          <div class="row">
-            <div class="col-md-1"></div>
-              <div class="col-md-3 text-center"> <h2 class="titleText" style="font-size: 15px;">Address</h2>
-                  <p class="text-center" style="font-size: 10px;">Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, 
+       <!-- Footer -->
+<footer class="page-footer font-small indigo w3-black text-white">
+
+<!-- Footer Links -->
+<div class="container text-center text-md-left">
+
+  <!-- Grid row -->
+  <div class="row">
+
+    <!-- Grid column -->
+    <div class="col-md-3 mx-auto">
+
+      <!-- Links -->
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">About</h5>
+          <p>The Water Laboratory is accredited as a testing laboratory by the Department of Environment and Natural Resources (DENR) and the Department of Health (DOH).</p>
+    </div>
+    <!-- Grid column -->
+
+    <hr class="clearfix w-100 d-md-none">
+
+    <!-- Grid column -->
+    <div class="col-md-3 mx-auto">
+
+      <!-- Links -->
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Address</h5>
+
+      <p>Room 320, 3rd Floor Bunzel Building, University of San Carlos Talamban Campus, 
                   Nasipit Talamban Cebu City Philippines 6000</p>
-              </div>
-              <div class="col-md-4 text-center"> <h2 class="titleText" style="font-size: 15px;">Contacts</h2>
-                  <p class="text-center" style="font-size: 10px;">Email:waterlab@usc.edu.ph<br>
-                  Phone: (63 32)345 3811<br>
-                  Fax: (63 32)230 0100 loc 110</p>
-              </div>
-              <div class="col-md-3 text-center"> <h2 class="titleText" style="font-size: 15px;">Feedbacks</h2>
-                  <p class="text-center" style="font-size: 10px;">Please send us your ideas, bug reports, suggestions! <br>
+    </div>
+    <!-- Grid column -->
+
+    <hr class="clearfix w-100 d-md-none">
+
+    <!-- Grid column -->
+    <div class="col-md-3 mx-auto">
+
+      <!-- Links -->
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Contact Us </h5>
+
+      <p>Email:waterlab@usc.edu.ph<br>
+         Phone: (63 32)345 3811<br>
+         Fax: (63 32)230 0100 loc 110</p>
+    </div>
+    <!-- Grid column -->
+
+    <hr class="clearfix w-100 d-md-none">
+
+    <!-- Grid column -->
+    <div class="col-md-3 mx-auto">
+
+      <!-- Links -->
+      <h5 class="font-weight-bold text-uppercase mt-3 mb-4 titleText">Feedbacks</h5>
+
+      <p>Please send us your ideas, bug reports, suggestions! <br>
                   Any feedback would be appreciated.</p>
-                  <br>
-              </div>
-          </div>
-              <div class="col-md-12 col-xs-12 col-centered w3-black">
-                <div class=" text-center titleText" style="font-size: 15px; align-content: center;" >Connect with us:
-                    <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379" style="color: #fff; font-size:20px;"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-                </div>
-          </div>
-      </footer>
+      <ul class="list-unstyled">
+        <li>
+          <a href="{{ url('/contact') }}">Message Us<i class="glyphicon glyphicon-envelope fa-fw "></i></a>
+        </li>
+      </ul>
+
+    </div>
+    <!-- Grid column -->
+
+  </div>
+  <!-- Grid row -->
+
+</div>
+<!-- Footer Links -->
+<h5 class="text-center"  style="font-size:25px; border-radius: 35px;">Follow us:
+    <a href="https://www.facebook.com/pages/USC-Water-Laboratory/618035434997379"><i class="fa fa-facebook-official w3-hover-opacity " style=" font-size:25px; border-radius: 35px;"></i></a> 
+</h5>
+<!-- Copyright -->
+<div class="footer-copyright text-center py-3">© 2019 Copyright:
+  <a href="https://mdbootstrap.com/education/bootstrap/">uscwaterlab.tech</a>- All rights served
+</div>
+<!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+    
   @endsection

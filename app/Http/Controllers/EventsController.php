@@ -35,7 +35,7 @@ class EventsController extends Controller
                 'left' => ' prev,next today',
             ],
             'defaultView' => 'month',
-            "eventLimit" => 4,
+            "eventLimit" => 1,
             "allDay" => false
         ]);
         return view('clients.client_home')->with(compact('calendar_details'));
