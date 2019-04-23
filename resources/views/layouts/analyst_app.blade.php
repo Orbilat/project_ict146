@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="navbar-brand" href="{{ url('/analyst/notification') }}">
                 <img src="/img/logo.png" style="height: 22px;">
                     {{ 'USC WATER LABORATORY' }}
             </a>
