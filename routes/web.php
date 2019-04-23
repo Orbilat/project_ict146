@@ -14,10 +14,7 @@ use App\Station;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('clients.client_home');
-});
-
+Route::get('/', 'EventsController@index')->name('events.index');
 
 //Auth routes
 // Route::get('/client-home', function () {
