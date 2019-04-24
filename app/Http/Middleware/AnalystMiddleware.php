@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\View;
 use App\Sample as Sample;
+use App\Station as Station;
 use DB;
 
 class AnalystMiddleware
@@ -21,7 +22,7 @@ class AnalystMiddleware
         if ($request->user()->userType != 'analyst') {
             return redirect('/');
         }
-
+        $stations = Station::all();
         $sampledata = DB::table('samples AS s')
                         ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection' )
                         ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -34,6 +35,7 @@ class AnalystMiddleware
                         ->get();
 
         View::share('sampledata', $sampledata);
+        View::share('stations', $stations);
         return $next($request);
     }
 }
