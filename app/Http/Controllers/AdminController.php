@@ -371,7 +371,7 @@ class AdminController extends Controller
         $sample->managedDate = new DateTime();
         $sample->save();
         // Add lab code
-        $sample->laboratoryCode = date("Y", strtotime($client->created_at)). '-' .date("m", strtotime($client->created_at)) . '-' . $sample->sampleId;
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
         // Insert sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
@@ -434,19 +434,9 @@ class AdminController extends Controller
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         $sample->save();
-        // Add lab code 
-        if (strlen((string)($sample->sampleId)) == 1) {
-            $idOfSample = (string)("000".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 2) {
-            $idOfSample = (string)("00".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 3) {
-            $idOfSample = (string)("0".$sample->sampleId);
-        } else {
-            $idOfSample = (string)$sample->sampleId;
-        }
-        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
-
-        // Add sample tests
+        // Add lab code
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
+        // Insert sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;

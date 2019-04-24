@@ -85,7 +85,12 @@
 
                                     <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
                                     <div class="col-md-3">
-                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">+63</div>
+                                            </div>
+                                            <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
+                                        </div>
         
                                         @if ($errors->has('faxNumber'))
                                             <span class="invalid-feedback" role="alert">
