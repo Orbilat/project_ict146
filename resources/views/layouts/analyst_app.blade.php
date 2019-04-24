@@ -41,7 +41,7 @@
                           Station
                       </a>
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                          @foreach(Session::get('stations') as $station)
+                          @foreach( $stations as $station)
                               <a class="dropdown-item" href="/analyst/sample/station/{{ $station->stationId }}">{{ $station->stationName }}</a>
                           @endforeach
                       </div>
