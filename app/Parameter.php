@@ -19,7 +19,7 @@ class Parameter extends Model
         return $this->belongsToMany(Sample::class, 'sample__tests', 'parameters', 'sampleCode')->withPivot('status', 'timeReceived', 'timeCompleted');
     }
 
-    public function station()
+    public function stations()
     {
         return $this->belongsTo(Station::class, 'station', 'stationId');
     }

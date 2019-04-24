@@ -95,11 +95,9 @@ class AdminController extends Controller
     // Parameters page
     public function parameters()
     {
-        $stations = Station::with('parameters', function ($query) {
-            $query->orderBy('analysis');
-        })->paginate(10);
+        $parameters = Parameter::with('stations')->orderBy('analysis')->paginate(10);
 
-        return view('admin.parameters', ['stations' => $stations]);
+        return view('admin.parameters', ['parameters' => $parameters]);
     }
 
      // Suppliers page
