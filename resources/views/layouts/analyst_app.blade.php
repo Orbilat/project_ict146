@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/capstone.css') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+<link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}" />
+<link rel="icon" type="image/gif" href="{{ asset('favicon.ico') }}" />
 <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('js/datatables.min.js')}}"></script>
