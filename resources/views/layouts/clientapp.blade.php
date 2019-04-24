@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="{{ asset('bootstrap3.4.0/icons/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('w3css/w3.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/fontgoogleapi.css') }}">
-    <link rel="icon" href="{{ asset('img/logo.ico') }}" type="image/x-icon/">
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logo.ico') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('img/logo.ico') }}" />
+    <link rel="icon" type="image/gif" href="{{ asset('img/logo.ico') }}" />
 
     
     <!-- Styles -->
