@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'USC Water Lab') }}</title>
 
            <!-- Scripts -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('bootstrap3.4.0/icons/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('w3css/w3.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/fontgoogleapi.css') }}">
+    <link rel="icon" href="{{ asset('img/logo.ico') }}" type="image/x-icon">
 
     
     <!-- Styles -->
