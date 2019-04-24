@@ -19,8 +19,8 @@ class AnalystMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->userType != 'analyst') {
-            return redirect('/');
+        if ($request->user()->userType != 'analyst' && $request->user()->userType != 'administrator') {
+            return redirect('/login');
         }
         $stations = Station::all();
         $sampledata = DB::table('samples AS s')
