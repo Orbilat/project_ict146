@@ -17,7 +17,7 @@
                         {{-- <input class="float-right" type="submit" value="Search"> --}}
                         <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search client...">
                     </form>
-                <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
+                    <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             {{-- FORM FOR ADDING CLIENT HERE --}}
                             <form method="POST" action="{{ route('addClient-admin') }}">
@@ -204,7 +204,7 @@
                                     <label for="followUp" class="col-md-4 col-form-label text-md-right">{{ __('Follow Up Date') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="followUp" type="datetime-local" class="form-control{{ $errors->has('followUp') ? ' is-invalid' : '' }}" name="followUp" required autofocus>
+                                        <input id="followUp" type="datetime" class="form-control{{ $errors->has('followUp') ? ' is-invalid' : '' }}" name="followUp" required autofocus>
         
                                         @if ($errors->has('followUp'))
                                             <span class="invalid-feedback" role="alert">

@@ -15,11 +15,25 @@
   .deleteModal {
     background-color: rgb(244, 193, 193);
   }
+
   .pointer {
     cursor: pointer;
   }
-  .event {
-    border-style: outset;
+
+  .nav-pills .nav-link {
+    border-radius: 0;
+  }
+
+  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #6c757d;
+  }
+
+  a {
+    color: #6c757d;
+  }
+
+  a:hover {
+    color: #353535;
   }
 
   .collapsible {
