@@ -40,7 +40,7 @@
   <div class="container-fluid w3-bar">
     <div class="row">
       <div class="col-lg-12 text-white cliNavLogo">
-    <a class="navbar-brand" href="{{ url('/client-home') }}">
+    <a class="navbar-brand" href="{{ url('/') }}">
           <img src="/img/logo.png" alt="logo" class="d-inline-block align-top" style="height: 30px; ">
           USC WATER LABORATORY
         </a>
@@ -52,7 +52,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link nav-link-ltr active">
-          <a class="nav-link" href="{{ url('/client-home') }}"><i class="fa fa-home"></i>Home
+          <a class="nav-link" href="{{ url('/') }}"><i class="fa fa-home"></i>Home
               </a>
         </li>
         <li class="nav-item nav-link nav-link-ltr active">
