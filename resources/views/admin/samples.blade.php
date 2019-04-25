@@ -358,7 +358,7 @@
                                                         <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
                                                                                
                                                         <div class="col-md-6">
-                                                            <input type="datetime" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ $sample->dueDate }}" required>
+                                                            <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ $sample->dueDate }}" required>
                                                             @if ($errors->has('dueDate'))
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $errors->first('dueDate') }}</strong>

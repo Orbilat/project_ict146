@@ -14,26 +14,13 @@ use App\Station;
 
 Auth::routes();
 
-Route::get('/', function () {
-    $stations = Station::all();
-
-    session(['stations' => $stations]);
-    return view('auth.login');
-});
-
-
-//Auth routes
-// Route::get('/client-home', function () {
-//     return view('clients.client_home');
-
-
 //CLIENT ROUTES
 Route::get('/RIS', function () {
     return view('clients.client_RIS');
 })->name('RisNumber');
-Route::post('/RIS', 'ClientController@RIS')->name('RIS');
 
-Route::get('/client-home', 'EventsController@index')->name('events.index');
+Route::post('/RIS', 'ClientController@RIS')->name('RIS');
+Route::get('/', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', 'ClientController@parameters')->name('parameters-client');
 Route::get('/contact', [
@@ -44,7 +31,6 @@ Route::post('/contact', [
     'as' => 'contact.store'
 ]);
 // END CLIENT ROUTES
-
 
 //SECRETARY ROUTES
 Route::middleware(['secretary','auth'])->group(function (){
@@ -67,7 +53,6 @@ Route::get('/secretary/add-sample','SecretaryController@addSample')->name('addSa
 Route::post('/secretary/add-sample','SecretaryController@postAddSample')->name('postAddSample');
 // Route::post('/secretary/search/not_found','ProduitController@search')->name('search-fail');
 });
-
 //END SECRETARY ROUTES
 
 //ADMIN ROUTES

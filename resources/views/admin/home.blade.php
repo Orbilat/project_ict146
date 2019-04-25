@@ -10,9 +10,6 @@
 @endif
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-6 mb-3">
-            
-        </div>
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Notifications</div>

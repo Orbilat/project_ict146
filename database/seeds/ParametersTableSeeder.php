@@ -15,7 +15,7 @@ class ParametersTableSeeder extends Seeder
         Parameter::insert([
             [
                 'analysis' => '(Cd) Cadmium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => '1',
                 'managedBy' => 'Test Admin',
@@ -23,7 +23,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Ca) Calcium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -31,7 +31,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Cr) Chromium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -39,7 +39,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Co) Cobalt',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -47,7 +47,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Cu) Copper',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -55,7 +55,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Fe) Iron',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -63,7 +63,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Pb) Lead',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -71,7 +71,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Ni) Nickel',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -79,7 +79,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Ne) Sodium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -87,7 +87,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(K) Potassium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -95,7 +95,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Sb) Antimony',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -103,7 +103,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Au) Gold',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1320.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -111,7 +111,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Hg) Mercury',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1320.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -119,7 +119,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Mg) Magnesium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -127,7 +127,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Mn) Manganese',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -135,7 +135,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Se) Selenium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1650.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -143,7 +143,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Ag) Silver',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1100.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -151,7 +151,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Sr) Strontium',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1100.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -159,7 +159,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Sn) Tin',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1100.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -167,7 +167,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(Zn) Zinc',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '740.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -175,7 +175,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '(As) Arsenic',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1650.00',
                 'station' => 1,
                 'managedBy' => 'Test Admin',
@@ -223,7 +223,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Acidity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '300.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -231,7 +231,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Bicarbonate Alkalinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -239,7 +239,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Carbonate Alkalinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -247,7 +247,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Hydroxide Alkalinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -255,7 +255,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Phenolphtalein Alkalinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -263,7 +263,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Alkalinity / Methyl Orange Alkalinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -271,7 +271,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Free Carbon Dioxide',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -279,7 +279,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Carbon Dioxide',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -287,7 +287,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Chloride',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '550.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -295,7 +295,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Chlorine Disenfectant, residual',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '420.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -303,7 +303,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Chromium (VI)',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -311,7 +311,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Calcium Hardness',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -319,7 +319,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Magnesium Hardness',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '445.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -327,7 +327,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Hardness',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '385.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -335,7 +335,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Iron,total',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -343,7 +343,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Iodine',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '500.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -351,7 +351,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Ammonia-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -359,7 +359,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Nitrate-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -367,7 +367,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Nitrite-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '660.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -375,7 +375,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Organic-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1210.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -383,7 +383,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Nitrogen',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1500.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -391,7 +391,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Kjeldahl-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1500.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -399,7 +399,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Urea-N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1000.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -407,7 +407,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Biochemical Oxygen Demand',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1320.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -415,7 +415,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Chemical Oxygen Demand',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '946.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -423,7 +423,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Disolved Oxygen',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '946.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -431,7 +431,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Oil and Grease',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '946.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -439,7 +439,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Phosphate',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '540.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -447,7 +447,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Phosphorus,total',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -455,7 +455,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Salinity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '660.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -463,7 +463,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Silica',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -471,7 +471,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Sulfate',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '550.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -479,7 +479,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Sulfide',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '550.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -487,7 +487,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Surfactants',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1500.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -495,7 +495,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Color(Aparent)',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -503,7 +503,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Color(True)',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '330.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -511,7 +511,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Conductivity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '120.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -519,7 +519,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'pH',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '120.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -527,7 +527,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Temperature',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '120.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -535,7 +535,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Turbidity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '360.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -543,7 +543,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Dissolved Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '410.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -551,7 +551,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Suspended Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '410.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -559,7 +559,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '410.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -567,7 +567,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Settleable Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '410.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -575,7 +575,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Volatile Suspended Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '495.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -583,7 +583,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Volatile Solids',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '495.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -591,7 +591,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% Free Acid',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '770.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -599,7 +599,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% Purity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '880.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -607,7 +607,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Chloride',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '660.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -615,7 +615,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Nitrate',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '770.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -623,7 +623,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Nitrite',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -631,7 +631,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Sulfate',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1320.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -639,7 +639,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Nitrogen',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1430.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -647,7 +647,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Phosphorus',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1210.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -655,7 +655,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Potassium (AAS)',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1240.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -663,7 +663,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Moisture(Oven Method)',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '660.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -671,7 +671,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% Acidity',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '650.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -679,7 +679,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% purity ACIDS/BASES',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '650.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -687,7 +687,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% purity Chlorine/Chloride',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -695,7 +695,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% purity MAP',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1210.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -703,7 +703,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '% purity other chemicals',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '770.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -855,7 +855,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => '0.02 N EDTA Solution',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -863,7 +863,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Calcium Carbonate Solution',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '715.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -871,7 +871,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Standard Iodine Solution 0.10 N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1100.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -879,7 +879,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Sodium Carbonate Standard 0.05 N',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -887,7 +887,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Total Alk indicator',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '1100.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -895,7 +895,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Phenolphthalein indicator',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '770.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -903,7 +903,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'TH buffer solution',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -911,7 +911,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'TH indicator',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '935.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -919,7 +919,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'NaOH Buffer Solution',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -927,7 +927,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'Methyl Orange indicator',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',
@@ -935,7 +935,7 @@ class ParametersTableSeeder extends Seeder
             ],
             [
                 'analysis' => 'CaH indicator',
-                'method' => 'none',
+                'method' => 'not specified',
                 'price' => '605.00',
                 'station' => 2,
                 'managedBy' => 'Test Admin',

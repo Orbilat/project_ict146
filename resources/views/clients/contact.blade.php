@@ -28,7 +28,7 @@
                         <p class="w3-center">Send us a message and we'll respond as soon as possible</p>
                           <!--Body-->
                         <form id="contact" method="post" action="{{ route('contact.store')}}">
-                          {{ csrf_field() }}
+                          @csrf
                           @if (Session::has('flash_message'))
                             <div class="alert alert-success">{{ Session::get('flash_message') }}</div>
                           @endif
@@ -64,7 +64,7 @@
       </div>
       <div class="col-lg-6 text-center ">
         <!--Google map-->
-          <img class="img-responsive img-fluid rounded mx-auto d-block" src="{{ asset('img/map.png') }}" style="border: 1px solid rgba(0, 0, 0, 0.125);">   
+          <img class="img-responsive img-fluid rounded mx-auto d-block" src="{{ asset('img/map.PNG') }}" style="border: 1px solid rgba(0, 0, 0, 0.125);">   
         <br>
         <!--Buttons-->
         <div class="row text-center">
