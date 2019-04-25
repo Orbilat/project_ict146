@@ -14,6 +14,10 @@ use App\Station;
 
 Auth::routes();
 
+Route::get('/', function () {
+    return view('auth.login');
+});
+
 //CLIENT ROUTES
 Route::get('/RIS', function () {
     return view('clients.client_RIS');
