@@ -21,7 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @include('secretary-file.secretary_style')
+    @include('Secretary-file.secretary_style')
 
            
     <!-- Client Style -->
