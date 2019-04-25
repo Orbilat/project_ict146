@@ -279,7 +279,7 @@
                                                         <label for="sampleCollection" class="col-md-4 col-form-label text-md-right">{{ __('Collection Time') }}</label>
                             
                                                         <div class="col-md-6">
-                                                            <input id="sampleCollection" type="datetime" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ $sample->sampleCollection }}" required autofocus>
+                                                            <input id="sampleCollection" type="datetime-local" class="form-control{{ $errors->has('sampleCollection') ? ' is-invalid' : '' }}" name="sampleCollection" value="{{ $sample->sampleCollection }}" required autofocus>
                             
                                                             @if ($errors->has('sampleCollection'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -358,7 +358,7 @@
                                                         <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
                                                                                
                                                         <div class="col-md-6">
-                                                            <input type="datetime" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ $sample->dueDate }}" required>
+                                                            <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ $sample->dueDate }}" required>
                                                             @if ($errors->has('dueDate'))
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $errors->first('dueDate') }}</strong>

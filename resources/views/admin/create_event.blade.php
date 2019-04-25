@@ -41,7 +41,7 @@
                                         <label for="startDate" class="offset-md-1 col-md-2 col-form-label">{{ __('Start Date') }}</label>
                     
                                         <div class="col-md-8">
-                                            <input id="startDate" type="datetime" class="form-control{{ $errors->has('startDate') ? ' is-invalid' : '' }}" name="startDate" required>
+                                            <input id="startDate" type="datetime-local" class="form-control{{ $errors->has('startDate') ? ' is-invalid' : '' }}" name="startDate" required>
                     
                                             @if ($errors->has('startDate'))
                                                 <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                                         <label for="endDate" class="offset-md-1 col-md-2 col-form-label">{{ __('End Date') }}</label>
                     
                                         <div class="col-md-8">
-                                            <input id="endDate" type="datetime" class="form-control{{ $errors->has('endDate') ? ' is-invalid' : '' }}" name="endDate" required>
+                                            <input id="endDate" type="datetime-local" class="form-control{{ $errors->has('endDate') ? ' is-invalid' : '' }}" name="endDate" required>
                     
                                             @if ($errors->has('endDate'))
                                                 <span class="invalid-feedback" role="alert">

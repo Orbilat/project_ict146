@@ -131,7 +131,13 @@
             </div>
         </nav>
         <main class="py-4">
-
+            {{-- SUCCESS MESSAGE OF ADDING EVENT --}}
+            @if(Session::has('flash_event_added'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_event_added')!!}
+                </div>
+            @endif
 
             {{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
                 @if(Session::has('flash_sample_added'))
