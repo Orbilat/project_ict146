@@ -95,7 +95,7 @@ class AdminController extends Controller
     // Parameters page
     public function parameters()
     {
-        $parameters = Parameter::with('station')->orderBy('analysis')->paginate(10);
+        $parameters = Parameter::with('stations')->orderBy('analysis')->paginate(10);
 
         return view('admin.parameters', ['parameters' => $parameters]);
     }
@@ -246,16 +246,7 @@ class AdminController extends Controller
         $client->managedDate = new DateTime();
         $client->save();
         // Add ris number
-        if (strlen((string)($client->clientId)) == 1) {
-            $idOfClient = (string)("000".$client->clientId);
-        } elseif (strlen((string)($client->clientId)) == 2) {
-            $idOfClient = (string)("00".$client->clientId);
-        } elseif (strlen((string)($client->clientId)) == 3) {
-            $idOfClient = (string)("0".$client->clientId);
-        } else {
-            $idOfClient = (string)$client->clientId;
-        }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $client->clientId;
 
         if($client->save()) {
             // Insert transaction
@@ -380,16 +371,7 @@ class AdminController extends Controller
         $sample->managedDate = new DateTime();
         $sample->save();
         // Add lab code
-        if (strlen((string)($sample->sampleId)) == 1) {
-            $idOfSample = (string)("000".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 2) {
-            $idOfSample = (string)("00".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 3) {
-            $idOfSample = (string)("0".$sample->sampleId);
-        } else {
-            $idOfSample = (string)$sample->sampleId;
-        }
-        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
         // Insert sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
@@ -402,7 +384,7 @@ class AdminController extends Controller
         // Return to add sample page
         if($sample->save()){
 
-            $sample->notify(new SampleDueDate($sample))->addMinutes(15);
+            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
 
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
@@ -452,19 +434,9 @@ class AdminController extends Controller
         $sample->managedBy = Auth::user()->employeeName;
         $sample->managedDate = new DateTime();
         $sample->save();
-        // Add lab code 
-        if (strlen((string)($sample->sampleId)) == 1) {
-            $idOfSample = (string)("000".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 2) {
-            $idOfSample = (string)("00".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 3) {
-            $idOfSample = (string)("0".$sample->sampleId);
-        } else {
-            $idOfSample = (string)$sample->sampleId;
-        }
-        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
-
-        // Add sample tests
+        // Add lab code
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
+        // Insert sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
@@ -779,10 +751,13 @@ class AdminController extends Controller
         }
         // Insert event
         $event = new Event;
-        $event->event_name = trim($request->eventName);
+        // $event->event_name = trim($request->eventName);
+        $event->event_name = $request->eventName;
         $event->start_date = $request->startDate;
         $event->end_date = $request->endDate;
-        // Save
+
+        // dd($event);
+        //CHECK SAVE
         if($event->save()){
             Session::flash('flash_event_added', 'Event added successfully!');
             return Redirect::back();

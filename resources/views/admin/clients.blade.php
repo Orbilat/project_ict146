@@ -17,7 +17,7 @@
                         {{-- <input class="float-right" type="submit" value="Search"> --}}
                         <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search client...">
                     </form>
-                <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
+                    <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             {{-- FORM FOR ADDING CLIENT HERE --}}
                             <form method="POST" action="{{ route('addClient-admin') }}">
@@ -85,7 +85,12 @@
 
                                     <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
                                     <div class="col-md-3">
-                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">+63</div>
+                                            </div>
+                                            <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
+                                        </div>
         
                                         @if ($errors->has('faxNumber'))
                                             <span class="invalid-feedback" role="alert">
@@ -528,7 +533,7 @@
                 </div>
             </div>
             {{-- PAGINATION LINKS (PAGINATION:6) --}}
-            <div class="offset-md-5 mt-3">
+            <div class="row justify-content-center mt-2">
                     {{ $clients->links() }}
             </div>
             {{-- PAGINATION END --}}

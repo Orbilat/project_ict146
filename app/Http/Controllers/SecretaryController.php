@@ -23,25 +23,25 @@ class SecretaryController extends Controller
     //
     public function index()
     {
-        return view('secretary-file.secretary');
+        return view('Secretary-file.secretary');
     }
     
     public function inve()
     {
-        return view('secretary-file.inventory-secretary');
+        return view('Secretary-file.inventory-secretary');
     }
     public function addSample(){
         $parameter = Parameter::all();
         $clients = Client::all();
-        return view ('secretary-file.add-sample', ['parameters' => $parameter, 'clients' => $clients]);
+        return view ('Secretary-file.add-sample', ['parameters' => $parameter, 'clients' => $clients]);
     }
     public function stat()
     {
-        return view('secretary-file.view-secretary');
+        return view('Secretary-file.view-secretary');
     }
     public function create()
     {
-        return view ('secretary-file.create-secretary');
+        return view ('Secretary-file.create-secretary');
     }
     public function samples(){
         $samples=Sample::all();
@@ -111,7 +111,7 @@ class SecretaryController extends Controller
             $clients=Client::all();
             $parameters = Parameter::all();
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
-            return view('secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
+            return view('Secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
         }
         else {
             abort(500, 'Error! Sample not added.');
@@ -122,7 +122,7 @@ class SecretaryController extends Controller
     public function form()
     {
         $clients = DB::table('clients')->orderBy('clientId','DESC')->get();
-        return view('secretary-file.secretary-form',['clients'=>$clients]);
+        return view('Secretary-file.secretary-form',['clients'=>$clients]);
     }
 
 
@@ -151,7 +151,7 @@ class SecretaryController extends Controller
        
         $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-        return view('secretary-file.manage_client_secretary', ['status'=>$client]);
+        return view('Secretary-file.manage_client_secretary', ['status'=>$client]);
     }
 
     protected function paid($clientId){
@@ -162,7 +162,7 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
+                return view('Secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
         else{
@@ -170,7 +170,7 @@ class SecretaryController extends Controller
             if($client->save()){
                 $client = Client::where('readyForPickUp','yes')->paginate(15);
 
-                return view('secretary-file.manage_client_secretary', ['status'=>$client]);
+                return view('Secretary-file.manage_client_secretary', ['status'=>$client]);
             }
         }
 
@@ -203,7 +203,7 @@ class SecretaryController extends Controller
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('secretary-file.create-secretary')
+            return redirect('Secretary-file.create-secretary')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -261,7 +261,7 @@ class SecretaryController extends Controller
             $parameter = Parameter::all();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-            return view('secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
+            return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
         }
         else {
             App::abort(500, 'Error!');
@@ -334,14 +334,11 @@ class SecretaryController extends Controller
             if($sample->save()){
                 $params = Parameter::all();
                 Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
-                return view('secretary-file.sample-secretary', ['risNumber' => $request->clientId, 'parameters' => $params]);
+                return view('Secretary-file.sample-secretary', ['risNumber' => $request->clientId, 'parameters' => $params]);
             }
             else {
                 App::abort(500, 'Error!');
             }
-            
         }
-        
     }
-    
 }

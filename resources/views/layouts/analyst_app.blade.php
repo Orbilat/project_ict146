@@ -1,19 +1,22 @@
 <title>USC Water Laboratory</title>
 <meta charset="UTF-8" />
-<link rel="stylesheet" href="/css/app.css" />
-<link rel="stylesheet" href="/css/datatables.min.css" />
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/capstone.css" />
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/datatables.min.js"></script>
-<script src="/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/capstone.css') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+<link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}" />
+<link rel="icon" type="image/gif" href="{{ asset('favicon.ico') }}" />
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('js/datatables.min.js')}}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="navbar-brand" href="{{ url('/analyst/notification') }}">
                 <img src="/img/logo.png" style="height: 22px;">
                     {{ 'USC WATER LABORATORY' }}
             </a>
@@ -41,7 +44,7 @@
                           Station
                       </a>
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                          @foreach(Session::get('stations') as $station)
+                          @foreach( $stations as $station)
                               <a class="dropdown-item" href="/analyst/sample/station/{{ $station->stationId }}">{{ $station->stationName }}</a>
                           @endforeach
                       </div>

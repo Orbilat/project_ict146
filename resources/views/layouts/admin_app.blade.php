@@ -17,6 +17,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/gif" href="{{ asset('favicon.ico') }}" />
     {{-- <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}"> --}}
 
     <!-- Styles -->
@@ -28,8 +31,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="/img/logo.png" style="height: 22px;">
+                <a class="navbar-brand" href="{{ url('/admin') }}">
+                    <img src="{{ asset('img/logo.png') }}" style="height: 22px;">
                     {{ 'USC WATER LABORATORY' }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -128,7 +131,13 @@
             </div>
         </nav>
         <main class="py-4">
-
+            {{-- SUCCESS MESSAGE OF ADDING EVENT --}}
+            @if(Session::has('flash_event_added'))
+                <div class="alert alert-info offset-md-1 col-md-10">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Notification:</strong> {!!Session::get('flash_event_added')!!}
+                </div>
+            @endif
 
             {{-- SUCCESS MESSAGE OF INSERTING SAMPLE --}}
                 @if(Session::has('flash_sample_added'))

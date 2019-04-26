@@ -77,14 +77,14 @@
 
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th class="admin-table">Company Name</th>
                                 <th class="admin-table">Email Address</th>
                                 <th class="admin-table">Contact No.</th>
                                 <th class="admin-table">Updated By</th>
                                 <th class="admin-table">Updated At</th>
-                                <th class="admin-table">Status</th>
+                                <th class="admin-table">Functions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -159,7 +159,7 @@
                                             </div> 
                                         </div>
                                     </div>
-            
+                                    &nbsp;&nbsp;
                                     {{-- DELETE BUTTON --}}
                                     <a data-toggle="modal" data-target="#deleteSupplier{{ $count }}"><i class="fa fa-trash"></i></a>
                                     <div id="deleteSupplier{{ $count }}" class="modal fade" role="dialog">
@@ -192,8 +192,8 @@
                     </table>           
                 </div>
             </div>
-            <div class="offset-md-5 mt-3">
-                    {{ $suppliers->links() }}
+            <div class="row justify-content-center mt-2">
+                {{ $suppliers->links() }}
             </div>
         </div>
     </div>

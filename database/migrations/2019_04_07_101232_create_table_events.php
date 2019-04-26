@@ -17,8 +17,8 @@ class CreateTableEvents extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('event_name');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
         });
     }
 

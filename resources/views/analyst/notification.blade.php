@@ -5,27 +5,24 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header ">Notification
-                </div>
+                <div class="card-header ">Notification</div>
                 <br>
                 <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
                     <thead class="thead-light">
                         <tr>
                             <th class="admin-table">Due Date</th>
-                            <th class="admin-table">Date Received</th>
                             <th class="admin-table">Laboratory Code</th>
                             <th class="admin-table">Collection Time</th>
-                            <th class="admin-table">Purpose of Analysis</th>
+                            <th class="admin-table">Station</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($sampledatas as $data)
                             <tr>
                                 <td>{{ $data->dueDate }}</td>
-                                <td>{{ $data->created_at}}</td>
                                 <td>{{ $data->laboratoryCode }}</td>
                                 <td>{{ $data->sampleCollection }}</td>
-                                <td>{{ $data->purposeOfAnalysis }}</td>
+                                <td>{{ $data->stationName }}</td>
                             </tr>
                         @endforeach
                     </tbody>

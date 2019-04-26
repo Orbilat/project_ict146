@@ -12,7 +12,7 @@
                 <div class="card-header">Inventory - Glassware &nbsp; &nbsp;
                 <a href="#addItem" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
                 <form class="float-right" action="GET">
-                    <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search analysis...">
+                    <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search item...">
                 </form>
                 <div id="addItem" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
@@ -79,6 +79,7 @@
                                 
                                 <div class="col-md-6">
                                     <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;" required>
+                                        <option value="" selected>Choose a supplier</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{ $supplier->companyName }}">{{ $supplier->companyName }}</option>
                                         @endforeach
@@ -104,8 +105,8 @@
             </div>
 
             <div class="card-body">
-                <table class="table">
-                    <thead class="thead-light">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
                             <th class="admin-table">Name of Item</th>
                             <th class="admin-table">Container Type</th>
@@ -122,7 +123,7 @@
                             <td class="admin-table">{{ $item->containerType }}</td>
                             <td class="admin-table">{{ $item->volumeCapacity }}</td>
                             <td class="admin-table">{{ $item->quantity }}</td>
-                            <td class="admin-table">{{ $item->companyName }}</td>
+                            <td class="admin-table">{{ $item->suppliers->companyName }}</td>
                             <td>
                                 {{-- EDIT BUTTON --}}
                                 <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>
@@ -178,7 +179,9 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="row justify-content-center mt-2">
+                {{ $items->links() }}
+            </div>
         </div>
     </div>
 </div>
