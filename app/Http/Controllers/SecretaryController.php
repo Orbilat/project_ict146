@@ -84,17 +84,7 @@ class SecretaryController extends Controller
         $sample->managedDate = new DateTime();
         $sample->save();
         // Add lab code 
-        if (strlen((string)($sample->sampleId)) == 1) {
-            $idOfSample = (string)("000".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 2) {
-            $idOfSample = (string)("00".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 3) {
-            $idOfSample = (string)("0".$sample->sampleId);
-        } else {
-            $idOfSample = (string)$sample->sampleId;
-        }
-        $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
-
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
         // Add sample tests
         foreach ($request->parameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
@@ -237,16 +227,7 @@ class SecretaryController extends Controller
        
         $client->save();
        
-        if (strlen((string)($client->clientId)) == 1) {
-            $idOfClient = (string)("000".$client->clientId);
-        } elseif (strlen((string)($client->clientId)) == 2) {
-            $idOfClient = (string)("00".$client->clientId);
-        } elseif (strlen((string)($client->clientId)) == 3) {
-            $idOfClient = (string)("0".$client->clientId);
-        } else {
-            $idOfClient = (string)$client->clientId;
-        }
-        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $idOfClient;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $client->clientId;
         $client->save();
         
 
@@ -310,16 +291,7 @@ class SecretaryController extends Controller
             $sample->managedDate = new DateTime();
             $sample->save();
             //INSERT LAB CODE TO SAMPLES
-            if (strlen((string)($sample->sampleId)) == 1) {
-                $idOfSample = (string)("000".$sample->sampleId);
-            } elseif (strlen((string)($sample->sampleId)) == 2) {
-                $idOfSample = (string)("00".$sample->sampleId);
-            } elseif (strlen((string)($sample->sampleId)) == 3) {
-                $idOfSample = (string)("0".$sample->sampleId);
-            } else {
-                $idOfSample = (string)$sample->sampleId;
-            }
-            $sample->laboratoryCode = $request->clientId . '-' . $idOfSample;
+            $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
             
             //INSERT SAMPLE TESTS IN LOOP
             foreach ($request->parameter as $parameter => $analysis) {

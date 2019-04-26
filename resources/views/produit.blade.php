@@ -74,7 +74,7 @@ p{
     
 <input id ="printbtn" type="button" value="Print this page" onclick="window.print();">
  @foreach($client as $clients)
- @foreach($clients->samples as $p)
+ @foreach($clients ->samples as $p)
     <div class="row">
         <div class="col-3">
             <br><br>
@@ -90,7 +90,7 @@ p{
         </div>
         <div class="col-1"></div>    
         <div class="col-7 div1"> 
-            <p> <b> USC WATER LABORATORY &emsp; &emsp; RIS#:</b> {{$p->laboratoryCode}}
+            <p> <b> USC WATER LABORATORY &emsp; &emsp; RIS#:</b> {{ $clients->risNumber }}
                     <!-- @php
                         $year = substr($p->ris,  0, 4);
                         $id = substr($p->ris, 4);
@@ -102,13 +102,7 @@ p{
             <p><b> CHAIN OF CUSTODY SLIP</b>
             
                 <br>
-                <b> LabCode:</b> 
-                @php
-                    $year = substr($p->laboratoryCode,  0, 4);
-                    $IDclient = substr($p->laboratoryCode, 4, 4);
-                    $IDsample = substr($p->laboratoryCode, 8);
-                    echo $year.'-'.$IDclient.'-'.$IDsample;
-                @endphp
+                <b> LabCode:</b> {{ $p->laboratoryCode }}
                 <br>
                 <b> Client's Code:</b> {{ $p->clientsCode }}
                 <br>
