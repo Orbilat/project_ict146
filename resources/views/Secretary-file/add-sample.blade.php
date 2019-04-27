@@ -34,7 +34,7 @@
                     <form action="{{ route('postAddSample') }}" method="post">
                         @csrf
                         <div class="form-group row">
-                            <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client RIS') }}</label>
+                            <label for="clientId" class="col-md-4 col-form-label text-md-right">{{ __('Client') }}</label>
                             
                             <div class="col-md-6">
                                 <select class="form-control" id="clientId" name="clientId" required autofocus>
