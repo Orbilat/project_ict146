@@ -5,8 +5,10 @@
 <div class="col-md-3">
 
 </div>
-<div class="col-md-4">
-<h6>YOU ARE LOGGED IN!</h6></div>
+<div class="col-md-12">
+<div class="alert alert-info">
+  <strong>Welcome! </strong> You are now logged in as Secretary!
+</div>
 
 </div>
 </div>

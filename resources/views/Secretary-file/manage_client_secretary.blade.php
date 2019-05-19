@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container">
+<div class="alert alert-info">
+  <strong>Info!</strong> Ready For Pick Up Clients
+  <br>
+  <strong>Note:</strong> If button is green, it is already paid/sent. Otherwise, it is not.
+</div>
 <table class="table">
   <thead class="thead-light">
     <tr>
