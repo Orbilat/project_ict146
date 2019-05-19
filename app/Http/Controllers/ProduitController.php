@@ -24,12 +24,12 @@ class ProduitController extends Controller
 
         if(count($produits)<1){
             Session::flash('flash_not_found', 'No Client ID exists.');
-            return view('secretary-file.search-fail');
+            return view('Secretary-file.search-fail');
           }
 
         else{
             
-            return view('secretary-file.secretary-search',['clients'=>$produits]);
+            return view('Secretary-file.secretary-search',['clients'=>$produits]);
             
         }
     }
