@@ -193,7 +193,7 @@ class SecretaryController extends Controller
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('Secretary-file.create-secretary')
+            return redirect('secretary/create')
                         ->withErrors($validator)
                         ->withInput();
         }
