@@ -158,7 +158,7 @@ class SecretaryController extends Controller
         else{
             $client->paid = "no";
             if($client->save()){
-                $client = Client::where('readyForPickUp','yes')->paginate(15);
+                $client = Client::where('readyForPickUp','yes')->where('readyForPickUp','Yes')->paginate(15);
 
                 return view('Secretary-file.manage_client_secretary', ['status'=>$client]);
             }
@@ -193,7 +193,7 @@ class SecretaryController extends Controller
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
-            return redirect('Secretary-file.create-secretary')
+            return redirect('secretary/create')
                         ->withErrors($validator)
                         ->withInput();
         }

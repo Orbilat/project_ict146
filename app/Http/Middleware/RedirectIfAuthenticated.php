@@ -28,7 +28,7 @@ class RedirectIfAuthenticated
                     return redirect('/admin/home');
                     break;
                 case 'secretary':
-                    return redirect('/secretary');
+                    return redirect('/secretary/home');
                     break;
                 case 'analyst':
                     return redirect('/analyst/notification');
