@@ -53,7 +53,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link nav-link-ltr active">
-          <a class="nav-link" href="{{ url('/client-home') }}"><i class="fa fa-home"></i>Home
+          <a class="nav-link" href="{{ url('/') }}"><i class="fa fa-home"></i>Home
               </a>
         </li>
         <li class="nav-item nav-link nav-link-ltr active">
