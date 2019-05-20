@@ -7,6 +7,7 @@ use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Parameter;
+use App\ClientContact;
 
 class ClientController extends Controller
 {
@@ -29,4 +30,23 @@ class ClientController extends Controller
         $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
         return view('clients.client_S&R', ['parameters' => $parameters]);
     }
+
+    public function contact()
+    {
+        $contact = DB::table('client_contacts');
+        return view('clients.contact');
+    }
+
+    public function receive(Request $request)
+    {
+        $receiveContact = new ClientContact;
+
+        $receiveContact->name = $request->name;
+        $receiveContact->emailAddress = $request->email;
+        $receiveContact->message =$request->message;
+
+        $receiveContact->save();
+        return view('clients.contact');
+    }
+    
 }

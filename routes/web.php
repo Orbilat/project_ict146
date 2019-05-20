@@ -23,13 +23,8 @@ Route::post('/RIS', 'ClientController@RIS')->name('RIS');
 Route::get('/', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', 'ClientController@parameters')->name('parameters-client');
-Route::get('/contact', [
-    'uses' => 'ContactMessageController@create'
-]);
-Route::post('/contact', [
-    'uses' => 'ContactMessageController@store',
-    'as' => 'contact.store'
-]);
+Route::get('/contact', 'ClientController@contact');
+Route::post('/contact','ClientController@receive')->name('contact.store');
 // END CLIENT ROUTES
 
 //SECRETARY ROUTES
