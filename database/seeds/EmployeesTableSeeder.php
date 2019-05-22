@@ -15,12 +15,12 @@ class EmployeesTableSeeder extends Seeder
     {
         Employee::insert([
             [
-                'username'  => 'tester',
-                'password'  => Hash::make('tester'),
-                'employeeName' => 'Test Admin',
+                'username'  => 'admin',
+                'password'  => Hash::make('admin'),
+                'employeeName' => 'Administrator',
                 'position'  => 'Admin',
-                'idNumber'  => '14102706',
-                'licenseNumber' => '14102706',
+                'idNumber'  => '1',
+                'licenseNumber' => '1',
                 'userType'  => 'administrator',
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,

@@ -15,22 +15,22 @@ class StationsTableSeeder extends Seeder
     {
         Station::insert([
             [
-                'stationName' => 'Station 1',
-                'managedBy' => 'Test Admin',
+                'stationName' => 'Metal',
+                'managedBy' => 'Administrator',
                 'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ],
             [
-                'stationName'  => 'Station 2',
-                'managedBy' => 'Test Admin',
+                'stationName'  => 'Environmental',
+                'managedBy' => 'Administrator',
                 'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ],
             [
-                'stationName'  => 'Station 3',
-                'managedBy' => 'Test Admin',
+                'stationName'  => 'Micro',
+                'managedBy' => 'Administrator',
                 'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
