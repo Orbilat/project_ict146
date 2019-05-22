@@ -2,6 +2,9 @@
 
 @section('content')
 
+{{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
+<?php $count = 0; ?>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -76,18 +79,70 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Event</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th class="admin-table">Event</th>
+                                            <th class="admin-table">Start Date</th>
+                                            <th class="admin-table">End Date</th>
+                                            <th class="admin-table">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($events as $event)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="admin-table">{{$event->event_name}}</td>
+                                            <td class="admin-table">{{$event->start_date}}</td>
+                                            <td class="admin-table">{{$event->end_date}}</td>
+                                            <td>
+                                                 {{-- EDIT BUTTON --}}
+                                                <a data-toggle="modal" data-target="#editEvent{{ $count }}"><i class="fa fa-edit"></i></a>
+                                                <div id="editEvent{{ $count }}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header editModal">
+                                                                <h5 class="modal-title">Edit Event</h5>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <form action="{{ route('updateEvent-admin', [$event->id]) }}" method="post">
+                                                                @method('PATCH')
+                                                                @csrf
+                                                            <div class="modal-body">
+                                                                
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                            </form>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                &nbsp;&nbsp; 
+                                                {{-- DELETE BUTTON --}}
+                                                <a data-toggle="modal" data-target="#deleteEvent{{ $count }}"><i class="fa fa-trash"></i></a>
+                                                <div id="deleteEvent{{ $count }}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header deleteModal">
+                                                                <h5 class="modal-title">Delete Event</h5>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to delete Event: {{ $event->event_name }} ?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="{{ route('destroyEvent-admin', [$event->id])}}" method="post">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
+                                        {{-- COUNT INCREMENTS --}}
+                                        <?php $count++; ?>
                                         @endforeach
                                     </tbody>
                                 </table>

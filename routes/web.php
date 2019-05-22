@@ -82,6 +82,8 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::delete('/admin/parameters/{parameterId}', 'AdminController@destroyParameter')->name('deleteParameter-admin');
     Route::patch('/admin/parameters/{parameterId}', 'AdminController@updateParameter')->name('updateParameter-admin');
     Route::post('/admin/events', 'AdminController@addEvent')->name('addEvent-admin');
+    Route::delete('/admin/events/{eventId}', 'AdminController@destroyEvent')->name('destroyEvent-admin');
+    Route::patch('/admin/events/{eventId}', 'AdminController@updateEvent')->name('updateEvent-admin');
     //Inventory routes
     Route::get('/admin/suppliers', 'AdminController@suppliers')->name('suppliers-admin');
     Route::post('/admin/suppliers', 'AdminController@addSupplier')->name('addSupplier-admin');
