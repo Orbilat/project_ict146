@@ -179,6 +179,9 @@ p{
         <div class="row">
         <b><u>Call us 3453811/2300100 local 110 for confirmation. Test results will not be released without this claim slip.</u> </b>
         </div>
+        <div class="row">
+            To view status of samples please visit our website: <b>www.uscwaterlab.tech</b>
+        </div>
     </div>
 
 

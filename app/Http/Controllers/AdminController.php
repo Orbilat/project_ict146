@@ -111,7 +111,9 @@ class AdminController extends Controller
     // Create event page
     public function events()
     {
-        return view('admin.create_event');
+        $events = Event::paginate(10);
+
+        return view('admin.create_event', ['events' => $events]);
     }
 
     // Add employee account
