@@ -15,14 +15,14 @@ class StationsTableSeeder extends Seeder
     {
         Station::insert([
             [
-                'stationName' => 'Metal',
+                'stationName' => 'Environmental',
                 'managedBy' => 'Administrator',
                 'managedDate' => new DateTime,
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ],
             [
-                'stationName'  => 'Environmental',
+                'stationName'  => 'Wet Lab',
                 'managedBy' => 'Administrator',
                 'managedDate' => new DateTime,
                 'created_at' => new DateTime,
