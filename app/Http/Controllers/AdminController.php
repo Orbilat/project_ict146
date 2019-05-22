@@ -384,7 +384,16 @@ class AdminController extends Controller
         // Return to add sample page
         if($sample->save()){
 
-            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
+            $users = Employee::all();
+            $when = now()->addMinutes(5);
+
+            foreach ($users as $user) {
+                if ($user['username'] == 'tester' || $user['username'] == 'secretary') {
+
+                    $user->notify((new SampleDueDate($sample))->delay($when));
+                    // ProcessNotification::dispatch($user, $sample);
+                }
+            }
 
             $params = Parameter::all();
             Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
