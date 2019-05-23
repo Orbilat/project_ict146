@@ -203,7 +203,7 @@ class SecretaryController extends Controller
         $client->nameOfPerson = trim($request->nameOfPerson);
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
-        $client->contactNumber = trim($request->contactNumber);
+        $client->contactNumber = ("63" . trim($request->contactNumber));
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         if($request->discount == NULL){

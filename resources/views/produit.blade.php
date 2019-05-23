@@ -13,14 +13,14 @@ div.test1
 border: 1.5px solid #000;
 }
 div.div1{
-  width: 450px;
-  height: 240px;
+  width: 350px;
+  height: 157px;
   border: 2px solid black;
 }
 
 div.div2{
   width: 100x;
-  height: 200px;  
+  height: 157px;  
   border: 2px solid black;
   padding: 10px;
 }
@@ -38,8 +38,8 @@ p{
   }
             [class*="col-"] {
                 float: left;
-                padding: 15px;
-                border: 1px;
+                padding: 7px;
+                border: 0px;
             }
 
             
@@ -78,6 +78,18 @@ p{
         .header {
             margin: 5px;
         }
+        b{
+            font-size:13px;
+        }
+        p{
+            font-size:11px;
+            font-weight: 500;
+            margin: 0px;
+        }
+        .row{
+            margin:0px;
+            padding: 0px;
+        }
     </style>
 </head>
 <body>
@@ -100,25 +112,49 @@ p{
         </div>
         <div class="col-1"></div>    
         <div class="col-7 div1">
-            <span class="logo-lg">
+            <p> <b style="font-size:14px">USC WATER LABORATORY  &emsp; &emsp; RIS#: {{ $clients->risNumber }}</b> </p>
+            <center><p><b>CHAIN OF CUSTODY SLIP</p></center>
+            <div class="row">
+                <div class="col-6"><p><b>Lab Code:</b> {{ $p->laboratoryCode }}</p></div>
+                <div class="col-6"><p><b>Sample Type:</b> {{ $p->sampleType }}</p></div>
+            </div>
+            <div class="row">
+                <p><b> Client's Code:</b> {{ $p->clientsCode }}</p>
+            </div>
+            <div class="row">
+                <p><b>Date Submitted: </b>{{  date("F j, Y g:m A", strtotime($p->created_at)) }}</p>
+            </div>
+            <div class="row">
+                <p><b>Date collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}</p>
+            </div>
+            <div class="row">
+                <p><b>Analysis Required:</b> 
+                        @foreach($p->parameters as $para)
+                        {{$para->analysis}},
+                        @endforeach
+                </p>
+            </div>
+            
+
+            <!-- <span class="logo-lg">
                     <img src="{{asset('img/logo_clean.png')}}" alt="" height="30px">
              </span>
-            <br>
-            <p> <b> USC WATER LABORATORY &emsp; &emsp; RIS#:</b> {{ $clients->risNumber }}
+            <br> -->
+            <!-- <p> <b  style="font-size:18px;"> USC WATER LABORATORY &emsp; &emsp; RIS#:</b> {{ $clients->risNumber }}
             </p>
-            <br>
+            
             
             <p><b> CHAIN OF CUSTODY SLIP</b>
             
                 <br>
                 <b> LabCode:</b> {{ $p->laboratoryCode }}
-                <br>
+                
                 <div class="col-6">
                     <b> Client's Code:</b> {{ $p->clientsCode }}
                 </div>
-                <div class="col-6"><b> Sample Type:</b> {{ $p->sampleType }}</div>
-                
+                <div class="col-6 font"> <b class="bold"> Sample Type:</b> {{ $p->sampleType }}</div>
                 <br>
+                <div class="font">
                 <b> Date Submitted:</b> {{  date("F j, Y g:m A", strtotime($p->created_at)) }}
                 <br>
                 <b> Date Collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}
@@ -128,8 +164,8 @@ p{
                         @foreach($p->parameters as $para)
                             {{$para->analysis}}
                         @endforeach
-                  
-            </p>   
+                </div>
+            </p>    -->
         </div> 
     </div>
     <br>
@@ -148,14 +184,14 @@ p{
              <br>
         </div>
         <div class= "row"> 
-            <div class="col-6"><h3 style="padding:0px; margin:0px">CLAIM SLIP</h3> </div>
+            <div class="col-6"><h3 style="padding:0px; margin:0px">CLAIM SLIP</h3> </div> </center>
             <div class="col-6"><b>Date:</b>
                 @php
-                echo date("Y-m-d");
+                echo date("F j, Y g:m A");
                 
                 @endphp
             </div>
-            <br><br>
+            <br>
         </div>
         <div class= "row"> 
             <div class="col-6"><b> RIS #:</b> {{$s->risNumber}}</div>
@@ -173,7 +209,7 @@ p{
             <div class="col-4"><b>Official Receipt No:</b> </div>
         </div>
         <div class="row">
-            <div class="col-6"><b>Please Follow Up On:</b> {{$s->followUp}}</div>
+            <div class="col-6"><b>Please Follow Up On:</b> {{  date("F j, Y g:m A", strtotime($s->followUp)) }}</div>
             <div class="col-6"><b>Issued By:</b> {{$s->managedBy}}</div>
         </div>
         <div class="row">
