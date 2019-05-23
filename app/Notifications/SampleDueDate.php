@@ -11,7 +11,7 @@ class SampleDueDate extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $sample;
+    protected $sample;
 
     /**
      * Create a new notification instance.
@@ -57,7 +57,7 @@ class SampleDueDate extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            'sampleId' => $this->sample['laboratoryCode'],
+            'labCode' => $this->sample['laboratoryCode'],
             'dueDate' => $this->sample['dueDate'],
             'message' => 'This is a test notification',
         ];

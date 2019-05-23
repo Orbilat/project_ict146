@@ -51,7 +51,7 @@
                     <div class="lg-form">
                         <i class="fa fa-comment"></i>
                         <label for="form-Subject">Message</label>
-                        <textarea name="message" class="form-control" required></textarea>
+                        <textarea name="message" class="form-control" maxlenght="120" required></textarea>
                           @if ($errors->has('message'))
                             <small class="form-text invalid-feedback">{{ $errors->first('message') }}</small>
                           @endif        

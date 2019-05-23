@@ -6,7 +6,8 @@
         <div class="card-header">
             <form class="float-right" action="GET">
                 {{-- <input class="float-right" type="submit" value="Search"> --}}
-                <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search analysis...">
+                <input type="text" name="searchBox" id="searchBox" placeholder="Search analysis...">
+                <button type="submit" class="btn btn-outline-dark float-right"><i class="fa fa-search"></i></button>
             </form>
         </div>
     <div class="card-body">
