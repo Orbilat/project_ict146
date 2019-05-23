@@ -128,7 +128,7 @@ p{
                 <p><b>Date collected:</b> {{  date("F j, Y g:m A", strtotime($p->sampleCollection)) }}</p>
             </div>
             <div class="row">
-                <p><b>Analysis Required:</b> 
+                <p style="font-weight: 550"><b>Analysis Required:</b> 
                         @foreach($p->parameters as $para)
                         {{$para->analysis}},
                         @endforeach
