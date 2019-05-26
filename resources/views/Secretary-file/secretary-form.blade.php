@@ -4,6 +4,7 @@
 @section('content')
 
 <div class="container">
+  <a href="{{url('secretary/samples')}}">Sample</a>
   <div class="float-right">
     <form method="POST" action="{{ route('search-barcode') }}">
       @csrf
@@ -19,7 +20,7 @@
     <th>Client Name</th>
     <th>Name Of Entity</th>
     <th>Address</th>
-    <th></th>
+    <th>Print</th>
   </tr>
   @foreach($clients as $client)
 
@@ -33,7 +34,7 @@
  
   
  
-  <a href="{{route('barcode',[$client->clientId])}}"><button class="button button3">  Forms</button></a>
+  <a href="{{route('barcode',[$client->clientId])}}"  class="btn btn-primary"> <i class="mdi mdi-printer"></i> Print</a>
  
   </td>
   
