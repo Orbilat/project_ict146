@@ -36,8 +36,6 @@ Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary')
 Route::post('/secretary/paid/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
 Route::post('/secretary/send/{clientId}', 'SecretaryController@send')->name('send');
 
-Route::get('/dynamic_pdf', 'SecretaryController@samples');
-Route::get('/dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
 Route::post('/secretary/create-sample','SecretaryController@createSample')->name('createSample-secretary');
@@ -46,6 +44,8 @@ Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
 Route::get('/secretary/add-sample','SecretaryController@addSample')->name('addSample');
 Route::post('/secretary/add-sample','SecretaryController@postAddSample')->name('postAddSample');
+Route::get('/secretary/samples','ProduitController@selectSamples');
+Route::post('/secretary/print','ProduitController@printSamples');
 // Route::post('/secretary/search/not_found','ProduitController@search')->name('search-fail');
 });
 //END SECRETARY ROUTES
