@@ -29,14 +29,14 @@ class ProduitController extends Controller
 
             $list_of_samples = $request->samples;
             $lists = [];           
-            $samples = Sample::whereIn('laboratoryCode',$list_of_samples)->get();
-            foreach($samples as $sample){
-                $lists[] = [$sample->risNumber];
-            }
-            $clients = Client::wherein('clientId', $lists)->get();
+            $samples = Sample::with('client')->whereIn('laboratoryCode',$list_of_samples)->get();
+            // foreach($samples as $sample){
+            //     $lists[] = [$sample->risNumber];
+            // }
+            // $clients = Client::wherein('clientId', $lists)->get();
             
             
-            return view('Secretary-file.printSamples', ['samples' => $samples], ['clients' => $clients]);
+            return view('Secretary-file.printSamples', ['samples' => $samples]);
             // echo "<br>";
         
         
