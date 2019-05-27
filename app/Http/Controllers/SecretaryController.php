@@ -239,7 +239,7 @@ class SecretaryController extends Controller
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
         if($transaction->save()){
-            $parameter = Parameter::all();
+            $parameter = Parameter::orderBy('analysis')->all();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
             return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);

@@ -97,7 +97,7 @@ p{
 <button id="printbtn" onclick="history.go(-1);">Back </button>
 <input id ="printbtn" type="button" value="Print this page" onclick="window.print();">
  @foreach($samples as $p)
-
+    
     <div class="row">
         <div class="col-3">
             <br><br>
@@ -113,13 +113,11 @@ p{
         <div class="col-1"></div>    
         <div class="col-7 div1">
             <p> <b style="font-size:14px">USC WATER LABORATORY  &emsp; &emsp; RIS#:
-            
-            <!-- @foreach($p->client)
-                
+            @foreach($clients as $client)
                 @if($client->clientId == $p->risNumber)
                     {{$client->risNumber}}
                 @endif
-            @endforeach -->
+            @endforeach
              </b> </p>
             <center><p><b>CHAIN OF CUSTODY SLIP</p></center>
             <div class="row">

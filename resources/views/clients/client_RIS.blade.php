@@ -23,7 +23,35 @@
         </div>
     </div>
     <br>
-    <div class="row" style="background-color:#e9ecef;">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Lab Code</th>
+      <th scope="col">Analysis</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($client->samples as $sample)
+    
+    <tr>
+    
+      <th scope="row">{{ $sample->managedDate  }}</th>
+      <td>{{$sample->laboratoryCode}}</td>
+      
+        <td>@foreach($sample->parameters as $parameter) {{ $parameter->analysis }} <br> @endforeach</td>
+    
+        <td>@foreach($sample->parameters as $parameter){{ $parameter->pivot->status }} <br> @endforeach</td>
+        
+    
+    </tr>
+    
+    @endforeach
+    
+  </tbody>
+</table>
+    <!-- <div class="row" style="background-color:#e9ecef;">
         <div class="col-sm-3" >
             <h4 class="text-center text-dark TS" style="margin-top:15px;">Date</h3>
         </div>
@@ -36,19 +64,19 @@
         <div class="col-sm-3">
             <h4 class="text-center text-dark TS" style="margin-top:15px;">Status</h4>
         </div>
-    </div>  
-        @foreach($client->samples as $sample)
+    </div>   -->
+        <!-- @foreach($client->samples as $sample)
                 <div class="row"> 
                     <div class="col-md-3 w3-border text-center TS" >{{ $sample->managedDate  }}</div>
                     <div class="col-md-3 w3-border text-center TS">{{ $sample->laboratoryCode  }}</div>
                     <div class="col-md-3 w3-border text-center TS" >
                     @foreach($sample->parameters as $parameter)
                     {{ $parameter->analysis }}<br>
+                    <div class="col-md-3 w3-border text-center TS">{{ $parameter->pivot->status }}</div>
                     @endforeach
                     </div>
-                    <div class="col-md-3 w3-border text-center TS">{{ $parameter->pivot->status }}</div>
                 </div>
-        @endforeach
+        @endforeach -->
             <br>
         @foreach($clients as $client)
             @if ( $client->readyForPickUp == "yes" || $client->paid == "Yes")
