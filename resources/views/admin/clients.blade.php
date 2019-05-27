@@ -73,7 +73,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">+63</div>
                                             </div>
-                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
+                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" placeholder="Optional">
                                         </div>
         
                                         @if ($errors->has('contactNumber'))
@@ -85,12 +85,7 @@
 
                                     <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
                                     <div class="col-md-3">
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">+63</div>
-                                            </div>
-                                            <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
-                                        </div>
+                                        <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
         
                                         @if ($errors->has('faxNumber'))
                                             <span class="invalid-feedback" role="alert">
