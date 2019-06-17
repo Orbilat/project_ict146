@@ -125,7 +125,7 @@ class SecretaryController extends Controller
         foreach($cli as $cl){
             foreach($cl->samples as $sample){
                 foreach($sample->parameters as $parameter){
-                    if($parameter->pivot->status == "Not Started" && $parameter->pivot->status == "In Progress"){
+                    if($parameter->pivot->status == "Not Started" || $parameter->pivot->status == "In Progress"){
                         $isComplete = 'false';
                         break;
                     }
