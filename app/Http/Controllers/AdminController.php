@@ -248,7 +248,7 @@ class AdminController extends Controller
         $client->managedDate = new DateTime();
         $client->save();
         // Add ris number
-        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $client->clientId;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . ($client->clientId + 549);
 
         if($client->save()) {
             // Insert transaction
