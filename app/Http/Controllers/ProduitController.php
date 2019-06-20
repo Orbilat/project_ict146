@@ -26,21 +26,7 @@ class ProduitController extends Controller
 
     public function printSamples(Request $request){
         
-
-            $list_of_samples = $request->samples;
-            $lists = [];           
-            $samples = Sample::with('client')->whereIn('laboratoryCode',$list_of_samples)->get();
-            // foreach($samples as $sample){
-            //     $lists[] = [$sample->risNumber];
-            // }
-            // $clients = Client::wherein('clientId', $lists)->get();
-            
-            
-            return view('Secretary-file.printSamples', ['samples' => $samples]);
-            // echo "<br>";
-        
-        
-        
+        return view('Secretary-file.printSamples');
     }
 
     public function search(Request $request){
