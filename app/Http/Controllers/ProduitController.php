@@ -26,9 +26,6 @@ class ProduitController extends Controller
 
     public function printSamples(Request $request){
         
-<<<<<<< HEAD
-        return view('Secretary-file.printSamples');
-=======
 
             $list_of_samples = $request->samples;
             $lists = [];           
@@ -44,7 +41,6 @@ class ProduitController extends Controller
         
         
         
->>>>>>> a5163017083ef52c3b8df5846ac423c532b00326
     }
 
     public function search(Request $request){

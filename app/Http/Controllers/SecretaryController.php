@@ -227,7 +227,7 @@ class SecretaryController extends Controller
        
         $client->save();
        
-        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . $client->clientId;
+        $client->risNumber = date("Y", strtotime($client->created_at)) . '-' . ($client->clientId + 554);
         $client->save();
         
 
@@ -239,7 +239,7 @@ class SecretaryController extends Controller
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
         if($transaction->save()){
-            $parameter = Parameter::orderBy('analysis')->all();
+            $parameter = Parameter::orderBy('analysis')->get();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
             return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
@@ -291,7 +291,7 @@ class SecretaryController extends Controller
             $sample->managedDate = new DateTime();
             $sample->save();
             //INSERT LAB CODE TO SAMPLES
-            $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
+            $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . ($sample->sampleId + 1588);
             
             //INSERT SAMPLE TESTS IN LOOP
             foreach ($request->parameter as $parameter => $analysis) {
