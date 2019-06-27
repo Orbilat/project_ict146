@@ -137,13 +137,13 @@ class AnalystController extends Controller
         //GROUP BY s.laboratoryCode,s.dueDate,st.status,st.timecompleted
 
         $progressperstation = DB::table('samples AS s')
-                ->select('s.laboratoryCode', 's.dueDate', 'st.status','st.timeReceived' )
+                ->select('s.laboratoryCode', 's.dueDate', 'st.status','s.created_at' )
                 ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                 ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                 ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
                 ->where('p.station','=', $id)
                 ->where('st.status','=', 'In Progress')
-                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','st.timeReceived')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','s.created_at')
                 ->distinct()
                 ->get();
 
