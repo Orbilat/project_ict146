@@ -66,7 +66,7 @@
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                                    <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
         
                                     <div class="col-md-3">
                                         <div class="input-group mb-2">
@@ -83,8 +83,13 @@
                                         @endif
                                     </div>
 
-                                    <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
-                                    <div class="col-md-3">
+                                   
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax No.') }}</label>
+                                    
+                                    <div class="col-md-6">
                                         <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
         
                                         @if ($errors->has('faxNumber'))
