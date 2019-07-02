@@ -109,7 +109,7 @@
                     </table>
                 </div>
             </div>
-            <div class="justify-content-center mt-2">
+            <div class="row justify-content-center mt-2">
                 {{ $transactions->links() }}
             </div>
         </div>
@@ -120,7 +120,6 @@
     $(function() {
         $("td[colspan=10]").find(".sample-parameter").hide();
         $('h6').click(false);
-        $('.row').click(false);
         $('.col-md-3').click(false);
         $("table").click(function(event) {
             event.stopPropagation();
