@@ -109,7 +109,7 @@
                     </table>
                 </div>
             </div>
-            <div class="row justify-content-center mt-2">
+            <div class="justify-content-center mt-2">
                 {{ $transactions->links() }}
             </div>
         </div>
