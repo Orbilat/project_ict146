@@ -20,8 +20,18 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                   <p> You are logged in! </p>
+            
+                    @foreach ($user->notifications as $notification)
+                    @php
+                        dd($notification)
+                    @endphp
+                        <div class="alert alert-info" role="alert">
+                            <h5 class="alert-heading">{{ $notification->data['message'] }}</h5>
+                            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                            <hr>
+                            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                        </div>
+                    @endforeach
     
                 </div>
             </div>

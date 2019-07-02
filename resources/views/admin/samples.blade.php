@@ -13,10 +13,16 @@
                     Samples
                     &nbsp;
                     <a href="#addSample" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
-                    <form class="float-right" action="GET">
-                        {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search sample...">
-                    </form>
+                    <form class="float-right" action="{{ route('searchSample-admin') }}" method="GET">
+                            @csrf
+                            <select class="js-example-responsive" id="search" name="search">
+                                <option selected>Search Lab Code</option>
+                                @foreach ($samps as $samp)
+                                    <option value="{{ $samp->laboratoryCode }}">{{ $samp->laboratoryCode }}</option>
+                                @endforeach
+                            </select>
+                            <input class="float-right" type="submit" value="Search">
+                        </form>
                     <div id="addSample" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                         <div class="card-body">
                             <form action="{{ route('insertSample-admin') }}" method="post">
@@ -310,6 +316,9 @@
                                                             @foreach ($parameters as $parameter)
                                                                 <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
                                                             @endforeach
+                                                           @foreach ($sample->parameters as $param)
+                                                                <option value="{{ $param->analysis }}" selected>{{ $param->analysis }}</option>
+                                                           @endforeach
                                                         </select>
                                                         @if ($errors->has('newParameter'))
                                                             <span class="invalid-feedback" role="alert">

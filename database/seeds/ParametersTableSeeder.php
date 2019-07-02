@@ -190,7 +190,7 @@ class ParametersTableSeeder extends Seeder
                 'managedDate' => new DateTime,
             ],
             [
-                'analysis' => 'Fecial Coliforms',
+                'analysis' => 'Fecal Coliforms',
                 'method' => 'Membrane Filtration for drinking water samples',
                 'price' => '510.00',
                 'station' => 3,

@@ -59,7 +59,7 @@ class SampleDueDate extends Notification implements ShouldQueue
         return [
             'labCode' => $this->sample['laboratoryCode'],
             'dueDate' => $this->sample['dueDate'],
-            'message' => 'This is a test notification',
+            'message' => 'A new sample has been added.'
         ];
     }
 }

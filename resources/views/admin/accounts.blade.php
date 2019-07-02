@@ -13,10 +13,16 @@
                     Accounts
                     &nbsp;
                     <a href="#addAccount" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
-                    <form class="float-right" action="GET">
-                        {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search employee...">
-                    </form>
+                    <form class="float-right" action="{{ route('searchAccount-admin') }}" method="GET">
+                            @csrf
+                            <select class="js-example-responsive" id="search" name="search">
+                                <option selected>Search Employee Name</option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->employeeName }}">{{ $employee->employeeName }}</option>
+                                @endforeach
+                            </select>
+                            <input class="float-right" type="submit" value="Search">
+                        </form>
                 <div id="addAccount" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             <form method="POST" action="{{ route('addAccount-admin') }}">

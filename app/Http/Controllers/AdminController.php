@@ -31,7 +31,9 @@ class AdminController extends Controller
     // Admin home page
     public function admin()
     {
-        return view('admin.home');
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('notifications')->first();
+
+        return view('admin.home', ['user' => $user]);
     }
 
     // Summary of clients with samples
@@ -46,27 +48,30 @@ class AdminController extends Controller
     // Samples page
     public function samples()
     {
-        $samples = Sample::with('client')->paginate(10);
+        $samples = Sample::with('client', 'parameters')->paginate(10);
         $parameters = Parameter::all();
         $clients = Client::orderBy('risNumber')->get();
+        $samps = Sample::all();
 
-        return view('admin.samples', ['samples' => $samples, 'parameters' => $parameters, 'clients' => $clients]);
+        return view('admin.samples', ['samples' => $samples, 'samps' => $samps, 'parameters' => $parameters, 'clients' => $clients]);
     }
 
     // Clients page
     public function clients()
     {
         $clients = Client::orderBy('clientId')->paginate(10);
+        $customers = Client::all();
 
-        return view('admin.clients', ['clients' => $clients]);
+        return view('admin.clients', ['clients' => $clients, 'customers' => $customers]);
     }
 
     // Employee accounts page
     public function accounts()
     {
         $accounts = Employee::orderBy('employeeName')->paginate(10);
+        $employees = Employee::all();
 
-        return view('admin.accounts', ['accounts' => $accounts]);
+        return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
     }
 
     // Item use history page
@@ -96,8 +101,9 @@ class AdminController extends Controller
     public function parameters()
     {
         $parameters = Parameter::with('stations')->orderBy('analysis')->paginate(10);
+        $params = Parameter::all();
 
-        return view('admin.parameters', ['parameters' => $parameters]);
+        return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
     }
 
      // Suppliers page
@@ -214,7 +220,8 @@ class AdminController extends Controller
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
             'address' => 'required|string|max:50',
-            'contactNumber' => 'string|numeric',
+            'contactNumber' => 'nullable|string|numeric',
+            'telephone' => 'nullable|string|numeric',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount' => 'nullable|numeric|between:0,100',
@@ -236,6 +243,7 @@ class AdminController extends Controller
         $client->nameOfEntity = trim($request->nameOfEntity);
         $client->address =  trim($request->address);
         $client->contactNumber = ("63" . trim($request->contactNumber));
+        $client->telephone = trim($request->telephone);
         $client->faxNumber = trim($request->faxNumber);
         $client->emailAddress = trim($request->emailAddress);
         $client->discount = $request->discount;
@@ -387,13 +395,11 @@ class AdminController extends Controller
         if($sample->save()){
 
             $users = Employee::all();
-            $when = now()->addMinutes(5);
-
+        
             foreach ($users as $user) {
-                if ($user['username'] == 'tester' || $user['username'] == 'secretary') {
+                if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample))->delay($when));
-                    // ProcessNotification::dispatch($user, $sample);
+                    $user->notify((new SampleDueDate($sample)));
                 }
             }
 
@@ -460,17 +466,23 @@ class AdminController extends Controller
         // Return to samples page
         if($sample->save()){
 
-            $sample = (new SampleDueDate($sample))->delay(Carbon::now()->addSeconds(15));
-            
-            // $emailJob = (new SendAnnouncementEmail($user->email))->delay(Carbon::now()->addSeconds(3));
+            $users = Employee::all();
+        
+            foreach ($users as $user) {
+                if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-            Session::flash('flash_sample_added', 'Sample inserted successfully!');
-            return redirect()->action('AdminController@samples');
+                    $user->notify((new SampleDueDate($sample)));
+                }
+            }
+
+            $params = Parameter::all();
+            Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
+
+            return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
         }
         else {
             abort(500, 'Error! Sample not added.');
         }
-        
     }
     // Delete a sample
     protected function destroySample($sampleId)
@@ -494,14 +506,14 @@ class AdminController extends Controller
             'sampleType' => 'required|string|max:255',
             'sampleCollection' => 'required|string|max:50',
             'samplePreservation' => 'nullable|string|max:50',
-            'parameter' => 'required',
+            'newParameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
             'dueDate' => 'required|string|max:50',
         ]);
         // Validation fails
         if ($validatorUpdate->fails()) {
-            return redirect('admin/clients')
+            return redirect('admin/samples')
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
@@ -522,18 +534,14 @@ class AdminController extends Controller
         $sample->managedDate = new DateTime();
         $sample->save();
         // Add lab code
-        if (strlen((string)($sample->sampleId)) == 1) {
-            $idOfSample = (string)("000".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 2) {
-            $idOfSample = (string)("00".$sample->sampleId);
-        } elseif (strlen((string)($sample->sampleId)) == 3) {
-            $idOfSample = (string)("0".$sample->sampleId);
-        } else {
-            $idOfSample = (string)$sample->sampleId;
+        $sample->laboratoryCode = date("Y", strtotime($sample->created_at)) . '-' . date("m", strtotime($sample->created_at)) . '-' . $sample->sampleId;
+        //Remove sample tests
+        $tests = Sample_Tests::where('sampleCode', $sample->sampleId)->get();
+        foreach ($tests as $test) {
+            $test->delete();
         }
-        $sample->laboratoryCode = $finalId . '-' . $idOfSample;
         // Add sample tests
-        foreach ($request->parameter as $parameter => $analysis) {
+        foreach ($request->newParameter as $parameter => $analysis) {
             $sampletests = new Sample_Tests;
             $sampletests->sampleCode = $sample->sampleId;
             $sampletests->parameters = Parameter::where('analysis', $analysis)->value('parameterId');
@@ -856,5 +864,39 @@ class AdminController extends Controller
         else {
             abort(500, 'Error! Item was not updated.');
         }
+    }
+
+    protected function searchClient(Request $request)
+    {
+        $client = Client::where('risNumber', $request->search)->paginate(10);
+        $customers = Client::all();
+
+        return view('admin.clients', ['clients' => $client, 'customers' => $customers]);
+    }
+
+    protected function searchSample(Request $request)
+    {
+        $samples = Sample::where('laboratoryCode', $request->search)->with('client', 'parameters')->paginate(10);
+        $parameters = Parameter::all();
+        $clients = Client::orderBy('risNumber')->get();
+        $samps = Sample::all();
+
+        return view('admin.samples', ['samples' => $samples, 'samps' => $samps, 'parameters' => $parameters, 'clients' => $clients]);
+    }
+
+    protected function searchParameter(Request $request)
+    {
+        $parameters = Parameter::where('analysis', $request->search)->with('stations')->paginate(10);
+        $params = Parameter::all();
+
+        return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
+    }
+
+    protected function searchAccount(Request $request)
+    {
+        $accounts = Employee::where('employeeName', $request->search)->paginate(10);
+        $employees = Employee::all();
+
+        return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
     }
 }
