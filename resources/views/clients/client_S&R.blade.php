@@ -12,6 +12,7 @@
                                   <option value="{{ $param->analysis }}">{{ $param->analysis }}</option>
                                 @endforeach
                             </select>
+                            
                             <input class="float-right" type="submit" value="Search">
                         </form>
         </div>
@@ -122,5 +123,13 @@
 
 </footer>
 <!-- Footer -->
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('.js-example-responsive').select2();
+});
+
+</script>
 
 @endsection
