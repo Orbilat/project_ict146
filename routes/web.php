@@ -20,6 +20,7 @@ Route::get('/RIS', function () {
 })->name('RisNumber');
 
 Route::post('/RIS', 'ClientController@RIS')->name('RIS');
+Route::get('/S&R/parameters/search', 'ClientController@searchParameter')->name('searchParameter-client');
 Route::get('/', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', 'ClientController@parameters')->name('parameters-client');
