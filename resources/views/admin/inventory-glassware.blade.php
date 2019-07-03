@@ -123,7 +123,12 @@
                             <td class="admin-table">{{ $item->containerType }}</td>
                             <td class="admin-table">{{ $item->volumeCapacity }}</td>
                             <td class="admin-table">{{ $item->quantity }}</td>
-                            <td class="admin-table">{{ $item->suppliers->companyName }}</td>
+                            @if (isset($item->suppliers))
+                                <td class="admin-table">{{ $item->suppliers->companyName }}</td>
+                            @else
+                                <td class="admin-table">NULL</td>    
+                            @endif
+                            
                             <td>
                                 {{-- EDIT BUTTON --}}
                                 <a data-toggle="modal" data-target="#editItem{{ $count }}"><i class="fa fa-edit"></i></a>

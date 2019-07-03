@@ -19,9 +19,9 @@ class CreateTableItems extends Migration
             $table->string('containerType');
             $table->string('volumeCapacity')->nullable();
             $table->integer('quantity')->default(1);
-            $table->unsignedInteger('supplier');
-            $table->string('managedBy');
-            $table->dateTime('managedDate');
+            $table->unsignedInteger('supplier')->nullable();
+            $table->string('managedBy')->nullable();
+            $table->dateTime('managedDate')->nullable();
             $table->timestamps();
         });
     }

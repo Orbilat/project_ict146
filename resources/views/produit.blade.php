@@ -8,10 +8,6 @@
 }
 </style> 
     <style>
-div.test1
-{
-border: 1.5px solid #000;
-}
 div.div1{
   width: 350px;
   height: 157px;
@@ -20,7 +16,7 @@ div.div1{
 
 div.div2{
   width: 100x;
-  height: 157px;  
+  height: 162px;  
   border: 2px solid black;
   padding: 10px;
 }
@@ -77,6 +73,7 @@ p{
         }
         .header {
             margin: 5px;
+            font-size:20px;
         }
         b{
             font-size:13px;
@@ -104,9 +101,8 @@ p{
             <div>{!! DNS1D::getBarcodeHTML ($p->laboratoryCode, 'C128A',1,60) !!}</div>
             <br>
             <h2 class="header">{{ $p->laboratoryCode}}
-            @if($p->remarks == "rush" || $p->remarks == "Rush")
-                <br>
-                Rush
+            @if($clients->remarks == "rush" || $clients->remarks == "Rush")
+            Rush
             @endif
             </h2>        
         </div>
@@ -175,7 +171,7 @@ p{
     
     <div class="row">
     @foreach($client as $s)
-    <br> <br>
+    <br>
     <div class="div2 row">
         <div class="row">
             <span class="logo-lg">
@@ -213,10 +209,10 @@ p{
             <div class="col-6"><b>Issued By:</b> {{$s->managedBy}}</div>
         </div>
         <div class="row">
-        <b><u>Call us 3453811/2300100 local 110 for confirmation. Test results will not be released without this claim slip.</u> </b>
+        <b>Call us 3453811/2300100 local 110 for confirmation. Test results will not be released without this claim slip. To view status of samples please visit our website: <u> www.uscwaterlab.tech </u> </b>
         </div>
         <div class="row">
-            To view status of samples please visit our website: <b>www.uscwaterlab.tech</b>
+            
         </div>
     </div>
 

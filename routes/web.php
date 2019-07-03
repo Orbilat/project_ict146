@@ -100,6 +100,8 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/samples/search', 'AdminController@searchSample')->name('searchSample-admin');
     Route::get('/admin/parameters/search', 'AdminController@searchParameter')->name('searchParameter-admin');
     Route::get('/admin/accounts/search', 'AdminController@searchAccount')->name('searchAccount-admin');
+    Route::get('/admininventory/glassware/search', 'AdminController@searchItem')->name('searchItem-admin');
+    Route::get('/admin/home/{id?}', 'AdminController@read')->name('notif-read');
 });
 // END ADMIN ROUTES
 

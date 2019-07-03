@@ -43,6 +43,12 @@
   </thead>
 </table>
 
+<div class="row justify-content-center">
+{{$clients->links()}}
+</div>
+
+
+
 </div>
 
 </body>

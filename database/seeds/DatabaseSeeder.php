@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             EmployeesTableSeeder::class,
             StationsTableSeeder::class,
             ParametersTableSeeder::class,
+            GlasswareTableSeeder::class,
         ]);
     }
 }

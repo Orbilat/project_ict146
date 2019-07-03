@@ -24,13 +24,10 @@
     <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
-    @include('Secretary-file.secretary_style')
+    <!-- @include('Secretary-file.secretary_style') -->
 
-           
-    <!-- Client Style -->
-    {{-- @include('layouts/client_homestyle') --}}
 
-</head>
+    </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">

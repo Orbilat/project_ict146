@@ -31,7 +31,7 @@ class AdminController extends Controller
     // Admin home page
     public function admin()
     {
-        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('notifications')->first();
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
 
         return view('admin.home', ['user' => $user]);
     }
@@ -898,5 +898,19 @@ class AdminController extends Controller
         $employees = Employee::all();
 
         return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
+    }
+
+    protected function read($id)
+    {
+        $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        foreach ($user->notifications as $notification) {
+            if($notification->notifiable_id == $id) {
+                $notification->markAsRead();
+                break;
+            }
+        }
+
+        return $this->admin();
     }
 }
