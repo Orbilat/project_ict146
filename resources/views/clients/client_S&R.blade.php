@@ -109,6 +109,7 @@
 
   </div>
   <!-- Grid row -->
+  <!-- Grid row -->
 
 </div>
 <!-- Footer Links -->
@@ -124,12 +125,6 @@
 </footer>
 <!-- Footer -->
 
-<script type="text/javascript">
 
-$(document).ready(function() {
-    $('.js-example-responsive').select2();
-});
-
-</script>
 
 @endsection
