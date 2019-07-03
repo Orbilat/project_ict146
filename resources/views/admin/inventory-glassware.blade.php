@@ -257,6 +257,8 @@
                             </div>
                             </td>
                         </tr>
+                        {{-- COUNT INCREMENTS --}}
+                        <?php $count++; ?>
                         @endforeach
                     </tbody>
                 </table>
