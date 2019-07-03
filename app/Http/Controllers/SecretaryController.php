@@ -32,7 +32,7 @@ class SecretaryController extends Controller
     }
     public function addSample(){
         $parameter = Parameter::all();
-        $clients = Client::all();
+        $clients = Client::orderBy('clientId', 'DESC')->get();
         return view ('Secretary-file.add-sample', ['parameters' => $parameter, 'clients' => $clients]);
     }
     public function stat()
@@ -111,7 +111,7 @@ class SecretaryController extends Controller
 
     public function form()
     {
-        $clients = DB::table('clients')->orderBy('clientId','DESC')->get();
+        $clients = DB::table('clients')->orderBy('clientId','DESC')->paginate(10);
         return view('Secretary-file.secretary-form',['clients'=>$clients]);
     }
 
@@ -129,7 +129,13 @@ class SecretaryController extends Controller
                         $isComplete = 'false';
                         break;
                     }
-                    $isComplete = 'true';
+                    elseif($parameter->pivot->status == "In Progress"){
+                        $isComplete = 'false';
+                        break;
+                    }
+                    else{
+                        $isComplete = 'true';
+                    }
                 }
             }
             if($isComplete == 'true'){

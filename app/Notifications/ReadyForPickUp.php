@@ -61,7 +61,7 @@ class ReadyForPickUp extends Notification
     }
 
     public function toNexmo($notifiable)
-    {
+    {   
         return (new NexmoMessage)
             ->content('Your test results at the USC Water Laboratory can now be claimed. Thank you for availing our services.');
     }
