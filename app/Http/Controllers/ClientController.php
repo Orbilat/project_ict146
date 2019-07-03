@@ -25,10 +25,20 @@ class ClientController extends Controller
         }
     }
 
+    public function searchParameter(Request $request)
+    {
+        $parameters = Parameter::where('analysis', $request->search)->paginate(10);
+        $params = Parameter::all();
+
+        return view('clients.client_S&R', ['parameters' => $parameters, 'params' => $params]);
+    }
+
     public function parameters()
     {
-        $parameters = DB::table('parameters')->orderBy('analysis')->paginate(6);
-        return view('clients.client_S&R', ['parameters' => $parameters]);
+        $parameters = Parameter::with('stations')->orderBy('analysis')->paginate(10);
+        $params = Parameter::all();
+
+        return view('clients.client_S&R', ['parameters' => $parameters, 'params' => $params]);
     }
 
     public function contact()

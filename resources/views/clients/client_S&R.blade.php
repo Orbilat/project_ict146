@@ -4,11 +4,17 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <form class="float-right" action="GET">
-                {{-- <input class="float-right" type="submit" value="Search"> --}}
-                <input type="text" name="searchBox" id="searchBox" placeholder="Search analysis...">
-                <button type="submit" class="btn btn-outline-dark float-right"><i class="fa fa-search"></i></button>
-            </form>
+            <form class="float-right" action="{{ route('searchParameter-client') }}" method="GET">
+                            @csrf
+                            <select class="js-example-responsive" id="search" name="search">
+                                  <option selected>Search Analysis</option>
+                                @foreach ($params as $param)
+                                  <option value="{{ $param->analysis }}">{{ $param->analysis }}</option>
+                                @endforeach
+                            </select>
+                            
+                            <input class="float-right" type="submit" value="Search">
+                        </form>
         </div>
     <div class="card-body">
         <table class="table">
@@ -103,6 +109,7 @@
 
   </div>
   <!-- Grid row -->
+  <!-- Grid row -->
 
 </div>
 <!-- Footer Links -->
@@ -117,5 +124,7 @@
 
 </footer>
 <!-- Footer -->
+
+
 
 @endsection

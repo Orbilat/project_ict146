@@ -10,6 +10,7 @@
     <title>USC Water Laboratory</title>
 
            <!-- Scripts -->
+           <link href="{{ asset('select2/dist/css/select2.min.css') }}" rel="stylesheet" />
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>     -->
 
@@ -22,13 +23,15 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}" />
     <link rel="icon" type="image/gif" href="{{ asset('favicon.ico') }}" />
-
+   
+    
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
     
 <script src="{{ asset('js/app.js')}}"></script>
+<script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
 
     <!-- Client Style -->
     @include('layouts/client_homestyle')
@@ -74,10 +77,17 @@
   </div>
 </nav>
 
-  
         <main>
             @yield('content')
         </main>
         
+
+        <script type="text/javascript">
+
+$(document).ready(function() {
+    $('.js-example-responsive').select2();
+});
+
+</script>
 </body>
 </html>

@@ -20,6 +20,7 @@ Route::get('/RIS', function () {
 })->name('RisNumber');
 
 Route::post('/RIS', 'ClientController@RIS')->name('RIS');
+Route::get('/S&R/parameters/search', 'ClientController@searchParameter')->name('searchParameter-client');
 Route::get('/', 'EventsController@index')->name('events.index');
 Route::post('/client-home', 'EventsController@addEvent')->name('events.add');
 Route::get('/S&R', 'ClientController@parameters')->name('parameters-client');
@@ -99,7 +100,8 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/samples/search', 'AdminController@searchSample')->name('searchSample-admin');
     Route::get('/admin/parameters/search', 'AdminController@searchParameter')->name('searchParameter-admin');
     Route::get('/admin/accounts/search', 'AdminController@searchAccount')->name('searchAccount-admin');
-    Route::get('/admininventory/glassware/search', 'AdminController@searchItem')->name('searchItem-admin');
+    Route::get('/admin/inventory/glassware/search', 'AdminController@searchItem')->name('searchItem-admin');
+    Route::get('/admin/suppliers/search', 'AdminController@searchSUpplier')->name('searchSupplier-admin');
     Route::get('/admin/home/{id?}', 'AdminController@read')->name('notif-read');
 });
 // END ADMIN ROUTES
