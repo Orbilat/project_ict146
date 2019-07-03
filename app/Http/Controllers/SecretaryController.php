@@ -32,7 +32,7 @@ class SecretaryController extends Controller
     }
     public function addSample(){
         $parameter = Parameter::all();
-        $clients = Client::all();
+        $clients = Client::orderBy('clientId', 'DESC')->get();
         return view ('Secretary-file.add-sample', ['parameters' => $parameter, 'clients' => $clients]);
     }
     public function stat()
@@ -111,7 +111,7 @@ class SecretaryController extends Controller
 
     public function form()
     {
-        $clients = DB::table('clients')->orderBy('clientId','DESC')->get();
+        $clients = DB::table('clients')->orderBy('clientId','DESC')->paginate(10);
         return view('Secretary-file.secretary-form',['clients'=>$clients]);
     }
 
@@ -129,7 +129,13 @@ class SecretaryController extends Controller
                         $isComplete = 'false';
                         break;
                     }
-                    $isComplete = 'true';
+                    elseif($parameter->pivot->status == "In Progress"){
+                        $isComplete = 'false';
+                        break;
+                    }
+                    else{
+                        $isComplete = 'true';
+                    }
                 }
             }
             if($isComplete == 'true'){
@@ -239,7 +245,7 @@ class SecretaryController extends Controller
         $transaction->managedDate = new DateTime();
         //SAVE TO DB && CHECK
         if($transaction->save()){
-            $parameter = Parameter::orderBy('analysis')->all();
+            $parameter = Parameter::orderBy('analysis')->get();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
             return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
