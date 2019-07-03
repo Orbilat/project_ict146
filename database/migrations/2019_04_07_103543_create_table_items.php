@@ -16,9 +16,9 @@ class CreateTableItems extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->increments('itemId');
             $table->string('itemName');
-            $table->string('containerType');
+            $table->string('containerType')->nullable();
             $table->string('volumeCapacity')->nullable();
-            $table->integer('quantity')->default(1);
+            $table->integer('quantity')->nullable()->default(1);
             $table->unsignedInteger('supplier')->nullable();
             $table->string('managedBy')->nullable();
             $table->dateTime('managedDate')->nullable();
