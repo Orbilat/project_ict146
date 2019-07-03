@@ -2,8 +2,12 @@
 
 @section('content')
    
-<div class="container "  style="padding-top: 120px;margin-bottom:30px; ">
-    <div class="row w3-padding-16" style="background-color:#A1CDA8">
+<div class="container-fluid">
+      <h4 class="text-dark titleText">
+      <i class="fa fa-info-circle fa-fw w3-xlarge w3-text-blue"></i>Do you mind taking a quick feedback survey? Just click the link 
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfmsyl_8QUoH6af-BMmvgofA83Edz0X0MtTL9Rqh0pqnURqFQ/viewform?fbclid=IwAR3lN__juAa_4UiIhKZNEHMTs-Otf47w5QnIbD6LeaNon3T_-mHTGsx1kc0">USC Water Laboratory Survey Questionnaire</a> 
+      </h4> 
+      <div class="row w3-padding-16" style="background-color:#A1CDA8">
         <div class="col-sm-12">
             <div class="text-dark TS">RIS NUMBER: 
                 <div class="d-inline-block text-danger">

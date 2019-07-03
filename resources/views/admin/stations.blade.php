@@ -37,10 +37,6 @@
                     Stations
                     &nbsp;
                     <a href="#addStation" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
-                    <form class="float-right" action="GET">
-                        {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search station...">
-                    </form>
                 <div id="addStation" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             <form method="POST" action="{{ route('addStation-admin') }}">

@@ -94,6 +94,11 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::patch('/admin/inventory/glassware/{itemId}', 'AdminController@updateItem')->name('updateItem-admin');
     Route::get('/admin/inventory/history', 'AdminController@history')->name('inventory-history-admin');
     Route::get('/admin/inventory/glassware', 'AdminController@glassware')->name('inventory-glassware-admin');
+    //Search routes
+    Route::get('/admin/clients/search', 'AdminController@searchClient')->name('searchClient-admin');
+    Route::get('/admin/samples/search', 'AdminController@searchSample')->name('searchSample-admin');
+    Route::get('/admin/parameters/search', 'AdminController@searchParameter')->name('searchParameter-admin');
+    Route::get('/admin/accounts/search', 'AdminController@searchAccount')->name('searchAccount-admin');
 });
 // END ADMIN ROUTES
 

@@ -13,9 +13,15 @@
                     Clients
                     &nbsp;
                     <a href="#addClient" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
-                    <form class="float-right" action="GET">
-                        {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search client...">
+                    <form class="float-right" action="{{ route('searchClient-admin') }}" method="GET">
+                        @csrf
+                        <select class="js-example-responsive" id="search" name="search">
+                            <option selected>Search RIS Number</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->risNumber }}">{{ $customer->risNumber }}</option>
+                            @endforeach
+                        </select>
+                        <input class="float-right" type="submit" value="Search">
                     </form>
                     <div id="addClient" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
@@ -66,7 +72,7 @@
                                 </div>
         
                                 <div class="form-group row">
-                                    <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                                    <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
         
                                     <div class="col-md-3">
                                         <div class="input-group mb-2">
@@ -83,8 +89,25 @@
                                         @endif
                                     </div>
 
-                                    <label for="faxNumber" class="col-form-label text-md-right">{{ __('Fax No.') }}</label>
+                                    <label for="telephone" class="col-form-label text-md-right">{{ __('Telephone Number') }}</label>
+
                                     <div class="col-md-3">
+                                        <div class="input-group mb-2">
+                                            <input id="telephone" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value="{{ old('telephone') }}" placeholder="Optional">
+                                        </div>
+        
+                                        @if ($errors->has('telephone'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('telephone') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="faxNumber" class="col-md-4 col-form-label text-md-right">{{ __('Fax No.') }}</label>
+                                    
+                                    <div class="col-md-6">
                                         <input id="faxNumber" type="text" class="form-control{{ $errors->has('faxNumber') ? ' is-invalid' : '' }}" name="faxNumber" value="{{ old('faxNumber') }}" placeholder="Optional">
         
                                         @if ($errors->has('faxNumber'))
@@ -347,7 +370,7 @@
                                                     </div>
                             
                                                     <div class="form-group row">
-                                                        <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                                                        <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
                                                         @php
                                                             $contact = substr($client->contactNumber, 2); 
                                                         @endphp
@@ -365,6 +388,22 @@
                                                                 </span>
                                                             @endif
                                                         </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Telephone Number') }}</label>
+                                                       
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-2">
+                                                                <input id="telephone" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone"  value="{{ $client->telephone }}" required autofocus>
+                                                            </div>
+                            
+                                                            @if ($errors->has('telephone'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('telephone') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>  
                                                     </div>
                                                     
                                                     <div class="form-group row">

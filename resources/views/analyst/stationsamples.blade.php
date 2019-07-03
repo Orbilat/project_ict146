@@ -6,13 +6,13 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">{{ $station->stationName }}
-                    <button type="button" class="btn btn-info btn-lg pull-right analystbtn" style="margin-left: 10px;" data-toggle="modal" data-target="#completescan">Complete</button>
-                    <button type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
+                    <button id="cmpltbtn" type="button" class="btn btn-info btn-lg pull-right analystbtn" style="margin-left: 10px;display:none;" data-toggle="modal" data-target="#completescan">Complete</button>
+                    <button id="rcvbtn" type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
                 </div> 
                 <br>
                 <ul class="nav nav-tabs">
-                   <li><a href="#inprogress" data-toggle="tab">In Progress</a></li>
-                   <li><a href="#completed" data-toggle="tab">Completed</a></li>
+                   <li id="inprogresstab"><a href="#inprogress" data-toggle="tab">In Progress</a></li>
+                   <li id="completedtab"><a href="#completed" data-toggle="tab">Completed</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="inprogress">
@@ -32,7 +32,7 @@
                                             <td><a href="/analyst/{{ $station->stationId }}/sample/{{ $data->laboratoryCode }}">{{ $data->laboratoryCode }}</a></td>
                                             <td>{{ $data->dueDate }}</td>
                                             <td>{{ $data->status}} </td>
-                                            <td>{{ $data->timeReceived}} </td>
+                                            <td>{{ $data->created_at}} </td>
                                             
                                         </tr>
                                     @endforeach
@@ -126,6 +126,14 @@
                 alert('Input the laboratory Code');  
             }
         });
+    });
+
+    $("#inprogresstab").click(function(e){
+        $("#cmpltbtn").show();
+    });
+
+    $("#completedtab").click(function(e){
+        $("#cmpltbtn").show();
     });
 </script>
 @endsection

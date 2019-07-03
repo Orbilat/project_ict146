@@ -19,7 +19,8 @@ class CreateTableClients extends Migration
             $table->string('nameOfPerson');
             $table->string('nameOfEntity')->nullable();
             $table->string('address');
-            $table->string('contactNumber');
+            $table->string('contactNumber')->nullable();
+            $table->string('telephone')->nullable();
             $table->string('faxNumber')->nullable();
             $table->string('emailAddress', 191)->nullable();
             $table->string('paid', 3)->default('No');
