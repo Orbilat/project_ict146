@@ -74,10 +74,20 @@
   </div>
 </nav>
 
-  
         <main>
             @yield('content')
         </main>
         
+
+        <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+        $(document).ready(function() {
+            $('.js-example-responsive').select2();
+        });
+
+        </script>
 </body>
 </html>
