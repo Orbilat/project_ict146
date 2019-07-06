@@ -32,13 +32,13 @@
         <div class="col-md-4">
           <form method="POST" action="{{ route('paidSecretary', [$p->clientId]) }}">
             @csrf
-            <button type="submit" class="btn smol btn-sm @if($p->paid == 'yes') btn-success @else btn-danger @endif">@if($p->paid == 'yes') PAID @else UNPAID @endif</button>
+            <button type="submit" class="btn smol btn-sm @if($p->paid == 'yes') btn-success @else btn-primary @endif">@if($p->paid == 'yes') PAID @else UNPAID @endif</button>
           </form>
         </div>
         <div class="col-md-4">
           <form method="POST" action="{{ route('send', [$p->clientId]) }}">
           @csrf
-          <button type="submit" class="btn smol btn-sm @if($p->sendText == 'Yes') btn-success @else btn-danger @endif">@if($p->sendText == 'Yes') SENT @else SEND @endif</button>
+          <button type="submit" class="btn smol btn-sm @if($p->sendText == 'Yes') btn-success @else btn-primary @endif">@if($p->sendText == 'Yes') SENT @else SEND @endif</button>
           </form>
         </div>
         </td>

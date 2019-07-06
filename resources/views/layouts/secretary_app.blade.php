@@ -32,8 +32,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/secretary/home') }}">
-                    {{ 'Laboratory Information Management System' }}
+            <a class="navbar-brand" href="{{ url('/admin') }}">
+                    <img src="{{ asset('img/logo.png') }}" style="height: 22px;">
+                    {{ 'USC WATER LABORATORY' }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +53,7 @@
                                         Client
                                  </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link" href="{{ route('createClient') }}">{{ __('Create Client') }}</a>
+                                        <a class="nav-link" href="{{ route('createClient') }}">{{ __('Add Client') }}</a>
                                         <a class="nav-link" href="{{ route('addSample') }}">{{ __('Add Sample') }}</a>
                                     </div>
                             </li>
