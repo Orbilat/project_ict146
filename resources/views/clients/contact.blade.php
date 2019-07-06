@@ -97,7 +97,7 @@
   </div>
 </div>
   <!-- Footer -->
-<footer class="page-footer font-small indigo text-white">
+<footer class="page-footer font-small indigo text-white footerBar">
 
 <!-- Footer Links -->
 <div class="container text-center text-md-left">

@@ -187,8 +187,9 @@ fieldset {
 }
 .footerBar{
 	background: #212529;
+}
+.footerSpace{
 	padding-top: 6%;
 }
-
 
 </style>
