@@ -23,7 +23,7 @@ class EventsController extends Controller
                 $event->event_name,
                 false,
                 new \DateTime($event->start_date),
-                new \DateTime($event->end_date)
+                new \DateTime($event->end_date )
             );
         }
         
@@ -35,8 +35,9 @@ class EventsController extends Controller
                 'left' => ' prev,next today',
             ],
             'defaultView' => 'month',
-            "eventLimit" => 1,
-            "allDay" => false
+            "eventLimit" => 3,
+            "allDay" => false,
+            "eventColor"=> ''
         ]);
         return view('clients.client_home')->with(compact('calendar_details'));
     }

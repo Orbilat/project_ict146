@@ -146,7 +146,7 @@ fieldset {
 }
 
 .nav-link::before {
-  transition: 300ms;
+  transition: 1500ms;
   height: 5px;
   content: "";
   position: absolute;
@@ -182,5 +182,12 @@ fieldset {
 .nav-link-grow-up:hover::before {
   height: 5px;
 }
+.footerText{
+	color: #85868c;
+}
+.footerBar{
+	background: #212529;
+}
+
 
 </style>
