@@ -32,7 +32,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-            <a class="navbar-brand" href="{{ url('/admin') }}">
+            <a class="navbar-brand" href="{{ url('/secretary/home') }}">
                     <img src="{{ asset('img/logo.png') }}" style="height: 22px;">
                     {{ 'USC WATER LABORATORY' }}
                 </a>
