@@ -15,7 +15,7 @@
     </div>
 </div>
   <!-- Footer -->
-<footer class="page-footer font-small indigo text-white footerBar">
+<footer class="page-footer font-small indigo text-white">
 
 <!-- Footer Links -->
 <div class="container text-center text-md-left">
