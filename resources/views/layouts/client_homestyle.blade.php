@@ -187,6 +187,7 @@ fieldset {
 }
 .footerBar{
 	background: #212529;
+	padding-top: 6%;
 }
 
 
