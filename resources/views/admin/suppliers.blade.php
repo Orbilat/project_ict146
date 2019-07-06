@@ -13,10 +13,16 @@
                     Supplier
                     &nbsp;
                     <a href="#addSupplier" id="addNew" class="glyphicon glyphicon-plus" data-toggle="collapse" onclick="changeText()">Add new</a>
-                    <form class="float-right" action="GET">
-                        {{-- <input class="float-right" type="submit" value="Search"> --}}
-                        <input class="float-right" type="text" name="searchBox" id="searchBox" placeholder="Search supplier...">
-                    </form>
+                    <form class="float-right" action="{{ route('searchSupplier-admin') }}" method="GET">
+                            @csrf
+                            <select class="js-example-responsive" id="search" name="search">
+                                <option selected>Search Supplier</option>
+                                @foreach ($supps as $supp)
+                                    <option value="{{ $supp->companyName }}">{{ $supp->companyName }}</option>
+                                @endforeach
+                            </select>
+                            <input class="float-right" type="submit" value="Search">
+                        </form>
                 <div id="addSupplier" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
                     <div class="card-body">
                             <form method="POST" action="{{ route('addSupplier-admin') }}">

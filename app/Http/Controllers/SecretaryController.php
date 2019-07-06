@@ -9,6 +9,7 @@ use App\Sample;
 use Validator;
 use App\Client;
 use App\Parameter;  
+use App\Employee;
 use App\Transaction;
 use App\Sample_Tests;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\ReadyForPickUp;
+use App\Notifications\SampleDueDate;
 
 
 class SecretaryController extends Controller
@@ -23,8 +25,16 @@ class SecretaryController extends Controller
     //
     public function index()
     {
-        return view('Secretary-file.secretary');
+        
+        
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        return view('Secretary-file.secretary', ['user' => $user]);
     }
+    public function admin()
+    {
+    }
+
     
     public function inve()
     {
@@ -98,6 +108,15 @@ class SecretaryController extends Controller
         // Return to samples page
         if($sample->save()){
 
+            $users = Employee::all();
+        
+            foreach ($users as $user) {
+                if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
+
+                    $user->notify((new SampleDueDate($sample)));
+                }
+            }
+
             $clients=Client::all();
             $parameters = Parameter::all();
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
@@ -119,17 +138,13 @@ class SecretaryController extends Controller
     
     protected function status(){
         
-        $cli = Client::with('samples.parameters')->paginate(10);
+        $cli = Client::with('samples.parameters')->get();
         $isComplete = 'false';
 
         foreach($cli as $cl){
             foreach($cl->samples as $sample){
                 foreach($sample->parameters as $parameter){
                     if($parameter->pivot->status == "Not Started" || $parameter->pivot->status == "In Progress"){
-                        $isComplete = 'false';
-                        break;
-                    }
-                    elseif($parameter->pivot->status == "In Progress"){
                         $isComplete = 'false';
                         break;
                     }
@@ -310,6 +325,14 @@ class SecretaryController extends Controller
             }
             //RETURN TO ADD SAMPLE PAGE TO ADD MORE SAMPLES
             if($sample->save()){
+                $users = Employee::all();
+        
+            foreach ($users as $user) {
+                if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
+
+                    $user->notify((new SampleDueDate($sample)));
+                }
+            }
                 $params = Parameter::all();
                 Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
                 return view('Secretary-file.sample-secretary', ['risNumber' => $request->clientId, 'parameters' => $params]);

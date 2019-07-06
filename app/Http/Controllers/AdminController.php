@@ -85,8 +85,9 @@ class AdminController extends Controller
     {
         $items = Item::with('suppliers')->orderBy('itemName')->paginate(10);
         $suppliers = Supplier::all();
+        $glasswares = Item::all();
 
-        return view('admin.inventory-glassware', ['items' => $items, 'suppliers' => $suppliers]);
+        return view('admin.inventory-glassware', ['items' => $items, 'glasswares' => $glasswares, 'suppliers' => $suppliers]);
     }
 
     // Stations page
@@ -110,8 +111,9 @@ class AdminController extends Controller
     public function suppliers()
     {
         $suppliers = Supplier::orderBy('companyName')->paginate(10);
+        $supps = Supplier::all();
 
-        return view('admin.suppliers', ['suppliers' => $suppliers]);
+        return view('admin.suppliers', ['suppliers' => $suppliers, 'supps' => $supps]);
     }
 
     // Create event page
@@ -836,16 +838,16 @@ class AdminController extends Controller
     {
         // Validation
         $validatorUpdate = Validator::make($request->all(), [
-            'itemName' => 'required|string|min:3|max:255',
-            'containerType' => 'required|string|min:6|max:255',
-            'volumeCapacity' => 'required|numeric',
-            'quantity' => 'required|numeric',
-            'supplier' => 'required|string',
+            'itemName' => 'nullable|string|min:3|max:255',
+            'containerType' => 'nullable|string|min:6|max:255',
+            'volumeCapacity' => 'nullable|numeric',
+            'quantity' => 'nullable|numeric',
+            'supplier' => 'nullable|string',
         ]);
         // Validation fails
         if ($validatorUpdate->fails()) {
             return redirect('admin/inventory/glassware')
-                        ->withErrors($validator)
+                        ->withErrors($validatorUpdate)
                         ->withInput();
         }
         // Find item
@@ -900,6 +902,23 @@ class AdminController extends Controller
         return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
     }
 
+    protected function searchItem(Request $request)
+    {
+        $items = Item::with('suppliers')->where('itemName', $request->search)->paginate(10);
+        $suppliers = Supplier::all();
+        $glasswares = Item::all();
+
+        return view('admin.inventory-glassware', ['items' => $items, 'glasswares' => $glasswares, 'suppliers' => $suppliers]);
+    }
+
+    protected function searchSupplier(Request $request)
+    {
+        $suppliers = Supplier::where('companyName', $request->search)->paginate(10);
+        $supps = Supplier::all();
+
+        return view('admin.suppliers', ['suppliers' => $suppliers, 'supps' => $supps]);
+    }
+
     protected function read($id)
     {
         $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
@@ -910,7 +929,7 @@ class AdminController extends Controller
                 break;
             }
         }
-
+        
         return $this->admin();
     }
 }

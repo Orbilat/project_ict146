@@ -23,7 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- @include('Secretary-file.secretary_style') -->
 
 
@@ -32,8 +32,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/secretary/home') }}">
-                    {{ 'Laboratory Information Management System' }}
+            <a class="navbar-brand" href="{{ url('/admin') }}">
+                    <img src="{{ asset('img/logo.png') }}" style="height: 22px;">
+                    {{ 'USC WATER LABORATORY' }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +53,7 @@
                                         Client
                                  </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link" href="{{ route('createClient') }}">{{ __('Create Client') }}</a>
+                                        <a class="nav-link" href="{{ route('createClient') }}">{{ __('Add Client') }}</a>
                                         <a class="nav-link" href="{{ route('addSample') }}">{{ __('Add Sample') }}</a>
                                     </div>
                             </li>
