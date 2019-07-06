@@ -30,6 +30,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
     
+    
 <script src="{{ asset('js/app.js')}}"></script>
 <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
 
@@ -65,7 +66,10 @@
         <li class="nav-item nav-link nav-link-ltr active">
           <a class="nav-link" href="{{ url('/contact') }}"><i class="fa fa-envelope"></i>Contact</a>
         </li>
-        <li class="nav-item link ">
+        <li class="nav-item nav-link nav-link-ltr active">
+          <a class="nav-link" href="{{ url('/login') }}"><i class="fa fa-sign-in"></i>Login</a>
+        </li>
+        <li class="nav-item link">
         <form class="nav-item" method="post" action="{{ route('RIS') }}" > 
           @csrf
           <input type="text" class="SearchRis" placeholder="RIS NUMBER" name="search" oninvalid="this.setCustomValidity('Input your  RIS Number')"  title='RIS NUMBER'  oninput="setCustomValidity('')" required/> 
@@ -79,6 +83,7 @@
 
         <main>
             @yield('content')
+            @yield('footer')        
         </main>
         
 
