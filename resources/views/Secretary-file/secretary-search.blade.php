@@ -29,7 +29,7 @@
  
   
  
-  <a href="{{route('barcode',[$client->clientId])}}"><button class="button button3">Forms</button></a>
+  <a href="{{route('barcode',[$client->clientId])}}" class="btn btn-primary"> <i class="fa fa-print"></i> Print</a>
  
   </td>
   

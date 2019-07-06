@@ -57,6 +57,7 @@ class SecretaryController extends Controller
         $samples=Sample::all();
         return view('dynamic_pdf',['samples'=>$samples]);
     }
+
     public function postAddSample(Request $request){
         // Validation
         $validator = Validator::make($request->all(), [
@@ -119,6 +120,7 @@ class SecretaryController extends Controller
 
             $clients=Client::all();
             $parameters = Parameter::all();
+            Session::flush();
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
             return view('Secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
         }
@@ -262,7 +264,7 @@ class SecretaryController extends Controller
         if($transaction->save()){
             $parameter = Parameter::orderBy('analysis')->get();
             $clientRis = $client->risNumber;
-            Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
+            Session::flash('flash_client_added', 'Client added successfully. Please add the samples of the new client.');
             return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
         }
         else {
@@ -334,7 +336,8 @@ class SecretaryController extends Controller
                 }
             }
                 $params = Parameter::all();
-                Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
+                Session::forget('flash_client_added');
+                Session::flash('flash_sample_added', 'Sample added successfully. You can add another sample.');
                 return view('Secretary-file.sample-secretary', ['risNumber' => $request->clientId, 'parameters' => $params]);
             }
             else {
