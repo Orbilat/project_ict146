@@ -138,7 +138,7 @@ class SecretaryController extends Controller
     
     protected function status(){
         
-        $cli = Client::with('samples.parameters')->paginate(10);
+        $cli = Client::with('samples.parameters')->all();
         $isComplete = 'false';
 
         foreach($cli as $cl){
@@ -148,11 +148,7 @@ class SecretaryController extends Controller
                         $isComplete = 'false';
                         break;
                     }
-                    elseif($parameter->pivot->status == "In Progress"){
-                        $isComplete = 'false';
-                        break;
-                    }
-                    else{
+                    elseif($parameter->pivot->status == "Completed"){
                         $isComplete = 'true';
                     }
                 }
