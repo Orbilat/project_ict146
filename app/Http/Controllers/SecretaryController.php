@@ -138,7 +138,7 @@ class SecretaryController extends Controller
     
     protected function status(){
         
-        $cli = Client::with('samples.parameters')->all();
+        $cli = Client::with('samples.parameters')->get();
         $isComplete = 'false';
 
         foreach($cli as $cl){
