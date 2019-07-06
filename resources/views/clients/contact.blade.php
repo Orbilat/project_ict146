@@ -62,6 +62,7 @@
              </div>
           </div>
       </div>
+      
       <div class="col-lg-6 text-center ">
         <!--Google map-->
           <img class="img-responsive img-fluid rounded mx-auto d-block" src="{{ asset('img/map.PNG') }}" style="border: 1px solid rgba(0, 0, 0, 0.125);">   

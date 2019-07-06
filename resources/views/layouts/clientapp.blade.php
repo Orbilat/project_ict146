@@ -30,7 +30,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
     
-    
+
 <script src="{{ asset('js/app.js')}}"></script>
 <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
 
