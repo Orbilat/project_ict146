@@ -148,7 +148,7 @@ class SecretaryController extends Controller
                         $isComplete = 'false';
                         break;
                     }
-                    elseif($parameter->pivot->status == "Completed"){
+                    else{
                         $isComplete = 'true';
                     }
                 }
