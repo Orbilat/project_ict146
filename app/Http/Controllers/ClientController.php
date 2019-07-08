@@ -30,7 +30,12 @@ class ClientController extends Controller
         $parameters = Parameter::where('analysis', $request->search)->paginate(10);
         $params = Parameter::all();
 
-        return view('clients.client_S&R', ['parameters' => $parameters, 'params' => $params]);
+        if(count($parameters) == 0 ){
+            return $this->parameters();
+        }else{
+            return view('clients.client_S&R', ['parameters' => $parameters, 'params' => $params]);
+        }
+
     }
 
     public function parameters()
