@@ -19,7 +19,7 @@ class AnalystMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->userType != 'analyst' && $request->user()->userType != 'administrator') {
+        if ($request->user()->userType != 'analyst') {
             return redirect('/login');
         }
         $stations = Station::all();

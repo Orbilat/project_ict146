@@ -50,7 +50,7 @@
                       </div>
                   </li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto" style="float: right;">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">

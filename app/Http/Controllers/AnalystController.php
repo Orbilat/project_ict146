@@ -137,13 +137,13 @@ class AnalystController extends Controller
         //GROUP BY s.laboratoryCode,s.dueDate,st.status,st.timecompleted
 
         $progressperstation = DB::table('samples AS s')
-                ->select('s.laboratoryCode', 's.dueDate', 'st.status','s.created_at' )
+                ->select('s.laboratoryCode', 's.dueDate', 'st.status','s.created_at', 'st.timeReceived' )
                 ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                 ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                 ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
                 ->where('p.station','=', $id)
                 ->where('st.status','=', 'In Progress')
-                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','s.created_at')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','s.created_at', 'st.timeReceived')
                 ->distinct()
                 ->get();
 
@@ -181,6 +181,9 @@ class AnalystController extends Controller
             //where('st.status','=', 'Not Started')
             ->update(array('st.status' => 'In Progress','s.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'timeReceived' => date("Y-m-d H:m:s")));
         
+        if( $updateresult > 0 )
+            return redirect('/analyst/sample/station/'.$id)->with(['samplereceiveNotif' => true]);
+
         return redirect('/analyst/sample/station/'.$id);
     }
 
@@ -194,6 +197,9 @@ class AnalystController extends Controller
             ->where('p.station','=', $id)
             ->where('st.status','=', 'In Progress')
             ->update(array('st.status' => 'Completed', 's.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'st.timecompleted' => now()));
+
+        if( $updateresult > 0 )
+            return redirect('/analyst/sample/station/'.$id)->with(['samplecompletedNotif' => true]);
 
         return redirect('/analyst/sample/station/'.$id);
     }

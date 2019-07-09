@@ -8,8 +8,22 @@
                 <div class="card-header">{{ $station->stationName }}
                     <button id="cmpltbtn" type="button" class="btn btn-info btn-lg pull-right analystbtn" style="margin-left: 10px;display:none;" data-toggle="modal" data-target="#completescan">Complete</button>
                     <button id="rcvbtn" type="button" class="btn btn-info btn-lg pull-right analystbtn" data-toggle="modal" data-target="#scanmodal">Receive</button>
-                </div> 
-                <br>
+                </div>
+
+                @if(Session::get('samplereceiveNotif') !== NULL)
+                    <div style="margin: 5px 10px; padding: 5px" class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> Successfully Receive Sample
+                    </div>
+                @endif
+
+                @if(Session::get('samplecompletedNotif') !== NULL)
+                    <div style="margin: 5px 10px; padding: 5px" class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> Successfully Completed Sample
+                    </div>
+                @endif
+                
                 <ul class="nav nav-tabs">
                    <li id="inprogresstab"><a href="#inprogress" data-toggle="tab">In Progress</a></li>
                    <li id="completedtab"><a href="#completed" data-toggle="tab">Completed</a></li>
@@ -23,6 +37,7 @@
                                     <th class="admin-table">Due Date</th>
                                     <th class="admin-table">Status </th>
                                     <th class="admin-table">Time Received</th>
+                                    <th class="admin-table">Received</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,7 +48,7 @@
                                             <td>{{ $data->dueDate }}</td>
                                             <td>{{ $data->status}} </td>
                                             <td>{{ $data->created_at}} </td>
-                                            
+                                            <td>{{ $data->timeReceived}} </td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -105,10 +120,17 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#sampledatainprogress').DataTable({
-            "ordering": false
+            "order": [[ 4, "desc" ]],
+            "columnDefs": [
+                {
+                    "targets": [ 4 ],
+                    "visible": false,
+                    "searchable": false
+                }
+            ]
         });
         $('#sampledatacomplete').DataTable({
-            "ordering": false
+            "order": [[ 3, "desc" ]]
         });
         $('#scanid2').focus();
         $('#scanid').focus();
@@ -130,10 +152,12 @@
 
     $("#inprogresstab").click(function(e){
         $("#cmpltbtn").show();
+        $("#rcvbtn").hide();
     });
 
     $("#completedtab").click(function(e){
-        $("#cmpltbtn").show();
+        $("#rcvbtn").hide();
+        $("#cmpltbtn").hide();
     });
 </script>
 @endsection
