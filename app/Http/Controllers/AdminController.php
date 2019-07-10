@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function admin()
     {
         $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
-
+       
         return view('admin.home', ['user' => $user]);
     }
 
