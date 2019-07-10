@@ -48,7 +48,7 @@ class NotifyDueDate extends Command
 
     private function getSamples()
     {
-        $samples = Sample::where('dueDate', '>', Carbon::now())->get();
+        $samples = Sample::where('dueDate', '>=', Carbon::now())->get();
 
         return $samples;
     }
