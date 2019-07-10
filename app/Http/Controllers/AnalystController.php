@@ -9,6 +9,7 @@ use App\Item as Item;
 use App\Station as Station;
 use App\Inventory as Inventory;
 use App\InventoryList as InventoryList;
+use App\Client as Clients;
 use Nexmo\Client\Credentials\Basic as NexmoBasic;
 use Nexmo\Client as NexmoClient;
 
@@ -48,16 +49,20 @@ class AnalystController extends Controller
         //GROUP BY s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived
         
         $sampledata = DB::table('samples AS s')
-                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName')
+                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName','st.status','p.analysis')
                     ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                     ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                     ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
-                    ->where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
-                    ->where('st.status','=', 'In Progress')
-                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName')
+                    ->where('s.dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                    ->where(function($query){
+                        $query->where('st.status','=', 'In Progress')
+                            ->orWhere('st.status','=', 'Not Started');
+                    })
+                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName','st.status','p.analysis')
                     ->distinct()
                     ->get();
 
+        $request->session()->put('notifcount', count($sampledata));
         return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
     }
     
@@ -137,19 +142,21 @@ class AnalystController extends Controller
         //GROUP BY s.laboratoryCode,s.dueDate,st.status,st.timecompleted
 
         $progressperstation = DB::table('samples AS s')
-                ->select('s.laboratoryCode', 's.dueDate', 'st.status','s.created_at' )
+                ->select('s.laboratoryCode', 's.dueDate', 'st.status','s.created_at', 'st.timeReceived' )
                 ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                 ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                 ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
                 ->where('p.station','=', $id)
                 ->where('st.status','=', 'In Progress')
-                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','s.created_at')
+                ->groupBy('s.laboratoryCode', 's.dueDate','st.status','s.created_at', 'st.timeReceived')
                 ->distinct()
                 ->get();
 
+        $clientsssss = Clients::all();
+
         $station = Station::where('stationId','=',$id)->get();
              
-    	return view('analyst.stationsamples', ['inprogresssample' => $progressperstation ,'station' => $station[0], 'completedsample' => $completeperstation]);
+    	return view('analyst.stationsamples', ['manyclient' => $clientsssss, 'inprogresssample' => $progressperstation ,'station' => $station[0], 'completedsample' => $completeperstation]);
     }
 
     public function sampleDetails($stationid,$id){
@@ -181,6 +188,9 @@ class AnalystController extends Controller
             //where('st.status','=', 'Not Started')
             ->update(array('st.status' => 'In Progress','s.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'timeReceived' => date("Y-m-d H:m:s")));
         
+        if( $updateresult > 0 )
+            return redirect('/analyst/sample/station/'.$id)->with(['samplereceiveNotif' => true]);
+
         return redirect('/analyst/sample/station/'.$id);
     }
 
@@ -194,6 +204,9 @@ class AnalystController extends Controller
             ->where('p.station','=', $id)
             ->where('st.status','=', 'In Progress')
             ->update(array('st.status' => 'Completed', 's.managedBy' => Auth::user()->employeeName , 'st.managedBy' => Auth::user()->employeeName, 'st.timecompleted' => now()));
+
+        if( $updateresult > 0 )
+            return redirect('/analyst/sample/station/'.$id)->with(['samplecompletedNotif' => true]);
 
         return redirect('/analyst/sample/station/'.$id);
     }
