@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Station;
+use App\Sample;
+use App\Employee;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
+use App\Notifications\SampleDueDate;
 
 class NotifyDueDate extends Command
 {
@@ -38,8 +41,27 @@ class NotifyDueDate extends Command
      */
     public function handle()
     {
-        $newStation = new Station;
-        $newStation->stationName = "Test";
-        $newStation->save();
+        $this->notifySampleIn(0);
+        $this->notifySampleIn(1);
+        $this->notifySampleIn(3);
+    }
+
+    private function getSamples()
+    {
+        $samples = Sample::where('dueDate', '>', Carbon::now())->get();
+
+        return $samples;
+    }
+
+    private function notifySampleIn($days)
+    {
+        if(count($this->getSamples()) > 0) {
+            foreach ($this->getSamples() as $sample) {
+                $users = Employee::whereIn('userType', ['secretary', 'administrator'])->get();
+                if(Carbon::parse($sample->dueDate)->subDays($days)->format('Y-m-d H:i') == Carbon::now()->format('Y-m-d H:i')) {
+                    \Notification::send($users, new SampleDueDate($sample, $days));
+                }
+            }
+        }
     }
 }
