@@ -60,6 +60,7 @@ class SecretaryController extends Controller
 
     public function postAddSample(Request $request){
         // Validation
+        
         $validator = Validator::make($request->all(), [
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
@@ -212,8 +213,10 @@ class SecretaryController extends Controller
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount'=> 'nullable|numeric|max:100|min:0',
+
          
         ]);
+        
         // VALIDATION CHECKS
         if ($validator->fails()) {
             return redirect('secretary/create')
