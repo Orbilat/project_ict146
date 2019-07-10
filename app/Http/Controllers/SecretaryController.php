@@ -212,7 +212,7 @@ class SecretaryController extends Controller
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount'=> 'nullable|numeric|max:100|min:0',
-         
+            'dueDate' => 'required|date|after:now'
         ]);
         // VALIDATION CHECKS
         if ($validator->fails()) {
