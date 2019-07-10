@@ -19,21 +19,25 @@ class AnalystMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->userType != 'analyst' && $request->user()->userType != 'administrator') {
+        if ($request->user()->userType != 'analyst') {
             return redirect('/login');
         }
         $stations = Station::all();
         $sampledata = DB::table('samples AS s')
-                        ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection' )
-                        ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
-                        ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
-                        ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
-                        ->where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
-                        ->where('st.status','=', 'In Progress')
-                        ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection')
-                        ->distinct()
-                        ->get();
+                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName')
+                    ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
+                    ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
+                    ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
+                    ->where('s.dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                    ->where(function($query){
+                        $query->where('st.status','=', 'In Progress')
+                            ->orWhere('st.status','=', 'Not Started');
+                    })
+                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName')
+                    ->distinct()
+                    ->get();
 
+        View::share('notifcount', count($sampledata));
         View::share('sampledata', $sampledata);
         View::share('stations', $stations);
         return $next($request);

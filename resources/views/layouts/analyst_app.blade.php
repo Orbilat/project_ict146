@@ -27,8 +27,8 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    @if( !$sampledata->isEmpty())
-                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }}<img class="exclamationicon" src="/img/redexclamation.png"></a>
+                    @if( $notifcount > 0)
+                      <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }} <b style="color:red">{{ $notifcount }}</b></a>
                     @else
                       <a class="nav-link" href="{{ route('analystnotification') }}">{{ __('Notification') }}</a>
                     @endif
@@ -50,7 +50,7 @@
                       </div>
                   </li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto" style="float: right;">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
