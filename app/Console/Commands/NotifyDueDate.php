@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Station;
 use Illuminate\Console\Command;
 
 class NotifyDueDate extends Command
@@ -37,10 +38,8 @@ class NotifyDueDate extends Command
      */
     public function handle()
     {
-        $newStation = new App\Station;
-        $newStation->name = "Test";
-        $newStation->managedBy = "Administrator";
-        $newStation->managedDate = " ";
+        $newStation = new Station;
+        $newStation->stationName = "Test";
         $newStation->save();
     }
 }
