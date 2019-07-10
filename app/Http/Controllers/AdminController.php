@@ -19,7 +19,7 @@ use App\Supplier;
 use App\Item;
 use App\Transaction;
 use App\Notifications\ReadyForPickUp;
-use App\Notifications\SampleDueDate;
+use App\Notifications\NewSampleAdded;
 use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
