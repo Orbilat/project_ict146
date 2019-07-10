@@ -11,14 +11,16 @@ class NewSampleAdded extends Notification
 {
     use Queueable;
 
+    protected $sample;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($sample)
     {
-        //
+        $this->sample = $sample;   
     }
 
     /**
