@@ -54,7 +54,7 @@
       </div>
     </div>
     
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link nav-link-ltr active">
           <a class="nav-link" href="{{ url('/') }}"><i class="fa fa-home"></i>Home
