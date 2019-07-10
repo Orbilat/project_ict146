@@ -170,7 +170,7 @@
 </h5>
 <!-- Copyright -->
 <div class="footer-copyright text-center py-3">© 2019 Copyright:
-  <a href="https://mdbootstrap.com/education/bootstrap/">uscwaterlab.tech</a>- All rights served
+  <a href="{{ url('/') }}">uscwaterlab.tech</a>- All rights served
 </div>
 <!-- Copyright -->
 
