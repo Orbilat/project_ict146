@@ -9,6 +9,7 @@ use App\Item as Item;
 use App\Station as Station;
 use App\Inventory as Inventory;
 use App\InventoryList as InventoryList;
+use App\Client as Clients;
 use Nexmo\Client\Credentials\Basic as NexmoBasic;
 use Nexmo\Client as NexmoClient;
 
@@ -48,16 +49,20 @@ class AnalystController extends Controller
         //GROUP BY s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived
         
         $sampledata = DB::table('samples AS s')
-                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName')
+                    ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName','st.status','p.analysis')
                     ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
                     ->leftJoin('parameters AS p', 'p.parameterId', '=', 'st.parameters')
                     ->leftJoin('stations AS sta', 'p.station', '=', 'sta.stationid')
-                    ->where('dueDate','<',date("Y-m-d",strtotime("+5 day")))
-                    ->where('st.status','=', 'In Progress')
-                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName')
+                    ->where('s.dueDate','<',date("Y-m-d",strtotime("+5 day")))
+                    ->where(function($query){
+                        $query->where('st.status','=', 'In Progress')
+                            ->orWhere('st.status','=', 'Not Started');
+                    })
+                    ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName','st.status','p.analysis')
                     ->distinct()
                     ->get();
 
+        $request->session()->put('notifcount', count($sampledata));
         return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
     }
     
@@ -147,9 +152,11 @@ class AnalystController extends Controller
                 ->distinct()
                 ->get();
 
+        $clientsssss = Clients::all();
+
         $station = Station::where('stationId','=',$id)->get();
              
-    	return view('analyst.stationsamples', ['inprogresssample' => $progressperstation ,'station' => $station[0], 'completedsample' => $completeperstation]);
+    	return view('analyst.stationsamples', ['manyclient' => $clientsssss, 'inprogresssample' => $progressperstation ,'station' => $station[0], 'completedsample' => $completeperstation]);
     }
 
     public function sampleDetails($stationid,$id){
