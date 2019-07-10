@@ -1,6 +1,20 @@
 @extends('layouts.admin_app')
 
 @section('content')
+{{-- SUCCESS MESSAGE OF ADDING STATION --}}
+    @if(Session::has('flash_event_added'))
+        <div class="alert alert-info offset-md-1 col-md-10">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>Notification:</strong> {!!Session::get('flash_event_added')!!}
+        </div>
+    @endif
+{{-- SUCCESS MESSAGE OF DELETING STATION --}}
+    @if(Session::has('flash_event_deleted'))
+        <div class="alert alert-info offset-md-1 col-md-10">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>Notification:</strong> {!!Session::get('flash_event_deleted')!!}
+        </div>
+    @endif
 
 {{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
 <?php $count = 0; ?>
@@ -105,7 +119,49 @@
                                                                 @method('PATCH')
                                                                 @csrf
                                                             <div class="modal-body">
-                                                                
+                                                                <div class="form-group row">
+                                                                    <label for="eventName" class="col-md-4 col-form-label text-md-right">{{ __('Event Name') }}</label>
+                                                                    
+                                                                    <div class="col-md-6">
+                                                                        <input id="eventName" type="text" class="form-control{{ $errors->has('eventName') ? ' is-invalid' : '' }}" name="eventName" value="{{ $event->event_name }}"  autofocus>
+                                                                        
+                                                                        @if ($errors->has('eventName'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $errors->first('eventName') }}</strong>
+                                                                        </span>
+                                                                        @endif
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="startDate" class="col-md-4 col-form-label text-md-right">{{ __('Start Date') }}</label>
+                                                                    
+                                                                    <div class="col-md-6">
+                                                                        <input id="startDate" type="datetime-local" class="form-control{{ $errors->has('startDate') ? ' is-invalid' : '' }}" name="startDate" value="{{ strftime('%Y-%m-%dT%H:%M:%S', strtotime($event->start_date)) }}" autofocus>
+                                                                        
+                                                                        @if ($errors->has('startDate'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $errors->first('startDate') }}</strong>
+                                                                        </span>
+                                                                        @endif
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="endDate" class="col-md-4 col-form-label text-md-right">{{ __('End Date') }}</label>
+                                                                    
+                                                                    <div class="col-md-6">
+                                                                        <input id="endDate" type="datetime-local" class="form-control{{ $errors->has('endDate') ? ' is-invalid' : '' }}" name="endDate" value="{{ strftime('%Y-%m-%dT%H:%M:%S', strtotime($event->end_date)) }}"  autofocus>
+                                                                        
+                                                                        @if ($errors->has('endDate'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $errors->first('endDate') }}</strong>
+                                                                        </span>
+                                                                        @endif
+
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-primary">Save</button>

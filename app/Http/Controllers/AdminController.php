@@ -777,7 +777,6 @@ class AdminController extends Controller
         $event->start_date = $request->startDate;
         $event->end_date = $request->endDate;
 
-        // dd($event);
         //CHECK SAVE
         if($event->save()){
             Session::flash('flash_event_added', 'Event added successfully!');
@@ -785,6 +784,46 @@ class AdminController extends Controller
         }
         else {
             abort(500, 'Error!');
+        }
+    }// Update event
+    protected function updateEvent(Request $request, $eventId)
+    {
+        // Validation
+        $validatorUpdate = Validator::make($request->all(), [
+            'eventName' => 'required|string|max:255',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date'
+        ]);
+        // Validation fails
+        if ($validatorUpdate->fails()) {
+            return redirect('admin/events')
+                        ->withErrors($validatorUpdate)
+                        ->withInput();
+        }
+        // Find event
+        $event = Event::findOrFail($eventId);
+        $event->event_name = trim($request->eventName);
+        $event->start_date = $request->startDate;
+        $event->end_date = $request->endDate;
+        // Save
+        if($event->save()){
+            Session::flash('flash_event_updated', 'Event updated successfully!');
+            return Redirect::back();
+        }
+        else {
+            abort(500, 'Error! Event not updated.');
+        }
+    }
+    // Delete event
+    protected function destroyEvent($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        if($event->delete()){
+            Session::flash('flash_event_deleted', 'Event deleted successfully!');
+            return Redirect::back();
+        }
+        else {
+            abort(500, 'Error! Event not deleted.');
         }
     }
     // Add glassware
@@ -933,3 +972,6 @@ class AdminController extends Controller
         return $this->admin();
     }
 }
+
+
+
