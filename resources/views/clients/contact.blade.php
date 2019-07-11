@@ -62,7 +62,7 @@
                         </button>
                         <br>
                       @if(Session::has('flash_feedback_added'))
-                          <div class="alert alert-success col-md-12">
+                          <div class="alert alert-success col-md-12" id="flash-msg">
                               <a class="close" data-dismiss="alert">×</a>
                               <strong><i class="fa fa-check-circle-o" style="font-size:25px;"></i>&nbsp{!!Session::get('flash_feedback_added')!!}</strong> 
                           </div>
