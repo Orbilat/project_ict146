@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="w3-container" id="contact">
       <!--Section heading-->
     <h3 class="w3-center">
@@ -59,6 +60,12 @@
                         <button class="w3-button w3-info" type="submit">
                           <i class="glyphicon glyphicon-send"></i> SEND MESSAGE
                         </button>
+                      @if(Session::has('flash_feedback_added'))
+                          <div class="alert alert-success offset-md-1 col-md-10">
+                              <a class="close" data-dismiss="alert">×</a>
+                              <strong>{!!Session::get('flash_feedback_added')!!}</strong> 
+                          </div>
+                      @endif
              </div>
           </div>
       </div>

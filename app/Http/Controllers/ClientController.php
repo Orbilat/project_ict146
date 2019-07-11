@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Session;
 use App\Client;
 use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Parameter;
 use App\ClientContact;
+use Redirect;
 
 class ClientController extends Controller
 {
@@ -60,7 +61,13 @@ class ClientController extends Controller
         $receiveContact->emailAddress = $request->email;
         $receiveContact->message =$request->message;
 
-        $receiveContact->save();
+        if($receiveContact->save()){
+        Session::flash('flash_feedback_added','Message send successfully!');
+            return Redirect::back();
+        }
+        else {
+            abort(500, 'Error! Item not added.');
+        }
         return view('clients.contact');
     }
     
