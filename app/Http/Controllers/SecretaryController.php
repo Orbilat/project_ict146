@@ -70,7 +70,7 @@ class SecretaryController extends Controller
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|string|max:50',
+            'dueDate' => 'required|date|after:now',
         ]);
         // Check validation
         if ($validator->fails()) {
@@ -121,7 +121,7 @@ class SecretaryController extends Controller
 
             $clients=Client::all();
             $parameters = Parameter::all();
-            Session::flush();
+            
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
             return view('Secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
         }
@@ -159,6 +159,10 @@ class SecretaryController extends Controller
             if($isComplete == 'true'){
                 $ready = Client::findOrFail($cl->clientId);
                 $ready->readyForPickUp = 'yes';
+                $ready->save();
+            }else{
+                $ready = Client::findOrFail($cl->clientId);
+                $ready->readyForPickUp = 'no';
                 $ready->save();
             }
         }
@@ -293,7 +297,7 @@ class SecretaryController extends Controller
                 'parameter' => 'required',
                 'purposeOfAnalysis' => 'nullable|string|max:50',
                 'sampleSource' => 'required|string|max:20',
-                'dueDate' => 'required|string|max:50',
+                'dueDate' => 'required|date|after:now',
             ]);
             //VALIDATION CHECKS
             if ($validator->fails()) {

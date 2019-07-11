@@ -29,7 +29,7 @@
 </head>
 <style>
      body {
-       background: url(img/bkg4.jpg) no-repeat center center fixed;
+       background: url(img/bkg5.jpg) no-repeat center center fixed;
        background-size: 100% 100%;
        height: 100%;
        position: absolute;
