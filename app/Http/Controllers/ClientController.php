@@ -62,11 +62,11 @@ class ClientController extends Controller
         $receiveContact->message =$request->message;
 
         if($receiveContact->save()){
-        Session::flash('flash_feedback_added','Message send successfully!');
+        Session::flash('flash_feedback_added','Message sent successfully!');
             return Redirect::back();
         }
         else {
-            abort(500, 'Error! Item not added.');
+            return view('clients.contact');
         }
         return view('clients.contact');
     }

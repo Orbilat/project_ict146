@@ -60,10 +60,11 @@
                         <button class="w3-button w3-info" type="submit">
                           <i class="glyphicon glyphicon-send"></i> SEND MESSAGE
                         </button>
+                        <br>
                       @if(Session::has('flash_feedback_added'))
-                          <div class="alert alert-success offset-md-1 col-md-10">
+                          <div class="alert alert-success col-md-12">
                               <a class="close" data-dismiss="alert">×</a>
-                              <strong>{!!Session::get('flash_feedback_added')!!}</strong> 
+                              <strong><i class="fa fa-check-circle-o" style="font-size:25px;"></i>&nbsp{!!Session::get('flash_feedback_added')!!}</strong> 
                           </div>
                       @endif
              </div>
