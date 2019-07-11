@@ -47,6 +47,7 @@ Route::get('/secretary/add-sample','SecretaryController@addSample')->name('addSa
 Route::post('/secretary/add-sample','SecretaryController@postAddSample')->name('postAddSample');
 Route::get('/secretary/samples','ProduitController@selectSamples');
 Route::post('/secretary/print','ProduitController@printSamples');
+Route::get('/secretary/home/{id?}', 'SecretaryController@read')->name('notif-read');
 // Route::post('/secretary/search/not_found','ProduitController@search')->name('search-fail');
 });
 //END SECRETARY ROUTES

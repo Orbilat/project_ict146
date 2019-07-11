@@ -31,14 +31,19 @@ class SecretaryController extends Controller
 
         return view('Secretary-file.secretary', ['user' => $user]);
     }
-    public function admin()
+ 
+    protected function read($id)
     {
-    }
+        $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
 
-    
-    public function inve()
-    {
-        return view('Secretary-file.inventory-secretary');
+        foreach ($user->notifications as $notification) {
+            if($notification->id == $id) {
+                $notification->markAsRead();
+                break;
+            }
+        }
+        
+        return $this->index();
     }
     public function addSample(){
         $parameter = Parameter::all();
@@ -70,7 +75,7 @@ class SecretaryController extends Controller
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|string|max:50',
+            'dueDate' => 'required|date|after:now',
         ]);
         // Check validation
         if ($validator->fails()) {
@@ -115,13 +120,13 @@ class SecretaryController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
 
             $clients=Client::all();
             $parameters = Parameter::all();
-            Session::flush();
+            
             Session::flash('flash_sample_added', 'Sample inserted successfully!');
             return view('Secretary-file.add-sample',['clients'=> $clients, 'parameters' => $parameters]);
         }
@@ -159,6 +164,10 @@ class SecretaryController extends Controller
             if($isComplete == 'true'){
                 $ready = Client::findOrFail($cl->clientId);
                 $ready->readyForPickUp = 'yes';
+                $ready->save();
+            }else{
+                $ready = Client::findOrFail($cl->clientId);
+                $ready->readyForPickUp = 'no';
                 $ready->save();
             }
         }
@@ -293,7 +302,7 @@ class SecretaryController extends Controller
                 'parameter' => 'required',
                 'purposeOfAnalysis' => 'nullable|string|max:50',
                 'sampleSource' => 'required|string|max:20',
-                'dueDate' => 'required|string|max:50',
+                'dueDate' => 'required|date|after:now',
             ]);
             //VALIDATION CHECKS
             if ($validator->fails()) {
@@ -334,7 +343,7 @@ class SecretaryController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
                 $params = Parameter::all();
