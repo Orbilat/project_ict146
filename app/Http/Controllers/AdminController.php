@@ -228,7 +228,7 @@ class AdminController extends Controller
             'discount' => 'nullable|numeric|between:0,100',
             'deposit' => 'nullable|numeric|between:0,100000',
             'reclaimSample' => 'required|numeric',
-            'followUp' => 'required|date',
+            'followUp' => 'required|date|after:now',
             'testResult' => 'nullable|string|max:5|min:1',
             'remarks' => 'required|string|max:20',
         ]);
@@ -353,16 +353,16 @@ class AdminController extends Controller
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleType' => 'required|string|max:255',
-            'sampleCollection' => 'required|string|max:50',
+            'sampleCollection' => 'required|date|before:now',
             'samplePreservation' => 'nullable|string|max:50',
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|string|max:50',
+            'dueDate' => 'required|date|after:now',
         ]);
         // Validation fails
         if ($validator->fails()) {
-            return redirect('admin/clients')
+            return redirect('admin/samples')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -422,16 +422,16 @@ class AdminController extends Controller
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleType' => 'required|string|max:255',
-            'sampleCollection' => 'required|string|max:50',
+            'sampleCollection' => 'required|date|before:now',
             'samplePreservation' => 'nullable|string|max:50',
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
             'sampleSource' => 'required|string|max:20',
-            'dueDate' => 'required|string|max:50',
+            'dueDate' => 'required|date|after:now',
         ]);
         // Check validation
         if ($validator->fails()) {
-            return redirect('admin/clients')
+            return redirect('admin/samples')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -962,7 +962,7 @@ class AdminController extends Controller
         $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
 
         foreach ($user->notifications as $notification) {
-            if($notification->notifiable_id == $id) {
+            if($notification->id == $id) {
                 $notification->markAsRead();
                 break;
             }

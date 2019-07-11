@@ -14,6 +14,7 @@ use App\Transaction;
 use App\Sample_Tests;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use App\Notifications\NewSampleAdded;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\ReadyForPickUp;
@@ -70,7 +71,7 @@ class SecretaryController extends Controller
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleType' => 'required|string|max:255',
-            'sampleCollection' => 'required|string|max:50',
+            'sampleCollection' => 'required|date|before:now',
             'samplePreservation' => 'nullable|string|max:50',
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
@@ -297,7 +298,7 @@ class SecretaryController extends Controller
                 'clientId' => 'required',
                 'clientsCode' => 'nullable|string|max:255',
                 'sampleType' => 'required|string|max:255',
-                'sampleCollection' => 'required|string|max:50',
+                'sampleCollection' => 'required|date|before:now',
                 'samplePreservation' => 'nullable|string|max:50',
                 'parameter' => 'required',
                 'purposeOfAnalysis' => 'nullable|string|max:50',

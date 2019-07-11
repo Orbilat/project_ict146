@@ -19,6 +19,7 @@
     @endforeach
         <p>Please try again.</p>
 </ul>
+</div>  
 @endif
 
 
@@ -39,6 +40,11 @@
                             <div class="col-md-6">
                                 <select class="form-control" id="clientId" name="clientId" required autofocus>
                                         <option value="" selected>SELECT A CLIENT</option>
+                                    @if((old('clientId')) != NULL)
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->risNumber }}" @if($client->risNumber == old('clientId')) selected @endif>{{ $client->risNumber }} - {{ $client->nameOfPerson }}</option>
+                                        @endforeach
+                                    @endif
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->risNumber }}">{{ $client->risNumber }} - {{ $client->nameOfPerson }}</option>
                                     @endforeach
@@ -117,6 +123,11 @@
                             <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
                             &nbsp;&nbsp;&nbsp;
                             <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple" required>
+                                @if(is_array(old('parameter')))
+                                    @foreach($parameters as $parameter)
+                                        <option value="{{ $parameter->analysis }}" @if(in_array($parameter->analysis, old('parameter'))) selected @endif>{{$parameter->analysis}}</option>
+                                    @endforeach
+                                @endif
                                 @foreach ($parameters as $parameter)
                                     <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
                                 @endforeach
@@ -168,7 +179,7 @@
                             <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
 
                             <div class="col-md-6">
-                                <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
+                                <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ old('dueDate') }}" required>
                                 @if ($errors->has('dueDate'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('dueDate') }}</strong>

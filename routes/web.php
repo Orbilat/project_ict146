@@ -103,7 +103,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/accounts/search', 'AdminController@searchAccount')->name('searchAccount-admin');
     Route::get('/admin/inventory/glassware/search', 'AdminController@searchItem')->name('searchItem-admin');
     Route::get('/admin/suppliers/search', 'AdminController@searchSUpplier')->name('searchSupplier-admin');
-    Route::get('/admin/home/{id?}', 'AdminController@read')->name('notif-read');
+    Route::get('/admin/home/{id?}', 'AdminController@read')->name('notif-read-admin');
 });
 // END ADMIN ROUTES
 
