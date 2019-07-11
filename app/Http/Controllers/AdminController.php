@@ -40,6 +40,7 @@ class AdminController extends Controller
     public function transactions()
     {
         $transactions = Client::with('samples.parameters')
+                        ->orderBy('risNumber', 'DESC')
                         ->paginate(10);
         return view('admin.transactions', ['transactions' => $transactions]);
     }
@@ -47,7 +48,7 @@ class AdminController extends Controller
     // Samples page
     public function samples()
     {
-        $samples = Sample::with('client', 'parameters')->paginate(10);
+        $samples = Sample::with('client', 'parameters')->orderBy('dueDate', 'DESC')->paginate(10);
         $parameters = Parameter::all();
         $clients = Client::orderBy('risNumber')->get();
         $samps = Sample::all();
@@ -108,9 +109,10 @@ class AdminController extends Controller
     public function parameters()
     {
         $parameters = Parameter::with('stations')->orderBy('analysis')->paginate(10);
+        $stations = Station::all();
         $params = Parameter::all();
 
-        return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
+        return view('admin.parameters', ['parameters' => $parameters, 'params' => $params, 'stations' => $stations]);
     }
 
      // Suppliers page
@@ -293,7 +295,7 @@ class AdminController extends Controller
     {
         $client = Client::findOrFail($clientId);
         if($client->delete()){
-            Session::flash('flash_client_deleted', 'Client has been deleted successfully!');
+            Session::flash('flash_client_deleted', 'Client has been deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -343,7 +345,7 @@ class AdminController extends Controller
         $client->managedDate = new DateTime();
     
         if($client->save()){
-            Session::flash('flash_client_updated', 'Client information updated successfully!');
+            Session::flash('flash_client_updated', 'Client information updated successfully.');
             return Redirect::back();
         }
         else {
@@ -481,7 +483,7 @@ class AdminController extends Controller
             }
 
             $params = Parameter::all();
-            Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
+            Session::flash('flash_sample_added', 'Sample added successfully. You can add another sample.');
 
             return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
         }
@@ -494,7 +496,7 @@ class AdminController extends Controller
     {
         $sample = Sample::findOrFail($sampleId);
         if($sample->delete()){
-            Session::flash('flash_sample_deleted', 'Sample deleted successfully!');
+            Session::flash('flash_sample_deleted', 'Sample deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -557,7 +559,7 @@ class AdminController extends Controller
         }
         
         if($sample->save()){
-            Session::flash('flash_sample_updated', 'Sample updated successfully!');
+            Session::flash('flash_sample_updated', 'Sample updated successfully.');
             return Redirect::back();
         }
         else {
@@ -591,7 +593,7 @@ class AdminController extends Controller
         $parameter->managedDate = new DateTime();
         // Save
         if($parameter->save()){
-            Session::flash('flash_parameter_added', 'Analysis added successfully!');
+            Session::flash('flash_parameter_added', 'Analysis added successfully.');
             return Redirect::back();
         }
         else {
@@ -603,7 +605,7 @@ class AdminController extends Controller
     {
         $parameter = Parameter::findOrFail($parameterId);
         if($parameter->delete()){
-            Session::flash('flash_parameter_deleted', 'Analysis has been deleted successfully!');
+            Session::flash('flash_parameter_deleted', 'Analysis has been deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -636,7 +638,7 @@ class AdminController extends Controller
         $parameter->managedDate = new DateTime();
         // Save
         if($parameter->save()){
-            Session::flash('flash_parameter_updated', 'Analysis information updated successfully!');
+            Session::flash('flash_parameter_updated', 'Analysis information updated successfully.');
             return Redirect::back();
         }
         else {
@@ -668,7 +670,7 @@ class AdminController extends Controller
         $supplier->managedDate = new DateTime();
         // Save
         if($supplier->save()){
-            Session::flash('flash_supplier_added', 'Supplier added successfully!');
+            Session::flash('flash_supplier_added', 'Supplier added successfully.');
             return Redirect::back();
         }
         else {
@@ -680,7 +682,7 @@ class AdminController extends Controller
     {
         $supplier = Supplier::findOrFail($supplierId);
         if($supplier->delete()){
-            Session::flash('flash_supplier_deleted', 'Supplier deleted successfully!');
+            Session::flash('flash_supplier_deleted', 'Supplier deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -711,7 +713,7 @@ class AdminController extends Controller
         $supplier->managedDate = new DateTime();
         // Save
         if($supplier->save()){
-            Session::flash('flash_supplier_updated', 'Supplier updated successfully!');
+            Session::flash('flash_supplier_updated', 'Supplier updated successfully.');
             return Redirect::back();
         }
         else {
@@ -739,7 +741,7 @@ class AdminController extends Controller
         $station->managedDate = new DateTime();
         // Save
         if($station->save()){
-            Session::flash('flash_station_added', 'Station added successfully!');
+            Session::flash('flash_station_added', 'Station added successfully.');
             return Redirect::back();
         }
         else {
@@ -751,7 +753,7 @@ class AdminController extends Controller
     {
         $station = Station::findOrFail($stationId);
         if($station->delete()){
-            Session::flash('flash_station_deleted', 'Station deleted successfully!');
+            Session::flash('flash_station_deleted', 'Station deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -782,7 +784,7 @@ class AdminController extends Controller
 
         //CHECK SAVE
         if($event->save()){
-            Session::flash('flash_event_added', 'Event added successfully!');
+            Session::flash('flash_event_added', 'Event added successfully.');
             return Redirect::back();
         }
         else {
@@ -810,7 +812,7 @@ class AdminController extends Controller
         $event->end_date = $request->endDate;
         // Save
         if($event->save()){
-            Session::flash('flash_event_updated', 'Event updated successfully!');
+            Session::flash('flash_event_updated', 'Event updated successfully.');
             return Redirect::back();
         }
         else {
@@ -822,7 +824,7 @@ class AdminController extends Controller
     {
         $event = Event::findOrFail($eventId);
         if($event->delete()){
-            Session::flash('flash_event_deleted', 'Event deleted successfully!');
+            Session::flash('flash_event_deleted', 'Event deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -856,7 +858,7 @@ class AdminController extends Controller
         $item->managedBy = Auth::user()->employeeName;
         $item->managedDate = new DateTime;
         if($item->save()) {
-            Session::flash('flash_event_added', 'Event added successfully!');
+            Session::flash('flash_event_added', 'Event added successfully.');
             return Redirect::back();
         }
         else {
@@ -868,7 +870,7 @@ class AdminController extends Controller
     {
         $item = Item::findOrFail($itemId);
         if($item->delete()){
-            Session::flash('flash_item_deleted', 'Item deleted successfully!');
+            Session::flash('flash_item_deleted', 'Item deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -902,7 +904,7 @@ class AdminController extends Controller
         $item->managedBy = Auth::user()->employeeName;
         $item->managedDate = new DateTime;
         if($item->save()) {
-            Session::flash('flash_item_updated', 'Item updated successfully!');
+            Session::flash('flash_item_updated', 'Item updated successfully.');
             return Redirect::back();
         }
         else {
@@ -930,7 +932,12 @@ class AdminController extends Controller
         $clients = Client::orderBy('risNumber')->get();
         $samps = Sample::all();
 
-        return view('admin.samples', ['samples' => $samples, 'samps' => $samps, 'parameters' => $parameters, 'clients' => $clients]);
+        if($samples->count() == 0) {
+            return $this->samples();
+        }
+        else {
+            return view('admin.samples', ['samples' => $samples, 'samps' => $samps, 'parameters' => $parameters, 'clients' => $clients]);
+        }
     }
 
     protected function searchParameter(Request $request)
@@ -938,7 +945,12 @@ class AdminController extends Controller
         $parameters = Parameter::where('analysis', $request->search)->with('stations')->paginate(10);
         $params = Parameter::all();
 
-        return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
+        if($parameters->count() == 0) {
+            return $this->parameters();
+        }
+        else {
+            return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
+        }
     }
 
     protected function searchAccount(Request $request)
@@ -946,7 +958,12 @@ class AdminController extends Controller
         $accounts = Employee::where('employeeName', $request->search)->paginate(10);
         $employees = Employee::all();
 
-        return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
+        if($accounts->count() == 0) {
+            return $this->accounts();
+        }
+        else {
+            return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
+        }
     }
 
     protected function searchItem(Request $request)
@@ -955,7 +972,12 @@ class AdminController extends Controller
         $suppliers = Supplier::all();
         $glasswares = Item::all();
 
-        return view('admin.inventory-glassware', ['items' => $items, 'glasswares' => $glasswares, 'suppliers' => $suppliers]);
+        if($items->count() == 0) {
+            return $this->glassware();
+        }
+        else {
+            return view('admin.inventory-glassware', ['items' => $items, 'glasswares' => $glasswares, 'suppliers' => $suppliers]);
+        }
     }
 
     protected function searchSupplier(Request $request)
@@ -963,7 +985,12 @@ class AdminController extends Controller
         $suppliers = Supplier::where('companyName', $request->search)->paginate(10);
         $supps = Supplier::all();
 
-        return view('admin.suppliers', ['suppliers' => $suppliers, 'supps' => $supps]);
+        if($suppliers->count() == 0) {
+            return $this->suppliers();
+        }
+        else {
+            return view('admin.suppliers', ['suppliers' => $suppliers, 'supps' => $supps]);
+        }
     }
 
     protected function read($id)
@@ -977,6 +1004,17 @@ class AdminController extends Controller
             }
         }
         
+        return $this->admin();
+    }
+
+    protected function readAll()
+    {
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        foreach ($user->notifications as $notification) {
+            $notification->markAsRead();
+        }
+
         return $this->admin();
     }
 }
