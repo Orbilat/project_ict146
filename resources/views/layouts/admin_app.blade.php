@@ -306,19 +306,13 @@
                         <strong>Notification:</strong> {!!Session::get('flash_supplier_updated')!!}
                     </div>
                 @endif
-            {{-- VALIDATION CHECKS --}}
-                @if ($errors->any())
-                <div class="alert alert-danger pb-0 offset-md-1 col-md-10">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                            <p>Please try again.</p>
-                    </ul>
-                </div>
+            {{-- SUCCESS MESSAGE OF UPDATING SUPPLIER --}}
+                @if(Session::has('flash_event_updated'))
+                    <div class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> {!!Session::get('flash_event_updated')!!}
+                    </div>
                 @endif
-
-
             @yield('content')
         </main>
     

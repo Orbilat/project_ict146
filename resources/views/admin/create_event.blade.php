@@ -62,7 +62,7 @@
                     
                                             @if ($errors->has('startDate'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('startDate') }}</strong>
+                                                    <strong>The Start Date must be before the End Date</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -75,9 +75,9 @@
                     
                                             @if ($errors->has('endDate'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('endDate') }}</strong>
+                                                    <strong>The end date must be after the Start Date</strong>
                                                 </span>
-                                            @endif
+                                            @endif  
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
