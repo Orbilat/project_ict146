@@ -115,7 +115,7 @@ class SecretaryController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
 
@@ -338,7 +338,7 @@ class SecretaryController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
                 $params = Parameter::all();
