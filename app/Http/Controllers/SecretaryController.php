@@ -31,14 +31,19 @@ class SecretaryController extends Controller
 
         return view('Secretary-file.secretary', ['user' => $user]);
     }
-    public function admin()
+ 
+    protected function read($id)
     {
-    }
+        $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
 
-    
-    public function inve()
-    {
-        return view('Secretary-file.inventory-secretary');
+        foreach ($user->notifications as $notification) {
+            if($notification->id == $id) {
+                $notification->markAsRead();
+                break;
+            }
+        }
+        
+        return $this->index();
     }
     public function addSample(){
         $parameter = Parameter::all();

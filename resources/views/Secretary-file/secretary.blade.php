@@ -35,7 +35,7 @@
                                 Due Date: {{ $notification->data['dueDate'] }}
                             </p>
                             <hr>
-                            <form action="{{ route('notif-read', ['id' => $notification->notifiable_id]) }}" method="get">
+                            <form action="{{ route('notif-read', ['id' => $notification->id]) }}" method="get">
                                     <button type="submit" class="mb-0 btn btn-secondary">Mark as read</button>
                             </form>
                         </div>
