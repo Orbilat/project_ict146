@@ -46,11 +46,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin') }}">{{ __('Notifications') }}
                                     @php
-                                        $user = App\Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first()
+                                        $user = App\Employee::where('employeeId', Auth::user()->employeeId)->with('notifications')->first()
                                     @endphp
                                 @if(count($user->unreadNotifications) > 0)
                                         <span class="badge badge-danger"> {{ count($user->unreadNotifications) }}</span>
-                                    @endif
+                                @endif
                                 </a>
                             </li>
                             <li class="nav-item">

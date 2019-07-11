@@ -6,8 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header ">Notification</div>
-                <br>
-                <table id="sampledata" class="display sampledata table table-hover" style="width:100%">
+                <!--table id="sampledata" class="display sampledata table table-hover" style="width:100%">
                     <thead class="thead-light">
                         <tr>
                             <th class="admin-table">Due Date</th>
@@ -26,7 +25,22 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table-->
+                @foreach($sampledatas as $data)
+                <div class="alert alert-info m-1" role="alert">
+                    <h4 class="alert-heading">
+                        Sample is almost due
+                    </h4>
+                    <p>
+                        Due Date: {{ $data->dueDate }} <br>
+                        Laboratory Code: {{ $data->laboratoryCode }}
+                        <br>
+                        Sample Collection: {{ $data->sampleCollection }} <br>
+                        Station Name: {{ $data->stationName }}
+                    </p>
+                    <hr>    
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@ use App\Supplier;
 use App\Item;
 use App\Transaction;
 use App\Notifications\ReadyForPickUp;
-use App\Notifications\SampleDueDate;
+use App\Notifications\NewSampleAdded;
 use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +41,6 @@ class AdminController extends Controller
     {
         $transactions = Client::with('samples.parameters')
                         ->paginate(10);
-
         return view('admin.transactions', ['transactions' => $transactions]);
     }
 
@@ -401,7 +400,7 @@ class AdminController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
 
@@ -473,7 +472,7 @@ class AdminController extends Controller
             foreach ($users as $user) {
                 if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-                    $user->notify((new SampleDueDate($sample)));
+                    $user->notify((new NewSampleAdded($sample)));
                 }
             }
 

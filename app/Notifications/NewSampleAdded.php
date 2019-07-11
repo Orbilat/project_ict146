@@ -7,21 +7,20 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SampleDueDate extends Notification implements ShouldQueue
+class NewSampleAdded extends Notification
 {
     use Queueable;
 
-    protected $sample, $days;
+    protected $sample;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($sample, $days = NULL)
+    public function __construct($sample)
     {
-        $this->sample = $sample;
-        $this->days = $days;
+        $this->sample = $sample;   
     }
 
     /**
@@ -61,8 +60,7 @@ class SampleDueDate extends Notification implements ShouldQueue
             'labCode' => $this->sample['laboratoryCode'],
             'dueDate' => $this->sample['dueDate'],
             'created_by' => $this->sample['managedBy'],
-            'days' => $this->days,
-            'message' => 'Your sample is due ' . ($this->days == 0 ? 'today.' : 'in ' . $this->days . ' day/s.'),
+            'message' => 'A new sample has been added'
         ];
     }
 }
