@@ -244,6 +244,11 @@
                         </div>
                     </div>
                 </div>
+                @if ($clients->count() == 0)
+                <div class="alert alert-info m-0" role="alert">
+                    <p>You have no clients. Please add a client.</p>
+                </div>
+                @else
                 {{-- TABLE FOR DISPLAYING CLIENTS --}}
                 <div class="card-body">
                     <table class="table table-hover">
@@ -565,6 +570,7 @@
                     </table>
                     {{-- TABLE END   --}}
                 </div>
+                @endif
             </div>
             {{-- PAGINATION LINKS (PAGINATION:6) --}}
             <div class="row justify-content-center mt-2">
