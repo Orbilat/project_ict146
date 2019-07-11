@@ -60,6 +60,7 @@ class NewSampleAdded extends Notification
             'labCode' => $this->sample['laboratoryCode'],
             'dueDate' => $this->sample['dueDate'],
             'created_by' => $this->sample['managedBy'],
+            'days' => -1,
             'message' => 'A new sample has been added'
         ];
     }

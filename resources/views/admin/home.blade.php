@@ -25,7 +25,7 @@
                     {{-- @php
                         dd($notification)
                     @endphp --}}
-                        <div @if($notification->read_at == NULL) class="alert alert-info m-1" @else class="alert alert-secondary m-1" @endif role="alert">
+                        <div @if($notification->read_at == NULL && $notification->data['days'] == 0) class="alert alert-danger m-1" @elseif($notification->read_at != NULL) class="alert alert-secondary m-1" @else class="alert alert-info m-1" @endif role="alert">
                             <h5 class="alert-heading">
                                 {{ $notification->data['message'] }}
                                 
@@ -42,7 +42,7 @@
                                 Due Date: {{ date("F d, Y h:i A", strtotime($notification->data['dueDate'])) }}
                             </p>
                             <hr>
-                            <form action="{{ route('notif-read', ['id' => $notification->notifiable_id]) }}" method="get">
+                            <form action="{{ route('notif-read-admin', ['id' => $notification->id]) }}" method="get">
                                     <button type="submit" class="mb-0 btn btn-secondary">Mark as read</button>
                             </form>
                         </div>
