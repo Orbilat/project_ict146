@@ -25,6 +25,7 @@
     @endforeach
         <p>Please try again.</p>
 </ul>
+</div>
 @endif
 
 
@@ -105,6 +106,11 @@
                             <label for="parameter" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Requested') }}</label>
                             &nbsp;&nbsp;&nbsp;
                             <select class="form-control js-example-basic-multiple" style="width:48%;" id="parameter" name="parameter[]" multiple="multiple" required>
+                                @if(is_array(old('parameter')))
+                                    @foreach($parameters as $parameter)
+                                        <option value="{{ $parameter->analysis }}" @if(in_array($parameter->analysis, old('parameter'))) selected @endif>{{$parameter->analysis}}</option>
+                                    @endforeach
+                                @endif
                                 @foreach ($parameters as $parameter)
                                     <option value="{{ $parameter->analysis }}">{{ $parameter->analysis }}</option>
                                 @endforeach
@@ -156,7 +162,7 @@
                             <label for="dueDate" class="col-md-4 col-form-label text-md-right">{{ __('Due Date') }}</label>
 
                             <div class="col-md-6">
-                                <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" required>
+                                <input type="datetime-local" name="dueDate" id="dueDate" class="form-control{{ $errors->has('dueDate') ? ' is-invalid' : '' }}" value="{{ old('dueDate') }}" required>
                                 @if ($errors->has('dueDate'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('dueDate') }}</strong>

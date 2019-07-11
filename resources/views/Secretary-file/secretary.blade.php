@@ -18,7 +18,7 @@
                     {{-- @php
                         dd($notification)
                     @endphp --}}
-                        <div class="alert alert-info m-1" role="alert">
+                    <div @if($notification->read_at == NULL && $notification->data['days'] == 0) class="alert alert-danger m-1" @elseif($notification->read_at != NULL) class="alert alert-secondary m-1" @else class="alert alert-info m-1" @endif role="alert">
                             <h5 class="alert-heading">
                                 {{ $notification->data['message'] }}
                                 
