@@ -92,7 +92,9 @@
 $(document).ready(function() {
     $('.js-example-responsive').select2();
 });
-
+$(document).ready(function () {
+    $("#flash-msg").delay(3000).fadeOut("slow");
+});
 </script>
 </body>
 </html>

@@ -14,6 +14,7 @@ use App\Transaction;
 use App\Sample_Tests;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use App\Notifications\NewSampleAdded;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\ReadyForPickUp;
@@ -31,7 +32,11 @@ class SecretaryController extends Controller
 
         return view('Secretary-file.secretary', ['user' => $user]);
     }
- 
+    public function sampleView($clientRis){
+        $parameters = Parameter::all();
+
+        return view('Secretary-file.sample-secretary',['clientRis' => $clientRis, 'parameters' => $parameters]);
+    }
     protected function read($id)
     {
         $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
@@ -70,7 +75,7 @@ class SecretaryController extends Controller
             'clientId' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleType' => 'required|string|max:255',
-            'sampleCollection' => 'required|string|max:50',
+            'sampleCollection' => 'required|date|before:now',
             'samplePreservation' => 'nullable|string|max:50',
             'parameter' => 'required',
             'purposeOfAnalysis' => 'nullable|string|max:50',
@@ -276,9 +281,10 @@ class SecretaryController extends Controller
             $parameter = Parameter::orderBy('analysis')->get();
             $clientRis = $client->risNumber;
             Session::flash('flash_client_added', 'Client added successfully. Please add the samples of the new client.');
-            return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
+            return redirect()->action('SecretaryController@sampleView', ['clientId' =>$client->clientId]);
+        //     return view('Secretary-file.sample-secretary', ['risNumber' => $client->risNumber, 'parameters' => $parameter]);
         }
-        else {
+        else{
             App::abort(500, 'Error!');
         }
        
@@ -294,10 +300,10 @@ class SecretaryController extends Controller
         {
             // VALIDATION
             $validator = Validator::make($request->all(), [
-                'clientId' => 'required',
+                'clientRis' => 'required',
                 'clientsCode' => 'nullable|string|max:255',
                 'sampleType' => 'required|string|max:255',
-                'sampleCollection' => 'required|string|max:50',
+                'sampleCollection' => 'required|date|before:now',
                 'samplePreservation' => 'nullable|string|max:50',
                 'parameter' => 'required',
                 'purposeOfAnalysis' => 'nullable|string|max:50',
@@ -305,12 +311,10 @@ class SecretaryController extends Controller
                 'dueDate' => 'required|date|after:now',
             ]);
             //VALIDATION CHECKS
-            if ($validator->fails()) {
-                return redirect('secretary/form')
-                            ->withErrors($validator)
-                            ->withInput();
+            if ($validator->fails()) {     
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-            $client = DB::table('clients')->where('risNumber', $request->clientId)->value('clientId');
+            $client = DB::table('clients')->where('clientId', $request->clientRis)->value('clientId');
             //ELOQUENT INSERT
             $sample = new Sample;
             $sample->risNumber = $client;
@@ -346,14 +350,15 @@ class SecretaryController extends Controller
                     $user->notify((new NewSampleAdded($sample)));
                 }
             }
-                $params = Parameter::all();
+                
                 Session::forget('flash_client_added');
                 Session::flash('flash_sample_added', 'Sample added successfully. You can add another sample.');
-                return view('Secretary-file.sample-secretary', ['risNumber' => $request->clientId, 'parameters' => $params]);
+                return redirect()->action('SecretaryController@sampleView', ['clientRis'=> $request->clientRis]);
             }
             else {
                 App::abort(500, 'Error!');
             }
+        
         }
     }
 }

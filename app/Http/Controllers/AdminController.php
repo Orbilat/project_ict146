@@ -764,8 +764,8 @@ class AdminController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'eventName' => 'required|string|max:255',
-            'startDate' => 'required|date',
-            'endDate' => 'required|date'
+            'startDate' => 'required|date|before:'.$request->endDate,
+            'endDate' => 'required|date|after:'.$request->startDate
         ]);
         // Validation fails
         if ($validator->fails()) {
@@ -794,8 +794,8 @@ class AdminController extends Controller
         // Validation
         $validatorUpdate = Validator::make($request->all(), [
             'eventName' => 'required|string|max:255',
-            'startDate' => 'required|date',
-            'endDate' => 'required|date'
+            'startDate' => 'required|date|before:'.$request->endDate,
+            'endDate' => 'required|date|after:'.$request->startDate
         ]);
         // Validation fails
         if ($validatorUpdate->fails()) {

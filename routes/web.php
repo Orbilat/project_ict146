@@ -40,6 +40,7 @@ Route::post('/secretary/send/{clientId}', 'SecretaryController@send')->name('sen
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
 Route::post('/secretary/create-sample','SecretaryController@createSample')->name('createSample-secretary');
+Route::get('/secretary/create-sample/{clientRis}','SecretaryController@sampleView');
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
