@@ -40,6 +40,7 @@ Route::post('/secretary/send/{clientId}', 'SecretaryController@send')->name('sen
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');
 Route::post('/secretary/create-sample','SecretaryController@createSample')->name('createSample-secretary');
+Route::get('/secretary/create-sample/{clientRis}','SecretaryController@sampleView');
 Route::get('/secretary/form','SecretaryController@form')->name('form');
 Route::get('/barcode/{clientId}','ProduitController@index')->name('barcode');
 Route::post('/secretary/search','ProduitController@search')->name('search-barcode');
@@ -71,6 +72,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::delete('/admin/accounts/{accountId}', 'AdminController@destroyAccount')->name('deleteAccount-admin');
     Route::patch('/admin/accounts/{accountId}', 'AdminController@updateAccount')->name('updateAccount-admin');
     Route::post('/admin/clients', 'AdminController@addClient')->name('addClient-admin');
+    Route::get('admin/client-samples/{clientRis}', 'AdminController@sampleCreate')->name('sampleCreate-admin');
     Route::delete('/admin/clients/{clientId}', 'AdminController@destroyClient')->name('deleteClient-admin');
     Route::patch('/admin/clients/{clientId}', 'AdminController@updateClient')->name('updateClient-admin');
     Route::post('/admin/samples-add', 'AdminController@addSample')->name('addSample-admin');
@@ -104,6 +106,7 @@ Route::middleware(['admin','auth'])->group(function (){
     Route::get('/admin/inventory/glassware/search', 'AdminController@searchItem')->name('searchItem-admin');
     Route::get('/admin/suppliers/search', 'AdminController@searchSUpplier')->name('searchSupplier-admin');
     Route::get('/admin/home/{id?}', 'AdminController@read')->name('notif-read-admin');
+    Route::post('/admin/home', 'AdminController@readAll')->name('read-notif-all');
 });
 // END ADMIN ROUTES
 

@@ -190,8 +190,13 @@
                         </div>
                     </div>
                 </div>
+                @if ($samples->count() == 0)
+                <div class="alert alert-info m-0" role="alert">
+                    <p>There are no samples added to any client. Please add a sample.</p>
+                </div>
+                @else
                 <div class="card-body">
-                    <table id="sample-table" class="table table-hover">
+                    <table id="sample-table" class="table">
                         <thead>
                             <tr>
                                 <th class="admin-table">RIS</th>
@@ -208,7 +213,7 @@
                         </thead>
                         <tbody>
                             @foreach($samples as $sample)
-                            <tr class="pointer">
+                            <tr>
                                 <td class="admin-table">{{ $sample->client->risNumber }}</td>
                                 <td class="admin-table">{{ $sample->laboratoryCode }}</td>
                                 <td class="admin-table">{{ $sample->clientsCode }}</td>
@@ -425,6 +430,7 @@
                         </tbody>
                     </table>           
                 </div>
+                @endif
             </div>
             <div class="offset-md-5 mt-3">
                 {{ $samples->links() }}

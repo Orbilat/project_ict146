@@ -57,7 +57,7 @@ class NotifyDueDate extends Command
     {
         if(count($this->getSamples()) > 0) {
             foreach ($this->getSamples() as $sample) {
-                $users = Employee::whereIn('userType', ['secretary', 'administrator'])->get();
+                $users = Employee::whereIn('userType', ['secretary', 'administrator', 'analyst'])->get();
                 if(Carbon::parse($sample->dueDate)->subDays($days)->format('Y-m-d H:i') == Carbon::now()->format('Y-m-d H:i')) {
                     \Notification::send($users, new SampleDueDate($sample, $days));
                 }

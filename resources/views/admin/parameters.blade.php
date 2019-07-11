@@ -74,9 +74,9 @@
         
                                     <div class="col-md-6">
                                         <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                            <option value="Station 1" selected>Station 1</option>
-                                            <option value="Station 2">Station 2</option>
-                                            <option value="Station 3">Station 3</option>                                    
+                                            @foreach ($stations as $station)
+                                                <option value="{{ $station->stationName }}">{{ $station->stationName }}</option>
+                                            @endforeach
                                         </select>
                                         @if ($errors->has('station'))
                                             <span class="invalid-feedback" role="alert">
@@ -178,12 +178,12 @@
 
                                                         <div class="form-group row">
                                                             <label for="station" class="col-md-4 col-form-label text-md-right">{{ __('Station') }}</label>
-                                
+        
                                                             <div class="col-md-6">
                                                                 <select id="station" type="text" class="form-control{{ $errors->has('station') ? ' is-invalid' : '' }}" name="station">
-                                                                    <option value="Station 1" @if($parameter->station == 1) selected @endif>Station 1</option>
-                                                                    <option value="Station 2" @if($parameter->station == 2) selected @endif>Station 2</option>
-                                                                    <option value="Station 3" @if($parameter->station == 3) selected @endif>Station 3</option>                                    
+                                                                    @foreach($stations as $station)
+                                                                        <option value="{{$station->stationName}}" @if($parameter->stations->stationName == $station->stationName) selected @endif>{{$station->stationName}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                                 @if ($errors->has('station'))
                                                                     <span class="invalid-feedback" role="alert">

@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <form action="{{ route('createSample-secretary') }}" method="post">
                         @csrf
-                        <input type="hidden" name="clientId" value="{{ $risNumber }}">
+                        <input type="hidden" name="clientRis" value="{{ $clientRis }}">
                         <div class="form-group row">
                             <label for="clientsCode" class="col-md-4 col-form-label text-md-right">{{ __('Client Code') }}</label>
 
