@@ -55,6 +55,13 @@ class AdminController extends Controller
         return view('admin.samples', ['samples' => $samples, 'samps' => $samps, 'parameters' => $parameters, 'clients' => $clients]);
     }
 
+    public function sampleCreate($clientRis)
+    {
+        $parameters = Parameter::all();
+
+        return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameters]);
+    }
+    
     // Clients page
     public function clients()
     {
@@ -155,7 +162,7 @@ class AdminController extends Controller
         $account->managedDate = new DateTime;
 
         if($account->save()){
-            Session::flash('flash_account_added', 'Employee account added successfully!');
+            Session::flash('flash_account_added', 'Employee account added successfully.');
             return Redirect::back();
         }
         else {
@@ -168,7 +175,7 @@ class AdminController extends Controller
         $account = Employee::findOrFail($accountId);
 
         if($account->delete()){
-            Session::flash('flash_account_deleted', 'Account deleted successfully!');
+            Session::flash('flash_account_deleted', 'Account deleted successfully.');
             return Redirect::back();
         }
         else {
@@ -205,7 +212,7 @@ class AdminController extends Controller
         $account->managedDate = new DateTime();
 
         if($account->save()){
-            Session::flash('flash_account_updated', 'Account updated successfully!');
+            Session::flash('flash_account_updated', 'Account updated successfully.');
             return Redirect::back();
         }
         else {
@@ -268,11 +275,10 @@ class AdminController extends Controller
             $transaction->managedDate = new DateTime();
 
             if($transaction->save()){
-                $parameter = Parameter::all();
                 $clientRis = $client->risNumber;
     
-                Session::flash('flash_client_added', 'Client added successfully! Please add the samples of the new client.');
-                return view('admin.add_sample', ['clientRis' => $clientRis, 'parameters' => $parameter]);
+                Session::flash('flash_client_added', 'Client added successfully. Please add the samples of the new client.');
+                return redirect()->action('AdminController@sampleCreate', ['clientRis' => $clientRis]);
             }
             else {
                 abort(500, 'Error! Transaction was unsuccessful.');
@@ -350,7 +356,7 @@ class AdminController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'clientId' => 'required',
+            'clientRis' => 'required',
             'clientsCode' => 'nullable|string|max:255',
             'sampleType' => 'required|string|max:255',
             'sampleCollection' => 'required|date|before:now',
@@ -362,12 +368,12 @@ class AdminController extends Controller
         ]);
         // Validation fails
         if ($validator->fails()) {
-            return redirect('admin/samples')
+            return  redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
         }
         // Find id of client
-        $client = Client::where('risNumber', $request->clientId)->value('clientId');
+        $client = Client::where('risNumber', $request->clientRis)->value('clientId');
         // Insert sample
         $sample = new Sample;
         $sample->risNumber = $client;
@@ -403,11 +409,9 @@ class AdminController extends Controller
                     $user->notify((new NewSampleAdded($sample)));
                 }
             }
+            Session::flash('flash_sample_added', 'Sample added successfully. You can add another sample.');
 
-            $params = Parameter::all();
-            Session::flash('flash_sample_added', 'Sample added successfully! You can add another sample.');
-
-            return view('admin.add_sample', ['clientRis' => $request->clientId, 'parameters' => $params]);
+            return redirect()->action('AdminController@sampleCreate', ['clientRis' => $request->clientRis]);
         }
         else {
             abort(500, 'Error! Sample not added.');
@@ -911,7 +915,12 @@ class AdminController extends Controller
         $client = Client::where('risNumber', $request->search)->paginate(10);
         $customers = Client::all();
 
-        return view('admin.clients', ['clients' => $client, 'customers' => $customers]);
+        if($client->count() == 0) {
+            return $this->clients();
+        }  
+        else {
+            return view('admin.clients', ['clients' => $client, 'customers' => $customers]);
+        }
     }
 
     protected function searchSample(Request $request)

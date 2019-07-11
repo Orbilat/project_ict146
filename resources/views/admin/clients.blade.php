@@ -222,7 +222,7 @@
                                     <label for="followUp" class="col-md-4 col-form-label text-md-right">{{ __('Follow Up Date') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="followUp" type="datetime-local" class="form-control{{ $errors->has('followUp') ? ' is-invalid' : '' }}" name="followUp" required autofocus>
+                                        <input id="followUp" type="datetime-local" class="form-control{{ $errors->has('followUp') ? ' is-invalid' : '' }}" name="followUp" value="{{ old('followUp') }}" required autofocus>
         
                                         @if ($errors->has('followUp'))
                                             <span class="invalid-feedback" role="alert">

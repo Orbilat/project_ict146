@@ -7,6 +7,11 @@
             <div class="card">
                 <div class="card-header">Transactions</div>
 
+                @if ($transactions->count() == 0)
+                    <div class="alert alert-info m-0" role="alert">
+                        <p>Your transactions are empty. Please add clients and samples.</p>
+                    </div>
+                @else
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
@@ -112,6 +117,7 @@
             <div class="row justify-content-center mt-2">
                 {{ $transactions->links() }}
             </div>
+            @endif
         </div>
     </div>
 </div>

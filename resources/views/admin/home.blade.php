@@ -14,10 +14,9 @@
             <div class="card">
                 <div class="card-header">Notifications</div>
 
-                <div class="card-body p-0">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    @if ($user->notifications()->count() == 0)
+                        <div class="alert alert-info m-0" role="alert">
+                            <p>There are no notifications to be read.</p>
                         </div>
                     @endif
             
