@@ -41,7 +41,7 @@
     
     <tr>
     
-      <th scope="row">{{ $sample->managedDate  }}</th>
+      <th scope="row">{{  date("F jS, Y g:m A", strtotime($sample->managedDate))  }}</th>
       <td>{{$sample->laboratoryCode}}</td>
       
         <td>@foreach($sample->parameters as $parameter) {{ $parameter->analysis }} <br> @endforeach</td>
