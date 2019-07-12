@@ -231,7 +231,7 @@ class SecretaryController extends Controller
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
             'address' => 'required|string|max:50',
-            'contactNumber' => 'required|string|numeric|min:10',
+            'contactNumber' => 'required|digits:10',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount'=> 'nullable|numeric|max:100|min:0',
