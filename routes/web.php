@@ -117,6 +117,8 @@ Route::middleware(['admin','auth'])->group(function (){
 Route::middleware(['analyst','auth'])->group(function (){
     Route::redirect('/analyst', '/analyst/samples');
     Route::get('/analyst/notification', 'AnalystController@notification')->name('analystnotification');
+    Route::get('/analyst/notification/{id?}', 'AnalystController@read')->name('read-notif-analyst');
+    Route::post('/analyst/notification', 'AnalystController@readAll')->name('readall');
     Route::get('/analyst/samples', 'AnalystController@samples')->name('analystsamples');
 
     Route::get('/analyst/inventory', 'AnalystController@inventory')->name('analystinventory');
