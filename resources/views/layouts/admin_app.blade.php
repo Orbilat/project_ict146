@@ -306,7 +306,7 @@
                         <strong>Message:</strong> {!!Session::get('flash_supplier_updated')!!}
                     </div>
                 @endif
-            {{-- SUCCESS MESSAGE OF UPDATING SUPPLIER --}}
+            {{-- SUCCESS MESSAGE OF UPDATING Event --}}
                 @if(Session::has('flash_event_updated'))
                     <div class="alert alert-info offset-md-1 col-md-10">
                         <a class="close" data-dismiss="alert">×</a>
