@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Sample as Sample;
+use App\Employee;
 use App\Item as Item;
 use App\Station as Station;
 use App\Inventory as Inventory;
@@ -47,7 +48,7 @@ class AnalystController extends Controller
         //LEFT JOIN stations AS sta ON p.station=sta.stationid
         //WHERE st.status = 'In Progress' AND dueDate < (currentDate+4)
         //GROUP BY s.laboratoryCode,s.dueDate,s.sampleCollection,sta.stationName,s.purposeOfAnalysis,st.timeReceived
-        
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
         $sampledata = DB::table('samples AS s')
                     ->select('s.laboratoryCode', 's.dueDate', 's.sampleCollection','sta.stationName','st.status','p.analysis')
                     ->leftJoin('sample__tests AS st','st.sampleCode','=','s.sampleId')
@@ -59,12 +60,37 @@ class AnalystController extends Controller
                             ->orWhere('st.status','=', 'Not Started');
                     })
                     ->groupBy('s.laboratoryCode', 's.dueDate','s.sampleCollection','sta.stationName','st.status','p.analysis')
-                    ->distinct()
-                    ->get();
+                     ->distinct()
+                     ->get();
 
-        $request->session()->put('notifcount', count($sampledata));
-        return view('analyst.notification',[ 'sampledatas' => $sampledata ]);
+         $request->session()->put('notifcount', count($sampledata));
+        return view('analyst.notification',[ 'sampledatas' => $sampledata,'user'=>$user ]);
     }
+    protected function read($id)
+    {
+        $user =  Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        foreach ($user->notifications as $notification) {
+            if($notification->id == $id) {
+                $notification->markAsRead();
+                break;
+            }
+        }
+        
+        return $this->analyst();
+    }
+
+    protected function readAll()
+    {
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        foreach ($user->notifications as $notification) {
+            $notification->markAsRead();
+        }
+
+        return $this->analyst();
+    }
+
     
     public function inventory(){
         // SELECT * FROM item

@@ -18,7 +18,6 @@ use App\Station;
 use App\Supplier;
 use App\Item;
 use App\Transaction;
-use App\Notifications\ReadyForPickUp;
 use App\Notifications\NewSampleAdded;
 use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +83,8 @@ class AdminController extends Controller
     // Item use history page
     public function history()
     {
-        return view('admin.inventory-history');
+        $lists = Item::with('user')->orderBy('updated_at')->paginate(10);
+        return view('admin.inventory-history', ['lists' => $lists]);
     }
 
     // Glassware page
@@ -840,7 +840,7 @@ class AdminController extends Controller
             'containerType' => 'required|string|min:6|max:255',
             'volumeCapacity' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'supplier' => 'required|string',
+            'supplier' => 'nullable|string',
         ]);
         // Validation fails
         if ($validator->fails()) {

@@ -26,8 +26,6 @@ class SecretaryController extends Controller
     //
     public function index()
     {
-        
-        
         $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
 
         return view('Secretary-file.secretary', ['user' => $user]);
@@ -48,6 +46,16 @@ class SecretaryController extends Controller
             }
         }
         
+        return $this->index();
+    }
+    protected function readAll()
+    {
+        $user = Employee::where('employeeId', Auth::user()->employeeId)->with('unreadNotifications')->first();
+
+        foreach ($user->notifications as $notification) {
+            $notification->markAsRead();
+        }
+
         return $this->index();
     }
     public function addSample(){
@@ -223,7 +231,7 @@ class SecretaryController extends Controller
             'nameOfPerson' => 'required|string|max:255|min:4',
             'nameOfEntity' => 'nullable|string|max:255',
             'address' => 'required|string|max:50',
-            'contactNumber' => 'string|numeric',
+            'contactNumber' => 'required|digits:10',
             'faxNumber' => 'nullable|string|numeric',
             'emailAddress' => 'nullable|string|max:50|email',
             'discount'=> 'nullable|numeric|max:100|min:0',
