@@ -21,4 +21,9 @@ class Employee extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'inventories', 'usedBy', 'itemUsed')->withPivot('managedBy', 'updated_at');
+    }
 }
