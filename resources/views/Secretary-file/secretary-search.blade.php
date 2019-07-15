@@ -20,22 +20,51 @@
  
   @foreach($clients as $client)
   <tr>
-    <td>{{$client->risNumber}}</td>
-    <td>{{$client->clientId}}</td>
-    <td>{{$client->nameOfPerson}}</td>
-    <td>{{$client->nameOfEntity}}</td>
-    <td>{{$client->address}}</td>
+  <td><button type="button" class="dropdown-item" data-toggle="modal" data-target="#message{{$client->nameOfPerson}}">
+    <label for="message"></label><i class="fa fa-envelope" id="message"></i>&nbsp; {{$client->risNumber}} 
+  </button></td>
+  <td>{{$client->nameOfPerson}}</td>
+  <td>{{$client->nameOfEntity}}</td>
+  <td>{{$client->contactNumber}}</td>
+  <td>{{$client->address}}</td>
   <td>
  
   
  
-  <a href="{{route('barcode',[$client->clientId])}}" class="btn btn-primary"> <i class="fa fa-print"></i> Print</a>
- 
+  <a href="{{route('barcode',[$client->clientId])}}"  class="btn btn-primary"> <i class="fa fa-print"></i> Print</a>
+  
+
+  
+  <div class="modal fade" id="message{{$client->nameOfPerson}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <form action="{{url('/secretary/informClient/'.$client->clientId)}}" method="POST">
+      @csrf
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{$client->nameOfPerson}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <label for="message">Message</label>
+            <input class="form-control input-sm" name="message" type="text">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
   </td>
   
   </tr>
+  
   @endforeach
-  </thead>  
+  </thead>
 </table>
 
 </div>

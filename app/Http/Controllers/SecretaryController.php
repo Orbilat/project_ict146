@@ -230,7 +230,7 @@ class SecretaryController extends Controller
         $client = Client::findorFail($clientId);
         $client->notify(new InformClient($request->message));
         Session::flash('flash_client_message', 'Client messaged succesfully.');
-        return Redirect::back();
+        return redirect()->action('SecretaryController@form');
 
     }
 

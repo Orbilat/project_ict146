@@ -2,10 +2,10 @@
 
 
 @section('content')
-@if(Session::has('flash_client_messaged'))
+@if(Session::has('flash_client_message'))
 <div class="alert alert-info offset-md-1 col-md-10">
     <a class="close" data-dismiss="alert">×</a>
-    <strong>Notification:</strong> {!!Session::get('flash_client_messaged')!!}
+    <strong>Notification:</strong> {!!Session::get('flash_client_message')!!}
 </div>
 @endif  
 
