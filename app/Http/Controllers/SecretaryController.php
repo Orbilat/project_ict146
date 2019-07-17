@@ -7,6 +7,7 @@ use Session;
 use App\Ris;
 use App\Sample;
 use Validator;
+use Redirect;
 use App\Client;
 use App\Parameter;  
 use App\Employee;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\ReadyForPickUp;
 use App\Notifications\SampleDueDate;
+use App\Notifications\InformClient;
 
 
 class SecretaryController extends Controller
@@ -221,6 +223,14 @@ class SecretaryController extends Controller
             $client->notify(new ReadyForPickUp($client));
         }
         return redirect()->action('SecretaryController@status');
+
+    }
+
+    protected function informClient($clientId, Request $request){
+        $client = Client::findorFail($clientId);
+        $client->notify(new InformClient($request->message));
+        Session::flash('flash_client_message', 'Client messaged succesfully.');
+        return redirect()->action('SecretaryController@form');
 
     }
 
