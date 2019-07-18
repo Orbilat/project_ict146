@@ -12,4 +12,14 @@ class InventoryList extends Model
 	protected $fillable = [
         'inventoryId', 'itemId', 'qty'
     ];
+
+    public function inventories()
+    {
+        return $this->belongsTo(Inventory::class, 'inventoryId', 'inventoryId');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'itemId', 'itemId');
+    }
 }

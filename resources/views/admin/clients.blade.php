@@ -5,6 +5,13 @@
 {{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
 <?php $count = 0; ?>
 
+@if (\Session::has('has_samples'))
+    <div class="alert alert-danger offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Error:</strong> {!!Session::get('has_samples')!!}
+    </div>
+@endif
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">

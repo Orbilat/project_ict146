@@ -130,8 +130,8 @@
                             <td class="admin-table">{{ $item->containerType }}</td>
                             <td class="admin-table">{{ $item->volumeCapacity }}</td>
                             <td class="admin-table">{{ $item->quantity }}</td>
-                            @if (isset($item->suppliers))
-                                <td class="admin-table">{{ $item->suppliers->companyName }}</td>
+                            @if ($item->suppliers != NULL)
+                                <td class="admin-table">{{ $item->suppliers['companyName'] }}</td>
                             @else
                                 <td class="admin-table">NULL</td>    
                             @endif
@@ -204,14 +204,14 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
                                                 <div class="form-group row">
                                                     <label for="supplier" class="col-md-4 col-form-label text-md-right">{{ __('Supplier') }}</label>
                                                     
                                                     <div class="col-md-6">
                                                         <select name="supplier" id="supplier" class="form-control js-example-basic-single" style="width:100%;">
-                                                            @foreach($suppliers as $supplier)
-                                                                <option value="{{ $supplier->companyName }}" @if($item->suppliers->companyName == $supplier->companyName) selected @endif>{{ $supplier->companyName }}</option>
+                                                            <option value="" selected>No supplier</option>
+                                                            @foreach($suppliers as $supplier)    
+                                                                <option value="{{ $supplier->companyName }}" @if($item->suppliers != NULL) @if($item->suppliers->companyName == $supplier->companyName) selected @endif @endif>{{ $supplier->companyName }}</option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has('supplier'))

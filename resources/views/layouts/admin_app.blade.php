@@ -124,6 +124,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('view-account', ['id' => Auth::user()->employeeId]) }}">
+                                         {{ __('My Account') }}
+                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault(); 
                                                      document.getElementById('logout-form').submit();">

@@ -17,9 +17,11 @@ use App\Parameter;
 use App\Station;
 use App\Supplier;
 use App\Item;
+use App\InventoryList;
 use App\Transaction;
 use App\Notifications\NewSampleAdded;
 use App\Jobs\ProcessNotification;
+use App\Rules\OldPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -80,16 +82,25 @@ class AdminController extends Controller
     // Employee accounts page
     public function accounts()
     {
-        $accounts = Employee::orderBy('employeeName')->paginate(10);
+        $accounts = Employee::where('employeeId', '!=', Auth::user()->employeeId)->orderBy('employeeName')->paginate(10);
         $employees = Employee::all();
 
         return view('admin.accounts', ['accounts' => $accounts, 'employees' => $employees]);
     }
 
+    // Employee view account
+    public function viewAccount($id)
+    {
+        $account = Employee::findOrFail($id);
+        
+        return view('admin.view_account', ['account' => $account]);
+    }
+
     // Item use history page
     public function history()
     {
-        $lists = Item::with('user')->orderBy('updated_at')->paginate(10);
+        $lists = InventoryList::with('item', 'inventories.user')->orderBy('updated_at')->paginate(10);
+   
         return view('admin.inventory-history', ['lists' => $lists]);
     }
 
@@ -197,6 +208,8 @@ class AdminController extends Controller
         $validatorUpdate = Validator::make($request->all(), [
             'username' => 'required|string|max:255|min:4',
             'employeeName' => 'required|string|max:50',
+            'old_password' => ['nullable', 'string', new OldPassword],
+            'password' => 'nullable|confirmed|string|min:5',
             'position' => 'required|string|max:30',
             'idNumber' => 'required|string|numeric',
             'licenseNumber' => 'required|string|max:50',
@@ -204,7 +217,7 @@ class AdminController extends Controller
         ]);
         // Validation check
         if ($validatorUpdate->fails()) {
-            return redirect('admin/accounts')
+            return redirect()->back()
                         ->withErrors($validatorUpdate)
                         ->withInput();
         }
@@ -299,13 +312,18 @@ class AdminController extends Controller
     // Delete a client
     protected function destroyClient($clientId)
     {
-        $client = Client::findOrFail($clientId);
-        if($client->delete()){
-            Session::flash('flash_client_deleted', 'Client has been deleted successfully.');
-            return Redirect::back();
+        $client = Client::with('samples')->findOrFail($clientId);
+        if($client->samples->count() > 0){
+            return Redirect::back()->with('has_samples', 'This client has samples and cannot be deleted.');
         }
         else {
-            abort(500, 'Error! Deletion was unsuccessful.');
+            if($client->delete()){
+                Session::flash('flash_client_deleted', 'Client has been deleted successfully.');
+                return Redirect::back();
+            }
+            else {
+                abort(500, 'Error! Deletion was unsuccessful.');
+            }
         }
     }
     // Update client
@@ -657,8 +675,8 @@ class AdminController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'companyName' => 'required|string|max:255|unique:suppliers',
-            'emailAddress' => 'nullable|string|min:6',
-            'contactNumber' => 'required|string|max:50|unique:suppliers',
+            'emailAddress' => 'nullable|string|email|unique:suppliers',
+            'contactNumber' => 'nullable|string|numeric',
         ]);
         // Validation fails
         if ($validator->fails()) {
@@ -671,7 +689,7 @@ class AdminController extends Controller
         $supplier = new Supplier;
         $supplier->companyName = trim($request->companyName);
         $supplier->emailAddress = trim($request->emailAddress);
-        $supplier->contactNumber =  trim($request->contactNumber);
+        $supplier->contactNumber =  '63' . trim($request->contactNumber);
         $supplier->managedBy = Auth::user()->employeeName;
         $supplier->managedDate = new DateTime();
         // Save
@@ -686,13 +704,19 @@ class AdminController extends Controller
     // Delete supplier
     protected function destroySupplier($supplierId)
     {
-        $supplier = Supplier::findOrFail($supplierId);
-        if($supplier->delete()){
-            Session::flash('flash_supplier_deleted', 'Supplier deleted successfully.');
-            return Redirect::back();
+        $supplier = Supplier::with('items')->findOrFail($supplierId);
+
+        if($supplier->items->count() > 0) {
+            return Redirect::back()->with('has_items', 'This supplier has items and cannot be deleted.');
         }
         else {
-            abort(500, 'Error! Supplier not deleted.');
+            if($supplier->delete()){
+                Session::flash('flash_supplier_deleted', 'Supplier deleted successfully.');
+                return Redirect::back();
+            }
+            else {
+                abort(500, 'Error! Supplier not deleted.');
+            }
         }
     }
     // Update supplier
@@ -757,13 +781,19 @@ class AdminController extends Controller
     // Delete Station
     protected function destroyStation($stationId)
     {
-        $station = Station::findOrFail($stationId);
-        if($station->delete()){
-            Session::flash('flash_station_deleted', 'Station deleted successfully.');
-            return Redirect::back();
+        $station = Station::with('parameters')->findOrFail($stationId);
+
+        if($station->parameters->count() > 0) {
+            return Redirect::back()->with('has_parameters', 'This station has parameters and cannot be deleted.');
         }
         else {
-            abort(500, 'Error! Station not deleted.');
+            if($station->delete()){
+                Session::flash('flash_station_deleted', 'Station deleted successfully.');
+                return Redirect::back();
+            }
+            else {
+                abort(500, 'Error! Station not deleted.');
+            }
         }
     }
     // Add event
@@ -864,7 +894,7 @@ class AdminController extends Controller
         $item->managedBy = Auth::user()->employeeName;
         $item->managedDate = new DateTime;
         if($item->save()) {
-            Session::flash('flash_event_added', 'Event added successfully.');
+            Session::flash('flash_item_added', 'Item added successfully.');
             return Redirect::back();
         }
         else {

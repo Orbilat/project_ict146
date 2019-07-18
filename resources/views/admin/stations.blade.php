@@ -1,6 +1,12 @@
 @extends('layouts.admin_app')
 
 @section('content')
+@if (\Session::has('has_parameters'))
+    <div class="alert alert-danger offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Error:</strong> {!!Session::get('has_parameters')!!}
+    </div>
+@endif
 {{-- SUCCESS MESSAGE OF ADDING STATION --}}
     @if(Session::has('flash_station_added'))
         <div class="alert alert-info offset-md-1 col-md-10">
@@ -66,7 +72,11 @@
                         </div>
                     </div>
                 </div>
-
+                @if ($stations->count() == 0)
+                    <div class="alert alert-info m-0" role="alert">
+                        <p>There are no stations available.</p>
+                    </div>
+                @else
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -94,7 +104,7 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <p>Are you sure you want to delete {{ $station->stationName }}?</p>                          
+                                                <p>Are you sure you want to delete {{ $station->stationName }} station?</p>                          
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="{{ route('destroyStation-admin', [$station->stationId]) }}" method="post">
@@ -115,6 +125,7 @@
                         </tbody>
                     </table>           
                 </div>
+                @endif
             </div>
             <div class="row justify-content-center mt-2">
                     {{ $stations->links() }}

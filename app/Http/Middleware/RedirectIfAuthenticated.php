@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
             //Checking type..
             switch ($type) {
                 case 'administrator':
-                    return redirect('/admin/home');
+                    return redirect('/admin/dashboard');
                     break;
                 case 'secretary':
                     return redirect('/secretary/home');

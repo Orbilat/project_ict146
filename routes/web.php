@@ -62,11 +62,12 @@ Route::redirect('/admin', '/admin/home');
 Route::middleware(['admin','auth'])->group(function (){
     //Admin routes
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('dashboard');
-    Route::get('/admin/home', 'AdminController@admin')->name('admin');
+    Route::get('/admin/notifications', 'AdminController@admin')->name('admin');
     Route::get('/admin/transactions', 'AdminController@transactions')->name('transactions');
     Route::get('/admin/samples', 'AdminController@samples')->name('samples-admin');
     Route::get('/admin/clients', 'AdminController@clients')->name('clients-admin');
     Route::get('/admin/accounts', 'AdminController@accounts')->name('accounts-admin');
+    Route::get('/admin/accounts/{id}', 'AdminController@viewAccount')->name('view-account');
     Route::get('/admin/stations', 'AdminController@stations')->name('stations-admin');
     Route::get('/admin/parameters', 'AdminController@parameters')->name('parameters-admin');
     Route::get('/admin/events', 'AdminController@events')->name('events-admin');

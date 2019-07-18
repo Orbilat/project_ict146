@@ -1,18 +1,11 @@
 @extends('layouts.admin_app')
 
 @section('content')
-{{-- SUCCESS MESSAGE OF ADDING STATION --}}
-    @if(Session::has('flash_event_added'))
-        <div class="alert alert-info offset-md-1 col-md-10">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_event_added')!!}
-        </div>
-    @endif
-{{-- SUCCESS MESSAGE OF DELETING STATION --}}
+{{-- SUCCESS MESSAGE OF DELETING EVENT --}}
     @if(Session::has('flash_event_deleted'))
         <div class="alert alert-info offset-md-1 col-md-10">
             <a class="close" data-dismiss="alert">×</a>
-            <strong>Notification:</strong> {!!Session::get('flash_event_deleted')!!}
+            <strong>Message:</strong> {!!Session::get('flash_event_deleted')!!}
         </div>
     @endif
 
@@ -87,6 +80,11 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                @if ($events->count() == 0)
+                                    <div class="alert alert-info m-0" role="alert">
+                                        <p>There are no events in your calendar.</p>
+                                    </div>
+                                @else
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -199,6 +197,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @endif
                             </div>
                         </div>
                     </div>

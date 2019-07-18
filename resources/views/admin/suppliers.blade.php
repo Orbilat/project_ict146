@@ -4,7 +4,12 @@
 
 {{-- DECLARING OF COUNTER VARIABLE FOR MULTIPLE MODALS --}}
 <?php $count = 0; ?>
-
+@if (\Session::has('has_items'))
+    <div class="alert alert-danger offset-md-1 col-md-10">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Error:</strong> {!!Session::get('has_items')!!}
+    </div>
+@endif
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -24,6 +29,7 @@
                             <input class="float-right" type="submit" value="Search">
                         </form>
                 <div id="addSupplier" @if($errors->any()) class="collapse.show" @else class="collapse" @endif>
+                   
                     <div class="card-body">
                             <form method="POST" action="{{ route('addSupplier-admin') }}">
                                 @csrf
@@ -59,8 +65,13 @@
                                     <label for="contactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" required autofocus>
-        
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">+63</div>
+                                            </div>
+                                            <input id="contactNumber" type="text" class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}" name="contactNumber" value="{{ old('contactNumber') }}" placeholder="Optional">
+                                        </div>
+                                        
                                         @if ($errors->has('contactNumber'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('contactNumber') }}</strong>
@@ -80,7 +91,11 @@
                         </div>
                     </div>
                 </div>
-
+                @if ($suppliers->count() == 0)
+                    <div class="alert alert-info m-0" role="alert">
+                        <p>There are no suppliers available.</p>
+                    </div>
+                @else
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
@@ -197,6 +212,7 @@
                         </tbody>
                     </table>           
                 </div>
+                @endif
             </div>
             <div class="row justify-content-center mt-2">
                 {{ $suppliers->links() }}

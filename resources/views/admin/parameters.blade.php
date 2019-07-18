@@ -97,7 +97,11 @@
                         </div>
                     </div>
                 </div>
-
+                @if ($parameters->count() == 0)
+                    <div class="alert alert-info m-0" role="alert">
+                        <p>There are no parameters available. Please add a parameter.</p>
+                    </div>
+                @else
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
@@ -234,6 +238,7 @@
                         </tbody>
                     </table>           
                 </div>
+                @endif
             </div>
             <div class="row justify-content-center mt-2">
                 {{ $parameters->links() }}

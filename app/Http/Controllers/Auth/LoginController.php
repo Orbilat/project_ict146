@@ -37,7 +37,7 @@ class LoginController extends Controller
         //Checking type..
         switch ($type) {
             case 'administrator':
-                return '/admin/home';
+                return '/admin/dashboard';
                 break;
             case 'secretary':
                 return '/secretary/home';
