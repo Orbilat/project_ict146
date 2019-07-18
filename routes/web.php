@@ -36,6 +36,7 @@ Route::get('/secretary/view', 'SecretaryController@stat')->name('view');
 Route::get('/secretary/add', 'SecretaryController@status')->name('addSecretary');
 Route::post('/secretary/paid/{clientId}', 'SecretaryController@paid')->name('paidSecretary');
 Route::post('/secretary/send/{clientId}', 'SecretaryController@send')->name('send');
+Route::post('/secretary/informClient/{clientId}','SecretaryController@informClient');
 
 Route::get('/secretary/create','SecretaryController@create')->name('createClient');
 Route::post('/secretary/create', 'SecretaryController@addClient')->name('addClient-secretary');

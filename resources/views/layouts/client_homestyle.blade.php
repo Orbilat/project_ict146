@@ -191,5 +191,8 @@ fieldset {
 .footerSpace{
 	padding-top: 6%;
 }
+.fc-unthemed td.fc-today{
+	background-color: ;
+}
 
 </style>

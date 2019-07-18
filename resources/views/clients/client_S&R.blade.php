@@ -21,7 +21,7 @@
                 <tr class="text-center">
                   <th class="text-dark TS">Analysis</th>
                   <th class="text-dark TS">Method</th>
-                  <th class="text-dark TS">Price</th>
+                  <th class="text-dark TS">Price (&#8369) </th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                 <tr class="text-center">
                   <td class="border">{{ $parameter->analysis }}</td>
                   <td class="border">{{ $parameter->method }}</td>
-                  <td class="border">{{ $parameter->price }}</td>
+                  <td class="border">{{ number_format($parameter->price,2) }}</td>
                 </tr>  
                 @endforeach  
             </tbody>
