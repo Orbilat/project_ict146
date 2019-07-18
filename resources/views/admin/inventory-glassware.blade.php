@@ -43,7 +43,7 @@
                                 <label for="containerType" class="col-md-4 col-form-label text-md-right">{{ __('Container Type') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="containerType" type="text" class="form-control{{ $errors->has('containerType') ? ' is-invalid' : '' }}" name="containerType" value="{{ old('containerType') }}" required autofocus>
+                                    <input id="containerType" type="text" class="form-control{{ $errors->has('containerType') ? ' is-invalid' : '' }}" name="containerType" value="{{ old('containerType') }}" autofocus>
     
                                     @if ($errors->has('containerType'))
                                         <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                                 <label for="volumeCapacity" class="col-md-4 col-form-label text-md-right">{{ __('Volume Capacity') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="volumeCapacity" type="number" class="form-control{{ $errors->has('volumeCapacity') ? ' is-invalid' : '' }}" name="volumeCapacity" value="{{ old('volumeCapacity') }}" required autofocus>
+                                    <input id="volumeCapacity" type="number" class="form-control{{ $errors->has('volumeCapacity') ? ' is-invalid' : '' }}" name="volumeCapacity" value="{{ old('volumeCapacity') }}" autofocus>
     
                                     @if ($errors->has('volumeCapacity'))
                                         <span class="invalid-feedback" role="alert">
@@ -71,7 +71,7 @@
                                 <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Quantity') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="quantity" type="number" class="form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" name="quantity" value="1" required autofocus>
+                                    <input id="quantity" type="number" class="form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" name="quantity" value="5" autofocus>
     
                                     @if ($errors->has('quantity'))
                                         <span class="invalid-feedback" role="alert">

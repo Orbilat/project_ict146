@@ -27,6 +27,12 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
+    // Dashboard page
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
     // Admin home page
     public function admin()
     {

@@ -60,6 +60,7 @@ Route::redirect('/admin', '/admin/home');
 //Middleware for User Content Control
 Route::middleware(['admin','auth'])->group(function (){
     //Admin routes
+    Route::get('/admin/dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::get('/admin/home', 'AdminController@admin')->name('admin');
     Route::get('/admin/transactions', 'AdminController@transactions')->name('transactions');
     Route::get('/admin/samples', 'AdminController@samples')->name('samples-admin');
