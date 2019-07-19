@@ -13,7 +13,12 @@
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-4">
-                            
+                            <div class="card" style="width: 14rem;">
+                                <div class="card-body">
+                                    <center><h3 class="card-title pt-2">{{ $samples }}</h3></center>
+                                    <center><h6 class="card-subtitle text-muted pb-2">Samples Received</h6></center>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <canvas id="myChart" width="400" height="400"></canvas>

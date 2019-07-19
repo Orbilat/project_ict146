@@ -32,7 +32,9 @@ class AdminController extends Controller
     // Dashboard page
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $samples = Sample::where('dueDate', '<', Carbon::now())->get()->count();
+
+        return view('admin.dashboard', ['samples' => $samples]);
     }
 
     // Admin home page
