@@ -87,7 +87,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: {!! json_encode($array_days) !!},
         datasets: [{
-            label: '# of Samples',
+            label: 'No. of Samples Today',
             data: {!! json_encode($array_samples) !!},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
