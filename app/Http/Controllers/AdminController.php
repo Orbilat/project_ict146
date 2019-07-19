@@ -32,7 +32,37 @@ class AdminController extends Controller
     // Dashboard page
     public function dashboard()
     {
-        $samples = Sample::where('dueDate', '<', Carbon::now())->get()->count();
+        $sample_not_started = 0; $sample_in_progress = 0; $sample_completed = 0;
+        $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
+        $samples = Sample::with('parameters')->get();
+
+        foreach ($samples as $sample) {
+            foreach ($sample->parameters as $parameter) {
+                if($parameter->pivot->status == 'Completed' ) {
+                    $completed = TRUE;
+                }
+                elseif($parameter->pivot->status == 'Not Started') {
+                    $not_started = TRUE;
+                }
+                else {
+                    $in_progress = TRUE;
+                    break;
+                }
+            }
+            if($in_progress == TRUE) {
+                $sample_in_progress++;
+            }
+            elseif($completed == TRUE && $not_started == FALSE) {
+                $sample_completed++;
+            }
+            elseif($not_started == TRUE && $completed == FALSE) {
+                $sample_not_started++;
+            }
+            else {
+                $sample_in_progress++;
+            }
+            $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
+        }
 
         return view('admin.dashboard', ['samples' => $samples]);
     }
