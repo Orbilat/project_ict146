@@ -32,9 +32,13 @@ class AdminController extends Controller
     // Dashboard page
     public function dashboard()
     {
+        $client = Client::all()->count();
+        $employee = Employee::where('employeeId', '!=', Auth::user()->employeeId)->get()->count();
+
         $sample_not_started = 0; $sample_in_progress = 0; $sample_completed = 0;
         $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
         $samples = Sample::with('parameters')->get();
+
 
         foreach ($samples as $sample) {
             foreach ($sample->parameters as $parameter) {
@@ -73,7 +77,7 @@ class AdminController extends Controller
         $array_samples = array($samples_today, $samples_yesterday, $samples_2_days_ago, $samples_3_days_ago, $samples_4_days_ago);
         $array_days = array(Carbon::today()->format('l'), Carbon::today()->subDays(1)->format('l'), Carbon::today()->subDays(2)->format('l'), Carbon::today()->subDays(3)->format('l'), Carbon::today()->subDays(4)->format('l'));
     
-        return view('admin.dashboard', ['completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_days' => $array_days, 'array_samples' => $array_samples]);
+        return view('admin.dashboard', ['employee' => $employee, 'client' => $client, 'completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_days' => $array_days, 'array_samples' => $array_samples]);
     }
 
     // Admin home page
