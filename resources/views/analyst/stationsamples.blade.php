@@ -24,6 +24,19 @@
                     </div>
                 @endif
                 
+                @if(Session::get('errorreceiveNotif') !== NULL)
+                    <div style="margin: 5px 10px; padding: 5px" class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> Can't receive sample, it is not for this station.
+                    </div>
+                @endif
+
+                @if(Session::get('errorcompletedNotif') !== NULL)
+                    <div style="margin: 5px 10px; padding: 5px" class="alert alert-info offset-md-1 col-md-10">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Notification:</strong> Error in completing sample. Sample might not be In Progress or not for this station.
+                    </div>
+                @endif
                 <ul class="nav nav-tabs">
                    <li id="inprogresstab"><a href="#inprogress" data-toggle="tab">In Progress</a></li>
                    <li id="completedtab"><a href="#completed" data-toggle="tab">Completed</a></li>
