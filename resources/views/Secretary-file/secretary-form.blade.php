@@ -8,6 +8,12 @@
     <strong>Notification:</strong> {!!Session::get('flash_client_message')!!}
 </div>
 @endif  
+@if(Session::has('no_message'))
+<div class="alert alert-danger offset-md-1 col-md-10">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Notification:</strong> {!!Session::get('no_message')!!}
+</div>
+@endif
 
 <div class="container">
   <a href="{{url('secretary/samples')}}">Sample</a>
