@@ -216,8 +216,8 @@ class AnalystController extends Controller
         
         if( $updateresult > 0 )
             return redirect('/analyst/sample/station/'.$id)->with(['samplereceiveNotif' => true]);
-
-        return redirect('/analyst/sample/station/'.$id);
+        else
+            return redirect('/analyst/sample/station/'.$id)->with(['errorreceiveNotif' => true]);
     }
 
     public function completeSample($id,Request $request){
@@ -233,7 +233,7 @@ class AnalystController extends Controller
 
         if( $updateresult > 0 )
             return redirect('/analyst/sample/station/'.$id)->with(['samplecompletedNotif' => true]);
-
-        return redirect('/analyst/sample/station/'.$id);
+        else
+            return redirect('/analyst/sample/station/'.$id)->with(['errorcompletedNotif' => true]);
     }
 }
