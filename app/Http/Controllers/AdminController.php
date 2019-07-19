@@ -63,8 +63,8 @@ class AdminController extends Controller
             }
             $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
         }
-
-        return view('admin.dashboard', ['samples' => $samples]);
+        
+        return view('admin.dashboard', ['completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress]);
     }
 
     // Admin home page

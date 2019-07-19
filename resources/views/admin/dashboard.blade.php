@@ -14,34 +14,39 @@
                     <div class="row justify-content-center">
                         <div class="col-md-4">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-                                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-exclamation" aria-hidden="true"></i></a>
+                                
                                 </div>
                             </div>
-                            <div class="col-9">
+                            <div class="col-10">
                                 <div class="tab-content" id="v-pills-tabContent">
                                 <div class="tab-pane fade show active card" style="width: 14rem;" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <div class="card-body">
-                                        <center><h3 class="card-title pt-2">{{ $samples }}</h3></center>
-                                        <center><h6 class="card-subtitle text-muted pb-2">Samples Received</h6></center>
+                                        <center><h3 class="card-title pt-2">{{ $completed }}</h3></center>
+                                        <center><h6 class="card-subtitle text-muted pb-2">Samples Completed</h6></center>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-                                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                                <div class="tab-pane fade card" style="width: 14rem;" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    <div class="card-body">
+                                        <center><h3 class="card-title pt-2">{{ $not_started }}</h3></center>
+                                        <center><h6 class="card-subtitle text-muted pb-2">Samples Not Started</h6></center>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade card" style="width: 14rem;" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                    <div class="card-body">
+                                        <center><h3 class="card-title pt-2">{{ $in_progress }}</h3></center>
+                                        <center><h6 class="card-subtitle text-muted pb-2">Samples In Progress</h6></center>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
-                            <!-- <div class="card" style="width: 14rem;">
-                                <div class="card-body">
-                                    <center><h3 class="card-title pt-2">{{ $samples }}</h3></center>
-                                    <center><h6 class="card-subtitle text-muted pb-2">Samples </h6></center>
-                                </div>
-                            </div> -->
+                            
                         </div>
                         <div class="col-md-4">
                             <canvas id="myChart" width="250" height="250"></canvas>
