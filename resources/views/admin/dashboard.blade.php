@@ -68,10 +68,10 @@ var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Green', 'Purple', 'Orange'],
+        labels: {!! json_encode($array_days) !!},
         datasets: [{
             label: '# of Samples',
-            data: json_encode($array_samples, JSON_HEX_CODE),
+            data: {!! json_encode($array_samples) !!},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

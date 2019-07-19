@@ -70,15 +70,10 @@ class AdminController extends Controller
         $samples_3_days_ago = Sample::whereDate('created_at', Carbon::today()->subDays(3))->get()->count();
         $samples_4_days_ago = Sample::whereDate('created_at', Carbon::today()->subDays(4))->get()->count();
 
-        $array_samples = [
-            Carbon::today()->format('l') => $samples_today,
-            Carbon::today()->subDays(1)->format('l') => $samples_yesterday,
-            Carbon::today()->subDays(2)->format('l') => $samples_2_days_ago,
-            Carbon::today()->subDays(3)->format('l') => $samples_3_days_ago,
-            Carbon::today()->subDays(4)->format('l') => $samples_4_days_ago,
-        ];
-
-        return view('admin.dashboard', ['completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_samples' => $array_samples]);
+        $array_samples = array($samples_today, $samples_yesterday, $samples_2_days_ago, $samples_3_days_ago, $samples_4_days_ago);
+        $array_days = array(Carbon::today()->format('l'), Carbon::today()->subDays(1)->format('l'), Carbon::today()->subDays(2)->format('l'), Carbon::today()->subDays(3)->format('l'), Carbon::today()->subDays(4)->format('l'));
+    
+        return view('admin.dashboard', ['completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_days' => $array_days, 'array_samples' => $array_samples]);
     }
 
     // Admin home page
