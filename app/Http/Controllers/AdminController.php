@@ -76,8 +76,17 @@ class AdminController extends Controller
 
         $array_samples = array($samples_today, $samples_yesterday, $samples_2_days_ago, $samples_3_days_ago, $samples_4_days_ago);
         $array_days = array(Carbon::today()->format('l'), Carbon::today()->subDays(1)->format('l'), Carbon::today()->subDays(2)->format('l'), Carbon::today()->subDays(3)->format('l'), Carbon::today()->subDays(4)->format('l'));
-    
-        return view('admin.dashboard', ['employee' => $employee, 'client' => $client, 'completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_days' => $array_days, 'array_samples' => $array_samples]);
+
+        $clients_this_month = Client::whereMonth('created_at', Carbon::today()->month)->get()->count();
+        $clients_last_month = Client::whereMonth('created_at', Carbon::today()->subMonth(1))->get()->count();
+        $clients_last_two_months = Client::whereMonth('created_at', Carbon::today()->subMonth(2))->get()->count();
+        $clients_last_three_months = Client::whereMonth('created_at', Carbon::today()->subMonth(3))->get()->count();
+        $clients_last_four_months = Client::whereMonth('created_at', Carbon::today()->subMonth(4))->get()->count();
+
+        $array_clients = array($clients_this_month, $clients_last_month, $clients_last_two_months, $clients_last_three_months, $clients_last_four_months);
+        $array_months = array(Carbon::today()->format('F'), Carbon::today()->subMonth(1)->format('F'), Carbon::today()->subMonth(2)->format('F'), Carbon::today()->subMonth(3)->format('F'), Carbon::today()->subMonth(4)->format('F'));
+
+        return view('admin.dashboard', ['employee' => $employee, 'client' => $client, 'completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'array_days' => $array_days, 'array_samples' => $array_samples, 'array_clients' => $array_clients, 'array_months' => $array_months]);
     }
 
     // Admin home page
