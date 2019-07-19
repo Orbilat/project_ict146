@@ -228,9 +228,17 @@ class SecretaryController extends Controller
 
     protected function informClient($clientId, Request $request){
         $client = Client::findorFail($clientId);
-        $client->notify(new InformClient($request->message));
-        Session::flash('flash_client_message', 'Client messaged succesfully.');
-        return redirect()->action('SecretaryController@form');
+
+        if($request->message == NULL){
+            Session::flash('no_message', 'No message inputted.');
+            return redirect()->action('SecretaryController@form');
+        }
+        else{
+            $client->notify(new InformClient($request->message));
+            Session::flash('flash_client_message', 'Client messaged succesfully.');
+            return redirect()->action('SecretaryController@form');
+        }
+        
 
     }
 
