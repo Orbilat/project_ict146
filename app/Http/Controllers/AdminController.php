@@ -32,9 +32,13 @@ class AdminController extends Controller
     // Dashboard page
     public function dashboard()
     {
+        $client = Client::all()->count();
+        $employee = Employee::where('employeeId', '!=', Auth::user()->employeeId)->get()->count();
+
         $sample_not_started = 0; $sample_in_progress = 0; $sample_completed = 0;
         $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
         $samples = Sample::with('parameters')->get();
+
 
         foreach ($samples as $sample) {
             foreach ($sample->parameters as $parameter) {
@@ -64,7 +68,7 @@ class AdminController extends Controller
             $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
         }
         
-        return view('admin.dashboard', ['completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress]);
+        return view('admin.dashboard', ['employee'=> $employee, 'completed' => $sample_completed, 'not_started' => $sample_not_started, 'in_progress' => $sample_in_progress, 'client' => $client]);
     }
 
     // Admin home page
