@@ -15,7 +15,7 @@
                         <div class="col-md-4">
                             <div class="card" style="width: 14rem;">
                                 <div class="card-body">
-                                    <center><h3 class="card-title pt-2">{{ $samples }}</h3></center>
+                                    <center><h3 class="card-title pt-2">#test</h3></center>
                                     <center><h6 class="card-subtitle text-muted pb-2">Samples </h6></center>
                                 </div>
                             </div>
@@ -40,9 +40,9 @@ var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Green', 'Purple', 'Orange'],
         datasets: [{
-            label: '# of Votes',
+            label: '# of Samples',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
