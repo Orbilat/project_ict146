@@ -48,9 +48,8 @@
                     @endif
             
                     @foreach ($user->notifications()->paginate(10) as $notification)
-                    {{-- @php
-                        dd($notification)
-                    @endphp --}}
+
+                        @if($notification->type == "App\Notifications\NewSampleAdded")
                         <div @if($notification->read_at == NULL && $notification->data['days'] == 0) class="alert alert-danger m-1" @elseif($notification->read_at != NULL) class="alert alert-secondary m-1" @else class="alert alert-info m-1" @endif role="alert">
                             <div class="row">
                                 <div class="col-md-8">
@@ -67,7 +66,7 @@
                                             @endif
                                         <br>
                                         Due Date: {{ date("F d, Y h:i A", strtotime($notification->data['dueDate'])) }}
-                                    </p>                                    
+                                    </p>  
                                 </div>
                                 <div class="col-md-4">
                                     @if($notification->read_at != NULL)
@@ -80,10 +79,33 @@
                                     @endif
                                 </div>
                             </div>
-                            
                         </div>
+                        @else
+                        <div @if($notification->read_at != NULL) class="alert alert-secondary m-1" @else class="alert alert-info m-1" @endif>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="alert-heading">
+                                        Message: {{ $notification->data['message'] }}
+                                    </h5>
+                                    <p class="mb-0">
+                                        Name: {{ $notification->data['name'] }}<br>
+                                        Email: {{ $notification->data['email'] }}
+                                    </p>      
+                                </div>
+                                <div class="col-md-4">
+                                    @if($notification->read_at != NULL)
+                                        <button type="submit" class="float-right mb-0 btn btn-secondary btn-sm" disabled>Mark as read</button>
+                                    @else
+                                        <form action="{{route('notif-read-admin', ['id' => $notification->id])}}" method="get">
+                                            @csrf
+                                            <button type="submit" class="float-right mb-0 btn btn-secondary btn-sm">Mark as read</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @endif      
                     @endforeach
-    
                 </div>
             </div>
         </div>

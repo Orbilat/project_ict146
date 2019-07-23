@@ -63,7 +63,7 @@ class AdminController extends Controller
                 $sample_not_started++;
             }
             else {
-                $sample_in_progress++;
+                $sample_in_progress++;  
             }
             $completed = FALSE; $not_started = FALSE; $in_progress = FALSE;
         }
@@ -1034,12 +1034,13 @@ class AdminController extends Controller
     {
         $parameters = Parameter::where('analysis', $request->search)->with('stations')->paginate(10);
         $params = Parameter::all();
+        $stations = Station::all();
 
         if($parameters->count() == 0) {
             return $this->parameters();
         }
         else {
-            return view('admin.parameters', ['parameters' => $parameters, 'params' => $params]);
+            return view('admin.parameters', ['parameters' => $parameters, 'params' => $params, 'stations' => $stations]);
         }
     }
 

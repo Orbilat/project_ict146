@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 use Session;
+use App\Employee;
 use App\Client;
 use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Parameter;
-use App\ClientContact;
+use App\Notifications\ClientContact;
 use Redirect;
 
 class ClientController extends Controller
@@ -55,20 +56,19 @@ class ClientController extends Controller
 
     public function receive(Request $request)
     {
-        $receiveContact = new ClientContact;
+        $users = Employee::all();
+        
+        foreach ($users as $user) {
+            if ($user['userType'] == 'administrator' || $user['userType'] == 'secretary') {
 
-        $receiveContact->name = $request->name;
-        $receiveContact->emailAddress = $request->email;
-        $receiveContact->message =$request->message;
+                $user->notify((new ClientContact($request)));
 
-        if($receiveContact->save()){
-        Session::flash('flash_feedback_added','Message sent successfully!');
-            return Redirect::back();
+                Session::flash('flash_feedback_added','Message sent successfully!');
+                return Redirect::back();
+            }
+            else {
+                return view('client.contact');
+            }
         }
-        else {
-            return view('clients.contact');
-        }
-        return view('clients.contact');
     }
-    
 }
